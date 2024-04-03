@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {ImageBackground, StatusBar} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../App';
+import {RootStackParamList} from '../../navigation/MainNavigation';
 
 export interface SplashProps {
   navigation: StackNavigationProp<RootStackParamList, 'Splash'>;

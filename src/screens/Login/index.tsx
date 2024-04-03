@@ -1,14 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Button, Input, Text, Image} from 'native-base';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {styles} from './style';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
+import {Alert} from 'react-native';
 
 type Props = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'Login'>;
 };
 
 const Login: React.FC<Props> = ({navigation}) => {
+  const [phoneNo, setPhoneNo] = useState('');
+
+  const handleContinue = () => {
+    if (phoneNo.length === 10) {
+      navigation.navigate('OTP');
+    } else {
+      Alert.alert('Enter valid phone number');
+    }
+  };
   return (
     <View flex={1} bg="primary.50">
       <View style={styles.imageBackground}>
@@ -39,6 +49,8 @@ const Login: React.FC<Props> = ({navigation}) => {
           keyboardType="number-pad"
           maxLength={10}
           blurOnSubmit
+          value={phoneNo}
+          onChangeText={setPhoneNo}
         />
         <Button
           size="md"
@@ -46,9 +58,7 @@ const Login: React.FC<Props> = ({navigation}) => {
           marginTop={2}
           rounded={13}
           bg="primary.500"
-          onPress={() => {
-            navigation.navigate('OTP');
-          }}>
+          onPress={handleContinue}>
           Continue
         </Button>
         <View style={styles.footer}>
