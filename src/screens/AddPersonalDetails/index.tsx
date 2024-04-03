@@ -20,8 +20,6 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
       Alert.alert('Enter valid Name');
     } else if (!validators.isEmail(email)) {
       Alert.alert('Enter valid Email');
-    } else {
-      Alert.alert('Registered');
     }
   };
 
