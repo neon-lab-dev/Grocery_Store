@@ -2,7 +2,7 @@ import {Dimensions} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
 // Getting the Device's screen dimensions
-const {width, height} = Dimensions.get('window');
+export const {width, height} = Dimensions.get('window');
 
 // Checking the device is small or not
 const isSmall = width <= 375 && !DeviceInfo.hasNotch(); // For 5 inch screen

@@ -1,32 +1,15 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import RootNavigation from './src/navigation/MainNavigation';
+import {NativeBaseProvider} from 'native-base';
+import {theme} from './src/constants/theme';
 
-const App = (): React.JSX.Element => {
+const App: React.FC = () => {
   return (
-    <SafeAreaView>
-      <StatusBar />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={styles.container}>
-          <Text>Welcome 🙏</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NativeBaseProvider theme={theme}>
+      <RootNavigation />
+    </NativeBaseProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;
