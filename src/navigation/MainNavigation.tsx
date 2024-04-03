@@ -4,14 +4,64 @@
  * AUTHENTICATED -> REDIRECT TO APPNAVIGATION
  */
 import React from 'react';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import AppNavigation from './AppNavigation';
 import AuthNavigation from './AuthNavigation';
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Splash from '../screens/Splash';
+
+export type RootStackParamList = {
+  Splash: undefined;
+  Auth: NavigatorScreenParams<AuthNavigatorParamList>;
+  App: NavigatorScreenParams<AppNavigatorParamList>;
+};
+
+export type AuthNavigatorParamList = {
+  Login: undefined;
+  OTP: undefined;
+  PersonalDetails: undefined;
+};
+
+export type AppNavigatorParamList = {
+  Home: undefined;
+  Settings: undefined;
+  PersonalDetails: undefined;
+  Help: undefined;
+  FAQ: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation: React.FC = () => {
-  const user = useSelector(state => state.user);
+  // const user = useSelector(state => state.user);
+  const isLoggedIn = false;
 
-  return user.isLoggedIn ? <AppNavigation /> : <AuthNavigation />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Splash" options={{headerShown: false}}>
+          {props => <Splash {...props} isLoggedIn={isLoggedIn} />}
+        </Stack.Screen>
+        {!isLoggedIn ? (
+          <Stack.Screen
+            name="Auth"
+            component={AuthNavigation}
+            options={{headerShown: false}}
+          />
+        ) : (
+          <Stack.Screen
+            name="App"
+            component={AppNavigation}
+            options={{headerShown: false}}
+          />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 export default RootNavigation;

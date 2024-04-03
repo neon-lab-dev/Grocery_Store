@@ -1,11 +1,26 @@
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import React from 'react';
-import {View, Text} from 'react-native';
+import {AppNavigatorParamList, RootStackParamList} from './MainNavigation';
+import Home from '../screens/Home';
 
-const AppNavigation: React.FC = () => {
+type AppNavigationProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'App'>;
+};
+
+const Stack = createStackNavigator<AppNavigatorParamList>();
+
+export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
-    <View>
-      <Text>App Navigation</Text>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
   );
 };
 
