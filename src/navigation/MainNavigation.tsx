@@ -32,13 +32,15 @@ export type AppNavigatorParamList = {
   PersonalDetails: undefined;
   Help: undefined;
   FAQ: undefined;
+  Orders: undefined;
+  SingleOrder: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation: React.FC = () => {
   // const user = useSelector(state => state.user);
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <NavigationContainer>
