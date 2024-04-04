@@ -6,16 +6,16 @@ import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
 import { Colors } from '../../constants/colors';
 import { scaleFontSize } from '../../assets/scaling';
-const Home = ({navigation}) => {
-  const openDrawer = () => {
-    navigation.openDrawer();
-  };
+const Home = ({}) => {
+  // const openDrawer = () => {
+  //   navigation.openDrawer();
+  // };
   return (
     <View style={style.container}>
       <Text> Home Screen </Text>
-      <Pressable onPress={openDrawer}>
+      {/* <Pressable onPress={openDrawer}>
         <Text>Open Settings</Text>
-      </Pressable>
+      </Pressable> */}
       <Header />
       <ImageCarousel />
       <View style={{flexDirection:"row",justifyContent:'space-between'}}>
