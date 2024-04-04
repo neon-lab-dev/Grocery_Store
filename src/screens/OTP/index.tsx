@@ -12,8 +12,6 @@ interface OTPScreenProps {
 }
 
 const OTPScreen: React.FC<OTPScreenProps> = ({navigation}) => {
-    
-
   const handleOtpComplete = () => {
     navigation.replace('PersonalDetails');
   };
