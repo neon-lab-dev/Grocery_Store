@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
+import { Colors } from '../../constants/colors';
 export const styles = StyleSheet.create({
     Container: {
-      width: 150,
-      margin: 5
+      width: '100%',
+      margin: 5,
     },
     Image: {
       width: '100%',
@@ -21,10 +22,12 @@ export const styles = StyleSheet.create({
       paddingVertical: 5,
       paddingHorizontal: 20,
       borderWidth: 1,
-      borderColor: '#F97316',
+      borderColor: Colors.primary[400],
+      marginHorizontal:35
+      
     },
     ButtonText: {
-      color: '#F97316',
+      color: Colors.primary[400],
       fontSize: 16,
     },
   });

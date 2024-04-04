@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
     carouselItem: {
-      flex: 1,
+      
     },
     img: {
       width: 340,
