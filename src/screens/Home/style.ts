@@ -14,7 +14,7 @@ const style = StyleSheet.create({
   },
   ExCatg:{
    height:'100%',
-   width:95,
+   width:90,
   },
   floatingButton:{
     position: 'absolute',

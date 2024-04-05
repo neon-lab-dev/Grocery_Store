@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './style';
 import {
   Text,
@@ -14,8 +14,10 @@ import {Colors} from '../../constants/colors';
 import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import Makelist from '../../components/Carousel/Makelist';
 import ProductData from '../../assets/data/ProductData';
+import SearchInput from '../../components/SearchInput';
 
 const Home: React.FC= () => {
+  const [searchInp,SetsearchInp]=useState("")
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
@@ -26,6 +28,10 @@ const Home: React.FC= () => {
         <Text>Open Settings</Text>
       </Pressable> */}
       <Header />
+      <SearchInput
+      onChangeText={SetsearchInp}
+      value={searchInp}
+      placeholder="Search “Bread” "/>
       <ScrollView>
         <ImageCarousel />
         <Makelist />
