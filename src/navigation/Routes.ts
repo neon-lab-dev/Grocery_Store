@@ -3,7 +3,7 @@ export const Routes = {
   Otp: 'Otp',
   Signup: 'Signup',
   Home: 'Home',
-  Settings: 'Settngs',
+  Settings: 'Settings',
   Orders: 'My Orders',
   AddressBook: 'Addresses',
   Profile: 'Profile',
