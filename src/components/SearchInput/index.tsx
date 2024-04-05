@@ -3,16 +3,27 @@ import {Image, TextInput, View} from 'react-native';
 import {styles} from './style';
 
 interface SearchInputProps {
-  // Add any props here
+  onChangeText: (text: string) => void;
+  value: string;
+  placeholder: string;
 }
 
-const SearchInput: FC<SearchInputProps> = ({...props}) => {
+const SearchInput: FC<SearchInputProps> = ({
+  onChangeText,
+  value,
+  placeholder,
+}) => {
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/icons/search.png')} />
-      <TextInput style={styles.searchInput} {...props} />
+      <Image source={require('../assets/images/search.png')} />
+      <TextInput
+        style={styles.searchInput}
+        onChangeText={onChangeText}
+        value={value}
+        placeholder={placeholder}
+      />
       <View style={styles.line} />
-      <Image source={require('../../assets/images/icons/mic.png')} />
+      <Image source={require('../assets/images/mic.png')} />
     </View>
   );
 };
