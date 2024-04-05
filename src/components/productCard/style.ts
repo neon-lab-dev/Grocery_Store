@@ -6,8 +6,9 @@ export const styles = StyleSheet.create({
       margin: 5,
     },
     Image: {
-      width: '100%',
-      height: 150,
+      width: 80,
+      height: 100,
+      alignSelf:'center'
     },
     Title: {
       fontSize: 18,
@@ -20,14 +21,22 @@ export const styles = StyleSheet.create({
     Button: {
       borderRadius: 10,
       paddingVertical: 5,
-      paddingHorizontal: 20,
+      paddingHorizontal: 16,
       borderWidth: 1,
       borderColor: Colors.primary[400],
-      marginHorizontal:35
+      marginHorizontal:25
       
     },
     ButtonText: {
       color: Colors.primary[400],
-      fontSize: 16,
+      fontSize: 14,
     },
+    cutLine: {
+      position: 'absolute',
+      top: '75%',
+      left: 0,
+      right: 0,
+      height: 1,
+      backgroundColor: '#333',
+      zIndex: 0,}
   });
