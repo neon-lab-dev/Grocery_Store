@@ -14,28 +14,28 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {ProductData.map(data => {
           return (
-            <View key={data.id}>
+            <View key={data.id} style={{width:140}}>
               <TouchableOpacity
                 style={{
                   borderRadius: 20,
                   backgroundColor: Colors.accent[100],
-                  height: 150,
-                  width: 120,
+                  height: 160,
+                  width: 130,
                   overflow: 'hidden',
                 }}>
                 <View
                   style={{
                     backgroundColor: Colors.primary[500],
                     height: 42,
-                    width: 40,
-                    marginLeft: 10,
+                    width: 35,
+                    marginLeft: 12,
                     borderBottomLeftRadius: 10,
                     borderBottomRightRadius: 10,
                   }}></View>
-                <Image source={{uri: data.image}} style={styles.Image} />
+                <Image source={getImage(data.image)} style={styles.Image} />
               </TouchableOpacity>
               <Text style={styles.Title}>{data.Title}</Text>
-              <Text>{data.Quantity}</Text>
+              <Text style={styles.Quantity}>{data.Quantity}</Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -44,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
                 }}>
                 <View>
                   <Text style={styles.Price}>₹{data.Price}</Text>
-                  <Text>₹{data.DisPrice}</Text>
+                  <Text style={styles.DisPrice}>₹{data.DisPrice}</Text>
                   <View style={styles.cutLine} />
                 </View>
                 <TouchableOpacity style={styles.Button} onPress={onPress}>
@@ -58,5 +58,14 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
     </View>
   );
 };
-
+const getImage = (imageName: string) => {
+  switch (imageName) {
+    case 'item1':
+      return require('../../assets/images/Product-Image/Tomato.png');
+    case 'item2':
+      return require('../../assets/images/Product-Image/Ginger.png');
+    default:
+      return null;
+  }
+};
 export default ProductCard;
