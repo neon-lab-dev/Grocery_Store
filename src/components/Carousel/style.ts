@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
       
     },
     img: {
-      width: horizontalScale(270),
+      width:horizontalScale(300),
+      // padding:15,
       marginTop: 35,
       marginLeft:horizontalScale(18),
       height: 180,

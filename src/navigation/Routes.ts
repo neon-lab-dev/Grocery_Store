@@ -1,6 +1,6 @@
 export const Routes = {
   Login: 'Login',
-  Otp: 'Otp',
+  Otp: "otp",
   Signup: 'Signup',
   Home: 'Home',
   Settings: 'Settings',

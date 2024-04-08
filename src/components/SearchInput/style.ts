@@ -3,7 +3,7 @@ import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 
 export const styles = StyleSheet.create({
   container: {
-    width: 330,
+    width: "90%",
     height: 56,
     marginHorizontal:horizontalScale(18),
     borderRadius: horizontalScale(12),

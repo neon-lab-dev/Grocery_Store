@@ -260,7 +260,7 @@ const Home: React.FC = () => {
       </ScrollView>
       <View style={style.floatingButton}>
         <Image
-          source={require('../../assets/images/icons/Categories.png')} // Replace with your image path
+          source={require('../../assets/images/icons/Categories.png')} 
           style={style.buttonImage}
         />
       </View>

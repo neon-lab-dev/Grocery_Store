@@ -3,6 +3,7 @@ import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {styles} from './style';
 import ProductData from '../../assets/data/ProductData';
 import {Colors} from '../../constants/colors';
+import { horizontalScale, verticalScale } from '../../assets/scaling';
 
 interface ProductCardProps {
   onPress: () => void;
@@ -14,7 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {ProductData.map(data => {
           return (
-            <View key={data.id} style={{width:140}}>
+            <View key={data.id} style={{width:horizontalScale(140),height:verticalScale(225)}}>
               <TouchableOpacity
                 style={{
                   borderRadius: 20,
@@ -34,22 +35,24 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
                   }}></View>
                 <Image source={getImage(data.image)} style={styles.Image} />
               </TouchableOpacity>
-              <Text style={styles.Title}>{data.Title}</Text>
+              <Text numberOfLines={1} style={styles.Title}>{data.Title}</Text>
               <Text style={styles.Quantity}>{data.Quantity}</Text>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
+                  alignItems:'baseline',
                 }}>
-                <View>
+                <View >
                   <Text style={styles.Price}>₹{data.Price}</Text>
                   <Text style={styles.DisPrice}>₹{data.DisPrice}</Text>
                   <View style={styles.cutLine} />
                 </View>
+                <View >
                 <TouchableOpacity style={styles.Button} onPress={onPress}>
                   <Text style={styles.ButtonText}>ADD</Text>
                 </TouchableOpacity>
+                </View>
               </View>
             </View>
           );

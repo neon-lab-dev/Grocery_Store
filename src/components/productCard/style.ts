@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
   Price: {
     fontSize: scaleFontSize(16),
     color: 'black',
+
   },
   DisPrice: {
     fontSize: scaleFontSize(14),
@@ -29,7 +30,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: Colors.primary[400],
-    marginHorizontal: 22,
+    marginHorizontal: 25,
   },
   ButtonText: {
     color: Colors.primary[400],
