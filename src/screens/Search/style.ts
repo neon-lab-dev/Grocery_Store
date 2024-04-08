@@ -5,10 +5,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
-    marginBottom: 8,
+    marginBottom: -8,
   },
   radioLabel: {
-    marginLeft: 5,
+    marginLeft: 3,
   },
   sliderContainer: {
     justifyContent: 'center',

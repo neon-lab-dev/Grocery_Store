@@ -79,7 +79,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
               pl={5}
-              pt={5}>
+              py={5}>
               Sort By
             </Text>
             {radioButtonsData.map(item => (
@@ -88,7 +88,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                   value={item.value}
                   status={sortOption === item.value ? 'checked' : 'unchecked'}
                   onPress={() => setSortOption(item.value)}
-                  color="#F97316"
+                  color="#22C55E"
                 />
                 <Text style={styles.radioLabel}>{item.label}</Text>
               </View>
@@ -151,7 +151,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
 
                     setSelectedBrands(newSelection);
                   }}
-                  tintColors={{true: '#F97316', false: '#9CA3AF'}}
+                  tintColors={{true: '#22C55E', false: '#9CA3AF'}}
                 />
                 <Text
                   fontSize={scaleFontSize(16)}
