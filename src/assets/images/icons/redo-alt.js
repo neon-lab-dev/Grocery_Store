@@ -7,4 +7,4 @@ export const redoAlt = `<svg width="18" height="18" viewBox="0 0 18 18" fill="no
 <rect width="18" height="18" fill="white" transform="matrix(-1 0 0 1 18 0)"/>
 </clipPath>
 </defs>
-</svg>`
+</svg>`;

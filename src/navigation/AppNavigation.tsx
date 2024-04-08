@@ -5,13 +5,17 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 import {AppNavigatorParamList, RootStackParamList} from './MainNavigation';
-import {ChevronLeftIcon, Text, View} from 'native-base';
+import {Center, ChevronLeftIcon, Text, View} from 'native-base';
 import {Settings} from '../screens/Settings';
 import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/single_order';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
+import Home from '../screens/Home';
+import Search from '../screens/Search';
+import {SvgXml} from 'react-native-svg';
+import {filter} from '../assets/images/icons/filter';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -22,6 +26,16 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Search"
+        component={Search}
+        options={() => ({headerStyle: {height: 100}})}
+      />
       <Stack.Screen
         name="Settings"
         component={Settings}

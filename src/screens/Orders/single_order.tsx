@@ -1,10 +1,10 @@
 import {Button, Center, Text, View} from 'native-base';
 import * as React from 'react';
 import {SvgXml} from 'react-native-svg';
-import {timer} from '../../assets/images/time-svgrepo';
-import {location} from '../../assets/images/address-location-map';
+import {timer} from '../../assets/images/icons/time-svgrepo';
+import {location} from '../../assets/images/icons/address-location-map';
 import {SingleOrderCard} from './single_order_card';
-import { horizontalScale } from '../../assets/scaling';
+import {horizontalScale} from '../../assets/scaling';
 
 const SingleOrder: React.FC = () => {
   return (
