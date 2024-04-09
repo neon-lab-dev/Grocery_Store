@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {Image, Text, View} from 'react-native';
 import {styles} from './style';
+import {SvgXml} from 'react-native-svg';
 
 const SelectAddress: FC = () => {
   const AddressCard: FC = () => {

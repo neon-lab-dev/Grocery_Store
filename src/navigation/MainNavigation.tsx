@@ -30,6 +30,8 @@ export type AppNavigatorParamList = {
   Home: undefined;
   Settings: undefined;
   PersonalDetails: undefined;
+  Addresses: undefined;
+  AddAddress: undefined;
   Help: undefined;
   FAQ: undefined;
   Orders: undefined;
