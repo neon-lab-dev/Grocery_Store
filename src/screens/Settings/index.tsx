@@ -22,6 +22,9 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const gotoOrders = () => {
     navigation.navigate('Orders');
   };
+  const gotoAddress = () => {
+    navigation.navigate('Addresses');
+  };
   return (
     <View flex={1}>
       <View
@@ -60,7 +63,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
       <SettingsOption
         name="Addresses"
         iconSVG={locationAlt}
-        onPress={() => {}}
+        onPress={gotoAddress}
       />
       <SettingsOption
         name="Profile"

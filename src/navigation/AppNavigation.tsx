@@ -12,6 +12,8 @@ import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/single_order';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
+import SavedAddress from '../screens/Address/saved_address';
+import AddAddress from '../screens/Address/add_address';
 import Home from '../screens/Home';
 import Search from '../screens/Search';
 import {SvgXml} from 'react-native-svg';
@@ -109,6 +111,40 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             />
           ),
           headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
+        })}
+      />
+      <Stack.Screen
+        name="Addresses"
+        component={SavedAddress}
+        options={({navigation}) => ({
+          headerTitle: 'Saved Addresses',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="AddAddress"
+        component={AddAddress}
+        options={({navigation}) => ({
+          headerTitle: 'Add Address',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
         })}
       />
     </Stack.Navigator>
