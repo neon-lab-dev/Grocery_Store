@@ -9,17 +9,7 @@ import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import ProductCard from '../../components/productCard/ProductCard';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FilterOverlay from './search_filter_overlay';
-
-const headerTitleComponent = () => (
-  <Center
-    borderRadius={12}
-    borderWidth={1}
-    borderColor={'accent.200'}
-    p={4}
-    w={horizontalScale(200)}>
-    <Text>Search</Text>
-  </Center>
-);
+import SearchInput from '../../components/SearchInput';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -27,6 +17,17 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({navigation}) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [searchInp, SetsearchInp] = useState('');
+
+  const headerTitleComponent = () => (
+    <SearchInput
+      onChangeText={SetsearchInp}
+      value={searchInp}
+      placeholder="Search “Bread” "
+      onPress={() => {}}
+      editable={true}
+    />
+  );
 
   const headerRightComponent = () => (
     <TouchableOpacity
@@ -43,76 +44,68 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       </Center>
     </TouchableOpacity>
   );
-  const products = [
-    {
-      id: '1',
-      title: 'Desi Tomato(Nattu Thakkali)',
-      price: 42,
-      quantity: 1,
-      image: require('../../assets/images/Vegetables/tomato.png'),
-    },
-    {
-      id: '2',
-      title: 'Ginger (Inji)',
-      price: 42,
-      quantity: 2,
-      image: require('../../assets/images/Vegetables/ginger.png'),
-    },
-    {
-      id: '3',
-      title: 'Ginger (Inji)',
-      price: 42,
-      quantity: 2,
-      image: require('../../assets/images/Vegetables/ginger.png'),
-    },
-    {
-      id: '4',
-      title: 'Ginger (Inji)',
-      price: 42,
-      quantity: 2,
-      image: require('../../assets/images/Vegetables/ginger.png'),
-    },
-    {
-      id: '5',
-      title: 'Ginger (Inji)',
-      price: 42,
-      quantity: 2,
-      image: require('../../assets/images/Vegetables/ginger.png'),
-    },
-    {
-      id: '6',
-      title: 'Ginger (Inji)',
-      price: 42,
-      quantity: 2,
-      image: require('../../assets/images/Vegetables/ginger.png'),
-    },
-    {
-      id: '7',
-      title: 'Ginger (Inji)',
-      price: 42,
-      quantity: 2,
-      image: require('../../assets/images/Vegetables/ginger.png'),
-    },
-    {
-      id: '8',
-      title: 'Ginger (Inji)',
-      price: 42,
-      quantity: 2,
-      image: require('../../assets/images/Vegetables/ginger.png'),
-    },
-  ];
+  // const products = [
+  //   {
+  //     id: '1',
+  //     title: 'Desi Tomato(Nattu Thakkali)',
+  //     price: 42,
+  //     quantity: 1,
+  //     image: require('../../assets/images/Vegetables/tomato.png'),
+  //   },
+  //   {
+  //     id: '2',
+  //     title: 'Ginger (Inji)',
+  //     price: 42,
+  //     quantity: 2,
+  //     image: require('../../assets/images/Vegetables/ginger.png'),
+  //   },
+  //   {
+  //     id: '3',
+  //     title: 'Ginger (Inji)',
+  //     price: 42,
+  //     quantity: 2,
+  //     image: require('../../assets/images/Vegetables/ginger.png'),
+  //   },
+  //   {
+  //     id: '4',
+  //     title: 'Ginger (Inji)',
+  //     price: 42,
+  //     quantity: 2,
+  //     image: require('../../assets/images/Vegetables/ginger.png'),
+  //   },
+  //   {
+  //     id: '5',
+  //     title: 'Ginger (Inji)',
+  //     price: 42,
+  //     quantity: 2,
+  //     image: require('../../assets/images/Vegetables/ginger.png'),
+  //   },
+  //   {
+  //     id: '6',
+  //     title: 'Ginger (Inji)',
+  //     price: 42,
+  //     quantity: 2,
+  //     image: require('../../assets/images/Vegetables/ginger.png'),
+  //   },
+  //   {
+  //     id: '7',
+  //     title: 'Ginger (Inji)',
+  //     price: 42,
+  //     quantity: 2,
+  //     image: require('../../assets/images/Vegetables/ginger.png'),
+  //   },
+  //   {
+  //     id: '8',
+  //     title: 'Ginger (Inji)',
+  //     price: 42,
+  //     quantity: 2,
+  //     image: require('../../assets/images/Vegetables/ginger.png'),
+  //   },
+  // ];
 
-  const renderProductItem = ({item}: {item: any}) => {
-    return (
-      <ProductCard
-        image={item.image}
-        Title={item.title}
-        Price={item.price}
-        Quantity={item.quantity}
-        onPress={() => {}}
-      />
-    );
-  };
+  // const renderProductItem = () => {
+  //   return <ProductCard onPress={() => {}} />;
+  // };
 
   const goBack = () => (
     <ChevronLeftIcon
@@ -160,12 +153,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           </Text>
         </View>
         <View alignItems={'center'}>
-          <FlatList
-            data={products}
-            renderItem={renderProductItem}
-            keyExtractor={item => item.id}
-            numColumns={2}
-          />
+          <ProductCard onPress={() => {}} />
         </View>
       </View>
       <FilterOverlay
