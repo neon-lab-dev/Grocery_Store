@@ -19,7 +19,7 @@ const style = StyleSheet.create({
   },
   SubCategoryText:{
    fontWeight:"400",
-   fontSize:scaleFontSize(16)
+   fontSize:scaleFontSize(16),
   },
   ExploreCatgories:{
    height:"100%",

@@ -44,42 +44,42 @@ const ProductData: ProductDataItem[] = [
     image:
       'item2',
   },
-  // {
-  //   id: 5,
-  //   Title: 'Grocery',
-  //   Price: 100,
-  //   Quantity: '1kg',
-  //   DisPrice: 110,
-  //   image:
-  //     'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-11/Slice-3_9.png',
-  // },
-  // {
-  //   id: 6,
-  //   Title: 'Grocery',
-  //   Price: 100,
-  //   Quantity: '1kg',
-  //   DisPrice: 110,
-  //   image:
-  //     'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-11/Slice-3_9.png',
-  // },
-  // {
-  //   id: 7,
-  //   Title: 'Grocery',
-  //   Price: 100,
-  //   Quantity: '1kg',
-  //   DisPrice: 110,
-  //   image:
-  //     'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-11/Slice-3_9.png',
-  // },
-  // {
-  //   id: 8,
-  //   Title: 'Grocery',
-  //   Price: 100,
-  //   Quantity: '1kg',
-  //   DisPrice: 110,
-  //   image:
-  //     'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-11/Slice-3_9.png',
-  // },
+  {
+    id: 5,
+    Title: 'Ginger (Inji)',
+    Price: 42,
+    Quantity: '1kg',
+    DisPrice: 58,
+    image:
+      'item2',
+  },
+  {
+    id: 6,
+    Title: 'Ginger (Inji)',
+    Price: 42,
+    Quantity: '1kg',
+    DisPrice: 58,
+    image:
+      'item2',
+  },
+  {
+    id: 7,
+    Title: 'Ginger (Inji)',
+    Price: 42,
+    Quantity: '1kg',
+    DisPrice: 58,
+    image:
+      'item2',
+  },
+  {
+    id: 8,
+    Title: 'Ginger (Inji)',
+    Price: 42,
+    Quantity: '1kg',
+    DisPrice: 58,
+    image:
+      'item2',
+  },
 ];
 
 export default ProductData;
