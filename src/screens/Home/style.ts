@@ -5,8 +5,8 @@ import { Colors } from '../../constants/colors';
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    // marginHorizontal:horizontalScale(15),
-    position: 'relative'
+    position: 'relative',
+    backgroundColor:"white"
   },
   Category:{
    marginLeft:horizontalScale(18),

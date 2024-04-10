@@ -22,7 +22,7 @@ const ProductScroll: React.FC<ProductCardProps> = ({onPress}) => {
               <Pressable
                 style={{
                   borderRadius: 20,
-                  backgroundColor: Colors.accent[100],
+                  backgroundColor: '#F9FAFB',
                   height: verticalScale(120),
                   width: horizontalScale(120),
                   overflow: 'hidden',

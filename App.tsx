@@ -8,8 +8,7 @@ import Home from './src/screens/Home';
 const App: React.FC = () => {
   return (
     <NativeBaseProvider theme={theme}>
-      <Home/>
-      {/* <RootNavigation /> */}
+      <RootNavigation />
     </NativeBaseProvider>
   );
 };
