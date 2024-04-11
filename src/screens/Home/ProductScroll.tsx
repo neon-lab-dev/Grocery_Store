@@ -18,7 +18,7 @@ const ProductScroll: React.FC<ProductCardProps> = ({onPress}) => {
           return (
             <View
               key={data.id}
-              style={{width: horizontalScale(130), height: verticalScale(200)}}>
+              style={{width: horizontalScale(130), height: verticalScale(210)}}>
               <Pressable
                 style={{
                   borderRadius: 20,
@@ -69,7 +69,7 @@ const ProductScroll: React.FC<ProductCardProps> = ({onPress}) => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   position: 'absolute',
-                  top: verticalScale(170),
+                  top: verticalScale(175),
                 }}>
                 <View>
                   <Text style={styles.Price}>₹{data.Price}</Text>

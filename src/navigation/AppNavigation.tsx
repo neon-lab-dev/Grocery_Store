@@ -12,6 +12,7 @@ import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/single_order';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
+import Home from '../screens/Home';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -21,7 +22,7 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Settings"
         component={Settings}
@@ -36,6 +37,13 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
               onPress={() => navigation.goBack()}
             />
           ),
+        })}
+      />
+         <Stack.Screen
+        name="Home"
+        component={Home}
+        options={({navigation}) => ({
+          headerShown:false
         })}
       />
       <Stack.Screen

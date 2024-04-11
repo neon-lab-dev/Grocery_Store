@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import style from './style';
-import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {Text, View, TouchableOpacity, Image, ScrollView, Pressable, Alert} from 'react-native';
 import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
@@ -261,12 +261,14 @@ const Home: React.FC = () => {
           </View>
         </View>
       </ScrollView>
+      <Pressable >
       <View style={style.floatingButton}>
         <Image
           source={require('../../assets/images/icons/Categories.png')} 
           style={style.buttonImage}
         />
       </View>
+      </Pressable>
     </View>
   );
 };
