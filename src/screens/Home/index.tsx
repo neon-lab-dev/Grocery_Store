@@ -9,6 +9,7 @@ import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
+import ProductScroll from './ProductScroll';
 
 const Home: React.FC = () => {
   const [searchInp, SetsearchInp] = useState('');
@@ -55,7 +56,9 @@ const Home: React.FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductCard onPress={() => {}} />
+        
+         <ProductScroll onPress={() => {}} />
+          
         {/* <View style={{alignSelf: 'center', margin: 5}}>
           <Image
             source={require('../../assets/images/icons/SendList.png')}></Image>
@@ -226,7 +229,7 @@ const Home: React.FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductCard onPress={() => {}} />
+        <ProductScroll onPress={() => {}} />
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
