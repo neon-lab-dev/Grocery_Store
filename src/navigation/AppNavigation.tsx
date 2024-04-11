@@ -12,6 +12,7 @@ import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/single_order';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
+import Home from '../screens/Home';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -22,6 +23,13 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
     <Stack.Navigator>
+         <Stack.Screen
+        name="Home"
+        component={Home}
+        options={({navigation}) => ({
+          headerShown:false
+        })}
+      />
       <Stack.Screen
         name="Settings"
         component={Settings}
