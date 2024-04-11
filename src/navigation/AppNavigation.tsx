@@ -22,14 +22,7 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
-    <Stack.Navigator>
-         <Stack.Screen
-        name="Home"
-        component={Home}
-        options={({navigation}) => ({
-          headerShown:false
-        })}
-      />
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Settings"
         component={Settings}
@@ -44,6 +37,13 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
               onPress={() => navigation.goBack()}
             />
           ),
+        })}
+      />
+         <Stack.Screen
+        name="Home"
+        component={Home}
+        options={({navigation}) => ({
+          headerShown:false
         })}
       />
       <Stack.Screen
