@@ -58,7 +58,7 @@ export const CartItemCard = ({item}) => {
             disabled={count === 1}>
             -
           </Button>
-          <Text fontSize={'sm'} color={'common.white'}>
+          <Text fontSize={'sm'} color={'white'}>
             {count}
           </Text>
           <Button
