@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import style from './style';
-import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {Text, View, TouchableOpacity, Image, ScrollView, Pressable, Alert} from 'react-native';
 import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
@@ -9,6 +9,7 @@ import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
+import ProductScroll from './ProductScroll';
 
 const Home: React.FC = () => {
   const [searchInp, SetsearchInp] = useState('');
@@ -55,7 +56,9 @@ const Home: React.FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductCard onPress={() => {}} />
+        
+         <ProductScroll onPress={() => {}} />
+          
         {/* <View style={{alignSelf: 'center', margin: 5}}>
           <Image
             source={require('../../assets/images/icons/SendList.png')}></Image>
@@ -226,7 +229,7 @@ const Home: React.FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductCard onPress={() => {}} />
+        <ProductScroll onPress={() => {}} />
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
@@ -258,12 +261,14 @@ const Home: React.FC = () => {
           </View>
         </View>
       </ScrollView>
+      <Pressable >
       <View style={style.floatingButton}>
         <Image
           source={require('../../assets/images/icons/Categories.png')} 
           style={style.buttonImage}
         />
       </View>
+      </Pressable>
     </View>
   );
 };

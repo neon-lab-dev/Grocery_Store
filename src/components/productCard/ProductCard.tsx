@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, Image, Pressable, ScrollView} from 'native-base';
 import {styles} from './style';
 import ProductData from '../../assets/data/ProductData';
 import {Colors} from '../../constants/colors';
-import { horizontalScale, verticalScale } from '../../assets/scaling';
+import {horizontalScale, verticalScale} from '../../assets/scaling';
 
 interface ProductCardProps {
   onPress: () => void;
@@ -12,52 +12,79 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
   return (
     <View style={styles.Container}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {ProductData.map(data => {
-          return (
-            <View key={data.id} style={{width:horizontalScale(140),height:verticalScale(225)}}>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 20,
-                  backgroundColor: Colors.accent[100],
-                  height: 160,
-                  width: 130,
-                  overflow: 'hidden',
-                }}>
-                <View
-                  style={{
-                    backgroundColor: Colors.primary[500],
-                    height: 42,
-                    width: 35,
-                    marginLeft: 12,
-                    borderBottomLeftRadius: 10,
-                    borderBottomRightRadius: 10,
-                  }}></View>
-                <Image source={getImage(data.image)} style={styles.Image} />
-              </TouchableOpacity>
-              <Text numberOfLines={1} style={styles.Title}>{data.Title}</Text>
-              <Text style={styles.Quantity}>{data.Quantity}</Text>
+      {ProductData.map(data => {
+        let off = ((data.DisPrice - data.Price) / data.DisPrice) * 100;
+        return (
+          <View
+            key={data.id}
+            style={{width: horizontalScale(130), height: verticalScale(200)}}>
+            <Pressable
+              style={{
+                borderRadius: 20,
+                backgroundColor: "#F9FAFB",
+                height: verticalScale(120),
+                width: horizontalScale(120),
+                overflow: 'hidden',
+              }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems:'baseline',
+                  backgroundColor: Colors.primary[500],
+                  height: verticalScale(30),
+                  width: horizontalScale(34),
+                  marginLeft: 10,
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
                 }}>
-                <View >
-                  <Text style={styles.Price}>₹{data.Price}</Text>
-                  <Text style={styles.DisPrice}>₹{data.DisPrice}</Text>
-                  <View style={styles.cutLine} />
-                </View>
-                <View >
-                <TouchableOpacity style={styles.Button} onPress={onPress}>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}>
+                  {off.toFixed(0)}%
+                </Text>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    position: 'absolute',
+                    top: verticalScale(11),
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}>
+                  OFF
+                </Text>
+              </View>
+              <Image
+                alt="Image"
+                source={getImage(data.image)}
+                style={styles.Image}
+              />
+            </Pressable>
+            <Text style={styles.Title}>{data.Title}</Text>
+            <Text style={styles.Quantity}>{data.Quantity}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                position: 'absolute',
+                top: verticalScale(170),
+              }}>
+              <View>
+                <Text style={styles.Price}>₹{data.Price}</Text>
+                <Text strikeThrough style={styles.DisPrice}>
+                  ₹{data.DisPrice}
+                </Text>
+              </View>
+              <View>
+                <Pressable style={styles.Button} onPress={onPress}>
                   <Text style={styles.ButtonText}>ADD</Text>
-                </TouchableOpacity>
-                </View>
+                </Pressable>
               </View>
             </View>
-          );
-        })}
-      </ScrollView>
+          </View>
+        );
+      })}
     </View>
   );
 };
