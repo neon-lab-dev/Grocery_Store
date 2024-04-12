@@ -12,13 +12,13 @@ import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/single_order';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
-import Home from '../screens/Home';
 import SavedAddress from '../screens/Address/saved_address';
 import AddAddress from '../screens/Address/add_address';
 import Home from '../screens/Home';
 import Search from '../screens/Search';
 import {SvgXml} from 'react-native-svg';
 import {filter} from '../assets/images/icons/filter';
+import Cart from '../screens/Cart';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -136,6 +136,22 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         component={AddAddress}
         options={({navigation}) => ({
           headerTitle: 'Add Address',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={({navigation}) => ({
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
           headerLeft: () => (

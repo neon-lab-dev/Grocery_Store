@@ -37,6 +37,7 @@ export type AppNavigatorParamList = {
   FAQ: undefined;
   Orders: undefined;
   SingleOrder: undefined;
+  Cart: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

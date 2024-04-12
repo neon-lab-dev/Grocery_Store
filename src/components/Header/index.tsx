@@ -2,8 +2,15 @@ import React, {FC} from 'react';
 import {Image, Text, View} from 'react-native';
 import {styles} from './style';
 import {spacing} from '../../constants/spacing';
+import {Pressable} from 'native-base';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 
-const Header: FC = () => {
+interface HeaderProps {
+  onCartPress: () => void;
+}
+
+const Header: FC<HeaderProps> = ({onCartPress}) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.profileContainer}>
@@ -17,7 +24,9 @@ const Header: FC = () => {
         <View style={styles.cartContainer}>
           <Text style={styles.cartQuantity}>90+</Text>
         </View>
-        <Image source={require('../../assets/images/icons/cart.png')} />
+        <Pressable onPress={onCartPress}>
+          <Image source={require('../../assets/images/icons/cart.png')} />
+        </Pressable>
       </View>
     </View>
   );

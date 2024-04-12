@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
 import style from './style';
-import {Text, View, TouchableOpacity, Image, ScrollView, Pressable, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Pressable,
+  Alert,
+} from 'react-native';
 import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
@@ -11,18 +19,21 @@ import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
 import ProductScroll from './ProductScroll';
 
-const Home: React.FC = () => {
+const Home: React.FC = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
+  const gotoCart = () => {
+    navigation.navigate('Cart');
+  };
 
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
         <Text>Open Settings</Text>
       </Pressable> */}
-      <Header />
+      <Header onCartPress={gotoCart} />
       <SearchInput
         onChangeText={SetsearchInp}
         value={searchInp}
@@ -56,9 +67,9 @@ const Home: React.FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        
-         <ProductScroll onPress={() => {}} />
-          
+
+        <ProductScroll onPress={() => {}} />
+
         {/* <View style={{alignSelf: 'center', margin: 5}}>
           <Image
             source={require('../../assets/images/icons/SendList.png')}></Image>
@@ -234,40 +245,39 @@ const Home: React.FC = () => {
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories1.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Baby Care</Text>
             </View>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories2.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Gift Store</Text>
             </View>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories3.jpg')}></Image>
-              <Text style={style.ExploreCatgoriesText}>
-                Party Essentials
-              </Text>
+              <Text style={style.ExploreCatgoriesText}>Party Essentials</Text>
             </View>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories4.jpg')}></Image>
-              <Text
-                style={style.ExploreCatgoriesText}>
-                Kitchen needs
-              </Text>
+              <Text style={style.ExploreCatgoriesText}>Kitchen needs</Text>
             </View>
           </View>
         </View>
       </ScrollView>
-      <Pressable >
-      <View style={style.floatingButton}>
-        <Image
-          source={require('../../assets/images/icons/Categories.png')} 
-          style={style.buttonImage}
-        />
-      </View>
+      <Pressable>
+        <View style={style.floatingButton}>
+          <Image
+            source={require('../../assets/images/icons/Categories.png')}
+            style={style.buttonImage}
+          />
+        </View>
       </Pressable>
     </View>
   );

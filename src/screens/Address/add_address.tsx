@@ -161,7 +161,7 @@ const AddAddress = () => {
         w={width}
         borderTopLeftRadius={14}
         borderTopRightRadius={14}
-        bg={'common.white'}
+        bg={'white'}
         shadow={1}>
         <Center flex={1} px={5}>
           <Button
