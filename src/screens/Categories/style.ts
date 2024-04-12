@@ -8,7 +8,7 @@ import {
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    borderTopWidth: 0.25,
+    borderTopWidth: horizontalScale(0.25),
     flexDirection: 'row',
     backgroundColor: 'white',
   },
@@ -31,13 +31,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     width: horizontalScale(66),
     height: verticalScale(111),
-    marginLeft: horizontalScale(8),
+    marginLeft: horizontalScale(9),
     gap: 9,
   },
   subCategoryCard: {
     width: horizontalScale(66),
     height: verticalScale(100),
-    marginLeft: horizontalScale(10),
+    marginLeft: horizontalScale(12),
     marginVertical: verticalScale(10),
   },
   rightImage: {
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   leftImage: {
     width: horizontalScale(66),
     height: verticalScale(77),
-    borderRadius: 16,
+    borderRadius: horizontalScale(16),
     backgroundColor: '#FFF7ED',
   },
 
