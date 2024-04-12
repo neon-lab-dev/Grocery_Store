@@ -1,22 +1,26 @@
 import React from 'react';
 import {View, Text, Image, Pressable, ScrollView} from 'native-base';
 import {styles} from './style';
-import ProductData from '../../assets/data/ProductData';
 import {Colors} from '../../constants/colors';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
-
+import { calculateDiscountPercentage } from '../../utils/calculatePercentage';
+interface ProductDataItem {
+  id: number;
+  Title: string;
+  image: string;
+  Price: number;
+  Quantity: string;
+  DisPrice: number;
+}
 interface ProductCardProps {
   onPress: () => void;
+  products: ProductDataItem;
 }
-
-const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
+const ProductCard: React.FC<ProductCardProps> = ({onPress,products}) => {
+  let off =calculateDiscountPercentage(products.DisPrice, products.Price)
   return (
     <View style={styles.Container}>
-      {ProductData.map(data => {
-        let off = ((data.DisPrice - data.Price) / data.DisPrice) * 100;
-        return (
-          <View
-            key={data.id}
+          <View  key={products.id}
             style={{width: horizontalScale(130), height: verticalScale(200)}}>
             <Pressable
               style={{
@@ -56,12 +60,12 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
               </View>
               <Image
                 alt="Image"
-                source={getImage(data.image)}
+                source={getImage(products.image)}
                 style={styles.Image}
               />
             </Pressable>
-            <Text style={styles.Title}>{data.Title}</Text>
-            <Text style={styles.Quantity}>{data.Quantity}</Text>
+            <Text style={styles.Title}>{products.Title}</Text>
+            <Text style={styles.Quantity}>{products.Quantity}</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -71,9 +75,9 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
                 top: verticalScale(170),
               }}>
               <View>
-                <Text style={styles.Price}>₹{data.Price}</Text>
+                <Text style={styles.Price}>₹{products.Price}</Text>
                 <Text strikeThrough style={styles.DisPrice}>
-                  ₹{data.DisPrice}
+                  ₹{products.DisPrice}
                 </Text>
               </View>
               <View>
@@ -82,9 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress}) => {
                 </Pressable>
               </View>
             </View>
-          </View>
-        );
-      })}
+          </View>   
     </View>
   );
 };
@@ -94,8 +96,6 @@ const getImage = (imageName: string) => {
       return require('../../assets/images/Product-Image/Tomato.png');
     case 'item2':
       return require('../../assets/images/Product-Image/Ginger.png');
-    default:
-      return null;
   }
 };
 export default ProductCard;
