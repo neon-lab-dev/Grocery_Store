@@ -27,8 +27,9 @@ export type AuthNavigatorParamList = {
 };
 
 export type AppNavigatorParamList = {
-  Home: undefined;
   Settings: undefined;
+  Home: undefined;
+  OrderSuccess: undefined;
   PersonalDetails: undefined;
   Help: undefined;
   FAQ: undefined;
