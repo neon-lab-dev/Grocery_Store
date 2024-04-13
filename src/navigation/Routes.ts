@@ -1,9 +1,9 @@
 export const Routes = {
   Login: 'Login',
-  Otp: 'Otp',
+  Otp: "otp",
   Signup: 'Signup',
   Home: 'Home',
-  Settings: 'Settngs',
+  Settings: 'Settings',
   Orders: 'My Orders',
   AddressBook: 'Addresses',
   Profile: 'Profile',
