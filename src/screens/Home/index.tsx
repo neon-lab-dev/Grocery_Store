@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import style from './style';
-<<<<<<< HEAD
 import {
   Text,
   View,
@@ -8,12 +7,7 @@ import {
   Image,
   ScrollView,
   Pressable,
-  Alert,
 } from 'react-native';
-import ProductCard from '../../components/productCard/ProductCard';
-=======
-import {Text, View, TouchableOpacity, Image, ScrollView, Pressable} from 'react-native';
->>>>>>> latest/develop
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
 import {Colors} from '../../constants/colors';
@@ -272,7 +266,6 @@ const Home: React.FC = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-<<<<<<< HEAD
       <Pressable onPress={() => navigation.navigate('Categories')}>
         <View style={style.floatingButton}>
           <Image
@@ -281,17 +274,6 @@ const Home: React.FC = ({navigation}) => {
           />
         </View>
       </Pressable>
-=======
-     
-      <View style={style.floatingButton}>
-      <Pressable onPress={()=>{}}>
-        <Image
-          source={require('../../assets/images/icons/Categories.png')} 
-          style={style.buttonImage}
-        />
-        </Pressable>
-      </View>
->>>>>>> latest/develop
     </View>
   );
 };
