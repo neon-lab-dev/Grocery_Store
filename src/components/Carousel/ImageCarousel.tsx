@@ -11,7 +11,7 @@ const ImageCarousel : React.FC = () => {
           return (
             <View key={imageCarousel.id}>
               <Image
-                source={{ uri: imageCarousel.image }}
+                source={getImage(imageCarousel.image)}
                 style={styles.img}
               />
             </View>
@@ -22,6 +22,15 @@ const ImageCarousel : React.FC = () => {
   );
 };
 
-
+const getImage = (imageName: string) => {
+  switch (imageName) {
+    case 'item1':
+      return require('../../assets/images/Carousel/ImageCarousel1.png');
+    case 'item2':
+      return require('../../assets/images/Carousel/ImageCarousel2.png');
+    default:
+      return null;
+  }
+};
 
 export default ImageCarousel;

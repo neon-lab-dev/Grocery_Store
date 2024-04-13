@@ -15,15 +15,15 @@ const SearchInput: FC<SearchInputProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/search.png')} />
+      <Image source={require('../../assets/images/icons/search.png')} />
       <TextInput
         style={styles.searchInput}
         onChangeText={onChangeText}
         value={value}
         placeholder={placeholder}
       />
-      <View style={styles.line} />
-      <Image source={require('../assets/images/mic.png')} />
+      {/* <View style={styles.line} /> */}
+      {/* <Image source={require('../../assets/images/icons/mic.png')} /> */}
     </View>
   );
 };
