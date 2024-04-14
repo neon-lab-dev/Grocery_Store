@@ -12,6 +12,7 @@ import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/single_order';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
+import Categories from '../screens/Categories';
 import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
 
@@ -23,7 +24,7 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
-    <Stack.Navigator initialRouteName="Home" >
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Settings"
         component={Settings}
@@ -40,18 +41,18 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           ),
         })}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="Home"
         component={Home}
         options={({navigation}) => ({
-          headerShown:false
+          headerShown: false,
         })}
       />
-         <Stack.Screen
+      <Stack.Screen
         name="OrderSuccess"
         component={OrderSuccess}
         options={({navigation}) => ({
-          headerShown:false
+          headerShown: false,
         })}
       />
       <Stack.Screen
@@ -111,6 +112,22 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             />
           ),
           headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
+        })}
+      />
+      <Stack.Screen
+        name="Categories"
+        component={Categories}
+        options={({navigation}) => ({
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
         })}
       />
     </Stack.Navigator>
