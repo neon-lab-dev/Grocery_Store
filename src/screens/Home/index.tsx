@@ -1,6 +1,13 @@
 import React, {useState} from 'react';
 import style from './style';
-import {Text, View, TouchableOpacity, Image, ScrollView, Pressable} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Pressable,
+} from 'react-native';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
 import {Colors} from '../../constants/colors';
@@ -9,8 +16,12 @@ import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
-
-const Home: React.FC = () => {
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AuthNavigatorParamList } from '../../navigation/MainNavigation';
+type Props = {
+  navigation: StackNavigationProp<AuthNavigatorParamList, 'Home'>;
+};
+const Home: React.FC<Props>  = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   // const openDrawer = () => {
   //   navigation.openDrawer();
@@ -233,42 +244,40 @@ const Home: React.FC = () => {
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories1.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Baby Care</Text>
             </View>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories2.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Gift Store</Text>
             </View>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories3.jpg')}></Image>
-              <Text style={style.ExploreCatgoriesText}>
-                Party Essentials
-              </Text>
+              <Text style={style.ExploreCatgoriesText}>Party Essentials</Text>
             </View>
             <View style={style.ExploreCatgories}>
-              <Image style={{height:80,width:75}}
+              <Image
+                style={{height: 80, width: 75}}
                 source={require('../../assets/images/Newcategories/ExploreCategories4.jpg')}></Image>
-              <Text
-                style={style.ExploreCatgoriesText}>
-                Kitchen needs
-              </Text>
+              <Text style={style.ExploreCatgoriesText}>Kitchen needs</Text>
             </View>
           </View>
         </View>
       </ScrollView>
-     
-      <View style={style.floatingButton}>
-      <Pressable onPress={()=>{}}>
-        <Image
-          source={require('../../assets/images/icons/Categories.png')} 
-          style={style.buttonImage}
-        />
-        </Pressable>
-      </View>
+      <Pressable onPress={() => navigation.navigate('Categories')}>
+        <View style={style.floatingButton}>
+          <Image
+            source={require('../../assets/images/icons/Categories.png')}
+            style={style.buttonImage}
+          />
+        </View>
+      </Pressable>
     </View>
   );
 };
