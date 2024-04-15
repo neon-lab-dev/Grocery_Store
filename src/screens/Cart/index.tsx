@@ -24,7 +24,7 @@ const item = {
 };
 
 const Cart: React.FC = ({navigation}) => {
-  const isAddressPresent = true;
+  const isAddressPresent = false;
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress');
   };

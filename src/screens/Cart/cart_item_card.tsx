@@ -50,6 +50,7 @@ export const CartItemCard = ({item}) => {
         <Center bg={'primary.500'} flexDir={'row'} rounded={8} h={38}>
           <Button
             bg={'transparent'}
+            colorScheme={'orange'}
             onPress={handleDecrease}
             _text={{fontSize: 'sm'}}
             disabled={count === 1}>
@@ -61,6 +62,7 @@ export const CartItemCard = ({item}) => {
           <Button
             _text={{fontSize: 'sm'}}
             bg={'transparent'}
+            colorScheme={'orange'}
             onPress={handleIncrease}>
             +
           </Button>
