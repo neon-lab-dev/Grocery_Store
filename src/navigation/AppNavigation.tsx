@@ -17,6 +17,7 @@ import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
 import SavedAddress from '../screens/Address/saved_address';
 import AddAddress from '../screens/Address/add_address';
+import ProductDetails from '../screens/ProductDetails';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -43,11 +44,34 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           ),
         })}
       />
+
       <Stack.Screen
         name="Home"
         component={Home}
         options={({navigation}) => ({
           headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetails}
+        options={({navigation}) => ({
+          headerTitle: () => (
+            <View>
+              <Text fontSize={'fs18'}>Product</Text>
+            </View>
+          ),
+          headerStyle: {height: 100},
+          headerTitleAlign: 'left',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
         })}
       />
       <Stack.Screen
