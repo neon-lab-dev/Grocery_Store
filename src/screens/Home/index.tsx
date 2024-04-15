@@ -1,19 +1,12 @@
 import React, {useState} from 'react';
 import style from './style';
 import {
-  
   Text,
- 
   View,
- 
   TouchableOpacity,
- 
   Image,
- 
   ScrollView,
- 
   Pressable,
-,
 } from 'react-native';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
