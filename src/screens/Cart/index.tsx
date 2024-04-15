@@ -3,6 +3,7 @@ import {
   Center,
   ChevronRightIcon,
   Divider,
+  Modal,
   Pressable,
   ScrollView,
   Text,
@@ -13,6 +14,7 @@ import {CartItemCard} from './cart_item_card';
 import {scaleFontSize, verticalScale, width} from '../../assets/scaling';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
+import SelectAddress from '../../components/SelectingAddress';
 
 const item = {
   name: 'Cadbury Bournville Rich Cocoa 70% Dark',
@@ -24,7 +26,8 @@ const item = {
 };
 
 const Cart: React.FC = ({navigation}) => {
-  const isAddressPresent = false;
+  const isAddressPresent = true;
+  const [modalVisible, setModalVisible] = React.useState(false);
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress');
   };
@@ -81,6 +84,15 @@ const Cart: React.FC = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      <Modal isOpen={modalVisible} size={'full'}>
+        <Modal.Content
+          mb={0}
+          mt={'auto'}
+          borderTopLeftRadius={12}
+          borderTopRightRadius={12}>
+          <SelectAddress onClose={() => setModalVisible(false)} />
+        </Modal.Content>
+      </Modal>
       <View
         flex={isAddressPresent ? 0.3 : 0.2}
         // h={isAddressPresent ? 150 : 100}
@@ -102,7 +114,7 @@ const Cart: React.FC = ({navigation}) => {
                 1st Floor, ABC street, XYZ City
               </Text>
             </View>
-            <Pressable onPress={gotoAddAddress}>
+            <Pressable onPress={() => setModalVisible(true)}>
               <View flexDir={'row'} alignItems={'center'}>
                 <SvgXml xml={orangeLocation} width={16} height={16} />
                 <Text color={'primary.500'} ml={1} fontSize={scaleFontSize(18)}>
