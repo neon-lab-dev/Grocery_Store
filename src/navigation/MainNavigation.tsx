@@ -26,10 +26,13 @@ export type AuthNavigatorParamList = {
   PersonalDetails: undefined;
   Home: undefined
   Categories:undefined
+  Settings: undefined;
+  CategoryProducts:undefined
 };
 
 export type AppNavigatorParamList = {
   Categories:undefined;
+  CategoryProducts:undefined;
   Settings: undefined;
   Home: undefined;
   OrderSuccess: undefined;

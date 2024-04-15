@@ -16,7 +16,9 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
         {ProductData.map(data => {
           let off = calculateDiscountPercentage(data.DisPrice,data.Price);
           return (
+            <View key={data.id}>
             <ProductCard onPress={()=>{}} products={data}/>
+            </View>
           );
         })}
       </ScrollView>
