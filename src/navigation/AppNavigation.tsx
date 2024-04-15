@@ -17,7 +17,7 @@ import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
 import SavedAddress from '../screens/Address/saved_address';
 import AddAddress from '../screens/Address/add_address';
-
+import Payment from '../screens/Payment';
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
 };
@@ -27,6 +27,31 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Payment"
+        component={Payment}
+        options={({navigation}) => ({
+          headerTitle: () => (
+            <View>
+              <Text fontSize={'fs18'}>Categories Method</Text>
+              <Text fontSize={'fs12'} color={'accent.400'}>
+                1 Item | Total ₹42
+              </Text>
+            </View>
+          ),
+          headerStyle: {height: 100},
+          headerTitleAlign: 'left',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
+        })}
+      />
       <Stack.Screen
         name="Settings"
         component={Settings}
