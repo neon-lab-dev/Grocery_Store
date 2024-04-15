@@ -103,12 +103,12 @@ const AddAddress = () => {
               mr={3}
               py={2}
               px={4}
-              borderColor={'accent.200'}
-              bgColor={selectedLabel === item ? 'accent.400' : 'accent.200'}
+              borderColor={selectedLabel === item ? 'accent.400' : 'accent.200'}
+              bgColor={selectedLabel === item ? 'accent.200' : 'accent.100'}
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>
               <Text
-                color={selectedLabel === item ? 'accent.900' : 'accent.400'}>
+                color={selectedLabel === item ? 'accent.700' : 'accent.400'}>
                 {item}
               </Text>
             </Pressable>
