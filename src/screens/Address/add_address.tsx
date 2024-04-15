@@ -34,11 +34,6 @@ const AddAddress = () => {
           bg={'accent.200'}
           placeholder={'Enter Here'}
         />
-        {!validators.stringWithSpace(landmark) && (
-          <Text mt={-5} mb={5} fontSize={scaleFontSize(12)} color={'error.300'}>
-            Enter Valid Landmark*
-          </Text>
-        )}
         <Text bold mb={2}>
           Address*
         </Text>
@@ -51,11 +46,6 @@ const AddAddress = () => {
           bg={'accent.200'}
           placeholder={'Enter Here'}
         />
-        {address === '' && (
-          <Text mt={-5} mb={5} fontSize={scaleFontSize(12)} color={'error.300'}>
-            Address is required*
-          </Text>
-        )}
         <View flexDir={'row'}>
           <View flex={0.5} mr={5}>
             <Text bold mb={2}>
@@ -71,15 +61,6 @@ const AddAddress = () => {
               bg={'accent.200'}
               placeholder={'Enter Here'}
             />
-            {!validators.stringWithSpace(city) && (
-              <Text
-                mt={-5}
-                mb={5}
-                fontSize={scaleFontSize(12)}
-                color={'error.300'}>
-                Enter Valid City*
-              </Text>
-            )}
           </View>
           <View flex={0.5}>
             <Text bold mb={2}>
@@ -95,15 +76,6 @@ const AddAddress = () => {
               bg={'accent.200'}
               placeholder={'Enter Here'}
             />
-            {!validators.stringWithSpace(state) && (
-              <Text
-                mt={-5}
-                mb={5}
-                fontSize={scaleFontSize(12)}
-                color={'error.300'}>
-                Enter Valid City*
-              </Text>
-            )}
           </View>
         </View>
         <Text bold mb={2}>
@@ -119,11 +91,6 @@ const AddAddress = () => {
           placeholder={'Enter Here'}
           keyboardType="number-pad"
         />
-        {!validators.onlyNumberAllowed(pincode) && (
-          <Text mt={-5} mb={5} fontSize={scaleFontSize(12)} color={'error.300'}>
-            Enter Valid Pincode*
-          </Text>
-        )}
         <Text bold mb={2}>
           Label*
         </Text>
@@ -136,11 +103,12 @@ const AddAddress = () => {
               mr={3}
               py={2}
               px={4}
-              borderColor={'accent.300'}
-              bgColor={selectedLabel === item ? 'accent.300' : 'accent.200'}
+              borderColor={selectedLabel === item ? 'accent.400' : 'accent.200'}
+              bgColor={selectedLabel === item ? 'accent.200' : 'accent.100'}
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>
-              <Text color={selectedLabel === item ? 'black' : 'accent.400'}>
+              <Text
+                color={selectedLabel === item ? 'accent.700' : 'accent.400'}>
                 {item}
               </Text>
             </Pressable>

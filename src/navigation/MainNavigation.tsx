@@ -24,12 +24,16 @@ export type AuthNavigatorParamList = {
   Login: undefined;
   OTP: undefined;
   PersonalDetails: undefined;
+  Home: undefined
+  Categories:undefined
 };
 
 export type AppNavigatorParamList = {
-  Home: undefined;
+  Categories:undefined;
   Search: undefined;
   Settings: undefined;
+  Home: undefined;
+  OrderSuccess: undefined;
   PersonalDetails: undefined;
   Addresses: undefined;
   AddAddress: undefined;

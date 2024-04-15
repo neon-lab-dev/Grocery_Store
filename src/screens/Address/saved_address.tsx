@@ -41,7 +41,9 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
           </Text>
         </View>
         <View flexDir={'row'}>
-          <SvgXml xml={edit} height={24} width={24} />
+          <Pressable onPress={gotoAddAddress}>
+            <SvgXml xml={edit} height={24} width={24} />
+          </Pressable>
           <View w={5} />
           <SvgXml xml={deleteIcon} height={24} width={24} />
         </View>
@@ -65,7 +67,9 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
           </Text>
         </View>
         <View flexDir={'row'}>
-          <SvgXml xml={edit} height={24} width={24} />
+          <Pressable onPress={gotoAddAddress}>
+            <SvgXml xml={edit} height={24} width={24} />
+          </Pressable>
           <View w={5} />
           <SvgXml xml={deleteIcon} height={24} width={24} />
         </View>
