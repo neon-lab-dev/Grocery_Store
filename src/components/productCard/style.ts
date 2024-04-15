@@ -3,6 +3,7 @@ import {Colors} from '../../constants/colors';
 import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
 export const styles = StyleSheet.create({
   Container: {
+    flex:1,
     width: '100%',
     marginLeft: horizontalScale(18),
   },
