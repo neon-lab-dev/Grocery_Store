@@ -15,9 +15,13 @@ import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
-import ProductScroll from './ProductScroll';
-
-const Home: React.FC = ({navigation}) => {
+import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AuthNavigatorParamList } from '../../navigation/MainNavigation';
+type Props = {
+  navigation: StackNavigationProp<AuthNavigatorParamList, 'Home'>;
+};
+const Home: React.FC<Props>  = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   // const openDrawer = () => {
   //   navigation.openDrawer();
@@ -62,9 +66,9 @@ const Home: React.FC = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-
-        <ProductScroll onPress={() => {}} />
-
+        
+         <ProductHorizontalScroll onPress={() => {}} />
+          
         {/* <View style={{alignSelf: 'center', margin: 5}}>
           <Image
             source={require('../../assets/images/icons/SendList.png')}></Image>
@@ -235,7 +239,7 @@ const Home: React.FC = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductScroll onPress={() => {}} />
+        <ProductHorizontalScroll  onPress={() => {}} />
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
