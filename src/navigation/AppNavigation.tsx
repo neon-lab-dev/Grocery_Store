@@ -15,6 +15,8 @@ import {horizontalScale} from '../assets/scaling';
 import Categories from '../screens/Categories';
 import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
+import SavedAddress from '../screens/Address/saved_address';
+import AddAddress from '../screens/Address/add_address';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -112,6 +114,40 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             />
           ),
           headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
+        })}
+      />
+      <Stack.Screen
+        name="Addresses"
+        component={SavedAddress}
+        options={({navigation}) => ({
+          headerTitle: 'Saved Addresses',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="AddAddress"
+        component={AddAddress}
+        options={({navigation}) => ({
+          headerTitle: 'Add Address',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
         })}
       />
       <Stack.Screen

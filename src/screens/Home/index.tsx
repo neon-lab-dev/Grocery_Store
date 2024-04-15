@@ -26,13 +26,15 @@ const Home: React.FC<Props>  = ({navigation}) => {
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
-
+  const openSettings = () => {
+    navigation.navigate('Settings');
+  };
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
         <Text>Open Settings</Text>
       </Pressable> */}
-      <Header />
+      <Header onSettingsPress={openSettings} />
       <SearchInput
         onChangeText={SetsearchInp}
         value={searchInp}
@@ -270,14 +272,15 @@ const Home: React.FC<Props>  = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-      <Pressable onPress={() => navigation.navigate('Categories')}>
-        <View style={style.floatingButton}>
+
+      <View style={style.floatingButton}>
+        <Pressable onPress={() => {}}>
           <Image
             source={require('../../assets/images/icons/Categories.png')}
             style={style.buttonImage}
           />
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
     </View>
   );
 };
