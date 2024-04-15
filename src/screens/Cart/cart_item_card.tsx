@@ -1,11 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {Button, Center, Image, Text, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 
 export const CartItemCard = ({item}) => {
-  const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart);
   const [count, setCount] = useState(item.quantity);
   const [discountPrice, setDiscountPrice] = useState(
     item.discount_price * count,

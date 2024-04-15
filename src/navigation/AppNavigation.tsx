@@ -17,7 +17,6 @@ import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
 import SavedAddress from '../screens/Address/saved_address';
 import AddAddress from '../screens/Address/add_address';
-import Home from '../screens/Home';
 import Search from '../screens/Search';
 import {SvgXml} from 'react-native-svg';
 import {filter} from '../assets/images/icons/filter';
@@ -59,18 +58,9 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         })}
       />
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={({navigation}) => ({
-          headerShown: false,
-        })}
-      />
-      <Stack.Screen
         name="OrderSuccess"
         component={OrderSuccess}
-        options={({navigation}) => ({
-          headerShown: false,
-        })}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="PersonalDetails"

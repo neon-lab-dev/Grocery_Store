@@ -3,6 +3,7 @@ import {
   Center,
   ChevronRightIcon,
   Divider,
+  Pressable,
   ScrollView,
   Text,
   View,
@@ -23,64 +24,66 @@ const item = {
 };
 
 const Cart: React.FC = ({navigation}) => {
-  const isAddressPresent = false;
+  const isAddressPresent = true;
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress');
   };
   return (
     <View flex={1} justifyContent={'space-between'}>
-      <ScrollView h={300} my={verticalScale(20)}>
-        <View bg={'white'} flexShrink={1}>
+      <ScrollView flex={0.8} mt={verticalScale(10)}>
+        <View bg={'white'}>
           <CartItemCard item={item} />
           <CartItemCard item={item} />
           <CartItemCard item={item} />
           <CartItemCard item={item} />
+          <CartItemCard item={item} />
+        </View>
+        <View p={5} bgColor={'white'} borderRadius={14} m={5}>
+          <Text fontSize={'fs20'}>Bill Summary</Text>
+          <View flexDir={'row'} justifyContent={'space-between'}>
+            <Text fontSize={'fs14'} color={'accent.500'}>
+              Item Total
+            </Text>
+            <Text fontSize={'fs14'}>₹33</Text>
+          </View>
+          <View flexDir={'row'} justifyContent={'space-between'}>
+            <Text fontSize={'fs14'} color={'accent.500'}>
+              Delivery Charge
+            </Text>
+            <Text fontSize={'fs14'}>₹25</Text>
+          </View>
+          <View
+            borderWidth={1}
+            borderRadius={1}
+            borderColor={'accent.100'}
+            my={2}
+          />
+          <View flexDir={'row'} justifyContent={'space-between'} pt={1}>
+            <Text fontSize={'fs14'}>Total Bill</Text>
+            <Center flexDir={'row'}>
+              <Text fontSize={'fs10'} color={'accent.500'} strikeThrough pr={1}>
+                ₹87.49
+              </Text>
+              <Text bold fontSize={'fs14'}>
+                ₹87.49
+              </Text>
+            </Center>
+          </View>
+          <View flexDir={'row'} justifyContent={'space-between'}>
+            <Text fontSize={'fs12'} color={'accent.500'}>
+              Incl. all taxes and charges
+            </Text>
+            <Center rounded={8} bg={'success.400'} w={'auto'} h={6} px={2}>
+              <Text fontSize={'fs10'} color={'white'}>
+                SAVING ₹9.51
+              </Text>
+            </Center>
+          </View>
         </View>
       </ScrollView>
-      <View p={5} bgColor={'white'} borderRadius={14} m={5}>
-        <Text fontSize={'fs20'}>Bill Summary</Text>
-        <View flexDir={'row'} justifyContent={'space-between'}>
-          <Text fontSize={'fs14'} color={'accent.500'}>
-            Item Total
-          </Text>
-          <Text fontSize={'fs14'}>₹33</Text>
-        </View>
-        <View flexDir={'row'} justifyContent={'space-between'}>
-          <Text fontSize={'fs14'} color={'accent.500'}>
-            Delivery Charge
-          </Text>
-          <Text fontSize={'fs14'}>₹25</Text>
-        </View>
-        <View
-          borderWidth={1}
-          borderRadius={1}
-          borderColor={'accent.100'}
-          my={2}
-        />
-        <View flexDir={'row'} justifyContent={'space-between'} pt={1}>
-          <Text fontSize={'fs14'}>Total Bill</Text>
-          <Center flexDir={'row'}>
-            <Text fontSize={'fs10'} color={'accent.500'} strikeThrough pr={1}>
-              ₹87.49
-            </Text>
-            <Text bold fontSize={'fs14'}>
-              ₹87.49
-            </Text>
-          </Center>
-        </View>
-        <View flexDir={'row'} justifyContent={'space-between'}>
-          <Text fontSize={'fs12'} color={'accent.500'}>
-            Incl. all taxes and charges
-          </Text>
-          <Center rounded={8} bg={'success.400'} w={'auto'} h={6} px={2}>
-            <Text fontSize={'fs10'} color={'white'}>
-              SAVING ₹9.51
-            </Text>
-          </Center>
-        </View>
-      </View>
       <View
-        h={isAddressPresent ? 150 : 100}
+        flex={isAddressPresent ? 0.3 : 0.2}
+        // h={isAddressPresent ? 150 : 100}
         w={width}
         borderTopLeftRadius={14}
         borderTopRightRadius={14}
@@ -99,12 +102,14 @@ const Cart: React.FC = ({navigation}) => {
                 1st Floor, ABC street, XYZ City
               </Text>
             </View>
-            <View flexDir={'row'} alignItems={'center'}>
-              <SvgXml xml={orangeLocation} width={16} height={16} />
-              <Text color={'primary.500'} ml={1} fontSize={scaleFontSize(18)}>
-                Change
-              </Text>
-            </View>
+            <Pressable onPress={gotoAddAddress}>
+              <View flexDir={'row'} alignItems={'center'}>
+                <SvgXml xml={orangeLocation} width={16} height={16} />
+                <Text color={'primary.500'} ml={1} fontSize={scaleFontSize(18)}>
+                  Change
+                </Text>
+              </View>
+            </Pressable>
           </View>
         )}
         <Center flex={1} px={5}>
@@ -112,6 +117,7 @@ const Cart: React.FC = ({navigation}) => {
             w={'100%'}
             h={50}
             rounded={12}
+            colorScheme={'orange'}
             bg={'primary.500'}
             onPress={!isAddressPresent ? gotoAddAddress : null}>
             <View
