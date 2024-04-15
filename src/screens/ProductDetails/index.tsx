@@ -173,7 +173,11 @@ const ProductDetails: React.FC = () => {
             </View>
           </View>
         </View>
-        <View style={{paddingHorizontal: horizontalScale(16)}}>
+        <View
+          style={{
+            paddingHorizontal: horizontalScale(16),
+            backgroundColor: '#FFFFFF',
+          }}>
           {/* Item Name Container*/}
           <View style={styles.nameContainer}>
             <Text style={styles.itemName}>Desi Tomato (Nattu Thakkali)</Text>
