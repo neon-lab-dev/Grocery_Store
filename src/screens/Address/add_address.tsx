@@ -136,6 +136,7 @@ const AddAddress = () => {
             w={'100%'}
             h={50}
             rounded={12}
+            colorScheme={'orange'}
             bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
             _text={{
               fontSize: 'lg',

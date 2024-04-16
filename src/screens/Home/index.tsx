@@ -7,7 +7,9 @@ import {
   Image,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
+import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
 import {Colors} from '../../constants/colors';
@@ -16,12 +18,12 @@ import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthNavigatorParamList } from '../../navigation/MainNavigation';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 type Props = {
-  navigation: StackNavigationProp<AuthNavigatorParamList, 'Home'>;
+  navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
-const Home: React.FC<Props>  = ({navigation}) => {
+const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   // const openDrawer = () => {
   //   navigation.openDrawer();
@@ -29,12 +31,16 @@ const Home: React.FC<Props>  = ({navigation}) => {
   const openSettings = () => {
     navigation.navigate('Settings');
   };
+  const gotoCart = () => {
+    navigation.navigate('Cart');
+  };
+
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
         <Text>Open Settings</Text>
       </Pressable> */}
-      <Header onSettingsPress={openSettings} />
+      <Header onSettingsPress={openSettings} onCartPress={gotoCart} />
       <SearchInput
         onChangeText={SetsearchInp}
         value={searchInp}
@@ -68,9 +74,9 @@ const Home: React.FC<Props>  = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        
-         <ProductHorizontalScroll onPress={() => {}} />
-          
+
+        <ProductHorizontalScroll onPress={() => {}} />
+
         {/* <View style={{alignSelf: 'center', margin: 5}}>
           <Image
             source={require('../../assets/images/icons/SendList.png')}></Image>
@@ -241,7 +247,7 @@ const Home: React.FC<Props>  = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductHorizontalScroll  onPress={() => {}} />
+        <ProductHorizontalScroll onPress={() => {}} />
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
