@@ -34,7 +34,9 @@ const Home: React.FC<Props> = ({navigation}) => {
   const gotoCart = () => {
     navigation.navigate('Cart');
   };
-
+  const gotoSearch = () => {
+    navigation.navigate('Search');
+  };
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>

@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {Center, ChevronLeftIcon, FlatList, Text, View} from 'native-base';
+import {
+  Center,
+  ChevronLeftIcon,
+  FlatList,
+  Pressable,
+  Text,
+  View,
+} from 'native-base';
 import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {SvgXml} from 'react-native-svg';
 import {filter} from '../../assets/images/icons/filter';
@@ -10,6 +17,7 @@ import ProductCard from '../../components/productCard/ProductCard';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FilterOverlay from './search_filter_overlay';
 import SearchInput from '../../components/SearchInput';
+import ProductData from '../../assets/data/ProductData';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -18,15 +26,18 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = ({navigation}) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [searchInp, SetsearchInp] = useState('');
-
+  const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
+  const recentSearch = ['Cat Food', 'Ice Cream', 'Cake'];
   const headerTitleComponent = () => (
-    <SearchInput
-      onChangeText={SetsearchInp}
-      value={searchInp}
-      placeholder="Search “Bread” "
-      onPress={() => {}}
-      editable={true}
-    />
+    <View flex={1} justifyContent={'center'} mb={-35}>
+      <SearchInput
+        onChangeText={SetsearchInp}
+        value={searchInp}
+        placeholder="Search “Bread” "
+        onPress={() => {}}
+        editable={true}
+      />
+    </View>
   );
 
   const headerRightComponent = () => (
@@ -44,68 +55,6 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       </Center>
     </TouchableOpacity>
   );
-  // const products = [
-  //   {
-  //     id: '1',
-  //     title: 'Desi Tomato(Nattu Thakkali)',
-  //     price: 42,
-  //     quantity: 1,
-  //     image: require('../../assets/images/Vegetables/tomato.png'),
-  //   },
-  //   {
-  //     id: '2',
-  //     title: 'Ginger (Inji)',
-  //     price: 42,
-  //     quantity: 2,
-  //     image: require('../../assets/images/Vegetables/ginger.png'),
-  //   },
-  //   {
-  //     id: '3',
-  //     title: 'Ginger (Inji)',
-  //     price: 42,
-  //     quantity: 2,
-  //     image: require('../../assets/images/Vegetables/ginger.png'),
-  //   },
-  //   {
-  //     id: '4',
-  //     title: 'Ginger (Inji)',
-  //     price: 42,
-  //     quantity: 2,
-  //     image: require('../../assets/images/Vegetables/ginger.png'),
-  //   },
-  //   {
-  //     id: '5',
-  //     title: 'Ginger (Inji)',
-  //     price: 42,
-  //     quantity: 2,
-  //     image: require('../../assets/images/Vegetables/ginger.png'),
-  //   },
-  //   {
-  //     id: '6',
-  //     title: 'Ginger (Inji)',
-  //     price: 42,
-  //     quantity: 2,
-  //     image: require('../../assets/images/Vegetables/ginger.png'),
-  //   },
-  //   {
-  //     id: '7',
-  //     title: 'Ginger (Inji)',
-  //     price: 42,
-  //     quantity: 2,
-  //     image: require('../../assets/images/Vegetables/ginger.png'),
-  //   },
-  //   {
-  //     id: '8',
-  //     title: 'Ginger (Inji)',
-  //     price: 42,
-  //     quantity: 2,
-  //     image: require('../../assets/images/Vegetables/ginger.png'),
-  //   },
-  // ];
-
-  // const renderProductItem = () => {
-  //   return <ProductCard onPress={() => {}} />;
-  // };
 
   const goBack = () => (
     <ChevronLeftIcon
@@ -122,10 +71,10 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       headerLeft: goBack,
       headerRight: headerRightComponent,
     });
-  }, [navigation]);
+  }, [searchInp]);
 
   return (
-    <View>
+    <View flex={1}>
       <View mt={4} px={horizontalScale(20)}>
         <View flexDir={'row'} justifyContent={'space-between'}>
           <Text fontSize={'fs14'}>Recent Searches</Text>
@@ -133,28 +82,71 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             Clear All
           </Text>
         </View>
+        <View flexDir={'row'} mt={1}>
+          {recentSearch.map((item, index) => (
+            <Pressable
+              key={index}
+              borderRadius={100}
+              borderWidth={1}
+              mr={3}
+              py={2}
+              px={4}
+              borderColor={
+                selectedRecentSearch === item ? 'accent.400' : 'accent.200'
+              }
+              bgColor={
+                selectedRecentSearch === item ? 'accent.200' : 'accent.100'
+              }
+              alignItems={'center'}
+              onPress={() => {
+                selectedRecentSearch === item
+                  ? setSelectedRecentSearch('')
+                  : setSelectedRecentSearch(item);
+              }}>
+              <Text
+                color={
+                  selectedRecentSearch === item ? 'accent.700' : 'accent.400'
+                }>
+                {item}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
       </View>
-      <View bg={'white'} mt={5}>
+      <View flex={1} bg={'white'} mt={5}>
         <View
           flexDir={'row'}
           justifyContent={'space-between'}
           alignItems={'center'}
           p={4}>
-          <View flexDir={'row'}>
-            <Text fontSize={scaleFontSize(18)} color={'accent.500'}>
-              Showing Results for{' '}
+          <View flexDir={'row'} flexShrink={1} w={horizontalScale(130)}>
+            <Text
+              fontSize={scaleFontSize(18)}
+              color={'accent.500'}
+              numberOfLines={1}>
+              Showing Results for
             </Text>
-            <Text fontSize={scaleFontSize(18)} color={'accent.700'}>
-              Product Name
+            <Text
+              fontSize={scaleFontSize(18)}
+              color={'accent.700'}
+              numberOfLines={1}>
+              {searchInp ? ` ${searchInp}` : ' Products Name'}
             </Text>
           </View>
           <Text fontSize={scaleFontSize(14)} color={'accent.500'}>
             246 items
           </Text>
         </View>
-        <View alignItems={'center'}>
-          <ProductCard onPress={() => {}} />
-        </View>
+        <FlatList
+          flex={1}
+          data={ProductData}
+          renderItem={({item}) => (
+            <ProductCard onPress={() => {}} products={item} />
+          )}
+          keyExtractor={item => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={{justifyContent: 'space-between'}}
+        />
       </View>
       <FilterOverlay
         showModal={showModal}

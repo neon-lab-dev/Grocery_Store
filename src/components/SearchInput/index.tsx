@@ -18,20 +18,18 @@ const SearchInput: FC<SearchInputProps> = ({
   editable,
 }) => {
   return (
-    <TouchableOpacity onPressIn={onPress}>
-      <View style={styles.container}>
-        <Image source={require('../../assets/images/icons/search.png')} />
-        <TextInput
-          style={styles.searchInput}
-          onChangeText={onChangeText}
-          value={value}
-          placeholder={placeholder}
-          placeholderTextColor={'#6B7280'}
-          editable={editable}
-        />
-        {/* <View style={styles.line} /> */}
-        {/* <Image source={require('../../assets/images/icons/mic.png')} /> */}
-      </View>
+    <TouchableOpacity onPressIn={onPress} style={styles.container}>
+      <Image source={require('../../assets/images/icons/search.png')} />
+      <TextInput
+        style={styles.searchInput}
+        onChangeText={onChangeText}
+        value={value}
+        placeholder={placeholder}
+        placeholderTextColor={'#6B7280'}
+        editable={editable}
+      />
+      {/* <View style={styles.line} /> */}
+      {/* <Image source={require('../../assets/images/icons/mic.png')} /> */}
     </TouchableOpacity>
   );
 };
