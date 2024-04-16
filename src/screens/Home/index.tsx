@@ -29,7 +29,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   //   navigation.openDrawer();
   // };
   const openSettings = () => {
-    navigation.navigate('Settings');
+    navigation.navigate("Settings");
   };
   const gotoCart = () => {
     navigation.navigate('Cart');
@@ -121,11 +121,13 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
+                    <Pressable  key={subIndex} onPress={()=>{navigation.navigate("CategoryProducts")}}>
                     <Image
                       key={subIndex}
                       source={{uri: item.image}}
                       style={{width: 100, height: 150}}
                     />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -151,11 +153,13 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
+                    <Pressable key={subIndex} onPress={()=>{navigation.navigate("CategoryProducts")}} >
                     <Image
                       key={subIndex}
                       source={{uri: item.image}}
                       style={{width: 100, height: 150}}
                     />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -181,11 +185,13 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
+                    <Pressable key={subIndex} onPress={()=>{navigation.navigate("CategoryProducts")}}>
                     <Image
                       key={subIndex}
                       source={{uri: item.image}}
                       style={{width: 100, height: 150}}
                     />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -211,11 +217,13 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
+                    <Pressable key={subIndex} onPress={()=>{navigation.navigate("CategoryProducts")}}>
                     <Image
                       key={subIndex}
                       source={{uri: item.image}}
                       style={{width: 100, height: 150}}
                     />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -280,7 +288,7 @@ const Home: React.FC<Props> = ({navigation}) => {
       </ScrollView>
 
       <View style={style.floatingButton}>
-        <Pressable onPress={() => {}}>
+        <Pressable onPress={()=>{navigation.navigate("Categories")}}>
           <Image
             source={require('../../assets/images/icons/Categories.png')}
             style={style.buttonImage}
