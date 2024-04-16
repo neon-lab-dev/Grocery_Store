@@ -3,12 +3,12 @@ import {Image, Text, View} from 'react-native';
 import {styles} from './style';
 import {spacing} from '../../constants/spacing';
 import {Pressable} from 'native-base';
-
 interface HeaderProps {
+  onCartPress: () => void;
   onSettingsPress: () => void;
 }
 
-const Header: FC<HeaderProps> = ({onSettingsPress}) => {
+const Header: FC<HeaderProps> = ({onCartPress, onSettingsPress}) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.profileContainer}>
@@ -25,7 +25,9 @@ const Header: FC<HeaderProps> = ({onSettingsPress}) => {
         <View style={styles.cartContainer}>
           <Text style={styles.cartQuantity}>90+</Text>
         </View>
-        <Image source={require('../../assets/images/icons/cart.png')} />
+        <Pressable onPress={onCartPress}>
+          <Image source={require('../../assets/images/icons/cart.png')} />
+        </Pressable>
       </View>
     </View>
   );

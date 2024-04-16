@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 import {AppNavigatorParamList, RootStackParamList} from './MainNavigation';
-import {ChevronLeftIcon, Text, View} from 'native-base';
+import {Center, ChevronLeftIcon, Text, View} from 'native-base';
 import {Settings} from '../screens/Settings';
 import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
@@ -17,6 +17,10 @@ import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
 import SavedAddress from '../screens/Address/saved_address';
 import AddAddress from '../screens/Address/add_address';
+import Search from '../screens/Search';
+import {SvgXml} from 'react-native-svg';
+import {filter} from '../assets/images/icons/filter';
+import Cart from '../screens/Cart';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -27,6 +31,16 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Search"
+        component={Search}
+        options={() => ({headerStyle: {height: 100}})}
+      />
       <Stack.Screen
         name="Settings"
         component={Settings}
@@ -44,18 +58,9 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         })}
       />
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={({navigation}) => ({
-          headerShown: false,
-        })}
-      />
-      <Stack.Screen
         name="OrderSuccess"
         component={OrderSuccess}
-        options={({navigation}) => ({
-          headerShown: false,
-        })}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="PersonalDetails"
@@ -138,6 +143,22 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         component={AddAddress}
         options={({navigation}) => ({
           headerTitle: 'Add Address',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={({navigation}) => ({
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
           headerLeft: () => (
