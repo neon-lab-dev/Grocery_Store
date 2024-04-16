@@ -12,10 +12,12 @@ import {
 
 interface ProductsSpecialOverlayProps {
   Close: () => void;
+  onPress: () => void;
 }
 
 const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   Close,
+  onPress,
 }) => {
   const [text, setText] = useState<string>('');
 
@@ -46,7 +48,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
         numColumns={2}
         data={ProductData}
         renderItem={({item}) => (
-          <ProductCard products={item} key={item.id} onPress={() => {}} />
+          <ProductCard products={item} key={item.id} onPress={onPress} />
         )}
         keyExtractor={item => item.id.toString()}
       />

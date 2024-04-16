@@ -1,16 +1,22 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {horizontalScale, verticalScale} from '../../assets/scaling';
-import {useNavigation} from '@react-navigation/native';
+import ProductData from '../../assets/data/ProductData';
+import ProductCard from '../../components/productCard/ProductCard';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling.ts';
+import {styles} from './style.ts';
+
 interface AlternativeImage {
   id: number;
   image: any;
@@ -58,7 +64,11 @@ const data: Data = {
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit accusamus aliquam ullam odio nulla nisi architecto consectetur officiis voluptates facere, atque et?  Tempora dolorum maiores corporis esse alias voluptas rem. ',
 };
 
-const UnitCard: FC<UnitCardProps> = ({item, setSelectedUnit, selectedUnit}) => {
+const UnitCard: React.FC<UnitCardProps> = ({
+  item,
+  setSelectedUnit,
+  selectedUnit,
+}) => {
   return (
     <TouchableOpacity
       onPress={() => setSelectedUnit(item.id)}
@@ -74,7 +84,7 @@ const UnitCard: FC<UnitCardProps> = ({item, setSelectedUnit, selectedUnit}) => {
       <Text
         style={{
           letterSpacing: 2,
-          fontSize: 16,
+          fontSize: scaleFontSize(16),
           fontWeight: '400',
           color: '#1F2937',
         }}>
@@ -83,8 +93,8 @@ const UnitCard: FC<UnitCardProps> = ({item, setSelectedUnit, selectedUnit}) => {
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Text
           style={{
-            fontSize: 16,
-            marginHorizontal: 5,
+            fontSize: scaleFontSize(16),
+            marginHorizontal: horizontalScale(5),
             fontWeight: '600',
             color: '#1F2937',
           }}>
@@ -93,7 +103,7 @@ const UnitCard: FC<UnitCardProps> = ({item, setSelectedUnit, selectedUnit}) => {
         <Text
           style={{
             textDecorationLine: 'line-through',
-            fontSize: 12,
+            fontSize: scaleFontSize(12),
             color: '#9CA3AF',
           }}>
           ₹{item.price}
@@ -103,7 +113,7 @@ const UnitCard: FC<UnitCardProps> = ({item, setSelectedUnit, selectedUnit}) => {
   );
 };
 
-const OtherImages: FC<OtherImagesProps> = ({
+const OtherImages: React.FC<OtherImagesProps> = ({
   item,
   selectedImage,
   setSelectedImage,
@@ -121,22 +131,18 @@ const OtherImages: FC<OtherImagesProps> = ({
       ]}>
       <Image
         source={require('../../assets/images/Vegetables/tomato-lg.png')}
-        style={{width: 32, height: 32}}
+        style={{width: horizontalScale(32), height: verticalScale(32)}}
       />
     </TouchableOpacity>
   );
 };
 
-const ProductDetails: FC = () => {
-  const [selectedImage, setSelectedImage] = useState(
-    data.alternativeImages[0].id,
-  );
-  const [selectedUnit, setSelectedUnit] = useState(data.units[0].id);
-  const navigation = useNavigation();
-
+const ProductDetails: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<number>(1);
+  const [selectedUnit, setSelectedUnit] = useState<number>(1);
   return (
     <>
-      <ScrollView>
+      <ScrollView style={{flex: 1}}>
         <View style={styles.imageContainer}>
           <View style={styles.percentageContainer}>
             <Text style={styles.percentageText}>20%</Text>
@@ -152,7 +158,7 @@ const ProductDetails: FC = () => {
               style={styles.mainImage}
               source={require('../../assets/images/Vegetables/tomato-lg.png')}
             />
-            <View style={{marginVertical: 20}}>
+            <View style={{marginVertical: verticalScale(20)}}>
               <FlatList
                 horizontal
                 data={data.alternativeImages}
@@ -167,7 +173,11 @@ const ProductDetails: FC = () => {
             </View>
           </View>
         </View>
-        <View style={{backgroundColor: '#F3F4F6'}}>
+        <View
+          style={{
+            // paddingHorizontal: horizontalScale(16),
+            backgroundColor: '#FFFFFF',
+          }}>
           {/* Item Name Container*/}
           <View style={styles.nameContainer}>
             <Text style={styles.itemName}>Desi Tomato (Nattu Thakkali)</Text>
@@ -176,24 +186,22 @@ const ProductDetails: FC = () => {
           <View>
             <View
               style={{
-                width: 430,
-                height: 150,
-                paddingHorizontal: 10,
+                width: horizontalScale(430),
+                height: verticalScale(100),
                 justifyContent: 'center',
-                padding: 13,
+                paddingHorizontal: horizontalScale(15),
               }}>
               <Text
                 style={{
-                  // fontFamily: fonts.Regular,
-                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontSize: scaleFontSize(16),
                   fontWeight: '500',
                   color: '#1F2937',
-                  marginLeft: 5,
+                  marginVertical: verticalScale(9),
                 }}>
                 Select Unit
               </Text>
               <FlatList
-                contentContainerStyle={{marginVertical: 10}}
                 horizontal
                 data={data.units}
                 renderItem={({item}) => (
@@ -213,187 +221,88 @@ const ProductDetails: FC = () => {
             }}>
             <Text
               style={{
-                fontSize: 16,
+                fontSize: scaleFontSize(16),
                 fontWeight: '500',
                 color: '#1F2937',
-                marginTop: 2,
+                marginTop: verticalScale(10),
               }}>
               Product Details
             </Text>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: scaleFontSize(14),
                 fontWeight: '500',
-                marginVertical: 5,
+                marginVertical: verticalScale(5),
                 fontFamily: 'Inter',
                 color: '#4B5563',
+                // paddingHorizontal: horizontalScale(15),
               }}>
               Description
             </Text>
-            <Text style={{fontSize: 14, fontWeight: '500', color: '#4B5563'}}>
+            <Text
+              style={{
+                fontSize: scaleFontSize(14),
+                fontWeight: '500',
+                color: '#4B5563',
+              }}>
               {data.description}
             </Text>
           </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: horizontalScale(15),
+            }}>
+            <Text style={[styles.descriptionTitle, {color: '#F97316'}]}>
+              View less details
+            </Text>
+            <Image
+              source={require('../../assets/images/icons/arrow_drop_down.png')}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              marginVertical: verticalScale(20),
+              paddingHorizontal: horizontalScale(15),
+            }}>
+            <Text style={styles.itemName}>Similar Products</Text>
+          </View>
+          <FlatList
+            contentContainerStyle={{
+              marginVertical: verticalScale(5),
+              marginRight: horizontalScale(5),
+            }}
+            horizontal
+            data={ProductData}
+            renderItem={({item}) => (
+              <ProductCard onPress={() => {}} key={item.id} products={item} />
+            )}
+          />
+          <View
+            style={{
+              flex: 1,
+              marginVertical: verticalScale(10),
+              paddingHorizontal: horizontalScale(15),
+            }}>
+            <Text style={styles.itemName}>People also Bought</Text>
+          </View>
+          <FlatList
+            contentContainerStyle={{
+              marginVertical: verticalScale(10),
+              paddingBottom: 20,
+            }}
+            horizontal
+            data={ProductData}
+            renderItem={({item}) => (
+              <ProductCard onPress={() => {}} key={item.id} products={item} />
+            )}
+          />
         </View>
       </ScrollView>
-      {/* Bottom Container  */}
-      <View
-        style={{
-          height: 100,
-          backgroundColor: '#FFFFFF',
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          padding: 15,
-        }}>
-        <View>
-          <Text
-            style={{
-              // fontFamily: fonts.Regular,
-              color: '#1F2937',
-              fontWeight: '400',
-            }}>
-            1 kg
-          </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center', gap: 5}}>
-            <Text style={{fontSize: 20, fontWeight: '600', color: '#1F2937'}}>
-              ₹42
-            </Text>
-            <View
-              style={{
-                width: 55,
-                height: 30,
-                borderRadius: 4,
-                backgroundColor: '#4ADE80',
-                padding: 5,
-              }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 12,
-                  textAlign: 'center',
-                  // fontFamily: fonts.Inter,
-                }}>
-                6% OFF
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            width: 131,
-            height: 47,
-            borderRadius: 12,
-            backgroundColor: '#F97316',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '500',
-              color: '#FFF7ED',
-            }}>
-            Add to Cart
-          </Text>
-        </View>
-        {/* <Pressable > */}
-        <Pressable
-          style={styles.floatingButton}
-          onPress={() => navigation.navigate('Cart')}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image
-              source={require('../../assets/images/icons/cart-white.png')}
-            />
-            <Text style={{color: '#ffffff'}}>1 Item</Text>
-          </View>
-        </Pressable>
-        {/* </Pressable> */}
-      </View>
     </>
   );
 };
 
 export default ProductDetails;
-
-const styles = StyleSheet.create({
-  imageContainer: {
-    // paddingHorizontal: 30,
-    width: '100%',
-    height: 365,
-    borderRadius: 16,
-    backgroundColor: '#F9FAFB',
-    // alignItems: 'center',
-  },
-  mainImage: {
-    width: 233,
-    height: 183,
-  },
-  percentageContainer: {
-    width: 70,
-    height: 65,
-    backgroundColor: '#F97316',
-    marginLeft: 20,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    justifyContent: 'center',
-  },
-  percentageText: {
-    fontFamily: 'Inter',
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    color: '#FFFFFF',
-  },
-  renderImageContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 12,
-    backgroundColor: '#FFFFFF',
-    borderStyle: 'solid',
-    borderWidth: 1.5,
-    // borderColor: 'rgba(229, 231, 235, 1.0)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 6,
-  },
-  itemName: {
-    width: '100%',
-    height: 24,
-    // fontFamily: fonts.Black,
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#1F2937',
-  },
-  nameContainer: {
-    width: '100%',
-    height: 80,
-    justifyContent: 'center',
-    paddingHorizontal: 15,
-    borderBottomWidth: 0.2,
-  },
-  unitCard: {
-    width: 98,
-    height: 65,
-    borderRadius: 12,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-  },
-  floatingButton: {
-    width: horizontalScale(80),
-    height: verticalScale(70),
-    backgroundColor: '#F97316',
-    position: 'absolute',
-    left: horizontalScale(240),
-    bottom: verticalScale(90),
-    borderRadius: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

@@ -1,22 +1,36 @@
-import {
-  Image,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React from 'react';
+import React, {FC} from 'react';
+import {Image, Modal, Pressable, StyleSheet, View} from 'react-native';
 import ProductsSpecialOverlay from '../ProductsSpecialOverlay';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
+import ProductDetails from '../ProductDetails';
 
-const BottomSheet = ({visible, onClose}) => {
+interface BottomSheetProps {
+  visible: boolean;
+  onClose: () => void;
+  type: string;
+  onPress: () => void;
+}
+
+const BottomSheet: FC<BottomSheetProps> = ({
+  visible,
+  onClose,
+  type,
+  onPress,
+}) => {
+  const getComponent = (type: string) => {
+    switch (type) {
+      case 'Product-Details':
+        return <ProductDetails />;
+      case 'Product-List':
+        return <ProductsSpecialOverlay Close={onClose} onPress={onPress} />;
+    }
+  };
+
   return (
     <Modal
       transparent={true}
       visible={visible}
-      animationType="slide"
+      animationType="none"
       onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <Pressable
@@ -27,11 +41,7 @@ const BottomSheet = ({visible, onClose}) => {
             source={require('../../assets/images/icons/close-button.png')}
           />
         </Pressable>
-        <View style={[styles.bottomSheet]}>
-          {/* Bottom Wraper */}
-          <ProductsSpecialOverlay Close={onClose} />
-          {/* Bottom Wraper */}
-        </View>
+        <View style={[styles.bottomSheet]}>{getComponent(type)}</View>
       </View>
     </Modal>
   );

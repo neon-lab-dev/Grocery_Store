@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image, Pressable, ScrollView} from 'native-base';
 import ProductData from '../../assets/data/ProductData';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
-import { calculateDiscountPercentage } from '../../utils/calculatePercentage';
+import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
 import ProductCard from './ProductCard';
 
 interface ProductCardProps {
@@ -14,9 +14,11 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
     <View style={{width: '100%'}}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {ProductData.map(data => {
-          let off = calculateDiscountPercentage(data.DisPrice,data.Price);
+          let off = calculateDiscountPercentage(data.DisPrice, data.Price);
           return (
-            <ProductCard onPress={()=>{}} products={data}/>
+            <View key={data.id}>
+              <ProductCard onPress={onPress} products={data} />
+            </View>
           );
         })}
       </ScrollView>
