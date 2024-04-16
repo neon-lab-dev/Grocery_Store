@@ -11,7 +11,8 @@ import {
 import {RadioButton} from 'react-native-paper';
 import {styles} from './style';
 import MultiSlider, {LabelProps} from '@ptomasroos/react-native-multi-slider';
-import CheckBox from '@react-native-community/checkbox';
+import Radio from './radio_button';
+import Checkbox from './checkbox';
 
 interface FilterOverlayProps extends IModalProps {
   showModal: boolean;
@@ -25,7 +26,6 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
 }) => {
   const filterOptions = ['Sort', 'Price', 'Brands'];
   const [selectedOption, setSelectedOption] = useState('Sort');
-  const [sortOption, setSortOption] = useState('default');
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedMinValue, setSelectedMinValue] = useState<number>(0);
   const [selectedMaxValue, setSelectedMaxValue] = useState<number>(100);
@@ -82,17 +82,10 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               py={5}>
               Sort By
             </Text>
-            {radioButtonsData.map(item => (
-              <View key={item.id} style={styles.radioButtonContainer}>
-                <RadioButton
-                  value={item.value}
-                  status={sortOption === item.value ? 'checked' : 'unchecked'}
-                  onPress={() => setSortOption(item.value)}
-                  color="#22C55E"
-                />
-                <Text style={styles.radioLabel}>{item.label}</Text>
-              </View>
-            ))}
+            <Radio
+              options={radioButtonsData}
+              onSelect={option => console.log(option)}
+            />
           </View>
         );
       case 'Price':
@@ -140,28 +133,11 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
             <Text fontSize={scaleFontSize(18)} color={'accent.700'} mb={5}>
               Sort By
             </Text>
-            {brands.map((brand, index) => (
-              <View key={index} flexDir={'row'} alignItems={'center'}>
-                <CheckBox
-                  value={selectedBrands.includes(brand)}
-                  onValueChange={() => {
-                    const newSelection = selectedBrands.includes(brand)
-                      ? selectedBrands.filter(item => item !== brand)
-                      : [...selectedBrands, brand];
-
-                    setSelectedBrands(newSelection);
-                  }}
-                  tintColors={{true: '#22C55E', false: '#9CA3AF'}}
-                />
-                <Text
-                  fontSize={scaleFontSize(16)}
-                  color={
-                    selectedBrands.includes(brand) ? 'black' : 'accent.400'
-                  }>
-                  {brand}
-                </Text>
-              </View>
-            ))}
+            <Checkbox
+              options={brands}
+              selectedOptions={selectedBrands}
+              onChange={selectedOptions => setSelectedBrands(selectedOptions)}
+            />
           </View>
         );
     }

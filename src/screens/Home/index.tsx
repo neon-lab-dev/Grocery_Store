@@ -55,6 +55,9 @@ const Home: React.FC<Props> = ({navigation}) => {
     openBottomSheet();
   };
 
+  const gotoSearch = () => {
+    navigation.navigate('Search');
+  };
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
@@ -65,6 +68,8 @@ const Home: React.FC<Props> = ({navigation}) => {
         onChangeText={SetsearchInp}
         value={searchInp}
         placeholder="Search “Bread” "
+        onPress={gotoSearch}
+        editable={false}
       />
       <ScrollView>
         <ImageCarousel />

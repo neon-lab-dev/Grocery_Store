@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {horizontalScale, scaleFontSize} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize, width} from '../../assets/scaling';
 
 export const styles = StyleSheet.create({
   container: {
-    width: "90%",
+    width: '90%',
     height: 56,
-    marginHorizontal:horizontalScale(18),
+    marginHorizontal: horizontalScale(18),
     borderRadius: horizontalScale(12),
     borderWidth: 1,
     borderColor: 'rgba(229, 231, 235, 1.0)',
@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 5,
     paddingHorizontal: horizontalScale(10),
-    marginBottom:35
+    marginBottom: 35,
   },
   line: {
     width: 1,
@@ -23,5 +23,6 @@ export const styles = StyleSheet.create({
   searchInput: {
     width: '80%',
     fontSize: scaleFontSize(16),
+    color: '#4B5563',
   },
 });
