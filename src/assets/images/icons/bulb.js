@@ -7,4 +7,4 @@ export const bulb = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none"
 <rect width="18" height="18" fill="white"/>
 </clipPath>
 </defs>
-</svg>`
+</svg>`;

@@ -7,11 +7,11 @@ import {
 
 export const styles = StyleSheet.create({
   selectAddressBox: {
-    width: 430,
+    width: '100%',
     height: 72,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: horizontalScale(20),
+    paddingLeft: horizontalScale(20),
     alignItems: 'center',
   },
   selectAddressText: {
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     marginRight: horizontalScale(15),
   },
   addAddress: {
-    width: 430,
+    width: '100%',
     height: 64,
     borderRadius: horizontalScale(12),
     borderStyle: 'solid',
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     gap: 5,
   },
   savedAdd: {
-    width: 430,
+    width: '100%',
     height: 30,
     paddingHorizontal: horizontalScale(20),
     marginVertical: verticalScale(5),
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(15),
   },
   addressDetails: {
-    width: 310,
+    width: horizontalScale(230),
     height: 34,
     color: '#9CA3AF',
     fontSize: scaleFontSize(14),

@@ -22,8 +22,8 @@ const SearchInput: FC<SearchInputProps> = ({
         value={value}
         placeholder={placeholder}
       />
-      <View style={styles.line} />
-      <Image source={require('../../assets/images/icons/mic.png')} />
+      {/* <View style={styles.line} /> */}
+      {/* <Image source={require('../../assets/images/icons/mic.png')} /> */}
     </View>
   );
 };

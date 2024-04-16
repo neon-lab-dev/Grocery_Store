@@ -1,104 +1,33 @@
-import React, {FC, useState} from 'react';
-import {FlatList, Image, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, Image, Pressable, Text, View} from 'react-native';
 import SearchInput from '../SearchInput';
 import ProductCard from '../productCard/ProductCard';
 import {styles} from './style';
+import ProductData from '../../assets/data/ProductData';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 
-interface Product {
-  id: number;
-  Title: string;
-  image: number;
-  Quantity: number;
-  Price: number;
+interface ProductsSpecialOverlayProps {
+  Close: () => void;
 }
 
-const ProductsSpecialOverlay: FC = () => {
+const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
+  Close,
+}) => {
   const [text, setText] = useState<string>('');
-  const onPress = () => {
-    console.log('---Pressed---');
-  };
-  const data: Product[] = [
-    {
-      id: 1,
-      Title: 'Tomato',
-      image: require('../../assets/images/Vegetables/tomato.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 2,
-      Title: 'Ginger',
-      image: require('../../assets/images/Vegetables/ginger.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 3,
-      Title: 'Tomato',
-      image: require('../../assets/images/Vegetables/tomato.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 4,
-      Title: 'Ginger',
-      image: require('../../assets/images/Vegetables/ginger.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 5,
-      Title: 'Tomato',
-      image: require('../../assets/images/Vegetables/tomato.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 6,
-      Title: 'Tomato',
-      image: require('../../assets/images/Vegetables/tomato.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 8,
-      Title: 'Tomato',
-      image: require('../../assets/images/Vegetables/tomato.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 9,
-      Title: 'Ginger',
-      image: require('../../assets/images/Vegetables/ginger.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 10,
-      Title: 'Tomato',
-      image: require('../../assets/images/Vegetables/tomato.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-    {
-      id: 11,
-      Title: 'Tomato',
-      image: require('../../assets/images/Vegetables/tomato.png'),
-      Quantity: 2,
-      Price: 30,
-    },
-  ];
+
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.selectAddressBox}>
         <Text style={styles.selectAddressText}>Fresly Picked Items</Text>
-        <Image
-          source={require('../../assets/images/icons/close.png')}
-          style={{marginRight: 20}}
-        />
+        <Pressable onPress={() => Close()}>
+          <Image source={require('../../assets/images/icons/close.png')} />
+        </Pressable>
       </View>
-      <View style={{alignItems: 'center', marginVertical: 10}}>
+      <View style={{alignItems: 'center', marginVertical: verticalScale(2)}}>
         <SearchInput
           onChangeText={setText}
           value={text}
@@ -106,20 +35,18 @@ const ProductsSpecialOverlay: FC = () => {
         />
       </View>
       <FlatList
-        contentContainerStyle={{paddingBottom: 160}}
+        contentContainerStyle={{paddingBottom: verticalScale(30)}}
         columnWrapperStyle={{
-          justifyContent: 'space-around',
+          justifyContent: 'space-evenly',
+          paddingLeft: horizontalScale(13),
         }}
+        ItemSeparatorComponent={
+          <View style={{marginVertical: verticalScale(10)}} />
+        }
         numColumns={2}
-        data={data}
+        data={ProductData}
         renderItem={({item}) => (
-          <ProductCard
-            image={item.image}
-            Title={item.Title}
-            Price={item.Price}
-            Quantity={item.Quantity}
-            onPress={onPress}
-          />
+          <ProductCard products={item} key={item.id} onPress={() => {}} />
         )}
         keyExtractor={item => item.id.toString()}
       />

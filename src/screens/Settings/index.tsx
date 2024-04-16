@@ -3,12 +3,11 @@ import React from 'react';
 import SettingsOption from './settings_options_component';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {bulb} from '../../assets/images/bulb';
-import {shoppingBag} from '../../assets/images/shopping-bag';
-import {locationAlt} from '../../assets/images/location-alt';
-import {comment} from '../../assets/images/comment';
-import {user} from '../../assets/images/user';
-import {verticalScale} from '../../assets/scaling';
+import {bulb} from '../../assets/images/icons/bulb';
+import {shoppingBag} from '../../assets/images/icons/shopping-bag';
+import {locationAlt} from '../../assets/images/icons/location-alt';
+import {comment} from '../../assets/images/icons/comment';
+import {user} from '../../assets/images/icons/user';
 
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
@@ -22,6 +21,9 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   };
   const gotoOrders = () => {
     navigation.navigate('Orders');
+  };
+  const gotoAddress = () => {
+    navigation.navigate('Addresses');
   };
   return (
     <View flex={1}>
@@ -61,7 +63,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
       <SettingsOption
         name="Addresses"
         iconSVG={locationAlt}
-        onPress={() => {}}
+        onPress={gotoAddress}
       />
       <SettingsOption
         name="Profile"
