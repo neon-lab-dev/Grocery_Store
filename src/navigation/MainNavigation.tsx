@@ -27,14 +27,17 @@ export type AuthNavigatorParamList = {
   Home: undefined
   Categories:undefined
   Settings: undefined;
-  CategoryProducts:undefined
+  CategoryProducts:undefined;
+  Payment:undefined;
 };
 
 export type AppNavigatorParamList = {
   Categories:undefined;
   CategoryProducts:undefined;
-  Settings: undefined;
+  Payment:undefined;
   Home: undefined;
+  Search: undefined;
+  Settings: undefined;
   OrderSuccess: undefined;
   PersonalDetails: undefined;
   Addresses: undefined;
@@ -43,6 +46,7 @@ export type AppNavigatorParamList = {
   FAQ: undefined;
   Orders: undefined;
   SingleOrder: undefined;
+  Cart: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

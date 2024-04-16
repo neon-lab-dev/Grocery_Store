@@ -7,4 +7,4 @@ export const locationAlt = `<svg width="18" height="18" viewBox="0 0 18 18" fill
 <rect width="18" height="18" fill="white"/>
 </clipPath>
 </defs>
-</svg>`
+</svg>`;
