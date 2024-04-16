@@ -22,5 +22,6 @@ export const styles = StyleSheet.create({
   searchInput: {
     width: '80%',
     fontSize: scaleFontSize(16),
+    color: '#4B5563',
   },
 });

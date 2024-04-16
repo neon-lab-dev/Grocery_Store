@@ -26,6 +26,7 @@ const SearchInput: FC<SearchInputProps> = ({
           onChangeText={onChangeText}
           value={value}
           placeholder={placeholder}
+          placeholderTextColor={'#6B7280'}
           editable={editable}
         />
         {/* <View style={styles.line} /> */}
