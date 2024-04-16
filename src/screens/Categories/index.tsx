@@ -39,7 +39,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
   );
 };
 
-const Categories: FC = () => {
+const Categories: FC = ({navigation}) => {
   const Data: Category[] = [
     {
       id: 1,
@@ -294,7 +294,9 @@ const Categories: FC = () => {
   const subCategory = Data.find(item => item.id === categoryId);
   const SubCategory: FC<SubCategory> = ({id, name}) => {
     return (
-      <TouchableOpacity style={styles.subCategoryCard}>
+      <TouchableOpacity
+        style={styles.subCategoryCard}
+        onPress={() => navigation.navigate('CategoryProducts')}>
         <View style={styles.rightImage}></View>
 
         <Text style={styles.categoriesRight}>{name}</Text>
@@ -329,13 +331,7 @@ const Categories: FC = () => {
         <FlatList
           numColumns={3}
           data={subCategory?.subCategory}
-          renderItem={({item}) => (
-            <SubCategory
-              id={item.id}
-              name={item.name}
-              categoryTitle={subCategory?.name}
-            />
-          )}
+          renderItem={({item}) => <SubCategory id={item.id} name={item.name} />}
           keyExtractor={item => item.id.toString()}
         />
       </View>

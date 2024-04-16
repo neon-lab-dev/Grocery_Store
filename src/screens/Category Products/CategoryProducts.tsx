@@ -41,7 +41,10 @@ const CategoryCard: FC<CategoryCardProps> = ({
   );
 };
 
-const CategoryProducts: FC = () => {
+const CategoryProducts: FC = ({navigation}) => {
+  const navigateToProductDetails = () => {
+    navigation.navigate('ProductDetails');
+  };
   const Data: Category[] = [
     {
       id: 1,
@@ -317,7 +320,10 @@ const CategoryProducts: FC = () => {
           numColumns={2}
           data={ProductData}
           renderItem={({item}) => (
-               <SmallProductCard onPress={() => {}} products={ProductData[1]} />
+            <SmallProductCard
+              onPress={navigateToProductDetails}
+              products={ProductData[1]}
+            />
           )}
           keyExtractor={item => item.id.toString()}
         />

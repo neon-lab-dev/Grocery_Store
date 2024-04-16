@@ -23,6 +23,7 @@ import {SvgXml} from 'react-native-svg';
 import {filter} from '../assets/images/icons/filter';
 import Cart from '../screens/Cart';
 import CategoryProducts from '../screens/Category Products/CategoryProducts';
+import ProductDetails from '../screens/ProductDetails';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -57,9 +58,8 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           ),
           // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
         })}
-        
       />
-        <Stack.Screen
+      <Stack.Screen
         name="Home"
         component={Home}
         options={{headerShown: false}}
@@ -83,6 +83,28 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
               onPress={() => navigation.goBack()}
             />
           ),
+        })}
+      />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetails}
+        options={({navigation}) => ({
+          headerTitle: () => (
+            <View>
+              <Text fontSize={'fs18'}>Product</Text>
+            </View>
+          ),
+          headerStyle: {height: 100},
+          headerTitleAlign: 'left',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
         })}
       />
       <Stack.Screen
@@ -223,7 +245,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             <View>
               <Text fontSize={'fs14'}>Ice Creams & More</Text>
               <Text fontSize={'fs12'} color={'accent.400'}>
-              703 items
+                703 items
               </Text>
             </View>
           ),
@@ -237,13 +259,13 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
               onPress={() => navigation.goBack()}
             />
           ),
-          headerRight:()=>(
+          headerRight: () => (
             <SearchIcon
-            size={'xl'}
-            mr={5}
-            color={'black'}
-            onPress={() => navigation.goBack()}
-          />
+              size={'xl'}
+              mr={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
           ),
         })}
       />
