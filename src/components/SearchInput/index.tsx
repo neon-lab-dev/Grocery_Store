@@ -1,30 +1,36 @@
 import React, {FC} from 'react';
-import {Image, TextInput, View} from 'react-native';
+import {Image, TextInput, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
 
 interface SearchInputProps {
   onChangeText: (text: string) => void;
   value: string;
   placeholder: string;
+  onPress: () => void;
+  editable: boolean;
 }
 
 const SearchInput: FC<SearchInputProps> = ({
   onChangeText,
   value,
   placeholder,
+  onPress,
+  editable,
 }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPressIn={onPress} style={styles.container}>
       <Image source={require('../../assets/images/icons/search.png')} />
       <TextInput
         style={styles.searchInput}
         onChangeText={onChangeText}
         value={value}
         placeholder={placeholder}
+        placeholderTextColor={'#6B7280'}
+        editable={editable}
       />
       {/* <View style={styles.line} /> */}
       {/* <Image source={require('../../assets/images/icons/mic.png')} /> */}
-    </View>
+    </TouchableOpacity>
   );
 };
 

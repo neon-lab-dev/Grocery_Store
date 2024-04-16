@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: scaleFontSize(16),
     fontWeight: 'bold',
+    color: '#4B5563'
   },
   cartContainer: {
     backgroundColor: '#FED7AA',
