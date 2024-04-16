@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../constants/colors';
-import {horizontalScale, scaleFontSize} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
 export const styles = StyleSheet.create({
   Container: {
+    flex:1,
     width: '100%',
     marginLeft: horizontalScale(18),
   },
@@ -23,10 +24,11 @@ export const styles = StyleSheet.create({
   },
   DisPrice: {
     fontSize: scaleFontSize(14),
+    color:Colors.accent[400]
   },
   Button: {
     borderRadius: 10,
-    paddingVertical: 5,
+    paddingVertical: verticalScale(3),
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: Colors.primary[400],
@@ -35,14 +37,6 @@ export const styles = StyleSheet.create({
   ButtonText: {
     color: Colors.primary[400],
     fontSize: 14,
-  },
-  cutLine: {
-    position: 'absolute',
-    top: '75%',
-    left: 0,
-    right: 0,
-    height: 1,
-    backgroundColor: '#333',
   },
   Quantity: {
     fontSize: scaleFontSize(12),

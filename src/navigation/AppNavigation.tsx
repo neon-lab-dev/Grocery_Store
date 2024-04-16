@@ -12,10 +12,16 @@ import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/single_order';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
+import Categories from '../screens/Categories';
 import Home from '../screens/Home';
+import OrderSuccess from '../screens/Orders/Order-Success';
+import SavedAddress from '../screens/Address/saved_address';
+import AddAddress from '../screens/Address/add_address';
+import Payment from '../screens/Payment';
 import Search from '../screens/Search';
 import {SvgXml} from 'react-native-svg';
 import {filter} from '../assets/images/icons/filter';
+import Cart from '../screens/Cart';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -25,8 +31,31 @@ const Stack = createStackNavigator<AppNavigatorParamList>();
 
 export const AppNavigation: React.FC<AppNavigationProps> = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
+        name="Payment"
+        component={Payment}
+        options={({navigation}) => ({
+          headerTitle: () => (
+            <View>
+              <Text fontSize={'fs18'}>Categories Method</Text>
+              <Text fontSize={'fs12'} color={'accent.400'}>
+                1 Item | Total ₹42
+              </Text>
+            </View>
+          ),
+          headerStyle: {height: 100},
+          headerTitleAlign: 'left',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
+        })}
         name="Home"
         component={Home}
         options={{headerShown: false}}
@@ -51,6 +80,11 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             />
           ),
         })}
+      />
+      <Stack.Screen
+        name="OrderSuccess"
+        component={OrderSuccess}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="PersonalDetails"
@@ -109,6 +143,72 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             />
           ),
           headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
+        })}
+      />
+      <Stack.Screen
+        name="Addresses"
+        component={SavedAddress}
+        options={({navigation}) => ({
+          headerTitle: 'Saved Addresses',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="AddAddress"
+        component={AddAddress}
+        options={({navigation}) => ({
+          headerTitle: 'Add Address',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={({navigation}) => ({
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Categories"
+        component={Categories}
+        options={({navigation}) => ({
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <ChevronLeftIcon
+              size={'md'}
+              ml={5}
+              color={'black'}
+              onPress={() => navigation.goBack()}
+            />
+          ),
         })}
       />
     </Stack.Navigator>

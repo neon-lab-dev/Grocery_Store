@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
 import style from './style';
-import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Pressable,
+  Alert,
+} from 'react-native';
 import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
@@ -9,24 +17,22 @@ import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
+import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
-
-interface HomeProps {
+type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
-}
-
-const Home: React.FC<HomeProps> = ({navigation}) => {
+};
+const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
-
-  const gotoSettings = () => {
+  const openSettings = () => {
     navigation.navigate('Settings');
   };
-  const gotoSearch = () => {
-    navigation.navigate('Search');
+  const gotoCart = () => {
+    navigation.navigate('Cart');
   };
 
   return (
@@ -34,7 +40,7 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
       {/* <Pressable onPress={openDrawer}>
         <Text>Open Settings</Text>
       </Pressable> */}
-      <Header onPress={gotoSettings} />
+      <Header onSettingsPress={openSettings} onCartPress={gotoCart} />
       <SearchInput
         onChangeText={SetsearchInp}
         value={searchInp}
@@ -70,7 +76,9 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductCard onPress={() => {}} />
+
+        <ProductHorizontalScroll onPress={() => {}} />
+
         {/* <View style={{alignSelf: 'center', margin: 5}}>
           <Image
             source={require('../../assets/images/icons/SendList.png')}></Image>
@@ -241,7 +249,7 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ProductCard onPress={() => {}} />
+        <ProductHorizontalScroll onPress={() => {}} />
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
@@ -272,11 +280,14 @@ const Home: React.FC<HomeProps> = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+
       <View style={style.floatingButton}>
-        <Image
-          source={require('../../assets/images/icons/Categories.png')}
-          style={style.buttonImage}
-        />
+        <Pressable onPress={() => {}}>
+          <Image
+            source={require('../../assets/images/icons/Categories.png')}
+            style={style.buttonImage}
+          />
+        </Pressable>
       </View>
     </View>
   );

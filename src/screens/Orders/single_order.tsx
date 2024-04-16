@@ -2,7 +2,7 @@ import {Button, Center, Text, View} from 'native-base';
 import * as React from 'react';
 import {SvgXml} from 'react-native-svg';
 import {timer} from '../../assets/images/icons/time-svgrepo';
-import {location} from '../../assets/images/icons/address-location-map';
+import {location} from '../../assets/images/icons/location';
 import {SingleOrderCard} from './single_order_card';
 import {horizontalScale} from '../../assets/scaling';
 

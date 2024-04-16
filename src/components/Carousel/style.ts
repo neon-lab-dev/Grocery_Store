@@ -1,15 +1,13 @@
 import {StyleSheet} from 'react-native';
-import { horizontalScale } from '../../assets/scaling';
+import { horizontalScale, verticalScale } from '../../assets/scaling';
 export const styles = StyleSheet.create({
     carouselItem: {
-      
+
     },
     img: {
-      width:horizontalScale(300),
-      // padding:15,
-      marginTop: 35,
+      width:horizontalScale(285),
       marginLeft:horizontalScale(18),
-      height: 180,
+      height: verticalScale(125),
       borderRadius: 25,
     },
   });
