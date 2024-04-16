@@ -1,7 +1,7 @@
 import {Text, View} from 'native-base';
 import * as React from 'react';
 import {SvgXml} from 'react-native-svg';
-import {sampleImage} from '../../assets/images/Rectangle';
+import {sampleImage} from '../../assets/images/icons/Rectangle';
 import {horizontalScale} from '../../assets/scaling';
 
 export const SingleOrderCard: React.FC = () => {
