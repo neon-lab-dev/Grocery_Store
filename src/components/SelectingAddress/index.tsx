@@ -3,12 +3,18 @@ import {Image, Text, View} from 'react-native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {Pressable} from 'native-base';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppNavigatorParamList } from '../../navigation/MainNavigation';
 
 interface SelectAddressProps {
   onClose: () => void;
+  navigation: StackNavigationProp<AppNavigatorParamList, 'AddAddress'>;
 }
 
-const SelectAddress: FC<SelectAddressProps> = ({onClose}) => {
+const SelectAddress: FC<SelectAddressProps> = ({onClose,navigation}) => {
+  const gotoAddAddress = () => {
+    navigation.navigate('AddAddress');
+  };
   const AddressCard: FC = () => {
     return (
       <View style={styles.addressBox}>
@@ -37,12 +43,16 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose}) => {
           />
         </Pressable>
       </View>
+      <Pressable onPress={gotoAddAddress}>
       <View style={styles.addAddress}>
+        
         <Text style={[styles.selectAddressText, {color: '#FB923C'}]}>
           Add a Address
         </Text>
+       
         <Image source={require('../../assets/images/icons/add.png')} />
       </View>
+      </Pressable>
       <View style={styles.savedAdd}>
         <Text style={styles.selectAddressText}>SAVED ADDRESSES</Text>
       </View>

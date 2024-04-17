@@ -40,7 +40,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerTitle: () => (
             <View>
-              <Text fontSize={'fs18'}>Categories Method</Text>
+              <Text fontSize={'fs18'}>Payment Method</Text>
               <Text fontSize={'fs12'} color={'accent.400'}>
                 1 Item | Total ₹42
               </Text>

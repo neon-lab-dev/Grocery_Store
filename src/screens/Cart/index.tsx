@@ -15,7 +15,11 @@ import {scaleFontSize, verticalScale, width} from '../../assets/scaling';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import SelectAddress from '../../components/SelectingAddress';
-
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppNavigatorParamList } from '../../navigation/MainNavigation';
+interface CartProps {
+  navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
+}
 const item = {
   name: 'Cadbury Bournville Rich Cocoa 70% Dark',
   image: require('../../assets/images/Product-Image/chocolate.png'),
@@ -25,11 +29,11 @@ const item = {
   actual_price: 58,
 };
 
-const Cart: React.FC = ({navigation}) => {
+const Cart: React.FC<CartProps> = ({navigation}) => {
   const isAddressPresent = true;
   const [modalVisible, setModalVisible] = React.useState(false);
-  const gotoAddAddress = () => {
-    navigation.navigate('AddAddress');
+  const gotoPayment = () => {
+    navigation.navigate('Payment');
   };
   return (
     <View flex={1} justifyContent={'space-between'}>
@@ -90,7 +94,7 @@ const Cart: React.FC = ({navigation}) => {
           mt={'auto'}
           borderTopLeftRadius={12}
           borderTopRightRadius={12}>
-          <SelectAddress onClose={() => setModalVisible(false)} />
+          <SelectAddress onClose={() => setModalVisible(false)} navigation={navigation} />
         </Modal.Content>
       </Modal>
       <View
@@ -131,7 +135,7 @@ const Cart: React.FC = ({navigation}) => {
             rounded={12}
             colorScheme={'orange'}
             bg={'primary.500'}
-            onPress={!isAddressPresent ? gotoAddAddress : null}>
+            onPress={gotoPayment}>
             <View
               w={'100%'}
               flexDir={'row'}

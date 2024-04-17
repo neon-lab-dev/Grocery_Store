@@ -5,10 +5,17 @@ import {Colors} from '../../constants/colors';
 import {SvgXml} from 'react-native-svg';
 import {width} from '../../assets/scaling';
 import {location} from '../../assets/images/icons/location';
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
-
-const OrderSuccess = () => {
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppNavigatorParamList } from '../../navigation/MainNavigation';
+interface OrderSuccessProps {
+  navigation: StackNavigationProp<AppNavigatorParamList, 'OrderSuccess'>;
+}
+const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
+  const gotoOrderDetails = () => {
+    navigation.navigate('SingleOrder');
+  };
   return (
     <View style={{flex: 1, backgroundColor: '#F9FAFB'}}>
       <View style={{alignSelf: 'center'}}>
@@ -101,9 +108,11 @@ const OrderSuccess = () => {
               SAVED ₹9.51
             </Text>
           </Center>
+          <Pressable onPress={gotoOrderDetails}>
           <Text fontSize={'fs12'} color={'primary.500'} fontWeight={500} ml={6}>
             View Details
           </Text>
+          </Pressable>
           <View>
             <Image
               alt="smallright"

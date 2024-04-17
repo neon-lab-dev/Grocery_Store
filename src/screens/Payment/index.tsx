@@ -15,10 +15,15 @@ import {
 } from '../../assets/scaling';
 import {Radio} from 'native-base';
 import {styles} from './style';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppNavigatorParamList } from '../../navigation/MainNavigation';
 
 interface Address {
   id: number;
   address: string;
+}
+interface PaymentProps {
+  navigation: StackNavigationProp<AppNavigatorParamList, 'Payment'>;
 }
 
 const AddressDropDownList: FC = () => {
@@ -231,7 +236,10 @@ const PaymentPreferred: FC = () => {
   );
 };
 
-const Payment: FC = () => {
+const Payment: FC <PaymentProps>= ({navigation}) => {
+  const gotoOrderSuccess = () => {
+    navigation.navigate('OrderSuccess');
+  };
   return (
     <View style={styles.mainContainer}>
       {/* Drop Down List  */}
@@ -247,8 +255,9 @@ const Payment: FC = () => {
         <BillSummaryCard />
         <PaymentPreferred />
       </View>
-
+      
       <View style={styles.bottomLayout}>
+      <Pressable onPress={gotoOrderSuccess}>
         <View style={styles.bottomCard}>
           <View
             style={{
@@ -285,7 +294,9 @@ const Payment: FC = () => {
             />
           </View>
         </View>
+        </Pressable>
       </View>
+      
     </View>
   );
 };

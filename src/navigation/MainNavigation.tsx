@@ -29,6 +29,7 @@ export type AuthNavigatorParamList = {
   Settings: undefined;
   CategoryProducts:undefined;
   Payment:undefined;
+  Splash:undefined
 };
 
 export type AppNavigatorParamList = {
@@ -47,6 +48,7 @@ export type AppNavigatorParamList = {
   Orders: undefined;
   SingleOrder: undefined;
   Cart: undefined;
+  Splash:undefined
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
