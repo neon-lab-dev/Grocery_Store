@@ -39,6 +39,9 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const onclose = () => {
     setModalVisible(false);
   };
+  const gotoSplash = () => {
+    navigation.navigate('Splash');
+  };
   return (
     <View flex={1}>
       <View
@@ -148,6 +151,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
       />
       <View flex={1} justifyContent={'center'}>
         <Button
+        onPress={gotoSplash}
           variant={'outline'}
           mt={5}
           w={100}
