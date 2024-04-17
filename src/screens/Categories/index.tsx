@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
+import style from '../Home/style';
 
 interface Category {
   id: number;
@@ -327,8 +328,8 @@ const Categories: FC = ({navigation}) => {
         <View style={{padding: 13, marginVertical: 8}}>
           <Text style={styles.categoriesTitle}>{subCategory?.name}</Text>
         </View>
-
         <FlatList
+          contentContainerStyle={{gap: 20}}
           numColumns={3}
           data={subCategory?.subCategory}
           renderItem={({item}) => <SubCategory id={item.id} name={item.name} />}

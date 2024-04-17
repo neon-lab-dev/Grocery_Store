@@ -37,8 +37,8 @@ export const styles = StyleSheet.create({
   subCategoryCard: {
     width: horizontalScale(66),
     height: verticalScale(100),
-    marginLeft: horizontalScale(12),
-    marginVertical: verticalScale(10),
+    marginHorizontal: horizontalScale(5),
+    gap: 3,
   },
   rightImage: {
     width: horizontalScale(66),
@@ -75,6 +75,7 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
     lineHeight: verticalScale(14.5),
     textAlign: 'center',
+    color: '#4B5563',
   },
   categoriesRight: {
     fontFamily: 'Inter',
@@ -82,5 +83,6 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     lineHeight: verticalScale(14.5),
     textAlign: 'center',
+    color: '#4B5563',
   },
 });
