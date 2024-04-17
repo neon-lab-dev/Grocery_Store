@@ -1,8 +1,12 @@
 import React from 'react';
-import {View, Text, Image, Pressable, ScrollView} from 'native-base';
-import {styles} from './style';
+import {StyleSheet} from 'react-native';
 import {Colors} from '../../constants/colors';
-import {horizontalScale, verticalScale} from '../../assets/scaling';
+import {View, Text, Image, Pressable} from 'native-base';
+import {
+  horizontalScale,
+  verticalScale,
+  scaleFontSize,
+} from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
 interface ProductDataItem {
   id: number;
@@ -16,33 +20,34 @@ interface ProductCardProps {
   onPress: () => void;
   products: ProductDataItem;
 }
-const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
+const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   return (
     <View style={styles.Container}>
       <View
         key={products.id}
-        style={{width: horizontalScale(120), height: verticalScale(200)}}>
+        style={{width: horizontalScale(120), height: verticalScale(175)}}>
         <Pressable
-          onPress={onPress}
+          onPress={() => onPress()}
           style={{
-            borderRadius: 20,
+            borderRadius: 16,
             backgroundColor: '#F9FAFB',
-            height: verticalScale(120),
-            width: horizontalScale(120),
+            height: verticalScale(90),
+            width: horizontalScale(90),
             overflow: 'hidden',
           }}>
           <View
             style={{
               backgroundColor: Colors.primary[500],
-              height: verticalScale(30),
-              width: horizontalScale(34),
-              marginLeft: 10,
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
+              height: verticalScale(25),
+              width: horizontalScale(28),
+              marginLeft: 15,
+              borderBottomLeftRadius: 8,
+              borderBottomRightRadius: 8,
             }}>
             <Text
               style={{
+                fontSize: 11,
                 alignSelf: 'center',
                 fontWeight: 'bold',
                 color: 'white',
@@ -51,9 +56,10 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             </Text>
             <Text
               style={{
+                fontSize: 11,
                 alignSelf: 'center',
                 position: 'absolute',
-                top: verticalScale(11),
+                top: verticalScale(8),
                 fontWeight: 'bold',
                 color: 'white',
               }}>
@@ -74,7 +80,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            top: verticalScale(170),
+            top: verticalScale(140),
           }}>
           <View>
             <Text style={styles.Price}>₹{products.Price}</Text>
@@ -100,4 +106,46 @@ const getImage = (imageName: string) => {
       return require('../../assets/images/Product-Image/Ginger.png');
   }
 };
-export default ProductCard;
+
+export const styles = StyleSheet.create({
+  Container: {
+    flex: 1,
+    marginLeft: horizontalScale(18),
+  },
+  Image: {
+    width: 80,
+    height: 75,
+    alignSelf: 'center',
+  },
+  Title: {
+    fontSize: 14,
+    color: 'black',
+    marginTop: 5,
+  },
+  Price: {
+    fontSize: scaleFontSize(14),
+    color: 'black',
+  },
+  DisPrice: {
+    fontSize: scaleFontSize(12),
+    color: Colors.accent[400],
+  },
+  Button: {
+    borderRadius: 10,
+    paddingVertical: verticalScale(3),
+    paddingHorizontal: 14,
+    borderWidth: 1,
+    borderColor: Colors.primary[400],
+    marginHorizontal: 22,
+  },
+  ButtonText: {
+    color: Colors.primary[400],
+    fontSize: 14,
+  },
+  Quantity: {
+    fontSize: scaleFontSize(12),
+    color: Colors.accent[400],
+  },
+});
+
+export default SmallProductCard;

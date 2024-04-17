@@ -3,7 +3,6 @@ import {
   FlatList,
   Image,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -175,7 +174,7 @@ const ProductDetails: React.FC = () => {
         </View>
         <View
           style={{
-            paddingHorizontal: horizontalScale(16),
+            // paddingHorizontal: horizontalScale(16),
             backgroundColor: '#FFFFFF',
           }}>
           {/* Item Name Container*/}
@@ -189,6 +188,7 @@ const ProductDetails: React.FC = () => {
                 width: horizontalScale(430),
                 height: verticalScale(100),
                 justifyContent: 'center',
+                paddingHorizontal: horizontalScale(15),
               }}>
               <Text
                 style={{
@@ -215,11 +215,9 @@ const ProductDetails: React.FC = () => {
             </View>
           </View>
           <View
-            style={
-              {
-                // paddingHorizontal: 15,
-              }
-            }>
+            style={{
+              paddingHorizontal: 15,
+            }}>
             <Text
               style={{
                 fontSize: scaleFontSize(16),
@@ -236,6 +234,7 @@ const ProductDetails: React.FC = () => {
                 marginVertical: verticalScale(5),
                 fontFamily: 'Inter',
                 color: '#4B5563',
+                // paddingHorizontal: horizontalScale(15),
               }}>
               Description
             </Text>
@@ -248,7 +247,12 @@ const ProductDetails: React.FC = () => {
               {data.description}
             </Text>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: horizontalScale(15),
+            }}>
             <Text style={[styles.descriptionTitle, {color: '#F97316'}]}>
               View less details
             </Text>
@@ -256,7 +260,12 @@ const ProductDetails: React.FC = () => {
               source={require('../../assets/images/icons/arrow_drop_down.png')}
             />
           </View>
-          <View style={{flex: 1, marginVertical: verticalScale(20)}}>
+          <View
+            style={{
+              flex: 1,
+              marginVertical: verticalScale(20),
+              paddingHorizontal: horizontalScale(15),
+            }}>
             <Text style={styles.itemName}>Similar Products</Text>
           </View>
           <FlatList
@@ -270,13 +279,18 @@ const ProductDetails: React.FC = () => {
               <ProductCard onPress={() => {}} key={item.id} products={item} />
             )}
           />
-          <View style={{flex: 1, marginVertical: verticalScale(20)}}>
+          <View
+            style={{
+              flex: 1,
+              marginVertical: verticalScale(10),
+              paddingHorizontal: horizontalScale(15),
+            }}>
             <Text style={styles.itemName}>People also Bought</Text>
           </View>
           <FlatList
             contentContainerStyle={{
-              marginVertical: verticalScale(5),
-              marginRight: horizontalScale(5),
+              marginVertical: verticalScale(10),
+              paddingBottom: 20,
             }}
             horizontal
             data={ProductData}

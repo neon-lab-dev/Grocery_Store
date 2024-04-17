@@ -20,11 +20,13 @@ import CategoryData from '../../assets/data/CategoriesData';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
+import BottomSheet from '../../components/BottomSheet/BottomSheet';
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
 const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
+  const [overLay, setOverLay] = useState('Product-List');
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
@@ -35,6 +37,27 @@ const Home: React.FC<Props> = ({navigation}) => {
     navigation.navigate('Cart');
   };
 
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const openBottomSheet = () => {
+    setBottomSheetVisible(true);
+  };
+  const closeBottomSheet = () => {
+    setBottomSheetVisible(false);
+  };
+
+  const listToDetails = () => {
+    setOverLay('Product-Details');
+    openBottomSheet();
+  };
+
+  const seeAll = () => {
+    setOverLay('Product-List');
+    openBottomSheet();
+  };
+
+  const gotoSearch = () => {
+    navigation.navigate('Search');
+  };
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
@@ -45,6 +68,8 @@ const Home: React.FC<Props> = ({navigation}) => {
         onChangeText={SetsearchInp}
         value={searchInp}
         placeholder="Search “Bread” "
+        onPress={gotoSearch}
+        editable={false}
       />
       <ScrollView>
         <ImageCarousel />
@@ -62,7 +87,7 @@ const Home: React.FC<Props> = ({navigation}) => {
               get your health on line :)
             </Text>
           </View>
-          <TouchableOpacity>
+          <Pressable onPress={seeAll}>
             <Text
               style={{
                 color: '#22C55E',
@@ -72,10 +97,10 @@ const Home: React.FC<Props> = ({navigation}) => {
               }}>
               See all
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
-        <ProductHorizontalScroll onPress={() => {}} />
+        <ProductHorizontalScroll onPress={listToDetails} />
 
         {/* <View style={{alignSelf: 'center', margin: 5}}>
           <Image
@@ -121,11 +146,17 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
-                    <Image
+                    <Pressable
                       key={subIndex}
-                      source={{uri: item.image}}
-                      style={{width: 100, height: 150}}
-                    />
+                      onPress={() => {
+                        navigation.navigate('CategoryProducts');
+                      }}>
+                      <Image
+                        key={subIndex}
+                        source={{uri: item.image}}
+                        style={{width: 100, height: 150}}
+                      />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -151,11 +182,17 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
-                    <Image
+                    <Pressable
                       key={subIndex}
-                      source={{uri: item.image}}
-                      style={{width: 100, height: 150}}
-                    />
+                      onPress={() => {
+                        navigation.navigate('CategoryProducts');
+                      }}>
+                      <Image
+                        key={subIndex}
+                        source={{uri: item.image}}
+                        style={{width: 100, height: 150}}
+                      />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -181,11 +218,17 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
-                    <Image
+                    <Pressable
                       key={subIndex}
-                      source={{uri: item.image}}
-                      style={{width: 100, height: 150}}
-                    />
+                      onPress={() => {
+                        navigation.navigate('CategoryProducts');
+                      }}>
+                      <Image
+                        key={subIndex}
+                        source={{uri: item.image}}
+                        style={{width: 100, height: 150}}
+                      />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -211,11 +254,17 @@ const Home: React.FC<Props> = ({navigation}) => {
                     justifyContent: 'space-evenly',
                   }}>
                   {currentSlice.map((item, subIndex) => (
-                    <Image
+                    <Pressable
                       key={subIndex}
-                      source={{uri: item.image}}
-                      style={{width: 100, height: 150}}
-                    />
+                      onPress={() => {
+                        navigation.navigate('CategoryProducts');
+                      }}>
+                      <Image
+                        key={subIndex}
+                        source={{uri: item.image}}
+                        style={{width: 100, height: 150}}
+                      />
+                    </Pressable>
                   ))}
                 </View>
               );
@@ -235,7 +284,7 @@ const Home: React.FC<Props> = ({navigation}) => {
             <Text style={style.CategoryText}>Freshly Picked For You!</Text>
             <Text>get your health on line :)</Text>
           </View>
-          <TouchableOpacity>
+          <Pressable onPress={seeAll}>
             <Text
               style={{
                 color: '#22C55E',
@@ -245,9 +294,9 @@ const Home: React.FC<Props> = ({navigation}) => {
               }}>
               See all
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
-        <ProductHorizontalScroll onPress={() => {}} />
+        <ProductHorizontalScroll onPress={listToDetails} />
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
@@ -280,13 +329,22 @@ const Home: React.FC<Props> = ({navigation}) => {
       </ScrollView>
 
       <View style={style.floatingButton}>
-        <Pressable onPress={() => {}}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Categories');
+          }}>
           <Image
             source={require('../../assets/images/icons/Categories.png')}
             style={style.buttonImage}
           />
         </Pressable>
       </View>
+      <BottomSheet
+        visible={bottomSheetVisible}
+        onClose={closeBottomSheet}
+        type={overLay}
+        onPress={listToDetails}
+      />
     </View>
   );
 };

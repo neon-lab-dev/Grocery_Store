@@ -2,13 +2,15 @@ import React, {FC, useState} from 'react';
 import {
   FlatList,
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import {horizontalScale, verticalScale} from '../../assets/scaling';
+import {useNavigation} from '@react-navigation/native';
 interface AlternativeImage {
   id: number;
   image: any;
@@ -43,10 +45,10 @@ interface OtherImagesProps {
 const data: Data = {
   productName: 'Desi Tomato (Nattu Thakkali)',
   alternativeImages: [
-    {id: 1, image: require('../assets/images/products/Tomato.png')},
-    {id: 2, image: require('../assets/images/products/Tomato.png')},
-    {id: 3, image: require('../assets/images/products/Tomato.png')},
-    {id: 4, image: require('../assets/images/products/Tomato.png')},
+    {id: 1, image: require('../../assets/images/Vegetables/tomato-lg.png')},
+    {id: 2, image: require('../../assets/images/Vegetables/tomato-lg.png')},
+    {id: 3, image: require('../../assets/images/Vegetables/tomato-lg.png')},
+    {id: 4, image: require('../../assets/images/Vegetables/tomato-lg.png')},
   ],
   units: [
     {id: 1, kg: 1, Newprice: 42, price: 58},
@@ -118,7 +120,7 @@ const OtherImages: FC<OtherImagesProps> = ({
         },
       ]}>
       <Image
-        source={require('../assets/images/products/Tomato.png')}
+        source={require('../../assets/images/Vegetables/tomato-lg.png')}
         style={{width: 32, height: 32}}
       />
     </TouchableOpacity>
@@ -130,6 +132,8 @@ const ProductDetails: FC = () => {
     data.alternativeImages[0].id,
   );
   const [selectedUnit, setSelectedUnit] = useState(data.units[0].id);
+  const navigation = useNavigation();
+
   return (
     <>
       <ScrollView>
@@ -146,7 +150,7 @@ const ProductDetails: FC = () => {
             }}>
             <Image
               style={styles.mainImage}
-              source={require('../assets/images/products/Tomato.png')}
+              source={require('../../assets/images/Vegetables/tomato-lg.png')}
             />
             <View style={{marginVertical: 20}}>
               <FlatList
@@ -163,78 +167,80 @@ const ProductDetails: FC = () => {
             </View>
           </View>
         </View>
-        {/* Item Name Container*/}
-        <View style={styles.nameContainer}>
-          <Text style={styles.itemName}>Desi Tomato (Nattu Thakkali)</Text>
-        </View>
-        {/* Units & cut-off Price */}
-        <View>
+        <View style={{backgroundColor: '#F3F4F6'}}>
+          {/* Item Name Container*/}
+          <View style={styles.nameContainer}>
+            <Text style={styles.itemName}>Desi Tomato (Nattu Thakkali)</Text>
+          </View>
+          {/* Units & cut-off Price */}
+          <View>
+            <View
+              style={{
+                width: 430,
+                height: 150,
+                paddingHorizontal: 10,
+                justifyContent: 'center',
+                padding: 13,
+              }}>
+              <Text
+                style={{
+                  // fontFamily: fonts.Regular,
+                  fontSize: 16,
+                  fontWeight: '500',
+                  color: '#1F2937',
+                  marginLeft: 5,
+                }}>
+                Select Unit
+              </Text>
+              <FlatList
+                contentContainerStyle={{marginVertical: 10}}
+                horizontal
+                data={data.units}
+                renderItem={({item}) => (
+                  <UnitCard
+                    item={item}
+                    selectedUnit={selectedUnit}
+                    setSelectedUnit={setSelectedUnit}
+                  />
+                )}
+                keyExtractor={item => item.id.toString()}
+              />
+            </View>
+          </View>
           <View
             style={{
-              width: 430,
-              height: 150,
-              paddingHorizontal: 10,
-              justifyContent: 'center',
-              padding: 13,
+              paddingHorizontal: 15,
             }}>
             <Text
               style={{
-                // fontFamily: fonts.Regular,
                 fontSize: 16,
                 fontWeight: '500',
                 color: '#1F2937',
-                marginLeft: 5,
+                marginTop: 2,
               }}>
-              Select Unit
+              Product Details
             </Text>
-            <FlatList
-              contentContainerStyle={{marginVertical: 10}}
-              horizontal
-              data={data.units}
-              renderItem={({item}) => (
-                <UnitCard
-                  item={item}
-                  selectedUnit={selectedUnit}
-                  setSelectedUnit={setSelectedUnit}
-                />
-              )}
-              keyExtractor={item => item.id.toString()}
-            />
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: '500',
+                marginVertical: 5,
+                fontFamily: 'Inter',
+                color: '#4B5563',
+              }}>
+              Description
+            </Text>
+            <Text style={{fontSize: 14, fontWeight: '500', color: '#4B5563'}}>
+              {data.description}
+            </Text>
           </View>
-        </View>
-        <View
-          style={{
-            paddingHorizontal: 15,
-          }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '500',
-              color: '#1F2937',
-              marginTop: 2,
-            }}>
-            Product Details
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: '500',
-              marginVertical: 5,
-              fontFamily: 'Inter',
-              color: '#4B5563',
-            }}>
-            Description
-          </Text>
-          <Text style={{fontSize: 14, fontWeight: '500', color: '#4B5563'}}>
-            {data.description}
-          </Text>
         </View>
       </ScrollView>
       {/* Bottom Container  */}
       <View
         style={{
           height: 100,
-          backgroundColor: 'white',
+          backgroundColor: '#FFFFFF',
           width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -294,7 +300,18 @@ const ProductDetails: FC = () => {
             Add to Cart
           </Text>
         </View>
-        {/* Price & Offer Tag */}
+        {/* <Pressable > */}
+        <Pressable
+          style={styles.floatingButton}
+          onPress={() => navigation.navigate('Cart')}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Image
+              source={require('../../assets/images/icons/cart-white.png')}
+            />
+            <Text style={{color: '#ffffff'}}>1 Item</Text>
+          </View>
+        </Pressable>
+        {/* </Pressable> */}
       </View>
     </>
   );
@@ -362,10 +379,21 @@ const styles = StyleSheet.create({
     width: 98,
     height: 65,
     borderRadius: 12,
-    // backgroundColor: '#FFF7ED',
+    backgroundColor: '#ffffff',
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 5,
+  },
+  floatingButton: {
+    width: horizontalScale(80),
+    height: verticalScale(70),
+    backgroundColor: '#F97316',
+    position: 'absolute',
+    left: horizontalScale(240),
+    bottom: verticalScale(90),
+    borderRadius: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

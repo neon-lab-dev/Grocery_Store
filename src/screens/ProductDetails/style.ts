@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
     height: verticalScale(50),
     justifyContent: 'center',
     borderBottomWidth: 0.2,
+    paddingHorizontal: horizontalScale(15),
   },
   unitCard: {
     width: horizontalScale(98),

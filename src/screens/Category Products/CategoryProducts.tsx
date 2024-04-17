@@ -1,6 +1,8 @@
 import React, {FC, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
+import ProductData from '../../assets/data/ProductData';
+import SmallProductCard from '../../components/productCard/SmallProductCard';
 
 interface Category {
   id: number;
@@ -39,11 +41,14 @@ const CategoryCard: FC<CategoryCardProps> = ({
   );
 };
 
-const Categories: FC = ({navigation}) => {
+const CategoryProducts: FC = ({navigation}) => {
+  const navigateToProductDetails = () => {
+    navigation.navigate('ProductDetails');
+  };
   const Data: Category[] = [
     {
       id: 1,
-      name: 'Electronics',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -81,7 +86,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 2,
-      name: 'Cleaners & Repellents',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -107,7 +112,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 3,
-      name: 'Sexual Wellness',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -133,7 +138,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 4,
-      name: 'Beauty & Cosmetics',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -159,7 +164,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 5,
-      name: 'Sweets & Chocolates',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -185,7 +190,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 6,
-      name: 'Sweets & Chocolates',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -211,7 +216,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 7,
-      name: 'Sweets & Chocolates',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -237,7 +242,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 8,
-      name: 'Sweets & Chocolates',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -263,7 +268,7 @@ const Categories: FC = ({navigation}) => {
     },
     {
       id: 9,
-      name: 'Sweets & Chocolates',
+      name: 'Chicken, Meat & Fish',
       subCategory: [
         {
           id: 1,
@@ -291,19 +296,6 @@ const Categories: FC = ({navigation}) => {
   const [categoryId, setCategoryId] = useState<number>(Data[0].id);
   console.log(categoryId);
 
-  const subCategory = Data.find(item => item.id === categoryId);
-  const SubCategory: FC<SubCategory> = ({id, name}) => {
-    return (
-      <TouchableOpacity
-        style={styles.subCategoryCard}
-        onPress={() => navigation.navigate('CategoryProducts')}>
-        <View style={styles.rightImage}></View>
-
-        <Text style={styles.categoriesRight}>{name}</Text>
-      </TouchableOpacity>
-    );
-  };
-  console.log(subCategory);
   return (
     <View style={styles.mainContainer}>
       <View style={styles.leftCard}>
@@ -324,14 +316,15 @@ const Categories: FC = ({navigation}) => {
         </View>
       </View>
       <View style={styles.rightCard}>
-        <View style={{padding: 13, marginVertical: 8}}>
-          <Text style={styles.categoriesTitle}>{subCategory?.name}</Text>
-        </View>
-
         <FlatList
-          numColumns={3}
-          data={subCategory?.subCategory}
-          renderItem={({item}) => <SubCategory id={item.id} name={item.name} />}
+          numColumns={2}
+          data={ProductData}
+          renderItem={({item}) => (
+            <SmallProductCard
+              onPress={navigateToProductDetails}
+              products={ProductData[1]}
+            />
+          )}
           keyExtractor={item => item.id.toString()}
         />
       </View>
@@ -339,4 +332,4 @@ const Categories: FC = ({navigation}) => {
   );
 };
 
-export default Categories;
+export default CategoryProducts;
