@@ -58,6 +58,7 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 3,
   },
   savingText: {
     fontFamily: 'Inter',

@@ -20,7 +20,7 @@ const BottomSheet: FC<BottomSheetProps> = ({
   const getComponent = (type: string) => {
     switch (type) {
       case 'Product-Details':
-        return <ProductDetails />;
+        return <ProductDetails Close={onClose} />;
       case 'Product-List':
         return <ProductsSpecialOverlay Close={onClose} onPress={onPress} />;
     }
@@ -34,12 +34,11 @@ const BottomSheet: FC<BottomSheetProps> = ({
       onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <Pressable
-          style={{alignItems: 'center', marginVertical: 18}}
+          style={{alignItems: 'center', marginVertical: verticalScale(7)}}
           onPress={onClose}>
-          <Image
-            style={{width: horizontalScale(44), height: verticalScale(40)}}
-            source={require('../../assets/images/icons/close-button.png')}
-          />
+          <View style={styles.closeButton}>
+            <Image source={require('../../assets/images/icons/close-x.png')} />
+          </View>
         </Pressable>
         <View style={[styles.bottomSheet]}>{getComponent(type)}</View>
       </View>
@@ -56,10 +55,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   bottomSheet: {
-    height: '90%',
+    height: '87%',
     backgroundColor: '#fff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     overflow: 'hidden',
+  },
+  closeButton: {
+    width: 64,
+    height: 64,
+    backgroundColor: '#03071280',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 32,
   },
 });

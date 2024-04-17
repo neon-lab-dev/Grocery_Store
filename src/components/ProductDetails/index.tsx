@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {useNavigation} from '@react-navigation/native';
+
 interface AlternativeImage {
   id: number;
   image: any;
@@ -42,6 +43,10 @@ interface OtherImagesProps {
   setSelectedImage: (id: number) => void;
 }
 
+interface ProductDetailsProps {
+  Close: () => void;
+}
+
 const data: Data = {
   productName: 'Desi Tomato (Nattu Thakkali)',
   alternativeImages: [
@@ -58,7 +63,11 @@ const data: Data = {
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit accusamus aliquam ullam odio nulla nisi architecto consectetur officiis voluptates facere, atque et?  Tempora dolorum maiores corporis esse alias voluptas rem. ',
 };
 
-const UnitCard: FC<UnitCardProps> = ({item, setSelectedUnit, selectedUnit}) => {
+const UnitCard: React.FC<UnitCardProps> = ({
+  item,
+  setSelectedUnit,
+  selectedUnit,
+}) => {
   return (
     <TouchableOpacity
       onPress={() => setSelectedUnit(item.id)}
@@ -103,7 +112,7 @@ const UnitCard: FC<UnitCardProps> = ({item, setSelectedUnit, selectedUnit}) => {
   );
 };
 
-const OtherImages: FC<OtherImagesProps> = ({
+const OtherImages: React.FC<OtherImagesProps> = ({
   item,
   selectedImage,
   setSelectedImage,
@@ -127,13 +136,17 @@ const OtherImages: FC<OtherImagesProps> = ({
   );
 };
 
-const ProductDetails: FC = () => {
+const ProductDetails: React.FC<ProductDetailsProps> = ({Close}) => {
   const [selectedImage, setSelectedImage] = useState(
     data.alternativeImages[0].id,
   );
   const [selectedUnit, setSelectedUnit] = useState(data.units[0].id);
   const navigation = useNavigation();
 
+  const navigateToCart = () => {
+    Close();
+    navigation.navigate('Cart');
+  };
   return (
     <>
       <ScrollView>
@@ -301,9 +314,7 @@ const ProductDetails: FC = () => {
           </Text>
         </View>
         {/* <Pressable > */}
-        <Pressable
-          style={styles.floatingButton}
-          onPress={() => navigation.navigate('Cart')}>
+        <Pressable style={styles.floatingButton} onPress={navigateToCart}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image
               source={require('../../assets/images/icons/cart-white.png')}
