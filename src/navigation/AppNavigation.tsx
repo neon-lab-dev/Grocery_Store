@@ -9,7 +9,7 @@ import {ChevronLeftIcon, SearchIcon, Text, View} from 'native-base';
 import {Settings} from '../screens/Settings';
 import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
-import SingleOrder from '../screens/Orders/single_order';
+import SingleOrder from '../screens/Orders/SingleOrder';
 import Delivered from '../components/Delivered';
 import {horizontalScale} from '../assets/scaling';
 import Categories from '../screens/Categories';
@@ -149,27 +149,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
       <Stack.Screen
         name="SingleOrder"
         component={SingleOrder}
-        options={({navigation}) => ({
-          headerTitle: () => (
-            <View>
-              <Text fontSize={'fs18'}>Order #189073202237</Text>
-              <Text fontSize={'fs12'} color={'accent.400'}>
-                Placed at 07/03/2024 at 09:12PM
-              </Text>
-            </View>
-          ),
-          headerStyle: {height: 100},
-          headerTitleAlign: 'left',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
-          headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
-        })}
+        options={{headerStyle: {height: 100}, headerTitleAlign: 'left'}}
       />
       <Stack.Screen
         name="Addresses"
