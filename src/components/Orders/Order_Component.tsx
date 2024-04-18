@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, Text, Pressable} from 'native-base';
-import Delivered from '../../components/Delivered';
+import Delivered from '../Delivered';
 
 interface OrderComponentProps {
   onPress?: () => void;
@@ -9,11 +9,11 @@ interface OrderComponentProps {
 export const OrderComponent: React.FC<OrderComponentProps> = ({onPress}) => {
   return (
     <Pressable p={4} bg={'white'} mb={1} onPress={onPress}>
-      <View flexDir={'row'}>
+      <View flexDir={'row'} justifyContent={'space-between'} my={2}>
         <Text numberOfLines={2} flexShrink={1}>
           Cadbury Bournville Rich Cocoa 70% Dark
         </Text>
-        <Text ml={100}>₹87.49</Text>
+        <Text>₹87.49</Text>
       </View>
       <View
         borderStyle={'dashed'}
