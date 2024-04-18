@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'native-base';
-import {OrderComponent} from './Order_Component';
+import {OrderComponent} from '../../components/Orders/Order_Component';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 
