@@ -83,8 +83,11 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
               w={'100%'}
               h={50}
               rounded={12}
-              bg={isContinueDisabled ? 'accent.400' : 'primary.500'}
-              _text={{fontSize: 'lg'}}
+              bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
+              _text={{
+                fontSize: 'lg',
+                color: isContinueDisabled ? 'accent.400' : 'white',
+              }}
               disabled={isContinueDisabled}
               onPress={() => {}}>
               Save

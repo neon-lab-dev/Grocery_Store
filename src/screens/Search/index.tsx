@@ -8,14 +8,14 @@ import {
   Text,
   View,
 } from 'native-base';
-import {horizontalScale, scaleFontSize} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
 import {SvgXml} from 'react-native-svg';
 import {filter} from '../../assets/images/icons/filter';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import ProductCard from '../../components/productCard/ProductCard';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import FilterOverlay from './search_filter_overlay';
+import FilterOverlay from '../../components/Search/SearchFilterOverlay';
 import SearchInput from '../../components/SearchInput';
 import ProductData from '../../assets/data/ProductData';
 
@@ -145,7 +145,11 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           )}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
-          columnWrapperStyle={{justifyContent: 'space-between'}}
+          contentContainerStyle={{paddingBottom: verticalScale(30)}}
+          columnWrapperStyle={{
+            justifyContent: 'space-evenly',
+            paddingHorizontal: horizontalScale(10)
+          }}
         />
       </View>
       <FilterOverlay
