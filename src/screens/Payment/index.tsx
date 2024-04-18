@@ -15,8 +15,10 @@ import {
 } from '../../assets/scaling';
 import {Radio} from 'native-base';
 import {styles} from './style';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AppNavigatorParamList } from '../../navigation/MainNavigation';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {AppNavigatorParamList} from '../../navigation/MainNavigation';
+import BillSummaryCard from '../../components/BillSummaryCard';
+import PaymentPreferred from '../../components/PaymentPreferred';
 
 interface Address {
   id: number;
@@ -132,114 +134,115 @@ const AddressDropDownList: FC = () => {
   );
 };
 
-const BillSummaryCard: FC = () => {
-  return (
-    <View style={styles.billSummaryCard}>
-      <Text style={styles.billSummaryText}>Bill Summary</Text>
-      <View style={{height: '52%', justifyContent: 'space-evenly'}}>
-        <View style={styles.totalCard}>
-          <Text style={styles.keysText}>Item Total</Text>
-          <Text style={styles.boldText}>₹33</Text>
-        </View>
-        <View style={styles.totalCard}>
-          <Text style={styles.keysText}>Delivery Charge</Text>
-          <Text style={styles.boldText}>₹25</Text>
-        </View>
-      </View>
-      <View style={styles.line} />
-      <View style={{marginVertical: 5}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginVertical: verticalScale(3),
-          }}>
-          <Text style={styles.boldText}>To Pay</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              gap: 10,
-              alignItems: 'center',
-            }}>
-            <Text style={styles.cutOffPrice}>₹87.49</Text>
-            <Text style={[styles.boldText]}>₹87.49</Text>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginVertical: verticalScale(3),
-          }}>
-          <Text>Incl. all taxes and charges</Text>
-          <View style={styles.savingCard}>
-            <Text style={styles.savingText}>SAVING ₹9.51</Text>
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-};
+// const BillSummaryCard: FC = () => {
+//   return (
+//     <View style={styles.billSummaryCard}>
+//       <Text style={styles.billSummaryText}>Bill Summary</Text>
+//       <View style={{height: '52%', justifyContent: 'space-evenly'}}>
+//         <View style={styles.totalCard}>
+//           <Text style={styles.keysText}>Item Total</Text>
+//           <Text style={styles.boldText}>₹33</Text>
+//         </View>
+//         <View style={styles.totalCard}>
+//           <Text style={styles.keysText}>Delivery Charge</Text>
+//           <Text style={styles.boldText}>₹25</Text>
+//         </View>
+//       </View>
+//       <View style={styles.line} />
+//       <View style={{marginVertical: 5}}>
+//         <View
+//           style={{
+//             flexDirection: 'row',
+//             justifyContent: 'space-between',
+//             alignItems: 'center',
+//             marginVertical: verticalScale(3),
+//           }}>
+//           <Text style={styles.boldText}>To Pay</Text>
+//           <View
+//             style={{
+//               flexDirection: 'row',
+//               justifyContent: 'center',
+//               gap: 10,
+//               alignItems: 'center',
+//             }}>
+//             <Text style={styles.cutOffPrice}>₹87.49</Text>
+//             <Text style={[styles.boldText]}>₹87.49</Text>
+//           </View>
+//         </View>
+//         <View
+//           style={{
+//             flexDirection: 'row',
+//             justifyContent: 'space-between',
+//             marginVertical: verticalScale(3),
+//           }}>
+//           <Text>Incl. all taxes and charges</Text>
+//           <View style={styles.savingCard}>
+//             <Text style={styles.savingText}>SAVING ₹9.51</Text>
+//           </View>
+//         </View>
+//       </View>
+//     </View>
+//   );
+// };
 
-const PaymentPreferred: FC = () => {
-  const [value, setValue] = React.useState<string>('one');
+// const PaymentPreferred: FC = () => {
+//   const [value, setValue] = React.useState<string>('one');
 
-  return (
-    <View style={styles.paymentPreferredCard}>
-      <Text style={styles.paymentPreferredTitle}>Select Preferred Payment</Text>
-      <View style={{marginTop: verticalScale(10)}}>
-        <Radio.Group
-          aria-label="payment method"
-          name="myRadioGroup"
-          accessibilityLabel="favorite number"
-          value={value}
-          onChange={nextValue => {
-            setValue(nextValue);
-          }}>
-          <View
-            style={[
-              styles.totalCard,
-              {
-                height: verticalScale(23),
-                marginVertical: verticalScale(10),
-              },
-            ]}>
-            <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-              <Image
-                source={require('../../assets/images/icons/cod.png')}
-                style={styles.codImage}
-              />
-              <Text style={styles.paymentPreferredText}>Cash on Delivery</Text>
-            </View>
-            <Radio value="one" my={1} aria-label="Cash on Delivey" />
-          </View>
-          <View style={styles.line} />
-          <View
-            style={[
-              styles.totalCard,
-              {height: verticalScale(23), marginVertical: verticalScale(15)},
-            ]}>
-            <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-              <Image
-                source={require('../../assets/images/icons/online-pay.png')}
-                style={styles.payOndelivey}
-              />
-              <Text style={styles.paymentPreferredText}>Pay Online</Text>
-            </View>
-            <Radio value="two" my={1} aria-label="Pay Online" />
-          </View>
-        </Radio.Group>
-      </View>
-    </View>
-  );
-};
+//   return (
+//     <View style={styles.paymentPreferredCard}>
+//       <Text style={styles.paymentPreferredTitle}>Select Preferred Payment</Text>
+//       <View style={{marginTop: verticalScale(10)}}>
+//         <Radio.Group
+//           aria-label="payment method"
+//           name="myRadioGroup"
+//           accessibilityLabel="favorite number"
+//           value={value}
+//           onChange={nextValue => {
+//             setValue(nextValue);
+//           }}>
+//           <View
+//             style={[
+//               styles.totalCard,
+//               {
+//                 height: verticalScale(23),
+//                 marginVertical: verticalScale(10),
+//               },
+//             ]}>
+//             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+//               <Image
+//                 source={require('../../assets/images/icons/cod.png')}
+//                 style={styles.codImage}
+//               />
+//               <Text style={styles.paymentPreferredText}>Cash on Delivery</Text>
+//             </View>
+//             <Radio value="one" my={1} aria-label="Cash on Delivey" />
+//           </View>
+//           <View style={styles.line} />
+//           <View
+//             style={[
+//               styles.totalCard,
+//               {height: verticalScale(23), marginVertical: verticalScale(15)},
+//             ]}>
+//             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+//               <Image
+//                 source={require('../../assets/images/icons/online-pay.png')}
+//                 style={styles.payOndelivey}
+//               />
+//               <Text style={styles.paymentPreferredText}>Pay Online</Text>
+//             </View>
+//             <Radio value="two" my={1} aria-label="Pay Online" />
+//           </View>
+//         </Radio.Group>
+//       </View>
+//     </View>
+//   );
+// };
 
-const Payment: FC <PaymentProps>= ({navigation}) => {
+const Payment: FC<PaymentProps> = ({navigation}) => {
   const gotoOrderSuccess = () => {
     navigation.navigate('OrderSuccess');
   };
+  const [value, setValue] = useState('one');
   return (
     <View style={styles.mainContainer}>
       {/* Drop Down List  */}
@@ -248,55 +251,60 @@ const Payment: FC <PaymentProps>= ({navigation}) => {
       <View
         style={{
           justifyContent: 'space-between',
-          flex: 1,
-          paddingHorizontal: horizontalScale(20),
-          alignItems: 'center',
+          // flex: 1,
+          // paddingHorizontal: horizontalScale(20),
+          // alignItems: 'center',
         }}>
-        <BillSummaryCard />
-        <PaymentPreferred />
+        <BillSummaryCard
+          cutOffPrice={87.49}
+          deliveryCharge={25}
+          itemPrice={33}
+          price={87.49}
+          savingPrice={9.51}
+        />
+        <PaymentPreferred setValue={setValue} value={value} />
       </View>
-      
+
       <View style={styles.bottomLayout}>
-      <Pressable onPress={gotoOrderSuccess}>
-        <View style={styles.bottomCard}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 5,
-            }}>
-            <Text style={styles.bottomCardText}>1 Item</Text>
-            {/* <View style={styles.straightLine} /> */}
-            <Text
-              style={[
-                styles.bottomCardText,
-                {fontWeight: '900', fontSize: scaleFontSize(24)},
-              ]}>
-              |
-            </Text>
-            <Text style={[styles.bottomCardText, {fontWeight: '700'}]}>
-              ₹42
-            </Text>
+        <Pressable onPress={gotoOrderSuccess}>
+          <View style={styles.bottomCard}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 5,
+              }}>
+              <Text style={styles.bottomCardText}>1 Item</Text>
+              {/* <View style={styles.straightLine} /> */}
+              <Text
+                style={[
+                  styles.bottomCardText,
+                  {fontWeight: '900', fontSize: scaleFontSize(24)},
+                ]}>
+                |
+              </Text>
+              <Text style={[styles.bottomCardText, {fontWeight: '700'}]}>
+                ₹42
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={[styles.bottomCardText, {fontSize: scaleFontSize(18)}]}>
+                Pay Now
+              </Text>
+              <Image
+                source={require('../../assets/images/icons/chevron-right.png')}
+              />
+            </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={[styles.bottomCardText, {fontSize: scaleFontSize(18)}]}>
-              Pay Now
-            </Text>
-            <Image
-              source={require('../../assets/images/icons/chevron-right.png')}
-            />
-          </View>
-        </View>
         </Pressable>
       </View>
-      
     </View>
   );
 };

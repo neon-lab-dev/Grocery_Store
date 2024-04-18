@@ -15,8 +15,9 @@ import {scaleFontSize, verticalScale, width} from '../../assets/scaling';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import SelectAddress from '../../components/SelectingAddress';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AppNavigatorParamList } from '../../navigation/MainNavigation';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {AppNavigatorParamList} from '../../navigation/MainNavigation';
+import BillSummaryCard from '../../components/BillSummaryCard';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
@@ -45,7 +46,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           <CartItemCard item={item} />
           <CartItemCard item={item} />
         </View>
-        <View p={5} bgColor={'white'} borderRadius={14} m={5}>
+        {/* <View p={5} bgColor={'white'} borderRadius={14} m={5}>
           <Text fontSize={'fs20'}>Bill Summary</Text>
           <View flexDir={'row'} justifyContent={'space-between'}>
             <Text fontSize={'fs14'} color={'accent.500'}>
@@ -86,7 +87,14 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
               </Text>
             </Center>
           </View>
-        </View>
+        </View> */}
+        <BillSummaryCard
+          cutOffPrice={87.49}
+          deliveryCharge={25}
+          itemPrice={33}
+          price={87.49}
+          savingPrice={9.51}
+        />
       </ScrollView>
       <Modal isOpen={modalVisible} size={'full'}>
         <Modal.Content
@@ -94,7 +102,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           mt={'auto'}
           borderTopLeftRadius={12}
           borderTopRightRadius={12}>
-          <SelectAddress onClose={() => setModalVisible(false)} navigation={navigation} />
+          <SelectAddress
+            onClose={() => setModalVisible(false)}
+            navigation={navigation}
+          />
         </Modal.Content>
       </Modal>
       <View
