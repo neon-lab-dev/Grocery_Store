@@ -10,7 +10,7 @@ import {
   View,
 } from 'native-base';
 import * as React from 'react';
-import {CartItemCard} from './cart_item_card';
+import {CartItemCard} from '../../components/Cart/CartItemCard';
 import {scaleFontSize, verticalScale, width} from '../../assets/scaling';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';

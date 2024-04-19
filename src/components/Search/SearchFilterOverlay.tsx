@@ -9,10 +9,10 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {RadioButton} from 'react-native-paper';
-import {styles} from './style';
+import {styles} from '../../screens/Search/style';
 import MultiSlider, {LabelProps} from '@ptomasroos/react-native-multi-slider';
-import Radio from './radio_button';
-import Checkbox from './checkbox';
+import Radio from './RadioButton';
+import Checkbox from './Checkbox';
 
 interface FilterOverlayProps extends IModalProps {
   showModal: boolean;

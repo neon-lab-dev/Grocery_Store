@@ -1,6 +1,6 @@
 import {Button, Center, Image, Modal, Text, View} from 'native-base';
 import React from 'react';
-import SettingsOption from './settings_options_component';
+import SettingsOption from '../../components/Settings/SettingsOptionComponent';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {bulb} from '../../assets/images/icons/bulb';
@@ -10,12 +10,9 @@ import {comment} from '../../assets/images/icons/comment';
 import {user} from '../../assets/images/icons/user';
 import {Pressable, TextInput} from 'react-native';
 import {StyleSheet} from 'react-native';
-import {
-  horizontalScale,
-  scaleFontSize,
-  verticalScale,
-} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
+import {CallNumber} from '../../utils/launchIntents';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
@@ -25,7 +22,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
     navigation.navigate('PersonalDetails');
   };
   const gotoHelp = () => {
-    navigation.navigate('Help');
+    CallNumber(1234567890);
   };
   const gotoOrders = () => {
     navigation.navigate('Orders');
@@ -151,7 +148,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
       />
       <View flex={1} justifyContent={'center'}>
         <Button
-        onPress={gotoSplash}
+          onPress={gotoSplash}
           variant={'outline'}
           mt={5}
           w={100}

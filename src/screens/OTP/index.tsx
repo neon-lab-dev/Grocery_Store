@@ -3,7 +3,7 @@ import {View, Text, Center} from 'native-base';
 import {ImageBackground} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './style';
-import OTP from './OTP_component';
+import OTP from '../../components/OTP/OTP_component';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
 
