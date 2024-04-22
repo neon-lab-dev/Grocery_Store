@@ -99,7 +99,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            top: verticalScale(172),
+            top: verticalScale(170),
           }}>
           <View style={{marginTop:10}}>
             <Text style={styles.Price}>₹{products.Price}</Text>
