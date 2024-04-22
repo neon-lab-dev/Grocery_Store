@@ -23,7 +23,7 @@ const Header: FC<HeaderProps> = ({onCartPress, onSettingsPress}) => {
       </View>
       <View style={styles.cartFlex}>
         <View style={styles.cartContainer}>
-          <Text style={styles.cartQuantity}>90+</Text>
+          <Text style={styles.cartQuantity}>1</Text>
         </View>
         <Pressable onPress={onCartPress}>
           <Image source={require('../../assets/images/icons/cart.png')} />

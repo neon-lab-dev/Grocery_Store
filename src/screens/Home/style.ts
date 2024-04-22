@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {horizontalScale, scaleFontSize} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
 import { Colors } from '../../constants/colors';
 
 const style = StyleSheet.create({
@@ -15,7 +15,7 @@ const style = StyleSheet.create({
     color:Colors.accent[700],
     fontWeight:"600",
     fontSize:scaleFontSize(20),
-    marginTop:30,
+    marginTop:verticalScale(12),
   },
   SubCategoryText:{
    fontWeight:"400",
@@ -23,22 +23,22 @@ const style = StyleSheet.create({
   },
   ExploreCatgories:{
    height:"100%",
-   width:85,
+   width:horizontalScale(78),
   },
   ExploreCatgoriesText:{
-    fontSize: scaleFontSize(12),
+    fontSize: scaleFontSize(11),
     color: Colors.accent[600],
     fontWeight:'500',
-    alignSelf:'flex-start',
-    marginTop:15
-  },
+    alignSelf:'center',
+    marginVertical:verticalScale (5)
 
+  },
   floatingButton:{
     position: 'absolute',
-    bottom: 8,
-    right: 20,
-    width: 70,
-    height: 70,
+    bottom: verticalScale(1),
+    right: horizontalScale(20),
+    width: horizontalScale(60),
+    height: verticalScale(48),
   },
   buttonImage: {
     width: '100%',

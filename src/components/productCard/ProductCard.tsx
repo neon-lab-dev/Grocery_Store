@@ -1,8 +1,16 @@
-import React from 'react';
-import {View, Text, Image, Pressable, ScrollView} from 'native-base';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  ScrollView,
+  Button,
+  Center,
+} from 'native-base';
 import {styles} from './style';
 import {Colors} from '../../constants/colors';
-import {horizontalScale, verticalScale} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
 interface ProductDataItem {
   id: number;
@@ -16,36 +24,52 @@ interface ProductCardProps {
   onPress: () => void;
   products: ProductDataItem;
 }
+
 const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
+  const [count, setCount] = useState(1);
+  const [isButton1Visible, setIsButton1Visible] = useState(true);
+  const handleDecrease = () => {
+    if (count == 1) {
+      setIsButton1Visible(true);
+    } else setCount(count - 1);
+  };
+
+  const handleIncrease = () => {
+    setCount(count + 1);
+  };
+  const handleButtonPress = () => {
+    setIsButton1Visible(false);
+  };
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   return (
     <View style={styles.Container}>
       <View
         key={products.id}
-        style={{width: horizontalScale(120), height: verticalScale(200)}}>
+        style={{width: horizontalScale(105), height: verticalScale(220)}}>
         <Pressable
           onPress={onPress}
           style={{
             borderRadius: 20,
             backgroundColor: '#F9FAFB',
             height: verticalScale(120),
-            width: horizontalScale(120),
+            width: horizontalScale(110),
             overflow: 'hidden',
           }}>
           <View
             style={{
               backgroundColor: Colors.primary[500],
-              height: verticalScale(30),
-              width: horizontalScale(34),
-              marginLeft: 10,
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
+              height: verticalScale(28),
+              width: horizontalScale(30),
+              marginLeft: horizontalScale(15),
+              borderBottomLeftRadius: horizontalScale(8),
+              borderBottomRightRadius: horizontalScale(8),
             }}>
             <Text
               style={{
                 alignSelf: 'center',
                 fontWeight: 'bold',
                 color: 'white',
+                fontSize:scaleFontSize(14),
               }}>
               {off.toFixed(0)}%
             </Text>
@@ -53,7 +77,8 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               style={{
                 alignSelf: 'center',
                 position: 'absolute',
-                top: verticalScale(11),
+                fontSize:scaleFontSize(14),
+                top: verticalScale(10),
                 fontWeight: 'bold',
                 color: 'white',
               }}>
@@ -74,18 +99,46 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            top: verticalScale(170),
+            top: verticalScale(172),
           }}>
-          <View>
+          <View style={{marginTop:10}}>
             <Text style={styles.Price}>₹{products.Price}</Text>
             <Text strikeThrough style={styles.DisPrice}>
               ₹{products.DisPrice}
             </Text>
           </View>
-          <View>
-            <Pressable style={styles.Button} onPress={onPress}>
-              <Text style={styles.ButtonText}>ADD</Text>
-            </Pressable>
+          <View >
+            {isButton1Visible ? (
+              <Pressable style={styles.Button} onPress={handleButtonPress}>
+                <Text style={styles.ButtonText}>ADD</Text>
+              </Pressable>
+            ) : (
+              <View
+                style={{
+                  paddingVertical: verticalScale(4),
+                  paddingHorizontal: horizontalScale(4),
+                  marginHorizontal: horizontalScale(25),
+                  backgroundColor: Colors.primary[500],
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius:10,
+                }}>
+                <Pressable onPress={handleDecrease}>
+                  <Text style={{color: 'white', fontSize: scaleFontSize(20),marginHorizontal:horizontalScale(5)}}>
+                    -
+                  </Text>
+                </Pressable>
+                <Text style={{color: 'white', fontSize: scaleFontSize(18),marginHorizontal:horizontalScale(5)}}>
+                  {count}
+                </Text>
+                <Pressable onPress={handleIncrease}>
+                  <Text style={{color: 'white', fontSize:  scaleFontSize(18),marginHorizontal:horizontalScale(5)}}>
+                    +
+                  </Text>
+                </Pressable>
+              </View>
+            )}
           </View>
         </View>
       </View>

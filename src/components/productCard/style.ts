@@ -8,35 +8,35 @@ export const styles = StyleSheet.create({
     marginLeft: horizontalScale(18),
   },
   Image: {
-    width: 110,
-    height: 110,
-    alignSelf: 'center',
+    width: horizontalScale(90),
+    height: verticalScale(70),
+    alignSelf: 'center'
   },
   Title: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: 'black',
-    marginTop: 5,
+    fontWeight:'500',
+    marginTop: verticalScale(4),
   },
   Price: {
     fontSize: scaleFontSize(16),
     color: 'black',
-
   },
   DisPrice: {
-    fontSize: scaleFontSize(14),
+    fontSize: scaleFontSize(12),
     color:Colors.accent[400]
   },
   Button: {
     borderRadius: 10,
     paddingVertical: verticalScale(3),
-    paddingHorizontal: 16,
+    paddingHorizontal: horizontalScale(16),
     borderWidth: 1,
     borderColor: Colors.primary[400],
-    marginHorizontal: 25,
+    marginHorizontal: horizontalScale(25),
   },
   ButtonText: {
     color: Colors.primary[400],
-    fontSize: 14,
+    fontSize: scaleFontSize(15),
   },
   Quantity: {
     fontSize: scaleFontSize(12),

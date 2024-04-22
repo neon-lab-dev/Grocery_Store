@@ -13,7 +13,7 @@ import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
 import {Colors} from '../../constants/colors';
-import {horizontalScale, scaleFontSize} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
 import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
 import CategoryData from '../../assets/data/CategoriesData';
@@ -79,7 +79,7 @@ const Home: React.FC<Props> = ({navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: 18,
+            marginBottom: verticalScale(15),
           }}>
           <View style={style.Category}>
             <Text style={style.CategoryText}>Freshly Picked up for you!</Text>
@@ -166,7 +166,7 @@ const Home: React.FC<Props> = ({navigation}) => {
           })}
         </View>
         <View style={{marginHorizontal: horizontalScale(18)}}>
-          <Text style={[style.CategoryText, {marginBottom: 15}]}>
+          <Text style={[style.CategoryText, {marginBottom: verticalScale(15)}]}>
             Snacks & Drinks
           </Text>
           {CategoryData.map(data => {
@@ -278,7 +278,7 @@ const Home: React.FC<Props> = ({navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: 18,
+            marginBottom: verticalScale(15),
           }}>
           <View style={style.Category}>
             <Text style={style.CategoryText}>Freshly Picked For You!</Text>
