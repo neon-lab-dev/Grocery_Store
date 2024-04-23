@@ -3,7 +3,6 @@ import {horizontalScale, scaleFontSize, width} from '../../assets/scaling';
 
 export const styles = StyleSheet.create({
   container: {
-    width: '90%',
     height: 56,
     marginHorizontal: horizontalScale(18),
     borderRadius: horizontalScale(12),
@@ -22,6 +21,8 @@ export const styles = StyleSheet.create({
   },
   searchInput: {
     width: '80%',
+    fontFamily: 'Inter',
+    fontWeight: '400',
     fontSize: scaleFontSize(16),
     color: '#4B5563',
   },

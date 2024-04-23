@@ -24,6 +24,7 @@ import {filter} from '../assets/images/icons/filter';
 import Cart from '../screens/Cart';
 import CategoryProducts from '../screens/Category Products/CategoryProducts';
 import ProductDetails from '../screens/ProductDetails';
+import GoBack from '../components/Navigation/GoBack';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -48,14 +49,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           ),
           headerStyle: {height: 100},
           headerTitleAlign: 'left',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
           // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
         })}
       />
@@ -75,14 +69,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
@@ -96,14 +83,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           ),
           headerStyle: {height: 100},
           headerTitleAlign: 'left',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
           // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
         })}
       />
@@ -119,14 +99,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: 'Personal Details',
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
@@ -136,14 +109,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: 'My Orders',
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
@@ -158,14 +124,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: 'Saved Addresses',
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
@@ -175,14 +134,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: 'Add Address',
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
@@ -191,14 +143,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
@@ -207,14 +152,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
@@ -231,14 +169,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           ),
           headerStyle: {height: 100},
           headerTitleAlign: 'left',
-          headerLeft: () => (
-            <ChevronLeftIcon
-              size={'md'}
-              ml={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
           headerRight: () => (
             <SearchIcon
               size={'xl'}
