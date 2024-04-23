@@ -45,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     <View style={styles.Container}>
       <View
         key={products.id}
-        style={{width: horizontalScale(105), height: verticalScale(220)}}>
+        style={{width: horizontalScale(105), height: verticalScale(210)}}>
         <Pressable
           onPress={onPress}
           style={{
@@ -99,9 +99,9 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            top: verticalScale(170),
+            top: verticalScale(160),
           }}>
-          <View style={{marginTop:10}}>
+          <View style={{marginTop:24}}>
             <Text style={styles.Price}>₹{products.Price}</Text>
             <Text strikeThrough style={styles.DisPrice}>
               ₹{products.DisPrice}
@@ -117,7 +117,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                 style={{
                   paddingVertical: verticalScale(4),
                   paddingHorizontal: horizontalScale(4),
-                  marginHorizontal: horizontalScale(25),
+                  marginHorizontal: horizontalScale(30),
                   backgroundColor: Colors.primary[500],
                   flexDirection: 'row',
                   justifyContent: 'center',

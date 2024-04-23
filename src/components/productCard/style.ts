@@ -24,7 +24,9 @@ export const styles = StyleSheet.create({
   },
   DisPrice: {
     fontSize: scaleFontSize(12),
-    color:Colors.accent[400]
+    color:Colors.accent[400],
+    marginBottom:25,
+    marginTop:-5
   },
   Button: {
     borderRadius: 10,
@@ -32,7 +34,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(16),
     borderWidth: 1,
     borderColor: Colors.primary[400],
-    marginHorizontal: horizontalScale(25),
+    marginHorizontal: horizontalScale(30),
   },
   ButtonText: {
     color: Colors.primary[400],
