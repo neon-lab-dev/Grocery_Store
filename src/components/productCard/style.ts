@@ -25,8 +25,8 @@ export const styles = StyleSheet.create({
   DisPrice: {
     fontSize: scaleFontSize(12),
     color:Colors.accent[400],
-    marginBottom:25,
-    marginTop:-5
+    marginBottom:verticalScale(17),
+    marginTop:verticalScale(-4)
   },
   Button: {
     borderRadius: 10,
