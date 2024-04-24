@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
-import {Center, FlatList, Pressable, ScrollView, Text, View} from 'native-base';
+import React, {useState} from 'react';
+import {Center, FlatList, Pressable, Text, View} from 'native-base';
 import {
   horizontalScale,
   scaleFontSize,
@@ -16,6 +15,8 @@ import FilterOverlay from '../../components/Search/SearchFilterOverlay';
 import SearchInput from '../../components/SearchInput';
 import ProductData from '../../assets/data/ProductData';
 import GoBack from '../../components/Navigation/GoBack';
+import {Dimensions} from 'react-native';
+import {getFontScale} from 'react-native-device-info';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -26,46 +27,11 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
   const recentSearch = ['Cat Food', 'Ice Cream', 'Cake'];
-  const headerTitleComponent = () => (
-    <View flex={1} justifyContent={'center'} mb={-35}>
-      <SearchInput
-        onChangeText={SetsearchInp}
-        value={searchInp}
-        placeholder="Search “Bread” "
-        onPress={() => {}}
-        editable={true}
-        width={100}
-      />
-    </View>
-  );
+  const {width} = Dimensions.get('window');
+  const fontSize = width >= 360 ? scaleFontSize(17) : scaleFontSize(16);
 
-  const headerRightComponent = () => (
-    <TouchableOpacity
-      onPress={() => {
-        setShowModal(true);
-      }}>
-      <Center
-        borderRadius={12}
-        borderWidth={1}
-        borderColor={'accent.200'}
-        mx={4}
-        p={4}>
-        <SvgXml xml={filter} height={18} width={20} />
-      </Center>
-    </TouchableOpacity>
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: headerTitleComponent,
-      headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
-      headerLeftContainerStyle: {marginRight: -horizontalScale(20)},
-      headerRight: headerRightComponent,
-    });
-  }, [searchInp]);
-
-  return (
-    <ScrollView flex={1} nestedScrollEnabled bg={'accent.50'}>
+  const ListHeaderComponent = () => (
+    <View flex={1} bg={'accent.50'}>
       <View mt={4} px={horizontalScale(20)}>
         <View flexDir={'row'} justifyContent={'space-between'}>
           <Text
@@ -107,6 +73,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               <Text
                 fontFamily={'Inter'}
                 fontSize={scaleFontSize(14)}
+                adjustsFontSizeToFit
                 fontWeight={selectedRecentSearch === item ? 600 : 500}
                 color={
                   selectedRecentSearch === item ? 'accent.700' : 'accent.400'
@@ -126,7 +93,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           <View flexDir={'row'}>
             <Text
               fontFamily={'Inter'}
-              fontSize={scaleFontSize(18)}
+              fontSize={fontSize}
               color={'accent.500'}
               numberOfLines={1}>
               Showing Results for
@@ -134,7 +101,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             <Text
               fontFamily={'Inter'}
               fontWeight={500}
-              fontSize={scaleFontSize(18)}
+              fontSize={fontSize}
               color={'accent.700'}>
               {searchInp ? ` ${searchInp}` : ' Product Name'}
             </Text>
@@ -142,24 +109,67 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           <Text
             fontFamily={'Inter'}
             fontWeight={500}
+            adjustsFontSizeToFit
             fontSize={scaleFontSize(14)}
             color={'accent.500'}>
             246 items
           </Text>
         </View>
+      </View>
+    </View>
+  );
+  return (
+    <>
+      <View
+        h={100}
+        bgColor={'white'}
+        borderBottomWidth={1}
+        borderColor={'accent.100'}
+        flexDir={'row'}
+        alignItems={'center'}>
+        <GoBack onPress={() => navigation.goBack()} />
+        <View flex={1} mb={-35} mr={5}>
+          <SearchInput
+            onChangeText={SetsearchInp}
+            value={searchInp}
+            placeholder="Search “Bread” "
+            onPress={() => {}}
+            editable={true}
+            width={100}
+          />
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            setShowModal(true);
+          }}>
+          <Center
+            borderRadius={12}
+            borderWidth={1}
+            borderColor={'accent.200'}
+            mr={horizontalScale(10)}
+            ml={horizontalScale(5)}
+            p={4}>
+            <SvgXml xml={filter} height={18} width={20} />
+          </Center>
+        </TouchableOpacity>
+      </View>
+      <View flex={1} bg={'white'}>
         <FlatList
           flex={1}
-          nestedScrollEnabled
+          ListHeaderComponent={ListHeaderComponent}
           data={ProductData}
           renderItem={({item}) => (
             <ProductCard onPress={() => {}} products={item} />
           )}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
-          contentContainerStyle={{paddingBottom: verticalScale(30)}}
+          contentContainerStyle={{
+            paddingBottom: verticalScale(30),
+          }}
           columnWrapperStyle={{
             justifyContent: 'space-evenly',
             paddingHorizontal: horizontalScale(10),
+            marginBottom: verticalScale(20),
           }}
         />
       </View>
@@ -167,7 +177,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
         showModal={showModal}
         onClose={() => setShowModal(false)}
       />
-    </ScrollView>
+    </>
   );
 };
 
