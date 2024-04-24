@@ -24,7 +24,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   return (
     <View style={{flex: 1}}>
       <View style={styles.selectAddressBox}>
-        <Text style={styles.selectAddressText}>Fresly Picked Items</Text>
+        <Text style={styles.freshlyPickedText}>Fresly Picked Items</Text>
         <Pressable onPress={() => Close()}>
           <Image source={require('../../assets/images/icons/close.png')} />
         </Pressable>
@@ -33,7 +33,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
         <SearchInput
           onChangeText={setText}
           value={text}
-          placeholder="Search Beard"
+          placeholder='Search "Beard"'
         />
       </View>
       <FlatList

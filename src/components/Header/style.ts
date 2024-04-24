@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {spacing} from '../../constants/spacing';
 import {scaleFontSize} from '../../assets/scaling';
+import { Colors } from '../../constants/colors';
 
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -29,10 +30,10 @@ export const styles = StyleSheet.create({
   cartContainer: {
     backgroundColor: '#FED7AA',
     position: 'absolute',
-    top: -9,
+    top: -6,
     right: -12,
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -40,7 +41,8 @@ export const styles = StyleSheet.create({
     borderWidth: 0.1,
   },
   cartQuantity: {
-    color: 'black',
-    fontSize: scaleFontSize(13),
+    fontWeight:'500',
+    color: Colors.primary[500],
+    fontSize: scaleFontSize(16),
   },
 });
