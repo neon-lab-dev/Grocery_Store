@@ -141,9 +141,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
               paddingTop: verticalScale(16),
               paddingHorizontal: horizontalScale(24),
               backgroundColor: '#FFFFFF',
-              borderBottomWidth: verticalScale(1),
-              borderBottomColor: '#F9FAFB',
-              paddingBottom: verticalScale(10),
+              borderBottomWidth: horizontalScale(2),
+              borderBottomColor: '#F3F4F6',
+              paddingBottom: verticalScale(12),
             }}>
             <Text style={styles.productName}>{data.productName}</Text>
           </View>
