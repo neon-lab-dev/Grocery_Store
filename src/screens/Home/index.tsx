@@ -94,7 +94,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 color: '#22C55E',
                 fontSize: scaleFontSize(16),
                 marginRight: horizontalScale(18),
-                marginTop: 35,
+                marginTop: verticalScale(25),
               }}>
               See all
             </Text>
@@ -291,7 +291,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 color: '#22C55E',
                 fontSize: scaleFontSize(16),
                 marginRight: horizontalScale(18),
-                marginTop: 35,
+                marginTop: verticalScale(25),
               }}>
               See all
             </Text>
@@ -300,28 +300,28 @@ const Home: React.FC<Props> = ({navigation}) => {
         <ProductHorizontalScroll onPress={listToDetails} />
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
-          <View style={{flexDirection: 'row', marginTop: 20}}>
+          <View style={{flexDirection: 'row', marginTop: verticalScale(14)}}>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                style={{height: verticalScale(54), width: horizontalScale(70)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories1.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Baby Care</Text>
             </View>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                  style={{height: verticalScale(54), width: horizontalScale(70)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories2.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Gift Store</Text>
             </View>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                  style={{height: verticalScale(54), width: horizontalScale(70)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories3.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Party Essentials</Text>
             </View>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                 style={{height: verticalScale(54), width: horizontalScale(70)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories4.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Kitchen needs</Text>
             </View>

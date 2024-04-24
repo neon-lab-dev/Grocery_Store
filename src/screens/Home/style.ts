@@ -22,7 +22,6 @@ const style = StyleSheet.create({
    fontSize:scaleFontSize(16),
   },
   ExploreCatgories:{
-   height:"100%",
    width:horizontalScale(78),
   },
   ExploreCatgoriesText:{
@@ -30,6 +29,7 @@ const style = StyleSheet.create({
     color: Colors.accent[600],
     fontWeight:'500',
     alignSelf:'center',
+    right:verticalScale(2),
     marginVertical:verticalScale (5)
 
   },
