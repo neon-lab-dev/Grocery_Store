@@ -156,7 +156,9 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           )}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
-          contentContainerStyle={{paddingBottom: verticalScale(30)}}
+          contentContainerStyle={{
+            paddingBottom: verticalScale(30),
+          }}
           columnWrapperStyle={{
             justifyContent: 'space-evenly',
             paddingHorizontal: horizontalScale(10),

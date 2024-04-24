@@ -3,6 +3,7 @@ import * as React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {SvgXml} from 'react-native-svg';
 import {checked} from '../../assets/images/icons/check';
+import {scaleFontSize} from '../../assets/scaling';
 
 interface CheckboxProps {
   options: string[];
@@ -47,6 +48,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
             )}
           </View>
           <Text
+            fontFamily={'Inter'}
+            fontWeight={500}
+            fontSize={scaleFontSize(16)}
             color={
               selectedOptions.includes(option) ? 'accent.600' : 'accent.400'
             }>
