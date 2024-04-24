@@ -7,8 +7,8 @@ import {width} from '../../assets/scaling';
 import {location} from '../../assets/images/icons/location';
 import {Pressable, StyleSheet} from 'react-native';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AppNavigatorParamList } from '../../navigation/MainNavigation';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 interface OrderSuccessProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'OrderSuccess'>;
 }
@@ -109,9 +109,13 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             </Text>
           </Center>
           <Pressable onPress={gotoOrderDetails}>
-          <Text fontSize={'fs12'} color={'primary.500'} fontWeight={500} ml={6}>
-            View Details
-          </Text>
+            <Text
+              fontSize={'fs12'}
+              color={'primary.500'}
+              fontWeight={500}
+              ml={6}>
+              View Details
+            </Text>
           </Pressable>
           <View>
             <Image
