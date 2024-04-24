@@ -1,22 +1,16 @@
 import {StyleSheet} from 'react-native';
+import {verticalScale} from '../../assets/scaling';
 
 export const styles = StyleSheet.create({
-  radioButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    marginBottom: -8,
-  },
-  radioLabel: {
-    marginLeft: 3,
-  },
   sliderContainer: {
     justifyContent: 'center',
-    marginBottom: -20,
+    marginBottom: -verticalScale(15),
+    marginTop: verticalScale(15),
   },
   sliderTrack: {
     height: 8,
     borderRadius: 10,
+    backgroundColor: '#F3F4F6',
   },
   selectedTrack: {
     backgroundColor: '#22C55E',
@@ -26,11 +20,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   marker: {
-    height: 20,
-    width: 20,
-    backgroundColor: '#22C55E',
-  },
-  pressedMarker: {
     height: 20,
     width: 20,
     backgroundColor: '#22C55E',
