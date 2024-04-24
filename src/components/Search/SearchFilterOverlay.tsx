@@ -8,8 +8,7 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import {RadioButton} from 'react-native-paper';
-import {styles} from '../../screens/Search/style';
+import {styles} from './style';
 import MultiSlider, {LabelProps} from '@ptomasroos/react-native-multi-slider';
 import Radio from './RadioButton';
 import Checkbox from './Checkbox';
@@ -26,7 +25,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
 }) => {
   const filterOptions = ['Sort', 'Price', 'Brands'];
   const [selectedOption, setSelectedOption] = useState('Sort');
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>(['Garnier']);
   const [selectedMinValue, setSelectedMinValue] = useState<number>(0);
   const [selectedMaxValue, setSelectedMaxValue] = useState<number>(100);
   const radioButtonsData = [
@@ -48,8 +47,9 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           left={sliderPosition.oneMarkerLeftPosition - 10}
           bottom={-40}>
           <Text
+            fontFamily={'Inter'}
+            fontWeight={500}
             fontSize={scaleFontSize(14)}
-            fontWeight={'fw500'}
             color={'secondary.500'}>
             ₹{selectedMinValue}
           </Text>
@@ -61,8 +61,9 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           left={sliderPosition.twoMarkerLeftPosition - 10}
           bottom={-40}>
           <Text
+            fontFamily={'Inter'}
+            fontWeight={500}
             fontSize={scaleFontSize(14)}
-            fontWeight={'fw500'}
             color={'secondary.500'}>
             ₹{selectedMaxValue}
           </Text>
@@ -76,6 +77,8 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
         return (
           <View>
             <Text
+              fontFamily={'Inter'}
+              fontWeight={500}
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
               pl={5}
@@ -91,10 +94,20 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
       case 'Price':
         return (
           <View p={5}>
-            <Text fontSize={scaleFontSize(18)} color={'accent.700'} mb={5}>
+            <Text
+              fontFamily={'Inter'}
+              fontWeight={500}
+              fontSize={scaleFontSize(18)}
+              color={'accent.700'}
+              mb={5}>
               Price
             </Text>
-            <Text fontSize={scaleFontSize(14)} color={'accent.500'} mb={2}>
+            <Text
+              fontFamily={'Inter'}
+              fontWeight={500}
+              fontSize={scaleFontSize(14)}
+              color={'accent.500'}
+              mb={2}>
               Select Range
             </Text>
             <MultiSlider
@@ -115,13 +128,20 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               selectedStyle={styles.selectedTrack}
               markerContainerStyle={styles.markerContainer}
               markerStyle={styles.marker}
-              pressedMarkerStyle={styles.pressedMarker}
             />
             <View flexDir={'row'} justifyContent={'space-between'}>
-              <Text fontSize={scaleFontSize(14)} color={'accent.400'}>
+              <Text
+                fontFamily={'Inter'}
+                fontWeight={500}
+                fontSize={scaleFontSize(14)}
+                color={'accent.400'}>
                 ₹0
               </Text>
-              <Text fontSize={scaleFontSize(14)} color={'accent.400'}>
+              <Text
+                fontFamily={'Inter'}
+                fontWeight={500}
+                fontSize={scaleFontSize(14)}
+                color={'accent.400'}>
                 ₹299
               </Text>
             </View>
@@ -130,7 +150,12 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
       case 'Brands':
         return (
           <View p={5}>
-            <Text fontSize={scaleFontSize(18)} color={'accent.700'} mb={5}>
+            <Text
+              fontFamily={'Inter'}
+              fontWeight={500}
+              fontSize={scaleFontSize(18)}
+              color={'accent.700'}
+              mb={5}>
               Sort By
             </Text>
             <Checkbox
@@ -143,19 +168,25 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
     }
   };
   return (
-    <Modal {...props} isOpen={showModal} size={'full'}>
+    <Modal {...props} isOpen={showModal} size={'full'} onClose={onClose}>
       <Modal.Content
         mb={0}
         mt={'auto'}
         borderTopLeftRadius={20}
         borderTopRightRadius={20}
-        h={'50%'}>
+        h={'65%'}
+        bgColor={'#ffffff'}>
         <View
           flexDir={'row'}
           alignItems={'center'}
           justifyContent={'space-between'}
           p={5}>
-          <Text fontSize={'fs18'}>Filter Items</Text>
+          <Text
+            fontFamily={'Inter'}
+            fontWeight={500}
+            fontSize={scaleFontSize(18)}>
+            Filter Items
+          </Text>
           <Pressable onPress={onClose}>
             <SvgXml xml={close} height={20} width={20} />
           </Pressable>
@@ -169,11 +200,13 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                 onPress={() => setSelectedOption(option)}>
                 <View
                   pl={5}
-                  py={5}
+                  mt={verticalScale(20)}
                   flexDir={'row'}
                   justifyContent={'space-between'}
                   alignItems={'center'}>
                   <Text
+                    fontFamily={'Inter'}
+                    fontWeight={500}
                     color={
                       selectedOption === option ? 'primary.500' : 'accent.500'
                     }
@@ -182,11 +215,11 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                   </Text>
                   <View
                     backgroundColor="primary.500"
-                    borderTopLeftRadius={10}
-                    borderBottomLeftRadius={10}
-                    height={5}
-                    width={1}
-                    ml={5}
+                    borderTopLeftRadius={100}
+                    borderBottomLeftRadius={100}
+                    height={'170%'}
+                    width={horizontalScale(5)}
+                    ml={horizontalScale(20)}
                     opacity={selectedOption === option ? 1 : 0}
                   />
                 </View>
@@ -194,7 +227,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
             ))}
           </View>
           <View
-            h={verticalScale(300)}
+            h={verticalScale(500)}
             borderWidth={0.5}
             borderColor={'accent.200'}
           />
