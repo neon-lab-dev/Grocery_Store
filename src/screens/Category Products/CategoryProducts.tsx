@@ -322,7 +322,7 @@ const CategoryProducts: FC = ({navigation}) => {
           renderItem={({item}) => (
             <SmallProductCard
               onPress={navigateToProductDetails}
-              products={ProductData[1]}
+              products={ProductData[0]}
             />
           )}
           keyExtractor={item => item.id.toString()}
