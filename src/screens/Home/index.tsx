@@ -70,6 +70,7 @@ const Home: React.FC<Props> = ({navigation}) => {
         placeholder="Search “Bread” "
         onPress={gotoSearch}
         editable={false}
+        width={90}
       />
       <ScrollView>
         <ImageCarousel />

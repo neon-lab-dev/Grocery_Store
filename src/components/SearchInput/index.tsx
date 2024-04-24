@@ -8,6 +8,7 @@ interface SearchInputProps {
   placeholder: string;
   onPress: () => void;
   editable: boolean;
+  width: number;
 }
 
 const SearchInput: FC<SearchInputProps> = ({
@@ -16,9 +17,12 @@ const SearchInput: FC<SearchInputProps> = ({
   placeholder,
   onPress,
   editable,
+  width,
 }) => {
   return (
-    <TouchableOpacity onPressIn={onPress} style={styles.container}>
+    <TouchableOpacity
+      onPressIn={onPress}
+      style={[styles.container, {width: `${width}%`}]}>
       <Image source={require('../../assets/images/icons/search.png')} />
       <TextInput
         style={styles.searchInput}

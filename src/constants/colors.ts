@@ -5,6 +5,7 @@ type Colors = {
     500: string;
   };
   accent: {
+    50: string;
     100: string;
     200: string;
     400: string;
@@ -33,6 +34,7 @@ export const Colors: Colors = {
     500: '#F97316',
   },
   accent: {
+    50: '#F9FAFB',
     100: '#F3F4F6',
     200: '#E5E7EB',
     400: '#9CA3AF',

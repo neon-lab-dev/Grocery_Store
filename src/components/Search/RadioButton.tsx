@@ -1,15 +1,17 @@
 import {Text, View} from 'native-base';
 import * as React from 'react';
 import {TouchableOpacity} from 'react-native';
-import {horizontalScale, verticalScale} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 interface RadioProps {
   options: {id: string; label: string; value: string}[];
   onSelect: (option: string) => void;
 }
 const Radio: React.FC<RadioProps> = ({options, onSelect}) => {
-  const [selectedOption, setSelectedOption] = React.useState<string | null>(
-    null,
-  );
+  const [selectedOption, setSelectedOption] = React.useState('default');
 
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
@@ -34,7 +36,15 @@ const Radio: React.FC<RadioProps> = ({options, onSelect}) => {
               marginVertical: verticalScale(2),
             }}
           />
-          <Text color={'black'}>{option.label}</Text>
+          <Text
+            fontFamily={'Inter'}
+            fontWeight={500}
+            fontSize={scaleFontSize(16)}
+            color={
+              selectedOption === option.value ? 'accent.700' : 'accent.400'
+            }>
+            {option.label}
+          </Text>
         </View>
       ))}
     </View>
