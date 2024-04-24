@@ -23,4 +23,10 @@ export const styles = StyleSheet.create({
     marginRight: horizontalScale(15),
     marginLeft: horizontalScale(5),
   },
+  freshlyPickedText: {
+    fontSize: 20,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#1F2937',
+  },
 });

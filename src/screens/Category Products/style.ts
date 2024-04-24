@@ -9,16 +9,17 @@ export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     borderTopWidth: horizontalScale(0.25),
+    borderTopColor:"#e3e2e0",
     flexDirection: 'row',
     backgroundColor: 'white',
   },
   leftCard: {
     width: horizontalScale(90),
-    borderRightWidth: horizontalScale(0.25),
+    borderRightWidth: horizontalScale(.25),
+    borderRightColor:"#e3e2e0"
   },
   rightCard: {
     width: horizontalScale(240),
-    // padding: 6,
     marginTop:verticalScale(8)
   },
   mainCategoryCard: {
@@ -35,25 +36,12 @@ export const styles = StyleSheet.create({
     marginLeft: horizontalScale(9),
     gap: 9,
   },
-  subCategoryCard: {
-    width: horizontalScale(66),
-    height: verticalScale(100),
-    marginLeft: horizontalScale(12),
-    marginVertical: verticalScale(10),
-  },
-  rightImage: {
-    width: horizontalScale(66),
-    height: verticalScale(73),
-    borderRadius: 16,
-    backgroundColor: '#F3F4F6',
-  },
   leftImage: {
     width: horizontalScale(66),
     height: verticalScale(77),
     borderRadius: horizontalScale(16),
     backgroundColor: '#FFF7ED',
   },
-
   selectedItem: {
     backgroundColor: '#F97316',
     width: horizontalScale(5),
@@ -62,14 +50,6 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
   },
-  categoriesTitle: {
-    fontFamily: 'Inter',
-    fontSize: scaleFontSize(16),
-    fontWeight: '600',
-    lineHeight: verticalScale(19.3),
-    textAlign: 'left',
-    color: '#374151',
-  },
   categoriesLeft: {
     fontFamily: 'Inter',
     fontSize: scaleFontSize(12),
@@ -77,11 +57,5 @@ export const styles = StyleSheet.create({
     lineHeight: verticalScale(14.5),
     textAlign: 'center',
   },
-  categoriesRight: {
-    fontFamily: 'Inter',
-    fontSize: scaleFontSize(12),
-    fontWeight: '500',
-    lineHeight: verticalScale(14.5),
-    textAlign: 'center',
-  },
+
 });
