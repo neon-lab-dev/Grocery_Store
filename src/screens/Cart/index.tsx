@@ -37,7 +37,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     navigation.navigate('Payment');
   };
   return (
-    <View flex={1} justifyContent={'space-between'}>
+    <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
       <ScrollView flex={0.8} mt={verticalScale(10)}>
         <View bg={'white'}>
           <CartItemCard item={item} />
@@ -124,15 +124,29 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             justifyContent={'space-between'}
             alignItems={'center'}>
             <View>
-              <Text fontSize={scaleFontSize(18)}>Deliver to</Text>
-              <Text fontSize={scaleFontSize(12)} color={'accent.500'}>
+              <Text
+                fontFamily={'Inter'}
+                fontWeight={500}
+                fontSize={scaleFontSize(18)}>
+                Deliver to
+              </Text>
+              <Text
+                fontFamily={'Inter'}
+                fontWeight={500}
+                fontSize={scaleFontSize(12)}
+                color={'accent.500'}>
                 1st Floor, ABC street, XYZ City
               </Text>
             </View>
             <Pressable onPress={() => setModalVisible(true)}>
               <View flexDir={'row'} alignItems={'center'}>
                 <SvgXml xml={orangeLocation} width={16} height={16} />
-                <Text color={'primary.500'} ml={1} fontSize={scaleFontSize(18)}>
+                <Text
+                  fontFamily={'Inter'}
+                  fontWeight={400}
+                  color={'primary.500'}
+                  ml={1}
+                  fontSize={scaleFontSize(18)}>
                   Change
                 </Text>
               </View>
@@ -151,24 +165,30 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
               w={'100%'}
               flexDir={'row'}
               justifyContent={'space-between'}
-              px={5}>
+              px={2}>
               <View flexDir={'row'} alignItems={'center'}>
-                <Text color={'white'} fontSize={scaleFontSize(20)}>
-                  1 Item
+                <Text
+                  color={'white'}
+                  fontFamily={'Inter'}
+                  fontWeight={600}
+                  fontSize={scaleFontSize(20)}>
+                  1 Item |{' '}
                 </Text>
-                <Divider
-                  orientation="vertical"
-                  bgColor={'white'}
-                  borderColor={'white'}
-                  mx={1}
-                  borderWidth={0.8}
-                />
-                <Text fontSize={scaleFontSize(20)} color={'white'}>
+                <Text
+                  fontFamily={'Inter'}
+                  fontWeight={600}
+                  fontSize={scaleFontSize(20)}
+                  color={'white'}>
                   ₹42
                 </Text>
               </View>
               <View flexDir={'row'} alignItems={'center'}>
-                <Text color={'white'} mr={2} fontSize={scaleFontSize(18)}>
+                <Text
+                  color={'white'}
+                  mr={2}
+                  fontFamily={'Inter'}
+                  fontWeight={600}
+                  fontSize={scaleFontSize(18)}>
                   {isAddressPresent ? 'Proceed to pay' : 'Checkout'}
                 </Text>
                 <ChevronRightIcon color={'white'} />

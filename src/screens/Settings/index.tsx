@@ -13,6 +13,8 @@ import {StyleSheet} from 'react-native';
 import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
 import {CallNumber} from '../../utils/launchIntents';
+import {SvgXml} from 'react-native-svg';
+import {accountIcon} from '../../assets/images/icons/account_circle';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
@@ -40,28 +42,30 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
     navigation.navigate('Splash');
   };
   return (
-    <View flex={1}>
+    <View flex={1} bgColor={'accent.50'}>
       <View
         flexDir={'row'}
         height={100}
         alignItems={'center'}
         bg={'white'}
         px={5}
-        mb={2}
-        mt={0.4}>
+        mb={2}>
         <Center bg={'primary.500'} borderRadius={100} h={10} w={10} mr={2}>
-          <Image
-            source={require('../../assets/images/account_circle.png')}
-            alt="avatar"
-            borderRadius={100}
-            resizeMode="contain"
-          />
+          <SvgXml xml={accountIcon} height={20} width={20} />
         </Center>
         <View>
-          <Text bold fontSize={'lg'}>
+          <Text
+            fontFamily={'Inter'}
+            fontWeight={600}
+            fontSize={scaleFontSize(20)}>
             Salmaan Ahmed
           </Text>
-          <Text fontSize={'sm'}>96000 16417</Text>
+          <Text
+            fontFamily={'Inter'}
+            fontWeight={500}
+            fontSize={scaleFontSize(14)}>
+            96000 16417
+          </Text>
         </View>
       </View>
       <Modal isOpen={modalVisible} size={'full'}>
@@ -146,19 +150,26 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
         iconSVG={bulb}
         onPress={SuggestProductOverlay}
       />
-      <View flex={1} justifyContent={'center'}>
+      <Center flex={1}>
         <Button
           onPress={gotoSplash}
           variant={'outline'}
           mt={5}
           w={100}
           h={50}
-          alignSelf={'center'}
           rounded={16}
-          _text={{fontSize: 15, color: 'error.300'}}>
+          borderWidth={2}
+          borderColor={'accent.200'}
+          colorScheme={'orange'}
+          _text={{
+            fontFamily: 'Inter',
+            fontSize: scaleFontSize(18),
+            fontWeight: 500,
+            color: 'error.300',
+          }}>
           Log Out
         </Button>
-      </View>
+      </Center>
     </View>
   );
 };

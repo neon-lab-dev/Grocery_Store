@@ -4,6 +4,7 @@ import Login from '../screens/Login';
 import {AuthNavigatorParamList} from './MainNavigation';
 import OTPScreen from '../screens/OTP';
 import {AddPersonalDetails} from '../screens/AddPersonalDetails';
+import {scaleFontSize} from '../assets/scaling';
 
 const Stack = createStackNavigator<AuthNavigatorParamList>();
 
@@ -25,7 +26,12 @@ export const AuthNavigation: React.FC = () => {
         component={AddPersonalDetails}
         options={{
           headerTitle: 'Personal Details',
-          headerStyle: {height: 100},
+          headerTitleStyle: {
+            fontFamily: 'Inter',
+            fontSize: scaleFontSize(18),
+            fontWeight: '500',
+          },
+          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerLeft: () => null,
           headerTitleAlign: 'center',
         }}

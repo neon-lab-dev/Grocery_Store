@@ -2,6 +2,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Button, Center, Input, Text, View} from 'native-base';
 import React, {useState} from 'react';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
+import {scaleFontSize} from '../../assets/scaling';
 
 interface PersonalDetailsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'PersonalDetails'>;
@@ -14,9 +15,13 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
   const isContinueDisabled = name === '' || email === '' || mobileNo === '';
 
   return (
-    <View flex={1}>
+    <View flex={1} bgColor={'accent.50'}>
       <View p={5}>
-        <Text mb={2} bold>
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          mb={2}>
           Full Name*
         </Text>
         <Input
@@ -25,10 +30,18 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.200'}
+          bg={'accent.100'}
+          _focus={{borderColor: 'primary.500'}}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          placeholderTextColor={'accent.400'}
           placeholder={'Enter Here'}
         />
-        <Text bold mb={2}>
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          mb={2}>
           Email ID*
         </Text>
         <Input
@@ -37,11 +50,19 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.200'}
+          bg={'accent.100'}
+          _focus={{borderColor: 'primary.500'}}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          placeholderTextColor={'accent.400'}
           placeholder={'Enter Here'}
           keyboardType="email-address"
         />
-        <Text mb={2} bold>
+        <Text
+          mb={2}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}>
           Mobile Number*
         </Text>
         <Input
@@ -54,20 +75,31 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
           value={mobileNo}
           onChangeText={txt => setMobileNo(txt)}
           rounded={15}
-          bg={'accent.200'}
+          bg={'accent.100'}
+          _focus={{borderColor: 'primary.500'}}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          placeholderTextColor={'accent.400'}
           placeholder={'Enter Here'}
-          fontSize="sm"
           mb={5}
           keyboardType="number-pad"
         />
-        <Text mb={2} bold>
+        <Text
+          mb={2}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}>
           Secondary Mobile Number(Optional)
         </Text>
         <Input
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.200'}
+          bg={'accent.100'}
+          _focus={{borderColor: 'primary.500'}}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          placeholderTextColor={'accent.400'}
           placeholder={'Enter Here'}
         />
       </View>
@@ -85,9 +117,12 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
               rounded={12}
               bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
               _text={{
-                fontSize: 'lg',
+                fontFamily: 'Inter',
+                fontSize: scaleFontSize(20),
+                fontWeight: 600,
                 color: isContinueDisabled ? 'accent.400' : 'white',
               }}
+              colorScheme={'orange'}
               disabled={isContinueDisabled}
               onPress={() => {}}>
               Save

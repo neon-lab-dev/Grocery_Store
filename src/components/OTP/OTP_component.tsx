@@ -1,6 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Center, Divider, Input, Text, View} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 
 interface OTPProps {
   countdown: number;
@@ -66,12 +71,17 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
               onChangeText={txt => {
                 focusNextInput(index, txt);
               }}
-              width={75}
-              height={75}
-              bg="common.white"
+              width={horizontalScale(70)}
+              height={verticalScale(60)}
+              bg="white"
+              borderColor={'accent.200'}
+              _focus={{
+                borderColor: 'primary.500',
+              }}
               rounded={16}
               textAlign="center"
-              fontSize={20}
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(20)}
               keyboardType="numeric"
               maxLength={1}
             />
@@ -81,12 +91,23 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
       </Center>
       <Center flexDir="row">
         <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={600}
           onPress={handleResend}
           disabled={!isResendEnabled}
-          color={isResendEnabled ? 'primary.500' : 'black'}>
+          color={isResendEnabled ? 'primary.500' : 'accent.500'}>
           Resend OTP
         </Text>
-        {resendTime > 0 && <Text>({resendTime}s)</Text>}
+        {resendTime > 0 && (
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(16)}
+            fontWeight={600}
+            color={'accent.500'}>
+            ({resendTime}s)
+          </Text>
+        )}
       </Center>
     </View>
   );

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {Button, Center, Image, Text, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
+import {scaleFontSize} from '../../assets/scaling';
 
 export const CartItemCard = ({item}) => {
   const [count, setCount] = useState(item.quantity);
@@ -24,7 +25,7 @@ export const CartItemCard = ({item}) => {
 
   return (
     <View
-      bg={'common.white'}
+      bg={'white'}
       flexDir={'row'}
       py={3}
       px={5}
@@ -39,11 +40,20 @@ export const CartItemCard = ({item}) => {
         mr={3}
       />
       <View flexShrink={1}>
-        <Text fontSize={'sm'} numberOfLines={2}>
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(14)}
+          fontWeight={400}
+          color={'accent.800'}
+          numberOfLines={2}>
           {item.name}
         </Text>
-        <Text fontSize={'xs'} color={'accent.500'}>
-          {item.weight}
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(12)}
+          fontWeight={500}
+          color={'accent.500'}>
+          {item.size}
         </Text>
       </View>
       <View flexDir={'row'} justifyContent={'flex-end'}>
@@ -52,15 +62,27 @@ export const CartItemCard = ({item}) => {
             bg={'transparent'}
             colorScheme={'orange'}
             onPress={handleDecrease}
-            _text={{fontSize: 'sm'}}
+            _text={{
+              fontFamily: 'Inter',
+              fontSize: scaleFontSize(16),
+              fontWeight: 600,
+            }}
             disabled={count === 1}>
             -
           </Button>
-          <Text fontSize={'sm'} color={'white'}>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(16)}
+            fontWeight={600}
+            color={'white'}>
             {count}
           </Text>
           <Button
-            _text={{fontSize: 'sm'}}
+            _text={{
+              fontFamily: 'Inter',
+              fontSize: scaleFontSize(16),
+              fontWeight: 600,
+            }}
             bg={'transparent'}
             colorScheme={'orange'}
             onPress={handleIncrease}>
@@ -68,10 +90,19 @@ export const CartItemCard = ({item}) => {
           </Button>
         </Center>
         <View ml={2} alignItems={'center'}>
-          <Text fontSize={'md'} color={'primary.500'}>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(16)}
+            fontWeight={500}
+            color={'primary.500'}>
             ₹{discountPrice}
           </Text>
-          <Text fontSize={'xs'} color={'accent.400'} strikeThrough>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(12)}
+            fontWeight={400}
+            color={'accent.400'}
+            strikeThrough>
             ₹{actualPrice}
           </Text>
         </View>
