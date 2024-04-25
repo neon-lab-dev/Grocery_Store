@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   inputSection: {
-    flex: 0.3,
+    flex: 0.4,
     alignItems: 'center',
     paddingHorizontal: 20,
     backgroundColor: '#FFF7ED',
