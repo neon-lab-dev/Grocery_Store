@@ -27,13 +27,13 @@ const style = StyleSheet.create({
     width:(width<370)?(84):(92),
   },
   ExploreCatgoriesText:{
-    fontSize: scaleFontSize(11),
+    fontSize: (width<370)?(10):(12),
     color: Colors.accent[600],
     fontWeight:'500',
     alignSelf:'center',
     right:verticalScale(2),
     marginVertical:verticalScale (5),
-    marginBottom:32
+    marginBottom:40
   },
   floatingButton:{
     position: 'absolute',
