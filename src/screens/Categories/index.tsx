@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
+import {verticalScale} from '../../assets/scaling';
 
 interface Category {
   id: number;
@@ -308,8 +309,8 @@ const Categories: FC = ({navigation}) => {
         <View>
           <FlatList
             contentContainerStyle={{
-              marginTop: 20,
-              paddingBottom: 16,
+              marginTop: verticalScale(20),
+              paddingBottom: verticalScale(27),
             }}
             showsVerticalScrollIndicator={false}
             data={Data}
