@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View} from 'native-base';
+import {ScrollView, View} from 'native-base';
 import {OrderComponent} from '../../components/Orders/Order_Component';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
@@ -13,11 +13,11 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
     navigation.navigate('SingleOrder');
   };
   return (
-    <View mt={5}>
+    <ScrollView flex={1} bgColor={'accent.50'} pt={5}>
       {Array.from({length: 4}).map((_, index) => (
         <OrderComponent key={index} onPress={handlePress} />
       ))}
-    </View>
+    </ScrollView>
   );
 };
 

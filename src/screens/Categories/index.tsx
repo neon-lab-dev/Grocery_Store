@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
-import style from '../Home/style';
+import {verticalScale} from '../../assets/scaling';
 
 interface Category {
   id: number;
@@ -290,7 +290,6 @@ const Categories: FC = ({navigation}) => {
     },
   ];
   const [categoryId, setCategoryId] = useState<number>(Data[0].id);
-  console.log(categoryId);
 
   const subCategory = Data.find(item => item.id === categoryId);
   const SubCategory: FC<SubCategory> = ({id, name}) => {
@@ -304,12 +303,15 @@ const Categories: FC = ({navigation}) => {
       </TouchableOpacity>
     );
   };
-  console.log(subCategory);
   return (
     <View style={styles.mainContainer}>
       <View style={styles.leftCard}>
         <View>
           <FlatList
+            contentContainerStyle={{
+              marginTop: verticalScale(20),
+              paddingBottom: verticalScale(27),
+            }}
             showsVerticalScrollIndicator={false}
             data={Data}
             keyExtractor={item => item.id.toString()}
@@ -329,7 +331,11 @@ const Categories: FC = ({navigation}) => {
           <Text style={styles.categoriesTitle}>{subCategory?.name}</Text>
         </View>
         <FlatList
-          contentContainerStyle={{gap: 20}}
+          contentContainerStyle={{
+            gap: 20,
+            paddingBottom: 10,
+            // backgroundColor: 'red',
+          }}
           numColumns={3}
           data={subCategory?.subCategory}
           renderItem={({item}) => <SubCategory id={item.id} name={item.name} />}

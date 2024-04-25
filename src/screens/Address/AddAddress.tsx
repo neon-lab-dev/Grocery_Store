@@ -20,9 +20,17 @@ const AddAddress = () => {
     pincode === '' ||
     selectedLabel === '';
   return (
-    <View flex={1} justifyContent={'space-between'} flexShrink={1}>
+    <View
+      flex={1}
+      bgColor={'accent.50'}
+      justifyContent={'space-between'}
+      flexShrink={1}>
       <View p={5}>
-        <Text mb={2} bold>
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          mb={2}>
           Landmark*
         </Text>
         <Input
@@ -31,10 +39,19 @@ const AddAddress = () => {
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.200'}
+          bg={'accent.100'}
+          _focus={{borderColor: 'primary.500'}}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          placeholderTextColor={'accent.400'}
           placeholder={'Enter Here'}
         />
-        <Text bold mb={2}>
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          mb={2}>
           Address*
         </Text>
         <Input
@@ -43,12 +60,21 @@ const AddAddress = () => {
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.200'}
+          bg={'accent.100'}
+          _focus={{borderColor: 'primary.500'}}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          placeholderTextColor={'accent.400'}
           placeholder={'Enter Here'}
         />
         <View flexDir={'row'}>
           <View flex={0.5} mr={5}>
-            <Text bold mb={2}>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(16)}
+              fontWeight={500}
+              mb={2}>
               City*
             </Text>
             <Input
@@ -58,12 +84,21 @@ const AddAddress = () => {
               variant={'filled'}
               rounded={15}
               mb={5}
-              bg={'accent.200'}
+              bg={'accent.100'}
+              _focus={{borderColor: 'primary.500'}}
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(16)}
+              fontWeight={500}
+              placeholderTextColor={'accent.400'}
               placeholder={'Enter Here'}
             />
           </View>
           <View flex={0.5}>
-            <Text bold mb={2}>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(16)}
+              fontWeight={500}
+              mb={2}>
               State*
             </Text>
             <Input
@@ -73,12 +108,21 @@ const AddAddress = () => {
               variant={'filled'}
               rounded={15}
               mb={5}
-              bg={'accent.200'}
+              bg={'accent.100'}
+              _focus={{borderColor: 'primary.500'}}
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(16)}
+              fontWeight={500}
+              placeholderTextColor={'accent.400'}
               placeholder={'Enter Here'}
             />
           </View>
         </View>
-        <Text bold mb={2}>
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          mb={2}>
           Pincode*
         </Text>
         <Input
@@ -87,11 +131,20 @@ const AddAddress = () => {
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.200'}
+          bg={'accent.100'}
+          _focus={{borderColor: 'primary.500'}}
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          placeholderTextColor={'accent.400'}
           placeholder={'Enter Here'}
           keyboardType="number-pad"
         />
-        <Text bold mb={2}>
+        <Text
+          fontFamily={'Inter'}
+          fontSize={scaleFontSize(16)}
+          fontWeight={500}
+          mb={2}>
           Label*
         </Text>
         <View flexDir={'row'}>
@@ -108,6 +161,9 @@ const AddAddress = () => {
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>
               <Text
+                fontFamily={'Inter'}
+                fontSize={scaleFontSize(16)}
+                fontWeight={500}
                 color={selectedLabel === item ? 'accent.700' : 'accent.400'}>
                 {item}
               </Text>
@@ -139,7 +195,8 @@ const AddAddress = () => {
             colorScheme={'orange'}
             bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
             _text={{
-              fontSize: 'lg',
+              fontFamily: 'Inter',
+              fontSize: scaleFontSize(20),
               color: isContinueDisabled ? 'accent.400' : 'white',
             }}
             disabled={isContinueDisabled}

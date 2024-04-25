@@ -21,7 +21,7 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
     navigation.navigate('AddAddress');
   };
   return (
-    <View py={verticalScale(10)}>
+    <View flex={1} py={verticalScale(10)} bgColor={'accent.50'}>
       <View
         w={'100%'}
         bg={'white'}
@@ -31,10 +31,18 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
         alignItems={'center'}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View mx={5} width={horizontalScale(190)}>
-          <Text fontSize={scaleFontSize(16)}>Home</Text>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(16)}
+            fontWeight={500}
+            color={'accent.900'}>
+            Home
+          </Text>
           <Text
             color={'accent.400'}
             numberOfLines={2}
+            fontFamily={'Inter'}
+            fontWeight={400}
             fontSize={scaleFontSize(14)}>
             Lorem ipsum dolor sit amet consectetur. Et at lectus congue ut
             sagittis sed dui. Aliquet porta sed diam tellus.
@@ -57,10 +65,18 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
         alignItems={'center'}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View mx={5} width={horizontalScale(190)}>
-          <Text fontSize={scaleFontSize(16)}>Home</Text>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(16)}
+            fontWeight={500}
+            color={'accent.900'}>
+            Home
+          </Text>
           <Text
             color={'accent.400'}
             numberOfLines={2}
+            fontFamily={'Inter'}
+            fontWeight={400}
             fontSize={scaleFontSize(14)}>
             Lorem ipsum dolor sit amet consectetur. Et at lectus congue ut
             sagittis sed dui. Aliquet porta sed diam tellus.
@@ -74,18 +90,26 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
           <SvgXml xml={deleteIcon} height={24} width={24} />
         </View>
       </View>
-      <Button
-        variant={'outline'}
-        borderStyle={'dashed'}
-        borderRadius={10}
-        borderColor={'primary.500'}
-        mt={5}
-        mx={horizontalScale(10)}
-        h={50}
-        _text={{color: 'primary.400', fontSize: scaleFontSize(20)}}
-        onPress={gotoAddAddress}>
-        Add Address
-      </Button>
+      <View flex={1} bgColor={'accent.50'}>
+        <Button
+          variant={'outline'}
+          borderStyle={'dashed'}
+          borderRadius={10}
+          colorScheme={'orange'}
+          borderColor={'primary.500'}
+          mt={5}
+          mx={horizontalScale(10)}
+          h={50}
+          _text={{
+            color: 'primary.400',
+            fontFamily: 'Inter',
+            fontSize: scaleFontSize(20),
+            fontWeight: '500',
+          }}
+          onPress={gotoAddAddress}>
+          Add an Address
+        </Button>
+      </View>
     </View>
   );
 };

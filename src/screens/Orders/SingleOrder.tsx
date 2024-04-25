@@ -19,6 +19,7 @@ import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {deliveryMan} from '../../assets/images/icons/deliveryMan';
 import {phone} from '../../assets/images/icons/phone';
 import {CallNumber} from '../../utils/launchIntents';
+import GoBack from '../../components/Navigation/GoBack';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
@@ -84,43 +85,51 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
       headerLeft: headerLeftComponent,
       headerRight: headerRightComponent,
     });
-  }, [orderStatus, orderInfo]);
+  }, [navigation, orderStatus, orderInfo]);
 
   const headerTitleComponent = () => (
     <View>
-      <Text fontSize={'fs18'}>Order #189073202237</Text>
-      <Text fontSize={'fs12'} color={'accent.400'}>
+      <Text fontFamily={'Inter'} fontSize={scaleFontSize(18)} fontWeight={500}>
+        Order #189073202237
+      </Text>
+      <Text
+        fontFamily={'Inter'}
+        fontSize={scaleFontSize(12)}
+        fontWeight={500}
+        color={'accent.400'}>
         Placed at 07/03/2024 at 09:12PM
       </Text>
     </View>
   );
 
   const headerLeftComponent = () => (
-    <ChevronLeftIcon
-      size={'md'}
-      ml={5}
-      color={'black'}
-      onPress={() => navigation.goBack()}
-    />
+    <GoBack onPress={() => navigation.goBack()} />
   );
   const headerRightComponent = () => (
     <Center
       rounded={4}
       bg={orderInfo.color}
       w={'auto'}
-      p={1}
+      py={1}
+      px={2}
       mr={horizontalScale(10)}>
-      <Text fontSize={'fs12'} color={'white'}>
+      <Text
+        fontFamily={'Inter'}
+        fontWeight={500}
+        fontSize={scaleFontSize(12)}
+        color={'white'}>
         {orderStatus}
       </Text>
     </Center>
   );
   return (
-    <ScrollView flex={1}>
+    <ScrollView flex={1} bgColor={'accent.50'}>
       {(orderStatus === 'Out For Delivery' || orderStatus === 'Delivered') && (
         <View
           bg={'white'}
           borderRadius={100}
+          borderWidth={1}
+          borderColor={'accent.100'}
           p={3}
           mx={5}
           mt={5}
@@ -137,8 +146,18 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               <SvgXml xml={deliveryMan} height={20} width={20} />
             </Center>
             <View ml={1}>
-              <Text fontSize={scaleFontSize(16)}>John Doe</Text>
-              <Text fontSize={scaleFontSize(14)} color={'accent.600'}>
+              <Text
+                fontFamily={'Inter'}
+                fontSize={scaleFontSize(16)}
+                fontWeight={500}
+                color={'accent.900'}>
+                John Doe
+              </Text>
+              <Text
+                fontFamily={'Inter'}
+                fontSize={scaleFontSize(14)}
+                fontWeight={500}
+                color={'accent.600'}>
                 TN 23 AC 2942
               </Text>
             </View>
@@ -168,8 +187,18 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           <SvgXml xml={timer} height={20} width={20} />
         </Center>
         <View>
-          <Text fontSize={'fs16'}>{orderInfo.receivedStatus}</Text>
-          <Text fontSize={'fs12'} color={'accent.400'}>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(16)}
+            fontWeight={500}
+            color={'accent.900'}>
+            {orderInfo.receivedStatus}
+          </Text>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(12)}
+            fontWeight={500}
+            color={'accent.400'}>
             {orderInfo.time}
           </Text>
         </View>
@@ -186,8 +215,18 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           <SvgXml xml={location} height={20} width={20} />
         </Center>
         <View>
-          <Text fontSize={'fs16'}>{orderInfo.deliveredStatus}</Text>
-          <Text fontSize={'fs12'} color={'accent.400'}>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(16)}
+            fontWeight={500}
+            color={'accent.900'}>
+            {orderInfo.deliveredStatus}
+          </Text>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(12)}
+            fontWeight={500}
+            color={'accent.400'}>
             No. 46, 1st floor, near police
           </Text>
         </View>
@@ -201,19 +240,45 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           borderRadius={1}
           borderColor={'accent.100'}
         />
-        <View px={5}>
-          <Text fontSize={'fs20'}>Bill Summary</Text>
+        <View p={5}>
+          <Text
+            fontFamily={'Inter'}
+            fontSize={scaleFontSize(20)}
+            fontWeight={600}
+            color={'accent.900'}>
+            Bill Summary
+          </Text>
           <View flexDir={'row'} justifyContent={'space-between'}>
-            <Text fontSize={'fs14'} color={'accent.500'}>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(14)}
+              fontWeight={500}
+              color={'accent.500'}>
               Item Total
             </Text>
-            <Text fontSize={'fs14'}>₹33</Text>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(14)}
+              fontWeight={500}
+              color={'accent.800'}>
+              ₹33
+            </Text>
           </View>
           <View flexDir={'row'} justifyContent={'space-between'}>
-            <Text fontSize={'fs14'} color={'accent.500'}>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(14)}
+              fontWeight={500}
+              color={'accent.500'}>
               Delivery Charge
             </Text>
-            <Text fontSize={'fs14'}>₹25</Text>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(14)}
+              fontWeight={500}
+              color={'accent.800'}>
+              ₹25
+            </Text>
           </View>
           <View
             borderWidth={1}
@@ -222,26 +287,46 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
             my={2}
           />
           <View flexDir={'row'} justifyContent={'space-between'} pt={1}>
-            <Text fontSize={'fs14'}>Total Bill</Text>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(14)}
+              fontWeight={500}
+              color={'accent.900'}>
+              Total Bill
+            </Text>
             <Center flexDir={'row'}>
-              <Text fontSize={'fs10'} color={'accent.500'} strikeThrough pr={1}>
+              <Text
+                fontFamily={'Inter'}
+                fontSize={scaleFontSize(10)}
+                fontWeight={400}
+                color={'accent.500'}
+                strikeThrough
+                pr={1}>
                 ₹87.49
               </Text>
-              <Text fontSize={'fs14'}>₹87.49</Text>
+              <Text
+                fontFamily={'Inter'}
+                fontSize={scaleFontSize(14)}
+                fontWeight={600}
+                color={'accent.800'}>
+                ₹87.49
+              </Text>
             </Center>
           </View>
           <View flexDir={'row'} justifyContent={'space-between'}>
-            <Text fontSize={'fs12'} color={'accent.500'}>
+            <Text
+              fontFamily={'Inter'}
+              fontSize={scaleFontSize(12)}
+              fontWeight={400}
+              color={'accent.500'}>
               Incl. all taxes and charges
             </Text>
-            <Center
-              rounded={4}
-              bg={'success.400'}
-              w={'auto'}
-              h={6}
-              px={2}
-              mb={5}>
-              <Text fontSize={'fs10'} color={'white'}>
+            <Center rounded={4} bg={'#4ADE80'} w={'auto'} h={6} px={2} mb={5}>
+              <Text
+                fontFamily={'Inter'}
+                fontSize={scaleFontSize(10)}
+                fontWeight={500}
+                color={'white'}>
                 SAVING ₹9.51
               </Text>
             </Center>
@@ -250,6 +335,8 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
       </View>
       <Center mb={horizontalScale(50)}>
         <Button
+          borderWidth={2}
+          borderColor={'accent.200'}
           variant={'outline'}
           colorScheme={'orange'}
           mt={5}
@@ -257,7 +344,12 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           h={50}
           alignSelf={'center'}
           rounded={16}
-          _text={{fontSize: 15, color: 'error.300'}}
+          _text={{
+            fontFamily: 'Inter',
+            fontSize: scaleFontSize(20),
+            fontWeight: 500,
+            color: 'error.300',
+          }}
           onPress={() => CallNumber(1234567890)}>
           Need Help?
         </Button>
