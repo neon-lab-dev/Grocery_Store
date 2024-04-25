@@ -32,7 +32,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
-      <View mt={4} px={horizontalScale(20)}>
+      <View mt={5} px={horizontalScale(20)}>
         <View flexDir={'row'} justifyContent={'space-between'}>
           <Text
             fontFamily={'Inter'}
@@ -41,13 +41,15 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             color={'#1F2937'}>
             Recent Searches
           </Text>
-          <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
-            fontSize={scaleFontSize(14)}
-            color={'primary.500'}>
-            Clear All
-          </Text>
+          <Pressable onPress={() => setSelectedRecentSearch('')}>
+            <Text
+              fontFamily={'Inter'}
+              fontWeight={500}
+              fontSize={scaleFontSize(14)}
+              color={'primary.500'}>
+              Clear All
+            </Text>
+          </Pressable>
         </View>
         <View flexDir={'row'} mt={1}>
           {recentSearch.map((item, index) => (
@@ -119,7 +121,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     </View>
   );
   return (
-    <>
+    <View flex={1}>
       <View
         h={100}
         bgColor={'white'}
@@ -163,13 +165,8 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           )}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
-          contentContainerStyle={{
-            paddingBottom: verticalScale(30),
-          }}
           columnWrapperStyle={{
-            justifyContent: 'space-evenly',
-            paddingHorizontal: horizontalScale(10),
-            marginBottom: verticalScale(20),
+            marginBottom: verticalScale(10),
           }}
         />
       </View>
@@ -177,7 +174,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
         showModal={showModal}
         onClose={() => setShowModal(false)}
       />
-    </>
+    </View>
   );
 };
 
