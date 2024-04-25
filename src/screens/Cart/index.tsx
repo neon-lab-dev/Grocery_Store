@@ -2,7 +2,6 @@ import {
   Button,
   Center,
   ChevronRightIcon,
-  Divider,
   Modal,
   Pressable,
   ScrollView,
@@ -11,13 +10,20 @@ import {
 } from 'native-base';
 import * as React from 'react';
 import {CartItemCard} from '../../components/Cart/CartItemCard';
-import {scaleFontSize, verticalScale, width} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+  width,
+} from '../../assets/scaling';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import SelectAddress from '../../components/SelectingAddress';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BillSummaryCard from '../../components/BillSummaryCard';
+import {useIsFocused} from '@react-navigation/native';
+import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
@@ -36,15 +42,17 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const gotoPayment = () => {
     navigation.navigate('Payment');
   };
+  const gotoAddAddress = () => {
+    navigation.navigate('AddAddress');
+  };
+
   return (
     <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
-      <ScrollView flex={0.8} mt={verticalScale(10)}>
+      <ScrollView flex={0.8}>
         <View bg={'white'}>
-          <CartItemCard item={item} />
-          <CartItemCard item={item} />
-          <CartItemCard item={item} />
-          <CartItemCard item={item} />
-          <CartItemCard item={item} />
+          {Array.from({length: 3}).map((_, index) => (
+            <CartItemCard key={index} item={item} />
+          ))}
         </View>
         {/* <View p={5} bgColor={'white'} borderRadius={14} m={5}>
           <Text fontSize={'fs20'}>Bill Summary</Text>
@@ -96,15 +104,20 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           savingPrice={9.51}
         />
       </ScrollView>
-      <Modal isOpen={modalVisible} size={'full'}>
+      <Modal
+        isOpen={modalVisible}
+        size={'full'}
+        onClose={() => setModalVisible(false)}>
         <Modal.Content
           mb={0}
           mt={'auto'}
+          h={'60%'}
+          bgColor={'white'}
           borderTopLeftRadius={12}
           borderTopRightRadius={12}>
           <SelectAddress
             onClose={() => setModalVisible(false)}
-            navigation={navigation}
+            onAddAddress={gotoAddAddress}
           />
         </Modal.Content>
       </Modal>
@@ -124,15 +137,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             justifyContent={'space-between'}
             alignItems={'center'}>
             <View>
-              <Text
-                fontFamily={'Inter'}
-                fontWeight={500}
-                fontSize={scaleFontSize(18)}>
+              <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(18)}>
                 Deliver to
               </Text>
               <Text
-                fontFamily={'Inter'}
-                fontWeight={500}
+                fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(12)}
                 color={'accent.500'}>
                 1st Floor, ABC street, XYZ City
@@ -142,8 +151,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
               <View flexDir={'row'} alignItems={'center'}>
                 <SvgXml xml={orangeLocation} width={16} height={16} />
                 <Text
-                  fontFamily={'Inter'}
-                  fontWeight={400}
+                  fontFamily={'Inter_Regular'}
                   color={'primary.500'}
                   ml={1}
                   fontSize={scaleFontSize(18)}>
@@ -156,7 +164,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
         <Center flex={1} px={5}>
           <Button
             w={'100%'}
-            h={50}
+            h={verticalScale(40)}
             rounded={12}
             colorScheme={'orange'}
             bg={'primary.500'}
@@ -165,17 +173,17 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
               w={'100%'}
               flexDir={'row'}
               justifyContent={'space-between'}
-              px={2}>
+              alignItems={'center'}
+              px={horizontalScale(5)}>
               <View flexDir={'row'} alignItems={'center'}>
                 <Text
                   color={'white'}
-                  fontFamily={'Inter'}
-                  fontWeight={600}
+                  fontFamily={'Inter_SemiBold'}
                   fontSize={scaleFontSize(20)}>
                   1 Item |{' '}
                 </Text>
                 <Text
-                  fontFamily={'Inter'}
+                  fontFamily={'Inter_Bold'}
                   fontWeight={600}
                   fontSize={scaleFontSize(20)}
                   color={'white'}>
@@ -186,12 +194,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                 <Text
                   color={'white'}
                   mr={2}
-                  fontFamily={'Inter'}
-                  fontWeight={600}
+                  fontFamily={'Inter_SemiBold'}
                   fontSize={scaleFontSize(18)}>
-                  {isAddressPresent ? 'Proceed to pay' : 'Checkout'}
+                  {isAddressPresent ? 'Proceed to Pay' : 'Checkout'}
                 </Text>
-                <ChevronRightIcon color={'white'} />
+                <SvgXml xml={rightArrowIcon} height={15} width={15} />
               </View>
             </View>
           </Button>

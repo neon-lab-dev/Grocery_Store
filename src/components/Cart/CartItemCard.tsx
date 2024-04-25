@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {Button, Center, Image, Text, View} from 'native-base';
+import {Button, Center, Image, Text, View, Pressable} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {scaleFontSize} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 
 export const CartItemCard = ({item}) => {
   const [count, setCount] = useState(item.quantity);
@@ -37,70 +41,91 @@ export const CartItemCard = ({item}) => {
         h={50}
         w={50}
         resizeMode="contain"
-        mr={3}
+        mr={horizontalScale(10)}
       />
       <View flexShrink={1}>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(14)}
-          fontWeight={400}
           color={'accent.800'}
           numberOfLines={2}>
           {item.name}
         </Text>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(12)}
-          fontWeight={500}
           color={'accent.500'}>
           {item.size}
         </Text>
       </View>
       <View flexDir={'row'} justifyContent={'flex-end'}>
-        <Center bg={'primary.500'} flexDir={'row'} rounded={8} h={38}>
-          <Button
-            bg={'transparent'}
-            colorScheme={'orange'}
-            onPress={handleDecrease}
-            _text={{
-              fontFamily: 'Inter',
-              fontSize: scaleFontSize(16),
-              fontWeight: 600,
+        <View
+          w={horizontalScale(60)}
+          bg={'primary.500'}
+          flexDir={'row'}
+          rounded={8}
+          h={verticalScale(30)}
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          px={horizontalScale(5)}
+          py={verticalScale(2)}
+          ml={horizontalScale(10)}>
+          <Pressable
+            flex={1}
+            hitSlop={{
+              top: verticalScale(20),
+              bottom: verticalScale(20),
+              left: horizontalScale(10),
+              right: horizontalScale(10),
             }}
-            disabled={count === 1}>
-            -
-          </Button>
+            onPress={handleDecrease}
+            disabled={count === 1}
+            alignItems={'center'}
+            justifyContent={'center'}>
+            <Text
+              fontFamily={'Inter_SemiBold'}
+              color={'white'}
+              fontSize={scaleFontSize(16)}>
+              -
+            </Text>
+          </Pressable>
           <Text
-            fontFamily={'Inter'}
+            mx={horizontalScale(5)}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
-            fontWeight={600}
             color={'white'}>
             {count}
           </Text>
-          <Button
-            _text={{
-              fontFamily: 'Inter',
-              fontSize: scaleFontSize(16),
-              fontWeight: 600,
+          <Pressable
+            flex={1}
+            hitSlop={{
+              top: verticalScale(20),
+              bottom: verticalScale(20),
+              left: horizontalScale(10),
+              right: horizontalScale(10),
             }}
-            bg={'transparent'}
-            colorScheme={'orange'}
-            onPress={handleIncrease}>
-            +
-          </Button>
-        </Center>
+            onPress={handleIncrease}
+            alignItems={'center'}
+            justifyContent={'center'}>
+            <Text
+              fontFamily={'Inter_SemiBold'}
+              color={'white'}
+              fontSize={scaleFontSize(16)}
+              onPress={handleIncrease}>
+              +
+            </Text>
+          </Pressable>
+        </View>
         <View ml={2} alignItems={'center'}>
           <Text
-            fontFamily={'Inter'}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
-            fontWeight={500}
             color={'primary.500'}>
             ₹{discountPrice}
           </Text>
           <Text
-            fontFamily={'Inter'}
+            fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(12)}
-            fontWeight={400}
             color={'accent.400'}
             strikeThrough>
             ₹{actualPrice}

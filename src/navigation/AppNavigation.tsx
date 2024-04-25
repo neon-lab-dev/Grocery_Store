@@ -165,11 +165,11 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="Cart"
         component={Cart}
         options={({navigation}) => ({
+          headerTitle: 'Cart(3)',
           headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerTitleStyle: {
-            fontFamily: 'Inter',
+            fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(18),
-            fontWeight: '500',
           },
           headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,

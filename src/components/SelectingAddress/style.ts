@@ -15,11 +15,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectAddressText: {
-    fontFamily: 'Inter',
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(18),
-    fontWeight: '500',
     color: '#1F2937',
-    marginRight: horizontalScale(15),
+    marginRight: horizontalScale(5),
   },
   addAddress: {
     width: '100%',
@@ -35,14 +34,12 @@ export const styles = StyleSheet.create({
   },
   savedAdd: {
     width: '100%',
-    height: 30,
     paddingHorizontal: horizontalScale(20),
-    marginVertical: verticalScale(5),
-    marginTop: 10,
+    marginTop: verticalScale(10),
   },
   addressBox: {
     width: 'auto',
-    height: 97,
+    height: verticalScale(70),
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -53,12 +50,12 @@ export const styles = StyleSheet.create({
     width: horizontalScale(230),
     height: 34,
     color: '#9CA3AF',
+    fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(14),
   },
   addressType: {
-    fontFamily: 'Inter',
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(16),
-    fontWeight: '500',
     color: '#111827',
   },
 });

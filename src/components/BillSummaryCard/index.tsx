@@ -20,38 +20,39 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
   return (
     <View p={5} bgColor={'white'} borderRadius={14} m={'5'}>
       <Text
-        fontFamily={'Inter'}
+        fontFamily={'Inter_SemiBold'}
         fontSize={scaleFontSize(20)}
-        fontWeight={600}
         color={'accent.900'}>
         Bill Summary
       </Text>
-      <View flexDir={'row'} justifyContent={'space-between'}>
+      <View
+        flexDir={'row'}
+        justifyContent={'space-between'}
+        alignItems={'center'}
+        my={1}>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
-          fontWeight={500}
           color={'accent.500'}>
           Item Total
         </Text>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter Medium'}
           fontSize={scaleFontSize(14)}
-          fontWeight={500}
           color={'accent.800'}>
           ₹{itemPrice}
         </Text>
       </View>
       <View flexDir={'row'} justifyContent={'space-between'}>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
           fontWeight={500}
           color={'accent.500'}>
           Delivery Charge
         </Text>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
           fontWeight={500}
           color={'accent.800'}>
@@ -64,46 +65,48 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
         borderColor={'accent.100'}
         my={2}
       />
-      <View flexDir={'row'} justifyContent={'space-between'} pt={1}>
+      <View
+        flexDir={'row'}
+        justifyContent={'space-between'}
+        alignItems={'center'}
+        pt={1}>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
-          fontWeight={500}
           color={'accent.900'}>
-          Total Bill
+          To Pay
         </Text>
         <Center flexDir={'row'}>
           <Text
-            fontFamily={'Inter'}
+            fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(10)}
-            fontWeight={400}
             color={'accent.500'}
             strikeThrough
             pr={1}>
             ₹{cutOffPrice}
           </Text>
           <Text
-            fontFamily={'Inter'}
+            fontFamily={'Inter_SemiBold'}
             fontSize={scaleFontSize(14)}
-            fontWeight={600}
             color={'accent.800'}>
             ₹{price}
           </Text>
         </Center>
       </View>
-      <View flexDir={'row'} justifyContent={'space-between'}>
+      <View
+        flexDir={'row'}
+        justifyContent={'space-between'}
+        alignItems={'center'}>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(12)}
-          fontWeight={400}
           color={'accent.500'}>
           Incl. all taxes and charges
         </Text>
         <Center rounded={8} bg={'success.400'} w={'auto'} h={6} px={2}>
           <Text
-            fontFamily={'Inter'}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(10)}
-            fontWeight={500}
             color={'white'}>
             SAVING ₹{savingPrice}
           </Text>
