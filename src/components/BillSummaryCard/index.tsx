@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
+import React, {FC, version} from 'react';
 import {View, Text, Center} from 'native-base';
-import {scaleFontSize} from '../../assets/scaling';
+import {scaleFontSize, verticalScale} from '../../assets/scaling';
 
 interface BillSummaryCardProps {
   itemPrice: number;
@@ -97,7 +97,8 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
         <Text
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(12)}
-          color={'accent.500'}>
+          color={'accent.500'}
+          mt={-verticalScale(2)}>
           Incl. all taxes and charges
         </Text>
         <Center rounded={8} bg={'success.400'} w={'auto'} h={6} px={2}>
