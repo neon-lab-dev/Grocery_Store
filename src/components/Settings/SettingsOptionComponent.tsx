@@ -33,7 +33,7 @@ const SettingsOption: React.FC<SettingsOptionProps> = ({
         <SvgXml xml={iconSVG} width={18} height={18} />
         <Text
           fontFamily={'Inter_Regular'}
-          fontSize={scaleFontSize(16)}
+          fontSize={scaleFontSize(14)}
           color={'accent.800'}
           ml={horizontalScale(10)}>
           {name}

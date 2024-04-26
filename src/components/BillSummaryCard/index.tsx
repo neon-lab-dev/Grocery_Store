@@ -93,10 +93,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
           </Text>
         </Center>
       </View>
-      <View
-        flexDir={'row'}
-        justifyContent={'space-between'}
-        alignItems={'center'}>
+      <View flexDir={'row'} justifyContent={'space-between'}>
         <Text
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(12)}
