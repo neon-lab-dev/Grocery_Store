@@ -8,7 +8,7 @@ import {
 export const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: '#F9FAFB',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     flex: 1,
   },
   billSummaryCard: {
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     borderRadius: horizontalScale(14),
     backgroundColor: '#FFFFFF',
     padding: 17,
-    marginTop: verticalScale(30),
+    // marginTop: verticalScale(30),
   },
   billSummaryText: {
     fontFamily: 'Inter',
@@ -83,13 +83,13 @@ export const styles = StyleSheet.create({
     marginTop: verticalScale(10),
   },
   bottomLayout: {
-    height: 112,
+    height: verticalScale(90),
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    marginTop: verticalScale(50),
+    marginTop: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ffffff',
   },
   paymentPreferredText: {
     fontFamily: 'Inter',
@@ -117,7 +117,8 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 13,
+    alignItems: 'center',
+    padding: 10,
   },
   codImage: {
     width: horizontalScale(24),
@@ -128,11 +129,11 @@ export const styles = StyleSheet.create({
     height: verticalScale(20),
   },
   bottomCardText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontSize: scaleFontSize(20),
-    fontWeight: '600',
-    letterSpacing: -0.02,
+    fontWeight: '500',
     color: '#FFF7ED',
+    letterSpacing: -0.02,
   },
   straightLine: {
     height: verticalScale(15),
