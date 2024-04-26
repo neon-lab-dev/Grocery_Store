@@ -119,6 +119,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 w={'100%'}
                 py={verticalScale(10)}
                 rounded={12}
+                colorScheme={'transparent'}
                 bg={'primary.500'}
                 _text={{
                   fontFamily: 'Inter_SemiBold',
