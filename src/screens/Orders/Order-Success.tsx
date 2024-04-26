@@ -28,7 +28,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
           source={require('../../assets/images/Order-Success.png')}
         />
       </View>
-      <Text style={styles.OrderText} mt={(width<380)?(0):(2)} fontSize={'xl'}>
+      <Text style={styles.OrderText} mt={(width<380)?(0):(2)} fontSize={(width<380)?('xl'):('2xl')}>
         Order Has been Placed Successfully
       </Text>
       <View
@@ -76,7 +76,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontSize={(width<380)?(14):(15)}
             color={'primary.500'}
             fontWeight={500}
-            ml={(width<380)?(12):(20)}>
+            ml={(width<380)?(12):(24)}>
             Cash on Delivery
           </Text>
         </View>
@@ -89,7 +89,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
         bg={'white'}
         flexDir={'row'}
         mt={(width<380)?(6):(4)}
-        mb={(width<380)?(6):(4)}
+        mb={(width<380)?(6):(8)}
         alignItems={'center'}
         px={2}>
         <Image
@@ -116,7 +116,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
               fontSize={(width<380)?(12):(14)}
               color={'primary.500'}
               fontWeight={500}
-              ml={(width<380)?(3):(6)}>
+              ml={(width<380)?(3):(12)}>
               View Details
             </Text>
           </Pressable>
@@ -128,7 +128,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
         </View>
       </View>
       <ImageCarousel />
-      <View h={100} w={width} bg={'white'} mt={(width<380)?(6):(4)}>
+      <View h={100} w={width} bg={'white'} mt={(width<380)?(6):(3)}>
         <Center flex={1} px={5}>
           <Button
           onPress={gotoHome}
@@ -154,7 +154,7 @@ export default OrderSuccess;
 const styles = StyleSheet.create({
   OrderText: {
     color: Colors.accent[700],
-    fontSize: (width<380)?(27):(32),
+    fontSize: (width<380)?(27):(34),
     fontWeight: '600',
     textAlign: 'center',
 

@@ -6,9 +6,9 @@ export const styles = StyleSheet.create({
 
     },
     img: {
-      width:(width<380)?(285):(315),
+      width:(width<380)?(285):(330),
       marginLeft:horizontalScale(18),
-      height: (width<380)?(152):(160),
+      height: (width<380)?(152):(175),
       borderRadius: 25,
     },
   });
