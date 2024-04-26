@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 5,
     paddingHorizontal: horizontalScale(10),
-    marginBottom: 35,
+    marginBottom: 32,
   },
   line: {
     width: 1,

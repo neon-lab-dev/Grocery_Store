@@ -16,7 +16,7 @@ const style = StyleSheet.create({
     color:Colors.accent[700],
     fontWeight:"600",
     fontSize:scaleFontSize(20),
-    marginTop:verticalScale(12),
+    marginTop:verticalScale(22),
   },
   SubCategoryText:{
    fontWeight:"400",
