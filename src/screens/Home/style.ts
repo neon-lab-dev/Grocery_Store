@@ -1,6 +1,7 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
 import { Colors } from '../../constants/colors';
+const { width, height } = Dimensions.get('window');
 
 const style = StyleSheet.create({
   container: {
@@ -22,23 +23,24 @@ const style = StyleSheet.create({
    fontSize:scaleFontSize(16),
   },
   ExploreCatgories:{
-   height:"100%",
-   width:horizontalScale(78),
+    height:'100%', 
+    width:(width<370)?(84):(92),
   },
   ExploreCatgoriesText:{
-    fontSize: scaleFontSize(11),
+    fontSize: (width<370)?(10):(12),
     color: Colors.accent[600],
     fontWeight:'500',
     alignSelf:'center',
-    marginVertical:verticalScale (5)
-
+    right:verticalScale(2),
+    marginVertical:verticalScale (5),
+    marginBottom:40
   },
   floatingButton:{
     position: 'absolute',
     bottom: verticalScale(1),
     right: horizontalScale(20),
-    width: horizontalScale(60),
-    height: verticalScale(48),
+    width: (width<370)?(70):(72),
+    height:(width<370)?(70):(72),
   },
   buttonImage: {
     width: '100%',
