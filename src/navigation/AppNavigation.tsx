@@ -11,7 +11,7 @@ import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/SingleOrder';
 import Delivered from '../components/Delivered';
-import {horizontalScale} from '../assets/scaling';
+import {horizontalScale, scaleFontSize} from '../assets/scaling';
 import Categories from '../screens/Categories';
 import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
