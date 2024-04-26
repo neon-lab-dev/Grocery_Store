@@ -10,11 +10,16 @@ import {comment} from '../../assets/images/icons/comment';
 import {user} from '../../assets/images/icons/user';
 import {Pressable, TextInput} from 'react-native';
 import {StyleSheet} from 'react-native';
-import {horizontalScale, scaleFontSize} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
 import {CallNumber} from '../../utils/launchIntents';
 import {SvgXml} from 'react-native-svg';
 import {accountIcon} from '../../assets/images/icons/account_circle';
+import {close} from '../../assets/images/icons/close';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
@@ -48,47 +53,50 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
         height={100}
         alignItems={'center'}
         bg={'white'}
-        px={5}
-        mb={2}>
-        <Center bg={'primary.500'} borderRadius={100} h={10} w={10} mr={2}>
-          <SvgXml xml={accountIcon} height={20} width={20} />
+        px={horizontalScale(20)}
+        mb={verticalScale(5)}>
+        <Center
+          bg={'primary.500'}
+          borderRadius={100}
+          overflow={'hidden'}
+          p={horizontalScale(10)}
+          mr={horizontalScale(10)}>
+          <SvgXml xml={accountIcon} height={27} width={27} />
         </Center>
         <View>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={600}
-            fontSize={scaleFontSize(20)}>
+            fontFamily={'Inter_SemiBold'}
+            fontSize={scaleFontSize(20)}
+            color={'accent.800'}>
             Salmaan Ahmed
           </Text>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
-            fontSize={scaleFontSize(14)}>
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'accent.600'}>
             96000 16417
           </Text>
         </View>
       </View>
-      <Modal isOpen={modalVisible} size={'full'}>
+      <Modal isOpen={modalVisible} size={'full'} onClose={onclose}>
         <Modal.Content
           mb={0}
           bg={'white'}
           mt={'auto'}
+          h={'50%'}
+          px={horizontalScale(15)}
           borderTopLeftRadius={20}
           borderTopRightRadius={20}>
           <View>
             <View style={styles.selectOverLayBox}>
               <Pressable onPress={onclose}>
-                <Image
-                  alt="image"
-                  source={require('../../assets/images/icons/close.png')}
-                  style={{marginRight: 20}}
-                />
+                <SvgXml xml={close} height={24} width={24} />
               </Pressable>
             </View>
-            <View style={styles.addBox}>
+            <View alignItems={'center'}>
               <Text style={[styles.SuggestText]}>Suggest Products</Text>
             </View>
-            <View>
+            <View alignItems={'center'} mb={verticalScale(15)}>
               <Text style={styles.Text}>
                 Lorem ipsum dolor sit amet consectetur. Quam diam lacus.
               </Text>
@@ -96,32 +104,29 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
             <TextInput
               textAlignVertical="top"
               placeholder="Enter Here"
-              placeholderTextColor={Colors.accent[400]}
+              placeholderTextColor={'#9CA3AF'}
               style={{
                 height: 160,
-                backgroundColor: Colors.accent[200],
+                backgroundColor: '#F3F4F6',
                 borderRadius: 15,
-                margin: 15,
-                marginBottom: 5,
+                paddingHorizontal: horizontalScale(10),
+                marginBottom: verticalScale(15),
               }}
             />
-            <View
-              h={100}
-              borderTopLeftRadius={14}
-              borderTopRightRadius={14}
-              bg={'white'}>
-              <Center flex={1} px={5}>
-                <Button
-                  w={'100%'}
-                  h={50}
-                  rounded={12}
-                  bg={'primary.500'}
-                  _text={{fontSize: 'lg', fontWeight: '600'}}
-                  onPress={() => {}}>
-                  Send
-                </Button>
-              </Center>
-            </View>
+            <Center>
+              <Button
+                w={'100%'}
+                py={verticalScale(10)}
+                rounded={12}
+                bg={'primary.500'}
+                _text={{
+                  fontFamily: 'Inter_SemiBold',
+                  fontSize: scaleFontSize(20),
+                }}
+                onPress={() => {}}>
+                Send
+              </Button>
+            </Center>
           </View>
         </Modal.Content>
       </Modal>
@@ -154,17 +159,16 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
         <Button
           onPress={gotoSplash}
           variant={'outline'}
-          mt={5}
-          w={100}
-          h={50}
+          px={horizontalScale(20)}
+          py={verticalScale(14)}
+          alignItems={'center'}
           rounded={16}
           borderWidth={2}
           borderColor={'accent.200'}
-          colorScheme={'orange'}
+          colorScheme={'muted'}
           _text={{
-            fontFamily: 'Inter',
+            fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(18),
-            fontWeight: 500,
             color: 'error.300',
           }}>
           Log Out
@@ -176,33 +180,19 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
 
 export const styles = StyleSheet.create({
   selectOverLayBox: {
-    width: '100%',
-    height: 72,
+    paddingVertical: verticalScale(20),
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingLeft: horizontalScale(20),
     alignItems: 'center',
   },
   SuggestText: {
-    fontFamily: 'Inter',
+    fontFamily: 'Inter_SemiBold',
     fontSize: scaleFontSize(20),
-    fontWeight: '700',
     color: '#1F2937',
-    marginRight: horizontalScale(15),
   },
   Text: {
-    fontFamily: 'Inter',
-    fontSize: scaleFontSize(11),
-    fontWeight: '400',
-    alignSelf: 'center',
+    fontFamily: 'Inter_Regular',
+    fontSize: scaleFontSize(12),
     color: '#1F2937',
-  },
-  addBox: {
-    width: '100%',
-    borderRadius: horizontalScale(12),
-    borderColor: 'rgba(243, 244, 246, 1.0)',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

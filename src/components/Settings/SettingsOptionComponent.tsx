@@ -1,8 +1,13 @@
 import React from 'react';
-import {View, Text, ChevronRightIcon} from 'native-base';
+import {View, Text} from 'native-base';
 import {SvgXml} from 'react-native-svg';
 import {TouchableOpacity} from 'react-native';
-import {scaleFontSize} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
+import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
 
 interface SettingsOptionProps {
   name: string;
@@ -17,17 +22,24 @@ const SettingsOption: React.FC<SettingsOptionProps> = ({
 }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <View bg="white" padding={5} flexDir="row" alignItems="center" mb={0.5}>
+      <View
+        bg="white"
+        px={horizontalScale(20)}
+        py={verticalScale(20)}
+        flexDir="row"
+        alignItems="center"
+        borderBottomColor={'accent.100'}
+        borderBottomWidth={1}>
         <SvgXml xml={iconSVG} width={18} height={18} />
         <Text
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(14)}
-          fontWeight={400}
-          ml={2}>
+          fontFamily={'Inter_Regular'}
+          fontSize={scaleFontSize(16)}
+          color={'accent.800'}
+          ml={horizontalScale(10)}>
           {name}
         </Text>
         <View flex={1} alignItems="flex-end">
-          <ChevronRightIcon color="primary.500" />
+          <SvgXml xml={rightOrangeArrowIcon} width={9} height={15} />
         </View>
       </View>
     </TouchableOpacity>
