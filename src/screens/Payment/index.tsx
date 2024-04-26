@@ -253,18 +253,18 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           justifyContent: 'space-between',
           padding: 12,
           backgroundColor: '#FFFFFF',
-          borderWidth: 1.5,
+          borderWidth: horizontalScale(1.5),
           borderColor: '#F3F4F6',
           alignItems: 'center',
+          paddingHorizontal: horizontalScale(17),
         }}>
         <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
           <Image source={require('../../assets/images/icons/marker.png')} />
           <Text
             style={{
               fontSize: scaleFontSize(12),
-              fontWeight: '600',
+              fontWeight: '500',
               color: '#374151',
-              fontFamily: 'Inter',
             }}>
             No. 23, ABC Street, XYZ area, City, State
           </Text>
