@@ -109,7 +109,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 height: 160,
                 backgroundColor: '#F3F4F6',
                 borderRadius: 15,
-                paddingHorizontal: horizontalScale(10),
+                paddingTop: verticalScale(15),
+                paddingHorizontal: horizontalScale(15),
                 marginBottom: verticalScale(15),
               }}
             />
@@ -159,7 +160,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
         <Button
           onPress={gotoSplash}
           variant={'outline'}
-          px={horizontalScale(20)}
+          px={horizontalScale(30)}
           py={verticalScale(14)}
           alignItems={'center'}
           rounded={16}
