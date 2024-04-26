@@ -41,8 +41,10 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerTitle: () => (
             <View>
-              <Text fontSize={'fs18'}>Payment Method</Text>
-              <Text fontSize={'fs12'} color={'accent.400'}>
+              <Text fontSize={'fs18'} color={'#1F2937'} fontWeight={'bold'}>
+                Payment Methods
+              </Text>
+              <Text fontSize={'fs12'} color={'#6B7280'} fontWeight={'bold'}>
                 1 Item | Total ₹42
               </Text>
             </View>
@@ -61,7 +63,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
       <Stack.Screen
         name="Search"
         component={Search}
-        options={() => ({headerShown: false})}
+        options={() => ({headerStyle: {height: 100}})}
       />
       <Stack.Screen
         name="Settings"
@@ -111,6 +113,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             color: '#1F2937',
           },
           headerStyle: {height: 100},
+          headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />

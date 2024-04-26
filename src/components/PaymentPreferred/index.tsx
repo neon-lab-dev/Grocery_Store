@@ -13,7 +13,7 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
   return (
     <View style={styles.paymentPreferredCard}>
       <Text style={styles.paymentPreferredTitle}>Select Preferred Payment</Text>
-      <View style={{marginTop: verticalScale(10)}}>
+      <View style={{marginTop: verticalScale(5)}}>
         <Radio.Group
           aria-label="payment method"
           name="myRadioGroup"
