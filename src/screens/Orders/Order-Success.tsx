@@ -16,36 +16,39 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
   const gotoOrderDetails = () => {
     navigation.navigate('SingleOrder');
   };
+  const gotoHome = () => {
+    navigation.navigate('Home');
+  };
   return (
     <View style={{flex: 1, backgroundColor: '#F9FAFB'}}>
       <View style={{alignSelf: 'center'}}>
         <Image
           alt="OrderAnimation"
-          style={{marginTop: verticalScale(25), width: 120, height: 120}}
+          style={{marginTop: (width<380)?(28):(45), width: (width<380)?(120):(140), height: (width<380)?(120):(140)}}
           source={require('../../assets/images/Order-Success.png')}
         />
       </View>
-      <Text style={styles.OrderText} fontSize={'xl'}>
+      <Text style={styles.OrderText} mt={(width<380)?(0):(2)} fontSize={(width<380)?('xl'):('2xl')}>
         Order Has been Placed Successfully
       </Text>
       <View
         h={16}
         borderRadius={10}
-        marginRight={3}
-        marginLeft={3}
+        marginRight={(width<380)?(4):(4)}
+        marginLeft={(width<380)?(4):(4)}
         bg={'white'}
         flexDir={'row'}
-        mt={12}
+        mt={(width<380)?(12):(12)}
         alignItems={'center'}
         px={2}>
-        <Center borderRadius={100} bg={'primary.400'} h={10} w={10} mr={2}>
+        <Center borderRadius={100} bg={'primary.400'} h={(width<380)?(10):(12)} w={(width<380)?(10):(12)} mr={2}>
           <SvgXml xml={location} height={20} width={20} />
         </Center>
         <View>
-          <Text fontSize={'fs14'} color={'accent.900'} fontWeight={500}>
+          <Text fontSize={(width<380)?(14):(16)} color={'accent.900'} fontWeight={500}>
             Delivering to
           </Text>
-          <Text fontSize={'fs10'} color={'accent.400'} fontWeight={500}>
+          <Text fontSize={(width<380)?(10):(12)} color={'accent.400'} fontWeight={500}>
             No.46, 1st floor, near police
           </Text>
         </View>
@@ -53,27 +56,27 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
       <View
         h={12}
         borderRadius={10}
-        marginRight={3}
-        marginLeft={3}
+        marginRight={(width<380)?(4):(4)}
+        marginLeft={(width<380)?(4):(4)}
         bg={'white'}
         flexDir={'row'}
-        mt={4}
+        mt={(width<380)?(6):(5)}
         alignItems={'center'}
         px={2}>
         <Image
-          style={{height: 16, width: 16}}
+          style={{height: 20, width: 20}}
           alt="PaymentIcon"
           source={require('../../assets/images/icons/PaymentIcon.png')}
         />
         <View flexDir={'row'}>
-          <Text fontSize={'fs14'} color={'accent.500'} ml={1} fontWeight={500}>
+          <Text fontSize={(width<380)?(14):(15)} color={'accent.500'} ml={1} fontWeight={500}>
             Payment Method
           </Text>
           <Text
-            fontSize={'fs14'}
+            fontSize={(width<380)?(14):(15)}
             color={'primary.500'}
             fontWeight={500}
-            ml={16}>
+            ml={(width<380)?(12):(24)}>
             Cash on Delivery
           </Text>
         </View>
@@ -81,20 +84,20 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
       <View
         h={12}
         borderRadius={10}
-        marginRight={3}
-        marginLeft={3}
+        marginRight={(width<380)?(4):(4)}
+        marginLeft={(width<380)?(4):(4)}
         bg={'white'}
         flexDir={'row'}
-        mt={4}
-        mb={4}
+        mt={(width<380)?(6):(4)}
+        mb={(width<380)?(6):(8)}
         alignItems={'center'}
         px={2}>
         <Image
-          style={{height: 16, width: 16}}
+          style={{height: 20, width: 20}}
           alt="PaymentIcon"
           source={require('../../assets/images/icons/WalletIcon.png')}></Image>
         <View flexDir={'row'} alignItems={'center'} justifyContent={'center'}>
-          <Text fontSize={'fs14'} color={'accent.500'} ml={1} fontWeight={500}>
+          <Text fontSize={(width<380)?(14):(16)} color={'accent.500'} ml={1} fontWeight={500}>
             2 items | ₹87.49
           </Text>
           <Center
@@ -102,18 +105,18 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             bg={'success.400'}
             w={'auto'}
             h={5}
-            px={2}
-            ml={0.5}>
-            <Text fontSize={'fs10'} color={'white'}>
+            px={1.5}
+            ml={1.5}>
+            <Text fontSize={(width<380)?(9):(11)} color={'white'}>
               SAVED ₹9.51
             </Text>
           </Center>
           <Pressable onPress={gotoOrderDetails}>
             <Text
-              fontSize={'fs12'}
+              fontSize={(width<380)?(12):(14)}
               color={'primary.500'}
               fontWeight={500}
-              ml={6}>
+              ml={(width<380)?(3):(12)}>
               View Details
             </Text>
           </Pressable>
@@ -125,9 +128,10 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
         </View>
       </View>
       <ImageCarousel />
-      <View h={100} w={width} bg={'white'} mt={4}>
+      <View h={100} w={width} bg={'white'} mt={(width<380)?(6):(3)}>
         <Center flex={1} px={5}>
           <Button
+          onPress={gotoHome}
             w={'100%'}
             h={50}
             rounded={12}
@@ -150,8 +154,9 @@ export default OrderSuccess;
 const styles = StyleSheet.create({
   OrderText: {
     color: Colors.accent[700],
-    fontSize: 27,
+    fontSize: (width<380)?(27):(34),
     fontWeight: '600',
     textAlign: 'center',
+
   },
 });
