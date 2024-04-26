@@ -1,25 +1,18 @@
 import React, {FC, useState} from 'react';
-import {
-  Image,
-  Pressable,
-  Text,
-  View,
-  Modal,
-  Alert,
-  FlatList,
-} from 'react-native';
+import {Image, Pressable, Text, View, Alert, FlatList} from 'react-native';
 import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import {Radio} from 'native-base';
+import {Modal} from 'native-base';
 import {styles} from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BillSummaryCard from '../../components/BillSummaryCard';
 import PaymentPreferred from '../../components/PaymentPreferred';
 import AddressDropDownList from '../../components/AddressDropDownList';
+import SelectAddress from '../../components/SelectingAddress';
 
 interface Address {
   id: number;
@@ -243,19 +236,42 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
   const gotoOrderSuccess = () => {
     navigation.navigate('OrderSuccess');
   };
+  const gotoAddAddress = () => {
+    setModalVisible(false);
+    navigation.navigate('AddAddress');
+  };
   const [value, setValue] = useState('one');
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.mainContainer}>
       {/* Drop Down List  */}
       {/* Drop Down List  */}
-      <AddressDropDownList />
-      <View
+      <Pressable
+        onPress={() => setModalVisible(!modalVisible)}
         style={{
+          flexDirection: 'row',
           justifyContent: 'space-between',
-          // flex: 1,
-          // paddingHorizontal: horizontalScale(20),
-          // alignItems: 'center',
+          padding: 12,
+          backgroundColor: '#FFFFFF',
+          borderWidth: 1.5,
+          borderColor: '#F3F4F6',
+          alignItems: 'center',
         }}>
+        <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+          <Image source={require('../../assets/images/icons/marker.png')} />
+          <Text
+            style={{
+              fontSize: scaleFontSize(12),
+              fontWeight: '600',
+              color: '#374151',
+              fontFamily: 'Inter',
+            }}>
+            No. 23, ABC Street, XYZ area, City, State
+          </Text>
+        </View>
+        <Image source={require('../../assets/images/icons/chevron-down.png')} />
+      </Pressable>
+      <View>
         <BillSummaryCard
           cutOffPrice={87.49}
           deliveryCharge={25}
@@ -265,7 +281,6 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
         />
         <PaymentPreferred setValue={setValue} value={value} />
       </View>
-
       <View style={styles.bottomLayout}>
         <Pressable onPress={gotoOrderSuccess}>
           <View style={styles.bottomCard}>
@@ -274,18 +289,23 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: 5,
+                gap: 4,
               }}>
               <Text style={styles.bottomCardText}>1 Item</Text>
               {/* <View style={styles.straightLine} /> */}
               <Text
                 style={[
                   styles.bottomCardText,
-                  {fontWeight: '900', fontSize: scaleFontSize(24)},
+                  {
+                    fontWeight: '600',
+                    fontSize: scaleFontSize(27),
+                    marginBottom: verticalScale(4),
+                    paddingLeft: horizontalScale(2),
+                  },
                 ]}>
                 |
               </Text>
-              <Text style={[styles.bottomCardText, {fontWeight: '700'}]}>
+              <Text style={[styles.bottomCardText, {fontWeight: '600'}]}>
                 ₹42
               </Text>
             </View>
@@ -296,7 +316,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                 alignItems: 'center',
               }}>
               <Text
-                style={[styles.bottomCardText, {fontSize: scaleFontSize(18)}]}>
+                style={[
+                  styles.bottomCardText,
+                  {fontSize: scaleFontSize(18), fontWeight: '600'},
+                ]}>
                 Pay Now
               </Text>
               <Image
@@ -306,6 +329,18 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           </View>
         </Pressable>
       </View>
+      <Modal isOpen={modalVisible} size={'full'}>
+        <Modal.Content
+          mb={0}
+          mt={'auto'}
+          borderTopLeftRadius={12}
+          borderTopRightRadius={12}>
+          <SelectAddress
+            onClose={() => setModalVisible(false)}
+            onAddAddress={gotoAddAddress}
+          />
+        </Modal.Content>
+      </Modal>
     </View>
   );
 };

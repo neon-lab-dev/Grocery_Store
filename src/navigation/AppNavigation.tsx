@@ -11,7 +11,7 @@ import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/SingleOrder';
 import Delivered from '../components/Delivered';
-import {horizontalScale, scaleFontSize} from '../assets/scaling';
+import {horizontalScale} from '../assets/scaling';
 import Categories from '../screens/Categories';
 import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
@@ -41,8 +41,10 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerTitle: () => (
             <View>
-              <Text fontSize={'fs18'}>Payment Method</Text>
-              <Text fontSize={'fs12'} color={'accent.400'}>
+              <Text fontSize={'fs18'} color={'#1F2937'} fontWeight={'bold'}>
+                Payment Methods
+              </Text>
+              <Text fontSize={'fs12'} color={'#6B7280'} fontWeight={'bold'}>
                 1 Item | Total ₹42
               </Text>
             </View>
@@ -61,21 +63,13 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
       <Stack.Screen
         name="Search"
         component={Search}
-        options={() => ({headerShown: false})}
+        options={() => ({headerStyle: {height: 100}})}
       />
       <Stack.Screen
         name="Settings"
         component={Settings}
         options={({navigation}) => ({
-          headerTitleStyle: {
-            fontFamily: 'Inter',
-            fontSize: scaleFontSize(18),
-            fontWeight: '500',
-          },
-          headerStyle: {
-            height: 100,
-            borderBottomColor: 'accent.100',
-          },
+          headerStyle: {height: 100},
           headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
@@ -104,13 +98,9 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="PersonalDetails"
         component={PersonalDetails}
         options={({navigation}) => ({
-          headerTitle: 'Your Profile',
-          headerTitleStyle: {
-            fontFamily: 'Inter',
-            fontSize: scaleFontSize(18),
-            fontWeight: '500',
-          },
+          headerTitle: 'Personal Details',
           headerStyle: {height: 100},
+          headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -119,31 +109,23 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         component={Orders}
         options={({navigation}) => ({
           headerTitle: 'My Orders',
-          headerTitleStyle: {
-            fontFamily: 'Inter',
-            fontSize: scaleFontSize(18),
-            fontWeight: '500',
-          },
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
         name="SingleOrder"
         component={SingleOrder}
-        options={{headerStyle: {height: 100}}}
+        options={{headerStyle: {height: 100}, headerTitleAlign: 'left'}}
       />
       <Stack.Screen
         name="Addresses"
         component={SavedAddress}
         options={({navigation}) => ({
           headerTitle: 'Saved Addresses',
-          headerTitleStyle: {
-            fontFamily: 'Inter',
-            fontSize: scaleFontSize(18),
-            fontWeight: '500',
-          },
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -151,13 +133,9 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="AddAddress"
         component={AddAddress}
         options={({navigation}) => ({
-          headerTitle: 'Add Address Details',
-          headerTitleStyle: {
-            fontFamily: 'Inter',
-            fontSize: scaleFontSize(18),
-            fontWeight: '500',
-          },
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
+          headerTitle: 'Add Address',
+          headerStyle: {height: 100},
+          headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -165,12 +143,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="Cart"
         component={Cart}
         options={({navigation}) => ({
-          headerTitle: 'Cart(3)',
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
-          headerTitleStyle: {
-            fontFamily: 'Inter_Medium',
-            fontSize: scaleFontSize(18),
-          },
+          headerStyle: {height: 100},
           headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
