@@ -8,6 +8,7 @@ import {
   ScrollView,
   Pressable,
   Alert,
+  Dimensions
 } from 'react-native';
 import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
@@ -58,6 +59,9 @@ const Home: React.FC<Props> = ({navigation}) => {
   const gotoSearch = () => {
     navigation.navigate('Search');
   };
+ 
+  const { width, height } = Dimensions.get('window');
+  // console.log(width,height)
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
@@ -94,7 +98,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 color: '#22C55E',
                 fontSize: scaleFontSize(16),
                 marginRight: horizontalScale(18),
-                marginTop: 35,
+                marginTop: verticalScale(25),
               }}>
               See all
             </Text>
@@ -291,7 +295,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 color: '#22C55E',
                 fontSize: scaleFontSize(16),
                 marginRight: horizontalScale(18),
-                marginTop: 35,
+                marginTop: verticalScale(25),
               }}>
               See all
             </Text>
@@ -303,25 +307,25 @@ const Home: React.FC<Props> = ({navigation}) => {
           <View style={{flexDirection: 'row', marginTop: 20}}>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                style={{height: (width<380)?(75):(83), width: (width<380)?(77):(85)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories1.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Baby Care</Text>
             </View>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                 style={{height: (width<380)?(75):(83), width: (width<380)?(77):(85)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories2.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Gift Store</Text>
             </View>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                 style={{height: (width<380)?(75):(83), width: (width<380)?(77):(85)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories3.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Party Essentials</Text>
             </View>
             <View style={style.ExploreCatgories}>
               <Image
-                style={{height: 80, width: 75}}
+                style={{height: (width<380)?(75):(83), width: (width<380)?(77):(85)}}
                 source={require('../../assets/images/Newcategories/ExploreCategories4.jpg')}></Image>
               <Text style={style.ExploreCatgoriesText}>Kitchen needs</Text>
             </View>
