@@ -15,7 +15,12 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
   return (
     <ScrollView flex={1} bgColor={'accent.50'} pt={5}>
       {Array.from({length: 4}).map((_, index) => (
-        <OrderComponent key={index} onPress={handlePress} />
+        <OrderComponent
+          key={index}
+          onPress={handlePress}
+          length={3}
+          index={index}
+        />
       ))}
     </ScrollView>
   );

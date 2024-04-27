@@ -11,7 +11,7 @@ import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/SingleOrder';
 import Delivered from '../components/Delivered';
-import {horizontalScale} from '../assets/scaling';
+import {horizontalScale, scaleFontSize} from '../assets/scaling';
 import Categories from '../screens/Categories';
 import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
@@ -69,7 +69,15 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="Settings"
         component={Settings}
         options={({navigation}) => ({
-          headerStyle: {height: 100},
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+          },
+          headerStyle: {
+            height: 100,
+            borderBottomColor: 'accent.100',
+          },
           headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
@@ -98,7 +106,12 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="PersonalDetails"
         component={PersonalDetails}
         options={({navigation}) => ({
-          headerTitle: 'Personal Details',
+          headerTitle: 'Your Profile',
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+          },
           headerStyle: {height: 100},
           headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
@@ -109,23 +122,31 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         component={Orders}
         options={({navigation}) => ({
           headerTitle: 'My Orders',
-          headerStyle: {height: 100},
-          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+          },
+          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
         name="SingleOrder"
         component={SingleOrder}
-        options={{headerStyle: {height: 100}, headerTitleAlign: 'left'}}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Addresses"
         component={SavedAddress}
         options={({navigation}) => ({
           headerTitle: 'Saved Addresses',
-          headerStyle: {height: 100},
-          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+          },
+          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -133,9 +154,13 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="AddAddress"
         component={AddAddress}
         options={({navigation}) => ({
-          headerTitle: 'Add Address',
-          headerStyle: {height: 100},
-          headerTitleAlign: 'center',
+          headerTitle: 'Add Address Details',
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+          },
+          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -143,7 +168,13 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="Cart"
         component={Cart}
         options={({navigation}) => ({
-          headerStyle: {height: 100},
+          headerTitle: 'Cart(3)',
+          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+          },
           headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
