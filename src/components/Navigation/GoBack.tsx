@@ -13,7 +13,7 @@ const GoBack: React.FC<GoBack> = ({onPress}) => {
     <Pressable onPress={onPress}>
       <SvgXml
         xml={goBackIcon}
-        height={20}
+        height={22}
         width={20}
         style={{marginLeft: horizontalScale(20)}}
       />
