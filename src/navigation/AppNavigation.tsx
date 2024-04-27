@@ -157,8 +157,9 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: 'Add Address Details',
           headerTitleStyle: {
             fontFamily: 'Inter_Medium',
-            fontSize: scaleFontSize(18),
+            fontSize: scaleFontSize(17),
             color: '#1F2937',
+            marginLeft:horizontalScale(-7)
           },
           headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
