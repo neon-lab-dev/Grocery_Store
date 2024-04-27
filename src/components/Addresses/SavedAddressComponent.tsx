@@ -13,11 +13,15 @@ import {edit} from '../../assets/images/icons/edit';
 interface SavedAddressComponentProps {
   gotoAddAddress: () => void;
   deleteAddress: () => void;
+  index: number;
+  length: number;
 }
 
 const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
   gotoAddAddress,
   deleteAddress,
+  index,
+  length,
 }) => {
   return (
     <View
@@ -25,12 +29,14 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
       bg={'white'}
       flexDir={'row'}
       px={horizontalScale(20)}
-      py={verticalScale(20)}
+      py={verticalScale(15)}
       alignItems={'center'}
-      justifyContent={'space-between'}>
+      justifyContent={'space-between'}
+      borderBottomWidth={index === length ? 0 : 1}
+      borderBottomColor={'accent.100'}>
       <View flexDir={'row'} alignItems={'center'}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
-        <View width={horizontalScale(170)} ml={horizontalScale(10)}>
+        <View width={horizontalScale(180)} ml={horizontalScale(10)}>
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
@@ -48,10 +54,9 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
         </View>
       </View>
       <View flexDir={'row'}>
-        <Pressable onPress={gotoAddAddress}>
+        <Pressable onPress={gotoAddAddress} mr={horizontalScale(20)}>
           <SvgXml xml={edit} height={24} width={24} />
         </Pressable>
-        <View w={5} />
         <Pressable onPress={deleteAddress}>
           <SvgXml xml={deleteIcon} height={24} width={24} />
         </Pressable>

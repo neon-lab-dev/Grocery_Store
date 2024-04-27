@@ -34,6 +34,8 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
           key={index}
           gotoAddAddress={gotoAddAddress}
           deleteAddress={() => handleDelete(index)}
+          index={index + 1}
+          length={Addresses.length}
         />
       ))}
       <View flex={1} bgColor={'accent.50'} mx={horizontalScale(20)}>
