@@ -22,7 +22,7 @@ export type RootStackParamList = {
 
 export type AuthNavigatorParamList = {
   Login: undefined;
-  OTP: undefined;
+  OTP: {phoneNo: string};
   PersonalDetails: undefined;
   Home: undefined;
   Categories: undefined;
@@ -55,7 +55,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation: React.FC = () => {
   // const user = useSelector(state => state.user);
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <NavigationContainer>

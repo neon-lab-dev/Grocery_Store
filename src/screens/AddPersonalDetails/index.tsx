@@ -1,10 +1,15 @@
-import {Button, Center, Input, Text, View} from 'native-base';
+import {Button, Center, Text, View} from 'native-base';
 import React, {useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
-import {scaleFontSize, width} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+  width,
+} from '../../assets/scaling';
 import validators from '../../utils/validators';
-import {Alert} from 'react-native';
+import TextInput from '../../components/Input';
 
 type AddPersonalDetailsProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'PersonalDetails'>;
@@ -13,84 +18,67 @@ type AddPersonalDetailsProps = {
 export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const isContinueDisabled = name === '' || email === '';
-
+  const [mobileNo, setMobileNo] = useState('');
+  const isContinueDisabled =
+    mobileNo.length === 0
+      ? !validators.stringDigitWithSpace(name) || !validators.isEmail(email)
+      : !validators.stringDigitWithSpace(name) ||
+        !validators.isEmail(email) ||
+        !validators.isPhoneNumber(mobileNo);
   const handleContinue = () => {
-    if (!validators.stringDigitWithSpace(name)) {
-      Alert.alert('Enter valid Name');
-    } else if (!validators.isEmail(email)) {
-      Alert.alert('Enter valid Email');
-    }
+    console.log('Logged In');
   };
 
   return (
     <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
-      <View p={5}>
+      <View px={horizontalScale(20)} py={verticalScale(20)}>
         <Text
-          fontFamily={'Inter'}
-          fontWeight={500}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={2}>
+          mb={verticalScale(5)}>
           Full Name*
         </Text>
-        <Input
+        <TextInput
           value={name}
-          onChangeText={txt => setName(txt)}
-          variant={'filled'}
-          rounded={15}
-          mb={10}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+          placeholder="Enter Here"
+          setValue={setName}
+          validation={() => validators.stringWithSpace(name)}
+          validationError="Enter a Valid Name*"
+          required
         />
-        <Text
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+
+        <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
           Email ID*
         </Text>
-        <Input
+        <TextInput
           value={email}
-          onChangeText={txt => setEmail(txt)}
-          variant={'filled'}
-          rounded={15}
-          mb={10}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+          placeholder="Enter Here"
+          setValue={setEmail}
           keyboardType="email-address"
+          validation={() => validators.isEmail(email)}
+          validationError="Enter a Valid Email*"
+          required
         />
-        <Text
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+        <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
           Secondary Mobile Number(Optional)
         </Text>
-        <Input
-          InputLeftElement={
+        <TextInput
+          placeholder="Enter Here"
+          value={mobileNo}
+          setValue={setMobileNo}
+          maxLength={10}
+          leftElement={
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              marginLeft={5}>
+              py={verticalScale(12)}
+              pl={horizontalScale(15)}
+              mr={horizontalScale(-5)}>
               +91
             </Text>
           }
-          variant={'filled'}
-          rounded={15}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
-          fontSize="sm"
-          keyboardType="number-pad"
+          validation={() => validators.isPhoneNumber(mobileNo)}
+          validationError="Enter Valid Phone Number*"
         />
       </View>
       <View
@@ -100,15 +88,15 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
         borderTopRightRadius={14}
         bg={'white'}
         shadow={1}>
-        <Center flex={1} px={5}>
+        <Center flex={1} px={horizontalScale(20)}>
           <Button
             w={'100%'}
-            h={50}
+            py={verticalScale(12)}
             rounded={12}
-            colorScheme={'orange'}
+            colorScheme={'transparent'}
             bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
             _text={{
-              fontFamily: 'Inter',
+              fontFamily: 'Inter_SemiBold',
               fontSize: scaleFontSize(20),
               color: isContinueDisabled ? 'accent.400' : 'white',
             }}

@@ -27,9 +27,8 @@ export const AuthNavigation: React.FC = () => {
         options={{
           headerTitle: 'Personal Details',
           headerTitleStyle: {
-            fontFamily: 'Inter',
+            fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(18),
-            fontWeight: '500',
           },
           headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerLeft: () => null,

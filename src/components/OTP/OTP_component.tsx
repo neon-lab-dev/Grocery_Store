@@ -72,15 +72,16 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
                 focusNextInput(index, txt);
               }}
               width={horizontalScale(70)}
-              height={verticalScale(60)}
+              height={verticalScale(65)}
               bg="white"
               borderColor={'accent.200'}
               _focus={{
-                borderColor: 'primary.500',
+                borderColor: 'accent.200',
+                bgColor: 'white',
               }}
               rounded={16}
               textAlign="center"
-              fontFamily={'Inter'}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(20)}
               keyboardType="numeric"
               maxLength={1}
@@ -91,9 +92,8 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
       </Center>
       <Center flexDir="row">
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_SemiBold'}
           fontSize={scaleFontSize(16)}
-          fontWeight={600}
           onPress={handleResend}
           disabled={!isResendEnabled}
           color={isResendEnabled ? 'primary.500' : 'accent.500'}>
@@ -101,9 +101,8 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
         </Text>
         {resendTime > 0 && (
           <Text
-            fontFamily={'Inter'}
+            fontFamily={'Inter_SemiBold'}
             fontSize={scaleFontSize(16)}
-            fontWeight={600}
             color={'accent.500'}>
             ({resendTime}s)
           </Text>

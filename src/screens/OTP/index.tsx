@@ -6,13 +6,13 @@ import {styles} from './style';
 import OTP from '../../components/OTP/OTP_component';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
-import {scaleFontSize} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 
 interface OTPScreenProps {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'OTP'>;
 }
 
-const OTPScreen: React.FC<OTPScreenProps> = ({navigation}) => {
+const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
   const handleOtpComplete = () => {
     navigation.replace('PersonalDetails');
   };
@@ -28,17 +28,16 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation}) => {
           style={styles.gradient}>
           <Center>
             <Text
-              fontFamily={'Inter'}
+              fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
-              fontWeight={600}>
+              color={'accent.800'}>
               We've sent you a Verification Code
             </Text>
             <Text
-              fontFamily={'Inter'}
+              fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
-              fontWeight={600}
-              marginBottom={5}>
-              +91 96865 29842
+              color={'accent.800'}>
+              {route.params.phoneNo}
             </Text>
           </Center>
           <OTP countdown={60} onOtpComplete={handleOtpComplete} />
