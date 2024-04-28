@@ -133,7 +133,8 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
         </View>
       </View>
       {/* product details and other options */}
-      <View style={{backgroundColor: '#FFFFFF'}}>
+      <View
+        style={{backgroundColor: '#FFFFFF', paddingBottom: verticalScale(40)}}>
         {/* product Name */}
         <View
           style={{
