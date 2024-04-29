@@ -11,7 +11,7 @@ interface TextInputProps extends IInputProps {
   value: any;
   setValue: (val: any) => void;
   leftElement?: JSX.Element;
-  validation: (val: any) => boolean;
+  validation: boolean;
   validationError: string;
   required?: boolean;
 }
@@ -46,7 +46,7 @@ const TextInput: React.FC<TextInputProps> = ({
         InputLeftElement={leftElement}
         onSubmitEditing={() => setTouchedOnce(true)}
       />
-      {touchedOnce && !validation(value) && !isEmptyAndNotRequired && (
+      {touchedOnce && !validation && !isEmptyAndNotRequired && (
         <Text
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(14)}

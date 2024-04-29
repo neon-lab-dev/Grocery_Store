@@ -42,7 +42,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
           value={name}
           placeholder="Enter Here"
           setValue={setName}
-          validation={() => validators.stringWithSpace(name)}
+          validation={validators.stringWithSpace(name)}
           validationError="Enter a Valid Name*"
           required
         />
@@ -55,7 +55,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
           placeholder="Enter Here"
           setValue={setEmail}
           keyboardType="email-address"
-          validation={() => validators.isEmail(email)}
+          validation={validators.isEmail(email)}
           validationError="Enter a Valid Email*"
           required
         />
@@ -77,7 +77,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
               +91
             </Text>
           }
-          validation={() => validators.isPhoneNumber(mobileNo)}
+          validation={validators.isPhoneNumber(mobileNo)}
           validationError="Enter Valid Phone Number*"
         />
       </View>

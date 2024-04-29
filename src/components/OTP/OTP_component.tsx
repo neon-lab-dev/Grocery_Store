@@ -72,7 +72,7 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
                 focusNextInput(index, txt);
               }}
               width={horizontalScale(70)}
-              height={verticalScale(65)}
+              height={verticalScale(60)}
               bg="white"
               borderColor={'accent.200'}
               _focus={{

@@ -81,7 +81,7 @@ const Login: React.FC<Props> = ({navigation}) => {
             marginTop: verticalScale(10),
           }}
           start={{y: 0.0, x: 0.0}}
-          end={{y: 0.5, x: 0.0}}>
+          end={{y: 1.0, x: 0.0}}>
           <Button
             w="100%"
             py={verticalScale(15)}
