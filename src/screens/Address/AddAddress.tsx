@@ -34,13 +34,14 @@ const AddAddress = () => {
           Landmark*
         </Text>
         <Input
+          style={{height: 55}}
           value={landmark}
           onChangeText={txt => setLandmark(txt)}
           variant={'filled'}
+          _focus={{borderColor: 'primary.500'}}
           rounded={15}
           mb={5}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
+          backgroundColor={'accent.100'}
           fontFamily={'Inter'}
           fontSize={scaleFontSize(16)}
           fontWeight={500}
@@ -55,13 +56,14 @@ const AddAddress = () => {
           Address*
         </Text>
         <Input
+          style={{height: 55}}
           value={address}
           onChangeText={txt => setAddress(txt)}
           variant={'filled'}
           rounded={15}
-          mb={5}
-          bg={'accent.100'}
           _focus={{borderColor: 'primary.500'}}
+          mb={5}
+          backgroundColor={'accent.100'}
           fontFamily={'Inter'}
           fontSize={scaleFontSize(16)}
           fontWeight={500}
@@ -78,14 +80,15 @@ const AddAddress = () => {
               City*
             </Text>
             <Input
+              style={{height: 55}}
               value={city}
+          _focus={{borderColor: 'primary.500'}}
               onChangeText={txt => setCity(txt)}
               w={'auto'}
               variant={'filled'}
               rounded={15}
               mb={5}
-              bg={'accent.100'}
-              _focus={{borderColor: 'primary.500'}}
+              backgroundColor={'accent.100'}
               fontFamily={'Inter'}
               fontSize={scaleFontSize(16)}
               fontWeight={500}
@@ -102,14 +105,15 @@ const AddAddress = () => {
               State*
             </Text>
             <Input
+          _focus={{borderColor: 'primary.500'}}
+              style={{height: 55}}
               value={state}
               onChangeText={txt => setState(txt)}
               w={'auto'}
               variant={'filled'}
               rounded={15}
               mb={5}
-              bg={'accent.100'}
-              _focus={{borderColor: 'primary.500'}}
+              backgroundColor={'accent.100'}
               fontFamily={'Inter'}
               fontSize={scaleFontSize(16)}
               fontWeight={500}
@@ -126,13 +130,14 @@ const AddAddress = () => {
           Pincode*
         </Text>
         <Input
+          style={{height: 55}}
           value={pincode}
+          _focus={{borderColor: 'primary.500'}}
           onChangeText={txt => setPincode(txt)}
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
+          backgroundColor={'accent.100'}
           fontFamily={'Inter'}
           fontSize={scaleFontSize(16)}
           fontWeight={500}
@@ -156,15 +161,17 @@ const AddAddress = () => {
               mr={3}
               py={2}
               px={4}
-              borderColor={selectedLabel === item ? 'accent.400' : 'accent.200'}
-              bgColor={selectedLabel === item ? 'accent.200' : 'accent.100'}
+              borderColor={
+                selectedLabel === item ? 'primary.500' : 'accent.200'
+              }
+              bgColor={selectedLabel === item ? 'primary.500' : 'accent.100'}
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>
               <Text
                 fontFamily={'Inter'}
                 fontSize={scaleFontSize(16)}
                 fontWeight={500}
-                color={selectedLabel === item ? 'accent.700' : 'accent.400'}>
+                color={selectedLabel === item ? 'white' : 'accent.400'}>
                 {item}
               </Text>
             </Pressable>
@@ -190,14 +197,14 @@ const AddAddress = () => {
         <Center flex={1} px={5}>
           <Button
             w={'100%'}
-            h={50}
+            h={57}
             rounded={12}
             colorScheme={'orange'}
             bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
             _text={{
-              fontFamily: 'Inter',
               fontSize: scaleFontSize(20),
               color: isContinueDisabled ? 'accent.400' : 'white',
+              fontWeight: '600',
             }}
             disabled={isContinueDisabled}
             onPress={() => {}}>
