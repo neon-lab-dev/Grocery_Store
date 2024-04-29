@@ -25,12 +25,13 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
           Full Name*
         </Text>
         <Input
+        style={{height:55}}
           value={name}
           onChangeText={txt => setName(txt)}
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.100'}
+          backgroundColor={'accent.100'}
           _focus={{borderColor: 'primary.500'}}
           fontFamily={'Inter'}
           fontSize={scaleFontSize(16)}
@@ -45,12 +46,13 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
           Email ID*
         </Text>
         <Input
+        style={{height:55}}
           value={email}
           onChangeText={txt => setEmail(txt)}
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.100'}
+          backgroundColor={'accent.100'}
           _focus={{borderColor: 'primary.500'}}
           fontFamily={'Inter'}
           fontSize={scaleFontSize(16)}
@@ -67,15 +69,16 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
         </Text>
         <Input
           InputLeftElement={
-            <Text fontSize="sm" marginLeft={5}>
+            <Text fontSize="md" marginLeft={5} fontWeight={500}>
               +91
             </Text>
           }
+          style={{height:55}}
           variant={'filled'}
           value={mobileNo}
           onChangeText={txt => setMobileNo(txt)}
           rounded={15}
-          bg={'accent.100'}
+          backgroundColor={'accent.100'}
           _focus={{borderColor: 'primary.500'}}
           fontFamily={'Inter'}
           fontSize={scaleFontSize(16)}
@@ -92,10 +95,16 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
           Secondary Mobile Number(Optional)
         </Text>
         <Input
+         InputLeftElement={
+          <Text fontSize="md" marginLeft={5} fontWeight={500}>
+            +91
+          </Text>
+        }
+        style={{height:55}}
           variant={'filled'}
           rounded={15}
           mb={5}
-          bg={'accent.100'}
+          backgroundColor={'accent.100'}
           _focus={{borderColor: 'primary.500'}}
           fontFamily={'Inter'}
           fontSize={scaleFontSize(16)}
@@ -113,11 +122,10 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
           <Center flex={1} px={5}>
             <Button
               w={'100%'}
-              h={50}
+              h={57}
               rounded={12}
               bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
               _text={{
-                fontFamily: 'Inter',
                 fontSize: scaleFontSize(20),
                 fontWeight: 600,
                 color: isContinueDisabled ? 'accent.400' : 'white',

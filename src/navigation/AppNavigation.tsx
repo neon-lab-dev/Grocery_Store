@@ -111,9 +111,9 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(18),
             color: '#1F2937',
+            marginLeft:horizontalScale(-6)
           },
           headerStyle: {height: 100},
-          headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
