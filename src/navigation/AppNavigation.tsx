@@ -63,7 +63,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
       <Stack.Screen
         name="Search"
         component={Search}
-        options={() => ({headerStyle: {height: 100}})}
+        options={() => ({headerShown: false})}
       />
       <Stack.Screen
         name="Settings"
