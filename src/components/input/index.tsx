@@ -11,9 +11,7 @@ interface TextInputProps extends IInputProps {
   value: any;
   setValue: (val: any) => void;
   leftElement?: JSX.Element;
-  validation: boolean;
-  validationError: string;
-  required?: boolean;
+  isErrorShown: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -21,12 +19,8 @@ const TextInput: React.FC<TextInputProps> = ({
   setValue,
   placeholder,
   leftElement,
-  validation,
-  validationError,
-  required,
+  isErrorShown,
 }) => {
-  const [touchedOnce, setTouchedOnce] = React.useState<boolean>();
-  const isEmptyAndNotRequired = !required && !value;
   return (
     <>
       <Input
@@ -38,23 +32,17 @@ const TextInput: React.FC<TextInputProps> = ({
         py={verticalScale(12)}
         pl={horizontalScale(15)}
         bg={'accent.100'}
-        _focus={{borderColor: 'accent.100', bgColor: 'accent.100'}}
+        borderColor={isErrorShown ? 'error.300' : 'accent.100'}
+        _focus={{
+          borderColor: isErrorShown ? 'error.300' : 'accent.100',
+          bgColor: 'accent.100',
+        }}
         fontFamily={'Inter_Medium'}
         fontSize={scaleFontSize(16)}
         placeholderTextColor={'accent.400'}
         placeholder={placeholder}
         InputLeftElement={leftElement}
-        onSubmitEditing={() => setTouchedOnce(true)}
       />
-      {touchedOnce && !validation && !isEmptyAndNotRequired && (
-        <Text
-          fontFamily={'Inter_Regular'}
-          fontSize={scaleFontSize(14)}
-          color={'#EF4444'}
-          mt={-verticalScale(10)}>
-          {validationError}
-        </Text>
-      )}
     </>
   );
 };

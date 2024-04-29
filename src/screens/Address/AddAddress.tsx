@@ -1,8 +1,23 @@
-import {Button, Center, Input, Modal, Pressable, Text, View} from 'native-base';
-import React, {useState} from 'react';
-import {scaleFontSize, width} from '../../assets/scaling';
+import {
+  Button,
+  Center,
+  Input,
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from 'native-base';
+import React, {useRef, useState} from 'react';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+  width,
+} from '../../assets/scaling';
 import validators from '../../utils/validators';
 import SelectAddress from '../../components/SelectingAddress';
+import TextInput from '../../components/Input';
 
 const AddAddress = () => {
   const [landmark, setLandmark] = useState('');
@@ -12,6 +27,7 @@ const AddAddress = () => {
   const [pincode, setPincode] = useState('');
   const [selectedLabel, setSelectedLabel] = useState('');
   const label = ['Home', 'Work', 'Other'];
+  const [isClicked, setIsClicked] = useState(false);
   const isContinueDisabled =
     landmark === '' ||
     address === '' ||
@@ -19,137 +35,142 @@ const AddAddress = () => {
     state === '' ||
     pincode === '' ||
     selectedLabel === '';
+  const landmarkErrorShown = landmark === '';
+  const addressErrorShown = !validators.isAddress(address);
+  const cityErrorShown = !validators.stringWithSpace(city);
+  const stateErrorShown = !validators.stringWithSpace(state);
+  const pincodeErrorShown = !validators.isPinCode(pincode);
+
+  const ScrollViewRef = useRef<ScrollView>(null);
+
   return (
     <View
       flex={1}
       bgColor={'accent.50'}
       justifyContent={'space-between'}
       flexShrink={1}>
-      <View p={5}>
+      <ScrollView
+        flex={1}
+        contentContainerStyle={{paddingBottom: verticalScale(30)}}
+        px={horizontalScale(20)}
+        py={verticalScale(20)}>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
           fontWeight={500}
-          mb={2}>
+          mb={verticalScale(5)}>
           Landmark*
         </Text>
-        <Input
-          style={{height: 55}}
+        <TextInput
           value={landmark}
-          onChangeText={txt => setLandmark(txt)}
-          variant={'filled'}
-          _focus={{borderColor: 'primary.500'}}
-          rounded={15}
-          mb={5}
-          backgroundColor={'accent.100'}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+          setValue={setLandmark}
+          placeholder="Enter Here"
+          isErrorShown={isClicked && landmarkErrorShown}
         />
+        {isClicked && landmarkErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter a Landmark*
+          </Text>
+        )}
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+          mb={verticalScale(5)}>
           Address*
         </Text>
-        <Input
-          style={{height: 55}}
+        <TextInput
           value={address}
-          onChangeText={txt => setAddress(txt)}
-          variant={'filled'}
-          rounded={15}
-          _focus={{borderColor: 'primary.500'}}
-          mb={5}
-          backgroundColor={'accent.100'}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+          setValue={setAddress}
+          placeholder="Enter Here"
+          isErrorShown={isClicked && addressErrorShown}
         />
+        {isClicked && addressErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter a Valid Address*
+          </Text>
+        )}
         <View flexDir={'row'}>
-          <View flex={0.5} mr={5}>
+          <View flex={0.5} mr={horizontalScale(10)}>
             <Text
-              fontFamily={'Inter'}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              fontWeight={500}
-              mb={2}>
+              mb={verticalScale(5)}>
               City*
             </Text>
-            <Input
-              style={{height: 55}}
+            <TextInput
               value={city}
-          _focus={{borderColor: 'primary.500'}}
-              onChangeText={txt => setCity(txt)}
-              w={'auto'}
-              variant={'filled'}
-              rounded={15}
-              mb={5}
-              backgroundColor={'accent.100'}
-              fontFamily={'Inter'}
-              fontSize={scaleFontSize(16)}
-              fontWeight={500}
-              placeholderTextColor={'accent.400'}
-              placeholder={'Enter Here'}
+              setValue={setCity}
+              placeholder="Enter Here"
+              isErrorShown={isClicked && cityErrorShown}
             />
+            {isClicked && cityErrorShown && (
+              <Text
+                fontFamily={'Inter_Regular'}
+                fontSize={scaleFontSize(14)}
+                color={'#EF4444'}
+                mt={-verticalScale(10)}>
+                Enter a Valid City*
+              </Text>
+            )}
           </View>
           <View flex={0.5}>
             <Text
-              fontFamily={'Inter'}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              fontWeight={500}
-              mb={2}>
+              mb={verticalScale(5)}>
               State*
             </Text>
-            <Input
-          _focus={{borderColor: 'primary.500'}}
-              style={{height: 55}}
+            <TextInput
               value={state}
-              onChangeText={txt => setState(txt)}
-              w={'auto'}
-              variant={'filled'}
-              rounded={15}
-              mb={5}
-              backgroundColor={'accent.100'}
-              fontFamily={'Inter'}
-              fontSize={scaleFontSize(16)}
-              fontWeight={500}
-              placeholderTextColor={'accent.400'}
-              placeholder={'Enter Here'}
+              setValue={setState}
+              placeholder="Enter Here"
+              isErrorShown={isClicked && stateErrorShown}
             />
+            {isClicked && stateErrorShown && (
+              <Text
+                fontFamily={'Inter_Regular'}
+                fontSize={scaleFontSize(14)}
+                color={'#EF4444'}
+                mt={-verticalScale(10)}>
+                Enter a Valid State*
+              </Text>
+            )}
           </View>
         </View>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+          mb={verticalScale(5)}>
           Pincode*
         </Text>
-        <Input
-          style={{height: 55}}
+        <TextInput
           value={pincode}
-          _focus={{borderColor: 'primary.500'}}
-          onChangeText={txt => setPincode(txt)}
-          variant={'filled'}
-          rounded={15}
-          mb={5}
-          backgroundColor={'accent.100'}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
-          keyboardType="number-pad"
+          setValue={setPincode}
+          placeholder="Enter Here"
+          isErrorShown={isClicked && pincodeErrorShown}
+          onFocus={() => ScrollViewRef.current?.scrollToEnd()}
         />
+        {isClicked && pincodeErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter a Valid Pincode*
+          </Text>
+        )}
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+          mb={verticalScale(5)}>
           Label*
         </Text>
         <View flexDir={'row'}>
@@ -158,20 +179,17 @@ const AddAddress = () => {
               key={index}
               borderRadius={100}
               borderWidth={1}
-              mr={3}
-              py={2}
-              px={4}
-              borderColor={
-                selectedLabel === item ? 'primary.500' : 'accent.200'
-              }
-              bgColor={selectedLabel === item ? 'primary.500' : 'accent.100'}
+              mr={horizontalScale(10)}
+              py={verticalScale(7)}
+              px={horizontalScale(15)}
+              borderColor={selectedLabel === item ? 'accent.400' : 'accent.200'}
+              bgColor={selectedLabel === item ? 'accent.200' : 'accent.100'}
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>
               <Text
-                fontFamily={'Inter'}
+                fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(16)}
-                fontWeight={500}
-                color={selectedLabel === item ? 'white' : 'accent.400'}>
+                color={selectedLabel === item ? 'accent.700' : 'accent.400'}>
                 {item}
               </Text>
             </Pressable>
@@ -186,28 +204,28 @@ const AddAddress = () => {
             <SelectAddress />
           </Modal.Content>
         </Modal> */}
-      </View>
+      </ScrollView>
       <View
         h={100}
-        w={width}
+        w={'100%'}
         borderTopLeftRadius={14}
         borderTopRightRadius={14}
         bg={'white'}
         shadow={1}>
-        <Center flex={1} px={5}>
+        <Center flex={1} px={horizontalScale(15)}>
           <Button
             w={'100%'}
-            h={57}
+            py={verticalScale(13)}
             rounded={12}
-            colorScheme={'orange'}
+            colorScheme={'transparent'}
             bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
             _text={{
+              fontFamily: 'Inter_SemiBold',
               fontSize: scaleFontSize(20),
               color: isContinueDisabled ? 'accent.400' : 'white',
-              fontWeight: '600',
             }}
             disabled={isContinueDisabled}
-            onPress={() => {}}>
+            onPress={() => setIsClicked(true)}>
             Save Address
           </Button>
         </Center>

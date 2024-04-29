@@ -10,23 +10,34 @@ import {
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
 import TextInput from '../../components/Input';
+import {
+  CommonActions,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {login} from '../../redux/slices/auth.slice';
 
 type AddPersonalDetailsProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'PersonalDetails'>;
 };
 
-export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
+export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNo, setMobileNo] = useState('');
-  const isContinueDisabled =
-    mobileNo.length === 0
-      ? !validators.stringDigitWithSpace(name) || !validators.isEmail(email)
-      : !validators.stringDigitWithSpace(name) ||
-        !validators.isEmail(email) ||
-        !validators.isPhoneNumber(mobileNo);
+  const [isClicked, setIsClicked] = useState(false);
+  const isContinueDisabled = name === '' || email === '';
+  const nameErrorShown = !validators.stringWithSpace(name);
+  const emailErrorShown = !validators.isEmail(email);
+  const mobileNoErrorShown =
+    mobileNo.length !== 0 && !validators.isPhoneNumber(mobileNo);
+  const dispatch = useDispatch();
   const handleContinue = () => {
-    console.log('Logged In');
+    if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
+      setIsClicked(true);
+    } else {
+      dispatch(login('User'));
+    }
   };
 
   return (
@@ -42,11 +53,18 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
           value={name}
           placeholder="Enter Here"
           setValue={setName}
-          validation={validators.stringWithSpace(name)}
-          validationError="Enter a Valid Name*"
-          required
+          borderColor={nameErrorShown ? 'error.300' : 'accent.100'}
+          isErrorShown={isClicked && nameErrorShown}
         />
-
+        {isClicked && nameErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Name*
+          </Text>
+        )}
         <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
           Email ID*
         </Text>
@@ -55,10 +73,17 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
           placeholder="Enter Here"
           setValue={setEmail}
           keyboardType="email-address"
-          validation={validators.isEmail(email)}
-          validationError="Enter a Valid Email*"
-          required
+          isErrorShown={isClicked && emailErrorShown}
         />
+        {isClicked && emailErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Email*
+          </Text>
+        )}
         <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
           Secondary Mobile Number(Optional)
         </Text>
@@ -67,6 +92,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
           value={mobileNo}
           setValue={setMobileNo}
           maxLength={10}
+          isErrorShown={isClicked && mobileNoErrorShown}
           leftElement={
             <Text
               fontFamily={'Inter_Medium'}
@@ -77,9 +103,16 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
               +91
             </Text>
           }
-          validation={validators.isPhoneNumber(mobileNo)}
-          validationError="Enter Valid Phone Number*"
         />
+        {isClicked && mobileNoErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Mobile Number*
+          </Text>
+        )}
       </View>
       <View
         h={100}

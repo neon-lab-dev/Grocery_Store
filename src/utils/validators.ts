@@ -43,6 +43,11 @@ const stringDigitWithSpaceAndComma = (value: string): boolean => {
   return value ? regex.test(value.trim()) : false;
 };
 
+const isPinCode = (value: any): boolean => {
+  const regex = /^([0-9]{6}|[0-9]{3}\s[0-9]{3})$/;
+  return value ? regex.test(value) : false;
+};
+
 export default {
   onlyStringAllowed,
   onlyNumberAllowed,
@@ -53,4 +58,5 @@ export default {
   stringWithSpace,
   stringDigitWithSpace,
   stringDigitWithSpaceAndComma,
+  isPinCode,
 };

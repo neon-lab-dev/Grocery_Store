@@ -1,8 +1,23 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Button, Center, Input, Text, View} from 'native-base';
+import {
+  Button,
+  Center,
+  Input,
+  KeyboardAvoidingView,
+  ScrollView,
+  Text,
+  View,
+} from 'native-base';
 import React, {useState} from 'react';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
-import {scaleFontSize} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
+import TextInput from '../../components/Input';
+import validators from '../../utils/validators';
+import {Platform} from 'react-native';
 
 interface PersonalDetailsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'PersonalDetails'>;
@@ -12,133 +27,166 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNo, setMobileNo] = useState('');
+  const [secondaryMobileNo, setSecondaryMobileNo] = useState('');
+  const [isClicked, setIsClicked] = useState(false);
   const isContinueDisabled = name === '' || email === '' || mobileNo === '';
+  const nameErrorShown = !validators.stringWithSpace(name);
+  const emailErrorShown = !validators.isEmail(email);
+  const mobileNoErrorShown = !validators.isPhoneNumber(mobileNo);
+  const secondaryMobileNoErrorShown =
+    secondaryMobileNo.length !== 0 &&
+    !validators.isPhoneNumber(secondaryMobileNo);
+  const scrollViewRef = React.useRef<ScrollView>(null);
 
   return (
-    <View flex={1} bgColor={'accent.50'}>
-      <View p={5}>
+    <KeyboardAvoidingView
+      flex={1}
+      bgColor={'accent.50'}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <ScrollView
+        flex={1}
+        flexGrow={1}
+        ref={scrollViewRef}
+        px={horizontalScale(20)}
+        py={verticalScale(20)}
+        _contentContainerStyle={{paddingBottom: verticalScale(30)}}>
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+          mb={verticalScale(5)}>
           Full Name*
         </Text>
-        <Input
-        style={{height:55}}
+        <TextInput
           value={name}
-          onChangeText={txt => setName(txt)}
-          variant={'filled'}
-          rounded={15}
-          mb={5}
-          backgroundColor={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+          placeholder="Enter Here"
+          setValue={setName}
+          isErrorShown={isClicked && nameErrorShown}
         />
+        {isClicked && nameErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Name*
+          </Text>
+        )}
         <Text
-          fontFamily={'Inter'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+          mb={verticalScale(5)}>
           Email ID*
         </Text>
-        <Input
-        style={{height:55}}
+        <TextInput
           value={email}
-          onChangeText={txt => setEmail(txt)}
-          variant={'filled'}
-          rounded={15}
-          mb={5}
-          backgroundColor={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
-          keyboardType="email-address"
+          placeholder="Enter Here"
+          setValue={setEmail}
+          isErrorShown={isClicked && emailErrorShown}
         />
+        {isClicked && emailErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Email*
+          </Text>
+        )}
         <Text
-          mb={2}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}>
+          mb={verticalScale(5)}
+          fontFamily={'Inter_Medium'}
+          fontSize={scaleFontSize(16)}>
           Mobile Number*
         </Text>
-        <Input
-          InputLeftElement={
-            <Text fontSize="md" marginLeft={5} fontWeight={500}>
+        <TextInput
+          placeholder="Enter Here"
+          value={mobileNo}
+          setValue={setMobileNo}
+          maxLength={10}
+          isErrorShown={isClicked && mobileNoErrorShown}
+          leftElement={
+            <Text
+              fontFamily={'Inter_Medium'}
+              fontSize={scaleFontSize(16)}
+              py={verticalScale(12)}
+              pl={horizontalScale(15)}
+              mr={horizontalScale(-5)}>
               +91
             </Text>
           }
-          style={{height:55}}
-          variant={'filled'}
-          value={mobileNo}
-          onChangeText={txt => setMobileNo(txt)}
-          rounded={15}
-          backgroundColor={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
-          mb={5}
-          keyboardType="number-pad"
         />
+        {isClicked && mobileNoErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Mobile Number*
+          </Text>
+        )}
         <Text
-          mb={2}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}>
+          mb={verticalScale(5)}
+          fontFamily={'Inter_Medium'}
+          fontSize={scaleFontSize(16)}>
           Secondary Mobile Number(Optional)
         </Text>
-        <Input
-         InputLeftElement={
-          <Text fontSize="md" marginLeft={5} fontWeight={500}>
-            +91
-          </Text>
-        }
-        style={{height:55}}
-          variant={'filled'}
-          rounded={15}
-          mb={5}
-          backgroundColor={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+        <TextInput
+          placeholder="Enter Here"
+          value={secondaryMobileNo}
+          setValue={setSecondaryMobileNo}
+          maxLength={10}
+          isErrorShown={isClicked && secondaryMobileNoErrorShown}
+          leftElement={
+            <Text
+              fontFamily={'Inter_Medium'}
+              fontSize={scaleFontSize(16)}
+              py={verticalScale(12)}
+              pl={horizontalScale(15)}
+              mr={horizontalScale(-5)}>
+              +91
+            </Text>
+          }
+          onFocus={() => scrollViewRef.current?.scrollToEnd()}
         />
+        {isClicked && secondaryMobileNoErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Mobile Number*
+          </Text>
+        )}
+      </ScrollView>
+      <View
+        h={verticalScale(80)}
+        borderTopLeftRadius={14}
+        borderTopRightRadius={14}
+        bg={'white'}
+        w={'100%'}
+        alignSelf={'flex-end'}
+        shadow={1}>
+        <Center flex={1} px={horizontalScale(20)}>
+          <Button
+            w={'100%'}
+            py={verticalScale(15)}
+            rounded={12}
+            bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
+            _text={{
+              fontSize: scaleFontSize(20),
+              fontFamily: 'Inter_SemiBold',
+              color: isContinueDisabled ? 'accent.400' : 'white',
+            }}
+            colorScheme={'transparent'}
+            disabled={isContinueDisabled}
+            onPress={() => {
+              setIsClicked(true);
+            }}>
+            Save
+          </Button>
+        </Center>
       </View>
-      <View flex={1} justifyContent={'flex-end'}>
-        <View
-          h={100}
-          borderTopLeftRadius={14}
-          borderTopRightRadius={14}
-          bg={'white'}
-          shadow={1}>
-          <Center flex={1} px={5}>
-            <Button
-              w={'100%'}
-              h={57}
-              rounded={12}
-              bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
-              _text={{
-                fontSize: scaleFontSize(20),
-                fontWeight: 600,
-                color: isContinueDisabled ? 'accent.400' : 'white',
-              }}
-              colorScheme={'orange'}
-              disabled={isContinueDisabled}
-              onPress={() => {}}>
-              Save
-            </Button>
-          </Center>
-        </View>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
