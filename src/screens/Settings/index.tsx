@@ -20,11 +20,14 @@ import {CallNumber} from '../../utils/launchIntents';
 import {SvgXml} from 'react-native-svg';
 import {accountIcon} from '../../assets/images/icons/account_circle';
 import {close} from '../../assets/images/icons/close';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../redux/slices/auth.slice';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
 export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
+  const dispatch = useDispatch();
   const gotoPersonalDetails = () => {
     navigation.navigate('PersonalDetails');
   };
@@ -43,8 +46,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const onclose = () => {
     setModalVisible(false);
   };
-  const gotoSplash = () => {
-    navigation.navigate('Splash');
+  const handleLogOut = () => {
+    dispatch(logout());
   };
   return (
     <View flex={1} bgColor={'accent.50'}>
@@ -159,7 +162,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
       />
       <Center flex={1}>
         <Button
-          onPress={gotoSplash}
+          onPress={handleLogOut}
           variant={'outline'}
           px={horizontalScale(30)}
           py={verticalScale(14)}

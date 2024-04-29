@@ -3,8 +3,13 @@ import {View, Button, Input, Text, Image} from 'native-base';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {styles} from './style';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
-import {Alert} from 'react-native';
-import {scaleFontSize, verticalScale} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
+import LinearGradient from 'react-native-linear-gradient';
+import validators from '../../utils/validators';
 
 type Props = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'Login'>;
@@ -14,11 +19,9 @@ const Login: React.FC<Props> = ({navigation}) => {
   const [phoneNo, setPhoneNo] = useState('');
 
   const handleContinue = () => {
-    if (phoneNo.length === 10) {
-      navigation.navigate('OTP');
-    } else {
-      Alert.alert('Enter valid phone number');
-    }
+    validators.isPhoneNumber(phoneNo)
+      ? navigation.navigate('OTP', {phoneNo: phoneNo})
+      : console.log('Enter Valid Mobile Number');
   };
   return (
     <View flex={1} bg="primary.50">
@@ -32,73 +35,78 @@ const Login: React.FC<Props> = ({navigation}) => {
       </View>
       <View style={styles.inputSection}>
         <Text
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(28)}
-          fontWeight={600}
+          fontFamily={'Inter_SemiBold'}
+          fontSize={scaleFontSize(25)}
           color={'accent.800'}>
           Fresh Picks Just a Tap Away!
         </Text>
         <Text
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={400}
+          fontFamily={'Inter_Regular'}
+          fontSize={scaleFontSize(15)}
           color="accent.500">
           Enter your phone number to receive an OTP.
         </Text>
         <Input
           InputLeftElement={
             <Text
-              fontFamily={'Inter'}
-              fontSize={scaleFontSize(18)}
-              fontWeight={500}
-              marginLeft={5}>
+              fontFamily={'Inter_Medium'}
+              fontSize={scaleFontSize(26)}
+              py={verticalScale(20)}
+              pl={horizontalScale(20)}>
               +91
             </Text>
           }
           bg="white"
           borderColor={'accent.100'}
-          marginTop={5}
+          marginTop={verticalScale(10)}
           rounded={20}
           _focus={{
-            borderColor: 'primary.500',
+            borderColor: 'accent.100',
+            bgColor: 'white',
           }}
-          h={verticalScale(50)}
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(18)}
+          py={verticalScale(20)}
+          fontFamily={'Inter_Medium'}
+          fontSize={scaleFontSize(26)}
           keyboardType="number-pad"
           maxLength={10}
           blurOnSubmit
           value={phoneNo}
           onChangeText={setPhoneNo}
         />
-        <Button
-          w="100%"
-          marginTop={2}
-          rounded={12}
-          h={verticalScale(40)}
-          colorScheme={'orange'}
-          bg="primary.500"
-          onPress={handleContinue}
-          _text={{
-            fontFamily: 'Inter',
-            fontWeight: 500,
-            fontSize: scaleFontSize(18),
-          }}>
-          Continue
-        </Button>
+        <LinearGradient
+          colors={['#FDBA74', '#F97316']}
+          style={{
+            borderRadius: 12,
+            width: '100%',
+            marginTop: verticalScale(10),
+          }}
+          start={{y: 0.0, x: 0.0}}
+          end={{y: 1.0, x: 0.0}}>
+          <Button
+            w="100%"
+            py={verticalScale(15)}
+            rounded={12}
+            colorScheme={'transparent'}
+            bg="transparent"
+            onPress={phoneNo.length === 10 ? handleContinue : null}
+            _text={{
+              fontFamily: 'Inter_Medium',
+              fontSize: scaleFontSize(18),
+            }}>
+            Continue
+          </Button>
+        </LinearGradient>
+
         <View style={styles.footer}>
           <Text
-            fontFamily={'Inter'}
-            fontSize={scaleFontSize(12)}
-            fontWeight={400}
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(10)}
             color="accent.400">
             By proceeding, you agree to our{' '}
           </Text>
           <Text
-            fontFamily={'Inter'}
-            fontSize={scaleFontSize(12)}
-            fontWeight={400}
-            fontSize={10}
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(10)}
             color="accent.400"
             underline>
             Terms & Conditions and Privacy policy.

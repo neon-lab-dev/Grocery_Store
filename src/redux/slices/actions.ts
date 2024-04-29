@@ -3,7 +3,7 @@ import {
   INCREMENT_ITEM,
   DECREMENT_ITEM,
   CLEAR_CART,
-} from './ActionTypes';
+} from './actionTypes';
 import {Item} from './index';
 
 export const addToCart = (item: Item) => ({

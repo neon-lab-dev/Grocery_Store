@@ -13,6 +13,7 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from '../screens/Splash';
+import {useDispatch, useSelector} from 'react-redux';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -22,7 +23,7 @@ export type RootStackParamList = {
 
 export type AuthNavigatorParamList = {
   Login: undefined;
-  OTP: undefined;
+  OTP: {phoneNo: string};
   PersonalDetails: undefined;
   Home: undefined;
   Categories: undefined;
@@ -55,15 +56,16 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation: React.FC = () => {
   // const user = useSelector(state => state.user);
-  const isLoggedIn = true;
+  // const isLoggedIn = false;
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Splash" options={{headerShown: false}}>
-          {props => <Splash {...props} isLoggedIn={isLoggedIn} />}
+          {props => <Splash {...props} isLoggedIn={isAuthenticated} />}
         </Stack.Screen>
-        {!isLoggedIn ? (
+        {!isAuthenticated ? (
           <Stack.Screen
             name="Auth"
             component={AuthNavigation}

@@ -1,97 +1,118 @@
-import {Button, Center, Input, Text, View} from 'native-base';
+import {Button, Center, Text, View} from 'native-base';
 import React, {useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
-import {scaleFontSize, width} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+  width,
+} from '../../assets/scaling';
 import validators from '../../utils/validators';
-import {Alert} from 'react-native';
+import TextInput from '../../components/Input';
+import {
+  CommonActions,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {login} from '../../redux/slices/auth.slice';
 
 type AddPersonalDetailsProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'PersonalDetails'>;
 };
 
-export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
+export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [mobileNo, setMobileNo] = useState('');
+  const [isClicked, setIsClicked] = useState(false);
   const isContinueDisabled = name === '' || email === '';
-
+  const nameErrorShown = !validators.stringWithSpace(name);
+  const emailErrorShown = !validators.isEmail(email);
+  const mobileNoErrorShown =
+    mobileNo.length !== 0 && !validators.isPhoneNumber(mobileNo);
+  const dispatch = useDispatch();
   const handleContinue = () => {
-    if (!validators.stringDigitWithSpace(name)) {
-      Alert.alert('Enter valid Name');
-    } else if (!validators.isEmail(email)) {
-      Alert.alert('Enter valid Email');
+    if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
+      setIsClicked(true);
+    } else {
+      dispatch(login('User'));
     }
   };
 
   return (
     <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
-      <View p={5}>
+      <View px={horizontalScale(20)} py={verticalScale(20)}>
         <Text
-          fontFamily={'Inter'}
-          fontWeight={500}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={2}>
+          mb={verticalScale(5)}>
           Full Name*
         </Text>
-        <Input
+        <TextInput
           value={name}
-          onChangeText={txt => setName(txt)}
-          variant={'filled'}
-          rounded={15}
-          mb={10}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+          placeholder="Enter Here"
+          setValue={setName}
+          borderColor={nameErrorShown ? 'error.300' : 'accent.100'}
+          isErrorShown={isClicked && nameErrorShown}
         />
-        <Text
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+        {isClicked && nameErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Name*
+          </Text>
+        )}
+        <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
           Email ID*
         </Text>
-        <Input
+        <TextInput
           value={email}
-          onChangeText={txt => setEmail(txt)}
-          variant={'filled'}
-          rounded={15}
-          mb={10}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
+          placeholder="Enter Here"
+          setValue={setEmail}
           keyboardType="email-address"
+          isErrorShown={isClicked && emailErrorShown}
         />
-        <Text
-          fontFamily={'Inter'}
-          fontSize={scaleFontSize(16)}
-          fontWeight={500}
-          mb={2}>
+        {isClicked && emailErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Email*
+          </Text>
+        )}
+        <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
           Secondary Mobile Number(Optional)
         </Text>
-        <Input
-          InputLeftElement={
+        <TextInput
+          placeholder="Enter Here"
+          value={mobileNo}
+          setValue={setMobileNo}
+          maxLength={10}
+          isErrorShown={isClicked && mobileNoErrorShown}
+          leftElement={
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              marginLeft={5}>
+              py={verticalScale(12)}
+              pl={horizontalScale(15)}
+              mr={horizontalScale(-5)}>
               +91
             </Text>
           }
-          variant={'filled'}
-          rounded={15}
-          bg={'accent.100'}
-          _focus={{borderColor: 'primary.500'}}
-          fontFamily={'Inter'}
-          placeholderTextColor={'accent.400'}
-          placeholder={'Enter Here'}
-          fontSize="sm"
-          keyboardType="number-pad"
         />
+        {isClicked && mobileNoErrorShown && (
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'#EF4444'}
+            mt={-verticalScale(10)}>
+            Enter Valid Mobile Number*
+          </Text>
+        )}
       </View>
       <View
         h={100}
@@ -100,15 +121,15 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = () => {
         borderTopRightRadius={14}
         bg={'white'}
         shadow={1}>
-        <Center flex={1} px={5}>
+        <Center flex={1} px={horizontalScale(20)}>
           <Button
             w={'100%'}
-            h={50}
+            py={verticalScale(12)}
             rounded={12}
-            colorScheme={'orange'}
+            colorScheme={'transparent'}
             bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
             _text={{
-              fontFamily: 'Inter',
+              fontFamily: 'Inter_SemiBold',
               fontSize: scaleFontSize(20),
               color: isContinueDisabled ? 'accent.400' : 'white',
             }}
