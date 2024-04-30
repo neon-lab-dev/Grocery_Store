@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useState} from 'react';
 import {Center, FlatList, Pressable, Text, View} from 'native-base';
 import {
@@ -16,7 +17,6 @@ import SearchInput from '../../components/SearchInput';
 import ProductData from '../../assets/data/ProductData';
 import GoBack from '../../components/Navigation/GoBack';
 import {Dimensions} from 'react-native';
-import {getFontScale} from 'react-native-device-info';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -32,34 +32,32 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
-      <View mt={5} px={horizontalScale(20)}>
+      <View mt={verticalScale(10)} px={horizontalScale(20)}>
         <View flexDir={'row'} justifyContent={'space-between'}>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(14)}
             color={'#1F2937'}>
             Recent Searches
           </Text>
           <Pressable onPress={() => setSelectedRecentSearch('')}>
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(14)}
               color={'primary.500'}>
               Clear All
             </Text>
           </Pressable>
         </View>
-        <View flexDir={'row'} mt={1}>
+        <View flexDir={'row'} mt={horizontalScale(10)}>
           {recentSearch.map((item, index) => (
             <Pressable
               key={index}
               borderRadius={100}
               borderWidth={1}
-              mr={3}
-              py={2}
-              px={4}
+              mr={horizontalScale(10)}
+              py={verticalScale(7)}
+              px={horizontalScale(12)}
               borderColor={
                 selectedRecentSearch === item ? 'accent.400' : 'accent.200'
               }
@@ -73,7 +71,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
                   : setSelectedRecentSearch(item);
               }}>
               <Text
-                fontFamily={'Inter'}
+                fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
                 adjustsFontSizeToFit
                 fontWeight={selectedRecentSearch === item ? 600 : 500}
@@ -86,7 +84,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           ))}
         </View>
       </View>
-      <View flex={1} bg={'white'} mt={5}>
+      <View flex={1} bg={'white'} mt={verticalScale(15)}>
         <View
           flexDir={'row'}
           justifyContent={'space-between'}
@@ -94,23 +92,21 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           p={4}>
           <View flexDir={'row'}>
             <Text
-              fontFamily={'Inter'}
+              fontFamily={'Inter_Medium'}
               fontSize={fontSize}
               color={'accent.500'}
               numberOfLines={1}>
               Showing Results for
             </Text>
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={fontSize}
               color={'accent.700'}>
               {searchInp ? ` ${searchInp}` : ' Product Name'}
             </Text>
           </View>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
+            fontFamily={'Inter_Medium'}
             adjustsFontSizeToFit
             fontSize={scaleFontSize(14)}
             color={'accent.500'}>

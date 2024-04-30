@@ -3,6 +3,9 @@ import {View, Image} from 'react-native';
 import {Radio, Text} from 'native-base';
 import {verticalScale} from '../../assets/scaling';
 import {styles} from './style';
+import {SvgXml} from 'react-native-svg';
+import {codIcon} from '../../assets/images/icons/cod';
+import {podIcon} from '../../assets/images/icons/pod';
 
 interface PaymentPreferredProps {
   value: string;
@@ -31,13 +34,10 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
               },
             ]}>
             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-              <Image
-                source={require('../../assets/images/icons/cod.png')}
-                style={styles.codImage}
-              />
+              <SvgXml xml={codIcon} height={20} width={20} />
               <Text style={styles.paymentPreferredText}>Cash on Delivery</Text>
             </View>
-            <Radio value="one" my={1} aria-label="Cash on Delivey" />
+            <Radio value="one" my={1} aria-label="Cash on Delivery" />
           </View>
           <View style={styles.line} />
           <View
@@ -46,10 +46,7 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
               {height: verticalScale(23), marginVertical: verticalScale(15)},
             ]}>
             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-              <Image
-                source={require('../../assets/images/icons/online-pay.png')}
-                style={styles.payOndelivey}
-              />
+              <SvgXml xml={podIcon} height={20} width={20} />
               <Text style={styles.paymentPreferredText}>Pay Online</Text>
             </View>
             <Radio value="two" my={1} aria-label="Pay Online" />

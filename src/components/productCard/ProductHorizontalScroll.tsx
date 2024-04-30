@@ -12,7 +12,10 @@ interface ProductCardProps {
 const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
   return (
     <View style={{width: '100%'}}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{paddingRight: horizontalScale(10)}}>
         {ProductData.map(data => {
           let off = calculateDiscountPercentage(data.DisPrice, data.Price);
           return (

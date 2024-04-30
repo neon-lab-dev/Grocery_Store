@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Button, Input, Text, Image} from 'native-base';
+import {
+  View,
+  Button,
+  Input,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+} from 'native-base';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {styles} from './style';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
@@ -10,6 +17,7 @@ import {
 } from '../../assets/scaling';
 import LinearGradient from 'react-native-linear-gradient';
 import validators from '../../utils/validators';
+import {Platform} from 'react-native';
 
 type Props = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'Login'>;
@@ -24,7 +32,11 @@ const Login: React.FC<Props> = ({navigation}) => {
       : console.log('Enter Valid Mobile Number');
   };
   return (
-    <View flex={1} bg="primary.50">
+    <KeyboardAvoidingView
+      flex={1}
+      bg="primary.50"
+      enabled
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.imageBackground}>
         <Image
           source={require('../../assets/images/20450388_Vitamins.png')}
@@ -113,7 +125,7 @@ const Login: React.FC<Props> = ({navigation}) => {
           </Text>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

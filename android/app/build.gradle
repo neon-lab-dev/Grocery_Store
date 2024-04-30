@@ -1,6 +1,6 @@
-apply plugin: "com.android.application"
-apply plugin: "org.jetbrains.kotlin.android"
-apply plugin: "com.facebook.react"
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'com.facebook.react'
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -44,11 +44,11 @@ react {
     // extraPackagerArgs = []
 
     /* Hermes Commands */
-    //   The hermes compiler command to run. By default it is 'hermesc'
-    // hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
-    //
-    //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
-    // hermesFlags = ["-O", "-output-source-map"]
+//   The hermes compiler command to run. By default it is 'hermesc'
+// hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
+//
+//   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
+// hermesFlags = ["-O", "-output-source-map"]
 }
 
 /**
@@ -74,13 +74,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.grocery_store"
+    namespace 'com.grocery_store'
     defaultConfig {
-        applicationId "com.grocery_store"
+        applicationId 'com.grocery_store'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
     }
     signingConfigs {
         debug {
@@ -99,21 +99,22 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
-    implementation("com.facebook.react:react-android")
-    implementation("com.facebook.react:flipper-integration")
+    implementation('com.facebook.react:react-android')
+    implementation('com.facebook.react:flipper-integration')
+    implementation('com.facebook.fresco:animated-gif:2.5.0')
 
     if (hermesEnabled.toBoolean()) {
-        implementation("com.facebook.react:hermes-android")
+        implementation('com.facebook.react:hermes-android')
     } else {
         implementation jscFlavor
     }
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: file('../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle'); applyNativeModulesAppBuildGradle(project)

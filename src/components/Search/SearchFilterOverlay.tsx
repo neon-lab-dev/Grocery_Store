@@ -47,8 +47,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           left={sliderPosition.oneMarkerLeftPosition - 10}
           bottom={-40}>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(14)}
             color={'secondary.500'}>
             ₹{selectedMinValue}
@@ -61,8 +60,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           left={sliderPosition.twoMarkerLeftPosition - 10}
           bottom={-40}>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(14)}
             color={'secondary.500'}>
             ₹{selectedMaxValue}
@@ -77,12 +75,11 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
         return (
           <View>
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
-              pl={5}
-              py={5}>
+              pl={horizontalScale(15)}
+              py={verticalScale(15)}>
               Sort By
             </Text>
             <Radio
@@ -93,21 +90,19 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
         );
       case 'Price':
         return (
-          <View p={5}>
+          <View px={horizontalScale(15)} py={verticalScale(15)}>
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
-              mb={5}>
+              mb={verticalScale(5)}>
               Price
             </Text>
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(14)}
               color={'accent.500'}
-              mb={2}>
+              mb={verticalScale(5)}>
               Select Range
             </Text>
             <MultiSlider
@@ -131,15 +126,13 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
             />
             <View flexDir={'row'} justifyContent={'space-between'}>
               <Text
-                fontFamily={'Inter'}
-                fontWeight={500}
+                fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
                 color={'accent.400'}>
                 ₹0
               </Text>
               <Text
-                fontFamily={'Inter'}
-                fontWeight={500}
+                fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
                 color={'accent.400'}>
                 ₹299
@@ -149,10 +142,9 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
         );
       case 'Brands':
         return (
-          <View p={5}>
+          <View px={horizontalScale(15)} py={verticalScale(15)}>
             <Text
-              fontFamily={'Inter'}
-              fontWeight={500}
+              fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
               mb={5}>
@@ -180,10 +172,11 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           flexDir={'row'}
           alignItems={'center'}
           justifyContent={'space-between'}
-          p={5}>
+          px={horizontalScale(15)}
+          py={verticalScale(15)}>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
+            fontFamily={'Inter_Medium'}
+            color={'accent.800'}
             fontSize={scaleFontSize(18)}>
             Filter Items
           </Text>
@@ -199,14 +192,13 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                 key={index}
                 onPress={() => setSelectedOption(option)}>
                 <View
-                  pl={5}
+                  pl={horizontalScale(15)}
                   mt={verticalScale(20)}
                   flexDir={'row'}
                   justifyContent={'space-between'}
                   alignItems={'center'}>
                   <Text
-                    fontFamily={'Inter'}
-                    fontWeight={500}
+                    fontFamily={'Inter_Medium'}
                     color={
                       selectedOption === option ? 'primary.500' : 'accent.500'
                     }

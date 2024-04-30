@@ -62,22 +62,21 @@ const RootNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Splash" options={{headerShown: false}}>
-          {props => <Splash {...props} isLoggedIn={isAuthenticated} />}
-        </Stack.Screen>
-        {!isAuthenticated ? (
-          <Stack.Screen
-            name="Auth"
-            component={AuthNavigation}
-            options={{headerShown: false}}
-          />
-        ) : (
-          <Stack.Screen
-            name="App"
-            component={AppNavigation}
-            options={{headerShown: false}}
-          />
-        )}
+        <Stack.Screen
+          name="Splash"
+          component={Splash}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Auth"
+          component={AuthNavigation}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="App"
+          component={AppNavigation}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,6 +1,8 @@
 import React, {FC} from 'react';
 import {Image, TextInput, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
+import {SvgXml} from 'react-native-svg';
+import {searchIcon} from '../../assets/images/icons/searchIcon';
 
 interface SearchInputProps {
   onChangeText: (text: string) => void;
@@ -23,7 +25,7 @@ const SearchInput: FC<SearchInputProps> = ({
     <TouchableOpacity
       onPressIn={onPress}
       style={[styles.container, {width: `${width}%`}]}>
-      <Image source={require('../../assets/images/icons/search.png')} />
+      <SvgXml xml={searchIcon} height={24} width={24} />
       <TextInput
         style={styles.searchInput}
         onChangeText={onChangeText}
