@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 import {AppNavigatorParamList, RootStackParamList} from './MainNavigation';
-import {ChevronLeftIcon, SearchIcon, Text, View} from 'native-base';
+import {ChevronLeftIcon, Pressable, SearchIcon, Text, View} from 'native-base';
 import {Settings} from '../screens/Settings';
 import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
@@ -25,6 +25,7 @@ import Cart from '../screens/Cart';
 import CategoryProducts from '../screens/Category Products/CategoryProducts';
 import ProductDetails from '../screens/ProductDetails';
 import GoBack from '../components/Navigation/GoBack';
+import {searchIcon} from '../assets/images/icons/searchIcon';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -41,10 +42,16 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerTitle: () => (
             <View>
-              <Text fontSize={'fs18'} color={'#1F2937'} fontWeight={'bold'}>
+              <Text
+                fontFamily={'Inter_Medium'}
+                color={'#1F2937'}
+                fontSize={scaleFontSize(18)}>
                 Payment Methods
               </Text>
-              <Text fontSize={'fs12'} color={'#6B7280'} fontWeight={'bold'}>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(12)}
+                color={'#6B7280'}>
                 1 Item | Total ₹42
               </Text>
             </View>
@@ -111,7 +118,6 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(18),
             color: '#1F2937',
-            marginLeft: horizontalScale(-6),
           },
           headerStyle: {height: 100},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
@@ -157,9 +163,8 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: 'Add Address Details',
           headerTitleStyle: {
             fontFamily: 'Inter_Medium',
-            fontSize: scaleFontSize(17),
+            fontSize: scaleFontSize(18),
             color: '#1F2937',
-            marginLeft: horizontalScale(-7),
           },
           headerStyle: {height: 100, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
@@ -185,6 +190,11 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         component={Categories}
         options={({navigation}) => ({
           headerStyle: {height: 100},
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(16),
+            color: '#1F2937',
+          },
           headerTitleAlign: 'center',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
@@ -195,8 +205,16 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerTitle: () => (
             <View>
-              <Text fontSize={'fs14'}>Ice Creams & More</Text>
-              <Text fontSize={'fs12'} color={'accent.400'}>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(16)}
+                color={'accent.800'}>
+                Ice Creams & More
+              </Text>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(14)}
+                color={'accent.400'}>
                 703 items
               </Text>
             </View>
@@ -205,12 +223,9 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitleAlign: 'left',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
           headerRight: () => (
-            <SearchIcon
-              size={'xl'}
-              mr={5}
-              color={'black'}
-              onPress={() => navigation.goBack()}
-            />
+            <Pressable mr={horizontalScale(20)}>
+              <SvgXml xml={searchIcon} height={24} width={24} />
+            </Pressable>
           ),
         })}
       />

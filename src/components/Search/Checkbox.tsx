@@ -48,8 +48,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
             )}
           </View>
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
             color={
               selectedOptions.includes(option) ? 'accent.600' : 'accent.400'

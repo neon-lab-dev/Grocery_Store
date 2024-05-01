@@ -21,8 +21,7 @@ export const styles = StyleSheet.create({
   },
   searchInput: {
     width: '80%',
-    fontFamily: 'Inter',
-    fontWeight: '400',
+    fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(16),
     color: '#4B5563',
   },

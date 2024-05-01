@@ -1,46 +1,51 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
-import { Colors } from '../../constants/colors';
-const { width, height } = Dimensions.get('window');
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
+import {Colors} from '../../constants/colors';
+const {width, height} = Dimensions.get('window');
 
 const style = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-    backgroundColor:"white"
+    backgroundColor: 'white',
   },
-  Category:{
-   marginLeft:horizontalScale(18),
+  Category: {
+    marginLeft: horizontalScale(18),
   },
-  CategoryText:{
-    color:Colors.accent[700],
-    fontWeight:"600",
-    fontSize:scaleFontSize(20),
-    marginTop:verticalScale(22),
+  CategoryText: {
+    color: Colors.accent[700],
+    fontFamily: 'Inter_SemiBold',
+    fontSize: scaleFontSize(20),
+    marginTop: verticalScale(22),
   },
-  SubCategoryText:{
-   fontWeight:"400",
-   fontSize:scaleFontSize(16),
+  SubCategoryText: {
+    fontFamily: 'Inter_Regular',
+    fontSize: scaleFontSize(16),
+    color: '#6B7280',
   },
-  ExploreCatgories:{
-    height:'100%', 
-    width:(width<370)?(84):(92),
+  ExploreCatgories: {
+    height: '100%',
+    width: width < 370 ? 84 : 92,
   },
-  ExploreCatgoriesText:{
-    fontSize: (width<370)?(10):(12),
+  ExploreCatgoriesText: {
+    fontSize: width < 370 ? 10 : 12,
     color: Colors.accent[600],
-    fontWeight:'500',
-    alignSelf:'center',
-    right:verticalScale(2),
-    marginVertical:verticalScale (5),
-    marginBottom:40
+    fontFamily: 'Inter_Medium',
+    alignSelf: 'center',
+    right: verticalScale(2),
+    marginVertical: verticalScale(5),
+    marginBottom: 40,
   },
-  floatingButton:{
+  floatingButton: {
     position: 'absolute',
     bottom: verticalScale(1),
     right: horizontalScale(20),
-    width: (width<370)?(70):(72),
-    height:(width<370)?(70):(72),
+    width: width < 370 ? 70 : 72,
+    height: width < 370 ? 70 : 72,
   },
   buttonImage: {
     width: '100%',

@@ -10,7 +10,11 @@ import {
 } from 'native-base';
 import {styles} from './style';
 import {Colors} from '../../constants/colors';
-import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
 interface ProductDataItem {
   id: number;
@@ -66,20 +70,20 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             }}>
             <Text
               style={{
+                fontFamily: 'Inter_Bold',
                 alignSelf: 'center',
-                fontWeight: 'bold',
                 color: 'white',
-                fontSize:scaleFontSize(14),
+                fontSize: scaleFontSize(14),
               }}>
               {off.toFixed(0)}%
             </Text>
             <Text
               style={{
+                fontFamily: 'Inter_Bold',
                 alignSelf: 'center',
                 position: 'absolute',
-                fontSize:scaleFontSize(14),
+                fontSize: scaleFontSize(14),
                 top: verticalScale(10),
-                fontWeight: 'bold',
                 color: 'white',
               }}>
               OFF
@@ -101,13 +105,13 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             position: 'absolute',
             top: verticalScale(160),
           }}>
-          <View style={{marginTop:24}}>
+          <View style={{marginTop: 24}}>
             <Text style={styles.Price}>₹{products.Price}</Text>
             <Text strikeThrough style={styles.DisPrice}>
               ₹{products.DisPrice}
             </Text>
           </View>
-          <View >
+          <View>
             {isButton1Visible ? (
               <Pressable style={styles.Button} onPress={handleButtonPress}>
                 <Text style={styles.ButtonText}>ADD</Text>
@@ -122,18 +126,36 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius:10,
+                  borderRadius: 10,
                 }}>
                 <Pressable onPress={handleDecrease}>
-                  <Text style={{color: 'white', fontSize: scaleFontSize(20),marginHorizontal:horizontalScale(5)}}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
                     -
                   </Text>
                 </Pressable>
-                <Text style={{color: 'white', fontSize: scaleFontSize(18),marginHorizontal:horizontalScale(5)}}>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Medium',
+                    color: 'white',
+                    fontSize: scaleFontSize(18),
+                    marginHorizontal: horizontalScale(5),
+                  }}>
                   {count}
                 </Text>
                 <Pressable onPress={handleIncrease}>
-                  <Text style={{color: 'white', fontSize:  scaleFontSize(18),marginHorizontal:horizontalScale(5)}}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
                     +
                   </Text>
                 </Pressable>

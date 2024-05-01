@@ -13,6 +13,11 @@ import BillSummaryCard from '../../components/BillSummaryCard';
 import PaymentPreferred from '../../components/PaymentPreferred';
 import AddressDropDownList from '../../components/AddressDropDownList';
 import SelectAddress from '../../components/SelectingAddress';
+import {SvgXml} from 'react-native-svg';
+import {orangeLocation} from '../../assets/images/icons/orangeLocation';
+import {orangeDownArrow} from '../../assets/images/icons/orangeDownArrow';
+import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
+import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
 
 interface Address {
   id: number;
@@ -259,17 +264,17 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           paddingHorizontal: horizontalScale(17),
         }}>
         <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-          <Image source={require('../../assets/images/icons/marker.png')} />
+          <SvgXml xml={orangeLocation} height={20} width={20} />
           <Text
             style={{
               fontSize: scaleFontSize(12),
-              fontWeight: '500',
+              fontFamily: 'Inter_Medium',
               color: '#374151',
             }}>
             No. 23, ABC Street, XYZ area, City, State
           </Text>
         </View>
-        <Image source={require('../../assets/images/icons/chevron-down.png')} />
+        <SvgXml xml={orangeDownArrow} height={20} width={20} />
       </Pressable>
       <View>
         <BillSummaryCard
@@ -291,21 +296,9 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                 alignItems: 'center',
                 gap: 4,
               }}>
-              <Text style={styles.bottomCardText}>1 Item</Text>
+              <Text style={styles.bottomCardText}>1 Item |</Text>
               {/* <View style={styles.straightLine} /> */}
-              <Text
-                style={[
-                  styles.bottomCardText,
-                  {
-                    fontWeight: '600',
-                    fontSize: scaleFontSize(27),
-                    marginBottom: verticalScale(4),
-                    paddingLeft: horizontalScale(2),
-                  },
-                ]}>
-                |
-              </Text>
-              <Text style={[styles.bottomCardText, {fontWeight: '600'}]}>
+              <Text style={[styles.bottomCardText, {fontFamily: 'Inter_Bold'}]}>
                 ₹42
               </Text>
             </View>
@@ -318,21 +311,27 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
               <Text
                 style={[
                   styles.bottomCardText,
-                  {fontSize: scaleFontSize(18), fontWeight: '600'},
+                  {
+                    fontSize: scaleFontSize(18),
+                    fontFamily: 'Inter_SemiBold',
+                    marginRight: horizontalScale(10),
+                  },
                 ]}>
                 Pay Now
               </Text>
-              <Image
-                source={require('../../assets/images/icons/chevron-right.png')}
-              />
+              <SvgXml xml={rightArrowIcon} height={15} width={9} />
             </View>
           </View>
         </Pressable>
       </View>
-      <Modal isOpen={modalVisible} size={'full'}>
+      <Modal
+        isOpen={modalVisible}
+        size={'full'}
+        onClose={() => setModalVisible(false)}>
         <Modal.Content
           mb={0}
           mt={'auto'}
+          h={'60%'}
           borderTopLeftRadius={12}
           borderTopRightRadius={12}>
           <SelectAddress

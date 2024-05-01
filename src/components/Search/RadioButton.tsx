@@ -37,8 +37,7 @@ const Radio: React.FC<RadioProps> = ({options, onSelect}) => {
             }}
           />
           <Text
-            fontFamily={'Inter'}
-            fontWeight={500}
+            fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
             color={
               selectedOption === option.value ? 'accent.700' : 'accent.400'

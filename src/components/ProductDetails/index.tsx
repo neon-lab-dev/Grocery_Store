@@ -122,9 +122,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
             }}>
             <FlatList
               showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={
+              ItemSeparatorComponent={() => (
                 <View style={{marginLeft: horizontalScale(6)}} />
-              }
+              )}
               data={data.alternativeImages}
               renderItem={({item}) => (
                 <AlternativeImage img={item.image} id={item.id} />
@@ -168,7 +168,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
             {/* product description */}
             <View style={{marginTop: verticalScale(10), gap: 2}}>
               <Text style={styles.descriptionText}>Description</Text>
-              <Text numberOfLines={!viewMoreDetails ? 2 : 5}>
+              <Text
+                style={styles.descriptionContent}
+                numberOfLines={!viewMoreDetails ? 2 : 5}>
                 Lorem ipsum dolor sit amet consectetur. Volutpat arcu vitae
                 tellus in dui mattis cursus lacus. Amet nisl a urna arcu
                 senectus viverra congue adipiscing. Viverra in natoque nec

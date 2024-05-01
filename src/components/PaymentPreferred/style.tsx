@@ -96,14 +96,14 @@ export const styles = StyleSheet.create({
   },
   paymentPreferredText: {
     fontSize: scaleFontSize(18),
-    fontWeight: '500',
+    fontFamily: 'Inter_Medium',
     // lineHeight: verticalScale(21.78),
     letterSpacing: -0.04,
     color: '#4B5563',
   },
   paymentPreferredTitle: {
     fontSize: scaleFontSize(18),
-    fontWeight: '500',
+    fontFamily: 'Inter_SemiBold',
     letterSpacing: -0.04,
     textAlign: 'left',
     color: '#111827',

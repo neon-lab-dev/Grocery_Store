@@ -77,9 +77,8 @@ export const styles = StyleSheet.create({
     color: '#374151',
   },
   categoriesLeft: {
-    fontFamily: 'Inter',
+    fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(12),
-    fontWeight: '400',
     lineHeight: verticalScale(11),
     textAlign: 'center',
     color: '#4B5563',

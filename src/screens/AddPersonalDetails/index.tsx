@@ -21,7 +21,9 @@ type AddPersonalDetailsProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'PersonalDetails'>;
 };
 
-export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({}) => {
+export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
+  navigation,
+}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -37,6 +39,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({}) => {
       setIsClicked(true);
     } else {
       dispatch(login('User'));
+      navigation.replace('App', {screen: 'Home'});
     }
   };
 

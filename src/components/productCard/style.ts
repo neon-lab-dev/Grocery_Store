@@ -1,32 +1,38 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../constants/colors';
-import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 export const styles = StyleSheet.create({
   Container: {
-    flex:1,
+    flex: 1,
     width: '100%',
     marginLeft: horizontalScale(18),
   },
   Image: {
     width: horizontalScale(90),
     height: verticalScale(70),
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   Title: {
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(16),
-    color: 'black',
-    fontWeight:'500',
+    color: '#1F2937',
     marginTop: verticalScale(4),
   },
   Price: {
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(16),
-    color: 'black',
+    color: '#1F2937',
   },
   DisPrice: {
+    fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(12),
-    color:Colors.accent[400],
-    marginBottom:verticalScale(17),
-    marginTop:verticalScale(-4)
+    color: Colors.accent[400],
+    marginBottom: verticalScale(17),
+    marginTop: verticalScale(-4),
   },
   Button: {
     borderRadius: 10,
@@ -37,11 +43,13 @@ export const styles = StyleSheet.create({
     marginHorizontal: horizontalScale(30),
   },
   ButtonText: {
+    fontFamily: 'Inter_Medium',
     color: Colors.primary[400],
     fontSize: scaleFontSize(15),
   },
   Quantity: {
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(12),
-    color: Colors.accent[400],
+    color: Colors.accent[500],
   },
 });

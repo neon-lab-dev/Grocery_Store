@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../constants/colors';
 import {View, Text, Image, Pressable} from 'native-base';
@@ -61,20 +61,20 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             }}>
             <Text
               style={{
+                fontFamily: 'Inter_Bold',
                 fontSize: scaleFontSize(12),
                 alignSelf: 'center',
-                fontWeight: 'bold',
                 color: 'white',
               }}>
               {off.toFixed(0)}%
             </Text>
             <Text
               style={{
+                fontFamily: 'Inter_Bold',
                 fontSize: scaleFontSize(12),
                 alignSelf: 'center',
                 position: 'absolute',
                 top: verticalScale(8),
-                fontWeight: 'bold',
                 color: 'white',
               }}>
               OFF
@@ -86,7 +86,9 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             style={styles.Image}
           />
         </Pressable>
-        <Text style={styles.Title}>{products.Title}</Text>
+        <Text mr={horizontalScale(10)} style={styles.Title}>
+          {products.Title}
+        </Text>
         <Text style={styles.Quantity}>{products.Quantity}</Text>
         <View
           style={{
@@ -96,13 +98,13 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             position: 'absolute',
             top: verticalScale(130),
           }}>
-          <View style={{marginTop:18}}>
+          <View style={{marginTop: 18}}>
             <Text style={styles.Price}>₹{products.Price}</Text>
             <Text strikeThrough style={styles.DisPrice}>
               ₹{products.DisPrice}
             </Text>
           </View>
-          <View >
+          <View>
             {isButton1Visible ? (
               <Pressable style={styles.Button} onPress={handleButtonPress}>
                 <Text style={styles.ButtonText}>ADD</Text>
@@ -117,18 +119,36 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius:10,
+                  borderRadius: 10,
                 }}>
                 <Pressable onPress={handleDecrease}>
-                  <Text style={{color: 'white', fontSize: scaleFontSize(20),marginHorizontal:horizontalScale(5)}}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
                     -
                   </Text>
                 </Pressable>
-                <Text style={{color: 'white', fontSize: scaleFontSize(18),marginHorizontal:horizontalScale(5)}}>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Medium',
+                    color: 'white',
+                    fontSize: scaleFontSize(18),
+                    marginHorizontal: horizontalScale(5),
+                  }}>
                   {count}
                 </Text>
                 <Pressable onPress={handleIncrease}>
-                  <Text style={{color: 'white', fontSize:  scaleFontSize(18),marginHorizontal:horizontalScale(5)}}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
                     +
                   </Text>
                 </Pressable>
@@ -161,19 +181,21 @@ export const styles = StyleSheet.create({
   },
   Title: {
     fontSize: scaleFontSize(14),
-    color: 'black',
+    color: '#1F2937',
     marginTop: verticalScale(3),
-    fontWeight:'500',
+    fontFamily: 'Inter_Medium',
   },
   Price: {
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(15),
-    color: 'black',
+    color: '#1F2937',
   },
   DisPrice: {
+    fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(12),
     color: Colors.accent[400],
-    marginBottom:verticalScale(10),
-    marginTop:verticalScale(-6)
+    marginBottom: verticalScale(10),
+    marginTop: verticalScale(-6),
   },
   Button: {
     borderRadius: 10,
@@ -184,13 +206,15 @@ export const styles = StyleSheet.create({
     marginHorizontal: horizontalScale(20),
   },
   ButtonText: {
+    fontFamily: 'Inter_Medium',
     color: Colors.primary[400],
     fontSize: scaleFontSize(15),
   },
   Quantity: {
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(12),
-    color: Colors.accent[400],
-    marginTop:verticalScale(-2)
+    color: Colors.accent[500],
+    marginTop: verticalScale(-2),
   },
 });
 

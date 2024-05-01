@@ -129,16 +129,10 @@ export const styles = StyleSheet.create({
     height: verticalScale(20),
   },
   bottomCardText: {
-    // fontFamily: 'Inter',
+    fontFamily: 'Inter_SemiBold',
     fontSize: scaleFontSize(20),
-    fontWeight: '500',
     color: '#FFF7ED',
     letterSpacing: -0.02,
-  },
-  straightLine: {
-    height: verticalScale(15),
-    width: horizontalScale(5),
-    backgroundColor: '#FFF7ED',
   },
   selectListCard: {
     width: '100%',
