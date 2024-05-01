@@ -36,7 +36,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             width: width < 380 ? 120 : 140,
             height: width < 380 ? 120 : 140,
           }}
-          source={require('../../assets/images/Order-Success.png')}
+          source={require('../../assets/images/icons/orderSuccess.gif')}
         />
       </View>
       <Text
