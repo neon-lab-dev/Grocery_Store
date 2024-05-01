@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {Colors} from '../../constants/colors';
 import {View, Text, Image, Pressable} from 'native-base';
 import {
@@ -35,12 +35,14 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   const handleButtonPress = () => {
     setIsButton1Visible(false);
   };
+  const {width, height} = Dimensions.get('window');
+  console.log(width, height)
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   return (
     <View style={styles.Container}>
       <View
         key={products.id}
-        style={{width: horizontalScale(110), height: verticalScale(180)}}>
+        style={{width: horizontalScale(110), height: verticalScale(width < 380 ? 180 : 200)}}>
         <Pressable
           onPress={() => onPress()}
           style={{
@@ -96,7 +98,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            top: verticalScale(130),
+            top: verticalScale(width < 380 ? 130 : 140),
           }}>
           <View style={{marginTop: 18}}>
             <Text style={styles.Price}>₹{products.Price}</Text>
@@ -183,7 +185,8 @@ export const styles = StyleSheet.create({
     fontSize: scaleFontSize(14),
     color: '#1F2937',
     marginTop: verticalScale(3),
-    fontFamily: 'Inter_Medium',
+    fontWeight:'500'
+    // fontFamily: 'Inter_Medium',
   },
   Price: {
     fontFamily: 'Inter_Medium',

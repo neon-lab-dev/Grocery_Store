@@ -16,6 +16,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
+import { Dimensions } from 'react-native';
 interface ProductDataItem {
   id: number;
   Title: string;
@@ -45,11 +46,13 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     setIsButton1Visible(false);
   };
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
+  const {width, height} = Dimensions.get('window');
+  console.log(width, height)
   return (
     <View style={styles.Container}>
       <View
         key={products.id}
-        style={{width: horizontalScale(105), height: verticalScale(210)}}>
+        style={{width: horizontalScale(105), height: verticalScale(width < 380 ? 210 : 220)}}>
         <Pressable
           onPress={onPress}
           style={{
@@ -103,7 +106,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            top: verticalScale(160),
+            top: verticalScale(width < 380 ? 160 : 165),
           }}>
           <View style={{marginTop: 24}}>
             <Text style={styles.Price}>₹{products.Price}</Text>
