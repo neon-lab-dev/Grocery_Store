@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   Title: {
-    fontFamily: 'Inter_Medium',
+    fontWeight:'500',
     fontSize: scaleFontSize(16),
     color: '#1F2937',
     marginTop: verticalScale(4),
