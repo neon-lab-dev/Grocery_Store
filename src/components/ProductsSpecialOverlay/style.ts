@@ -24,8 +24,8 @@ export const styles = StyleSheet.create({
     marginLeft: horizontalScale(5),
   },
   freshlyPickedText: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: scaleFontSize(20),
+    fontFamily: 'Inter_SemiBold',
     textAlign: 'center',
     color: '#1F2937',
   },

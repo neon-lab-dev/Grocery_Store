@@ -17,6 +17,8 @@ import SearchInput from '../../components/SearchInput';
 import ProductData from '../../assets/data/ProductData';
 import GoBack from '../../components/Navigation/GoBack';
 import {Dimensions} from 'react-native';
+import SearchProductCard from '../../components/productCard/SearchResultProductCard';
+import {HelperText} from 'react-native-paper';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -157,12 +159,17 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           ListHeaderComponent={ListHeaderComponent}
           data={ProductData}
           renderItem={({item}) => (
-            <ProductCard onPress={() => {}} products={item} />
+            <SearchProductCard onPress={() => {}} products={item} />
           )}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
+          contentContainerStyle={{
+            paddingBottom: verticalScale(15),
+          }}
           columnWrapperStyle={{
-            marginBottom: verticalScale(10),
+            paddingHorizontal: horizontalScale(15),
+            marginBottom: verticalScale(15),
+            gap: horizontalScale(15),
           }}
         />
       </View>

@@ -9,6 +9,9 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
+import SearchProductCard from '../productCard/SearchResultProductCard';
+import {SvgXml} from 'react-native-svg';
+import {close} from '../../assets/images/icons/close';
 
 interface ProductsSpecialOverlayProps {
   Close: () => void;
@@ -24,9 +27,9 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   return (
     <View style={{flex: 1}}>
       <View style={styles.selectAddressBox}>
-        <Text style={styles.freshlyPickedText}>Fresly Picked Items</Text>
+        <Text style={styles.freshlyPickedText}>Freshly Picked Items</Text>
         <Pressable onPress={() => Close()}>
-          <Image source={require('../../assets/images/icons/close.png')} />
+          <SvgXml xml={close} height={24} width={24} />
         </Pressable>
       </View>
       <View style={{alignItems: 'center', marginVertical: verticalScale(2)}}>
@@ -34,21 +37,25 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
           onChangeText={setText}
           value={text}
           placeholder='Search "Beard"'
+          editable
+          width={90}
+          onPress={() => {}}
         />
       </View>
       <FlatList
         contentContainerStyle={{paddingBottom: verticalScale(30)}}
         columnWrapperStyle={{
-          justifyContent: 'space-evenly',
-          paddingLeft: horizontalScale(13),
+          paddingHorizontal: horizontalScale(15),
+          gap: horizontalScale(10),
+          marginBottom: verticalScale(10),
         }}
-        ItemSeparatorComponent={
+        ItemSeparatorComponent={() => (
           <View style={{marginVertical: verticalScale(10)}} />
-        }
+        )}
         numColumns={2}
         data={ProductData}
         renderItem={({item}) => (
-          <ProductCard products={item} key={item.id} onPress={onPress} />
+          <SearchProductCard products={item} key={item.id} onPress={onPress} />
         )}
         keyExtractor={item => item.id.toString()}
       />

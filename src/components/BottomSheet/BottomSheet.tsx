@@ -3,6 +3,8 @@ import {Image, Modal, Pressable, StyleSheet, View} from 'react-native';
 import ProductsSpecialOverlay from '../ProductsSpecialOverlay';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
 import ProductDetails from '../ProductDetails';
+import {SvgXml} from 'react-native-svg';
+import {overlayCloseIcon} from '../../assets/images/icons/overlayClose';
 
 interface BottomSheetProps {
   visible: boolean;
@@ -34,10 +36,10 @@ const BottomSheet: FC<BottomSheetProps> = ({
       onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <Pressable
-          style={{alignItems: 'center', marginVertical: verticalScale(7)}}
+          style={{alignItems: 'center', marginVertical: verticalScale(10)}}
           onPress={onClose}>
           <View style={styles.closeButton}>
-            <Image source={require('../../assets/images/icons/close-x.png')} />
+            <SvgXml xml={overlayCloseIcon} />
           </View>
         </Pressable>
         <View style={[styles.bottomSheet]}>{getComponent(type)}</View>
