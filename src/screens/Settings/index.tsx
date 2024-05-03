@@ -70,13 +70,17 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
           <Text
             fontFamily={'Inter_SemiBold'}
             fontSize={scaleFontSize(20)}
-            color={'accent.800'}>
+            color={'accent.800'}
+            lineHeight={24.2}
+            letterSpacing={-0.01}>
             Salmaan Ahmed
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
-            color={'accent.600'}>
+            color={'accent.600'}
+            lineHeight={16.94}
+            letterSpacing={-0.04}>
             96000 16417
           </Text>
         </View>
@@ -115,18 +119,24 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 paddingTop: verticalScale(15),
                 paddingHorizontal: horizontalScale(15),
                 marginBottom: verticalScale(15),
+                fontFamily: 'Inter_Medium',
+                fontSize: scaleFontSize(16),
+                lineHeight: 19.36,
+                letterSpacing: -0.04,
               }}
             />
             <Center>
               <Button
                 w={'100%'}
-                py={verticalScale(10)}
+                py={verticalScale(15)}
                 rounded={12}
                 colorScheme={'transparent'}
                 bg={'primary.500'}
                 _text={{
                   fontFamily: 'Inter_SemiBold',
                   fontSize: scaleFontSize(20),
+                  lineHeight: 24.2,
+                  letterSpacing: -0.04,
                 }}
                 onPress={() => {}}>
                 Send
@@ -175,6 +185,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
             fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(18),
             color: 'error.300',
+            lineHeight: 21.78,
+            letterSpacing: -0.04,
           }}>
           Log Out
         </Button>
@@ -194,10 +206,14 @@ export const styles = StyleSheet.create({
     fontFamily: 'Inter_SemiBold',
     fontSize: scaleFontSize(20),
     color: '#1F2937',
+    lineHeight: 24.2,
+    letterSpacing: -0.01,
   },
   Text: {
     fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(12),
     color: '#1F2937',
+    lineHeight: 16.8,
+    letterSpacing: -0.03,
   },
 });

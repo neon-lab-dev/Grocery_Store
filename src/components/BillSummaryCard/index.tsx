@@ -22,7 +22,9 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
       <Text
         fontFamily={'Inter_SemiBold'}
         fontSize={scaleFontSize(20)}
-        color={'accent.900'}>
+        color={'accent.900'}
+        lineHeight={24.2}
+        letterSpacing={-0.01}>
         Bill Summary
       </Text>
       <View
@@ -33,13 +35,17 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
-          color={'accent.500'}>
+          color={'accent.500'}
+          lineHeight={16.94}
+          letterSpacing={-0.04}>
           Item Total
         </Text>
         <Text
-          fontFamily={'Inter Medium'}
+          fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
-          color={'accent.800'}>
+          color={'accent.800'}
+          lineHeight={16.94}
+          letterSpacing={-0.04}>
           ₹{itemPrice}
         </Text>
       </View>
@@ -48,14 +54,17 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
           fontWeight={500}
-          color={'accent.500'}>
+          color={'accent.500'}
+          lineHeight={16.94}
+          letterSpacing={-0.04}>
           Delivery Charge
         </Text>
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
-          fontWeight={500}
-          color={'accent.800'}>
+          color={'accent.800'}
+          lineHeight={16.94}
+          letterSpacing={-0.04}>
           ₹{deliveryCharge}
         </Text>
       </View>
@@ -71,9 +80,11 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
         alignItems={'center'}
         pt={1}>
         <Text
-          fontFamily={'Inter_Medium'}
+          fontFamily={'Inter_SemiBold'}
           fontSize={scaleFontSize(14)}
-          color={'accent.900'}>
+          color={'accent.900'}
+          lineHeight={16.94}
+          letterSpacing={-0.04}>
           To Pay
         </Text>
         <Center flexDir={'row'}>
@@ -82,13 +93,17 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
             fontSize={scaleFontSize(10)}
             color={'accent.500'}
             strikeThrough
-            pr={1}>
+            pr={1}
+            lineHeight={12.1}
+            letterSpacing={-0.04}>
             ₹{cutOffPrice}
           </Text>
           <Text
             fontFamily={'Inter_SemiBold'}
             fontSize={scaleFontSize(14)}
-            color={'accent.800'}>
+            color={'accent.800'}
+            lineHeight={16.94}
+            letterSpacing={-0.04}>
             ₹{price}
           </Text>
         </Center>
@@ -98,14 +113,18 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(12)}
           color={'accent.500'}
-          mt={-verticalScale(2)}>
+          mt={-verticalScale(1)}
+          lineHeight={14.4}
+          letterSpacing={-0.03}>
           Incl. all taxes and charges
         </Text>
         <Center rounded={8} bg={'success.400'} w={'auto'} h={6} px={2}>
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(10)}
-            color={'white'}>
+            color={'white'}
+            lineHeight={12.1}
+            letterSpacing={-0.04}>
             SAVING ₹{savingPrice}
           </Text>
         </Center>

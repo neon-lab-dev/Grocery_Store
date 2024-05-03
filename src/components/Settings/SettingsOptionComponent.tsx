@@ -35,7 +35,9 @@ const SettingsOption: React.FC<SettingsOptionProps> = ({
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
-          ml={horizontalScale(10)}>
+          ml={horizontalScale(10)}
+          lineHeight={16.8}
+          letterSpacing={-0.03}>
           {name}
         </Text>
         <View flex={1} alignItems="flex-end">

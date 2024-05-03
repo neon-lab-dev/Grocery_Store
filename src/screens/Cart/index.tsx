@@ -28,6 +28,7 @@ interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 const item = {
+  id: 1,
   name: 'Cadbury Bournville Rich Cocoa 70% Dark',
   image: require('../../assets/images/Product-Image/chocolate.png'),
   size: '200 g',
@@ -49,7 +50,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   return (
     <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
       <ScrollView flex={0.8}>
-        <View bg={'white'}>
+        <View bg={'white'} mt={verticalScale(15)}>
           {Array.from({length: 3}).map((_, index) => (
             <CartItemCard key={index} item={item} />
           ))}
@@ -137,13 +138,20 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             justifyContent={'space-between'}
             alignItems={'center'}>
             <View>
-              <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(18)}>
+              <Text
+                color={'#000000'}
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(18)}
+                lineHeight={21.78}
+                letterSpacing={-0.04}>
                 Deliver to
               </Text>
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(12)}
-                color={'accent.500'}>
+                color={'accent.600'}
+                lineHeight={14.52}
+                letterSpacing={-0.04}>
                 1st Floor, ABC street, XYZ City
               </Text>
             </View>
@@ -154,7 +162,9 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                   fontFamily={'Inter_Regular'}
                   color={'primary.500'}
                   ml={1}
-                  fontSize={scaleFontSize(18)}>
+                  fontSize={scaleFontSize(18)}
+                  lineHeight={21.78}
+                  letterSpacing={-0.04}>
                   Change
                 </Text>
               </View>
@@ -164,9 +174,9 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
         <Center flex={1} px={5}>
           <Button
             w={'100%'}
-            h={verticalScale(40)}
+            py={verticalScale(15)}
             rounded={12}
-            colorScheme={'orange'}
+            colorScheme={'transparent'}
             bg={'primary.500'}
             onPress={gotoPayment}>
             <View
@@ -177,25 +187,32 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
               px={horizontalScale(5)}>
               <View flexDir={'row'} alignItems={'center'}>
                 <Text
-                  color={'white'}
+                  color={'primary.50'}
                   fontFamily={'Inter_SemiBold'}
-                  fontSize={scaleFontSize(20)}>
+                  fontSize={scaleFontSize(20)}
+                  lineHeight={24.2}
+                  letterSpacing={-0.04}>
                   1 Item |{' '}
                 </Text>
                 <Text
                   fontFamily={'Inter_Bold'}
                   fontWeight={600}
                   fontSize={scaleFontSize(20)}
-                  color={'white'}>
+                  color={'primary.50'}
+                  lineHeight={24.2}
+                  letterSpacing={-0.04}>
                   ₹42
                 </Text>
               </View>
               <View flexDir={'row'} alignItems={'center'}>
                 <Text
-                  color={'white'}
-                  mr={2}
+                  color={'primary.50'}
+                  mr={horizontalScale(10)}
                   fontFamily={'Inter_SemiBold'}
-                  fontSize={scaleFontSize(18)}>
+                  fontSize={scaleFontSize(18)}
+                  textAlign={'center'}
+                  lineHeight={21.78}
+                  letterSpacing={-0.04}>
                   {isAddressPresent ? 'Proceed to Pay' : 'Checkout'}
                 </Text>
                 <SvgXml xml={rightArrowIcon} height={15} width={15} />

@@ -38,47 +38,57 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
 
   return (
     <View
+      flex={1}
       bg={'white'}
       flexDir={'row'}
       py={verticalScale(10)}
       px={horizontalScale(20)}
       alignItems={'center'}
-      mb={1}>
-      <Image
-        source={item.image}
-        alt="item"
-        h={50}
-        w={50}
-        resizeMode="contain"
-        mr={horizontalScale(10)}
-      />
-      <View flexShrink={1}>
-        <Text
-          fontFamily={'Inter_Regular'}
-          fontSize={scaleFontSize(14)}
-          color={'accent.800'}
-          numberOfLines={2}>
-          {item.name}
-        </Text>
-        <Text
-          fontFamily={'Inter_Medium'}
-          fontSize={scaleFontSize(12)}
-          color={'accent.500'}>
-          {item.size}
-        </Text>
+      justifyContent={'space-between'}
+      borderBottomWidth={1}
+      borderBottomColor={'accent.100'}>
+      <View flex={1} flexDir={'row'}>
+        <Image
+          source={item.image}
+          resizeMode="cover"
+          alt="item"
+          mr={horizontalScale(10)}
+        />
+        <View justifyContent={'space-evenly'}>
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(14)}
+            color={'accent.800'}
+            numberOfLines={2}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
+            {item.name}
+          </Text>
+          <Text
+            fontFamily={'Inter_Medium'}
+            fontSize={scaleFontSize(12)}
+            color={'accent.500'}
+            lineHeight={14.52}
+            letterSpacing={-0.04}>
+            {item.size}
+          </Text>
+        </View>
       </View>
-      <View flexDir={'row'} alignItems={'center'} justifyContent={'flex-end'}>
+      <View
+        flex={1}
+        flexDir={'row'}
+        alignItems={'center'}
+        justifyContent={'flex-end'}>
         <View
           w={horizontalScale(60)}
           bg={'primary.500'}
           flexDir={'row'}
           rounded={8}
-          h={verticalScale(25)}
+          h={'auto'}
           justifyContent={'space-between'}
           alignItems={'center'}
           px={horizontalScale(5)}
-          py={verticalScale(2)}
-          ml={horizontalScale(10)}>
+          py={verticalScale(5)}>
           <Pressable
             flex={1}
             hitSlop={{
@@ -89,20 +99,25 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
             }}
             onPress={handleDecrease}
             disabled={count === 1}
-            alignItems={'center'}
-            justifyContent={'center'}>
+            alignItems={'center'}>
             <Text
               fontFamily={'Inter_SemiBold'}
-              color={'white'}
-              fontSize={scaleFontSize(16)}>
+              color={'primary.50'}
+              fontSize={scaleFontSize(14)}
+              textAlign={'center'}
+              lineHeight={19.36}
+              letterSpacing={-0.04}>
               -
             </Text>
           </Pressable>
           <Text
             mx={horizontalScale(5)}
             fontFamily={'Inter_Medium'}
-            fontSize={scaleFontSize(16)}
-            color={'white'}>
+            fontSize={scaleFontSize(14)}
+            color={'primary.50'}
+            textAlign={'center'}
+            lineHeight={19.36}
+            letterSpacing={-0.04}>
             {count}
           </Text>
           <Pressable
@@ -114,13 +129,15 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
               right: horizontalScale(10),
             }}
             onPress={handleIncrease}
-            alignItems={'center'}
-            justifyContent={'center'}>
+            alignItems={'center'}>
             <Text
               fontFamily={'Inter_SemiBold'}
-              color={'white'}
-              fontSize={scaleFontSize(16)}
-              onPress={handleIncrease}>
+              color={'primary.50'}
+              fontSize={scaleFontSize(14)}
+              onPress={handleIncrease}
+              textAlign={'center'}
+              lineHeight={19.36}
+              letterSpacing={-0.04}>
               +
             </Text>
           </Pressable>
@@ -129,7 +146,9 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
-            color={'primary.500'}>
+            color={'primary.500'}
+            lineHeight={19.36}
+            letterSpacing={-0.04}>
             ₹{discountPrice}
           </Text>
           <Text
@@ -137,7 +156,9 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
             fontSize={scaleFontSize(12)}
             color={'accent.400'}
             mt={-verticalScale(2)}
-            strikeThrough>
+            strikeThrough
+            lineHeight={14.52}
+            letterSpacing={-0.04}>
             ₹{actualPrice}
           </Text>
         </View>

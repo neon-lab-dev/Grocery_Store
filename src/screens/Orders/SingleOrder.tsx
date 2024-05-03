@@ -99,13 +99,17 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
             <Text
               fontFamily={'Inter_Medium'}
               color={'accent.800'}
-              fontSize={scaleFontSize(18)}>
+              fontSize={scaleFontSize(18)}
+              lineHeight={21.78}
+              letterSpacing={-0.04}>
               Order #189073202237
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(12)}
-              color={'accent.400'}>
+              color={'accent.400'}
+              lineHeight={14.52}
+              letterSpacing={-0.04}>
               Placed at 07/03/2024 at 09:12PM
             </Text>
           </View>
@@ -114,13 +118,15 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           rounded={4}
           bg={orderInfo.color}
           w={'auto'}
-          py={verticalScale(3)}
-          px={horizontalScale(5)}
+          py={verticalScale(4)}
+          px={horizontalScale(6)}
           mr={horizontalScale(20)}>
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(12)}
-            color={'white'}>
+            color={'white'}
+            lineHeight={14.52}
+            letterSpacing={-0.04}>
             {orderStatus}
           </Text>
         </Center>
@@ -152,13 +158,17 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                 <Text
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(16)}
-                  color={'accent.900'}>
+                  color={'accent.900'}
+                  lineHeight={19.36}
+                  letterSpacing={-0.04}>
                   John Doe
                 </Text>
                 <Text
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(14)}
-                  color={'accent.600'}>
+                  color={'accent.600'}
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
                   TN 23 AC 2942
                 </Text>
               </View>
@@ -196,13 +206,17 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              color={'accent.900'}>
+              color={'accent.900'}
+              lineHeight={19.36}
+              letterSpacing={-0.04}>
               {orderInfo.receivedStatus}
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(12)}
-              color={'accent.400'}>
+              color={'accent.400'}
+              lineHeight={14.52}
+              letterSpacing={-0.04}>
               {orderInfo.time}
             </Text>
           </View>
@@ -227,13 +241,17 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              color={'accent.900'}>
+              color={'accent.900'}
+              lineHeight={19.36}
+              letterSpacing={-0.04}>
               {orderInfo.deliveredStatus}
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(12)}
-              color={'accent.400'}>
+              color={'accent.400'}
+              lineHeight={14.52}
+              letterSpacing={-0.04}>
               No. 46, 1st floor, near police
             </Text>
           </View>
@@ -252,20 +270,29 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
               color={'accent.900'}
-              mb={verticalScale(5)}>
+              mb={verticalScale(5)}
+              lineHeight={24.2}
+              letterSpacing={-0.01}>
               Bill Summary
             </Text>
-            <View flexDir={'row'} justifyContent={'space-between'}>
+            <View
+              flexDir={'row'}
+              justifyContent={'space-between'}
+              mb={verticalScale(10)}>
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
-                color={'accent.500'}>
+                color={'accent.500'}
+                lineHeight={16.94}
+                letterSpacing={-0.04}>
                 Item Total
               </Text>
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
-                color={'accent.800'}>
+                color={'accent.800'}
+                lineHeight={16.94}
+                letterSpacing={-0.04}>
                 ₹33
               </Text>
             </View>
@@ -273,13 +300,17 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
-                color={'accent.500'}>
+                color={'accent.500'}
+                lineHeight={16.94}
+                letterSpacing={-0.04}>
                 Delivery Charge
               </Text>
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
-                color={'accent.800'}>
+                color={'accent.800'}
+                lineHeight={16.94}
+                letterSpacing={-0.04}>
                 ₹25
               </Text>
             </View>
@@ -289,11 +320,13 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               borderColor={'accent.100'}
               my={2}
             />
-            <View flexDir={'row'} justifyContent={'space-between'} pt={1}>
+            <View flexDir={'row'} justifyContent={'space-between'}>
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
-                color={'accent.900'}>
+                color={'accent.900'}
+                lineHeight={16.94}
+                letterSpacing={-0.04}>
                 Total Bill
               </Text>
               <Center flexDir={'row'}>
@@ -302,13 +335,17 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                   fontSize={scaleFontSize(10)}
                   color={'accent.500'}
                   strikeThrough
-                  pr={1}>
+                  pr={1}
+                  lineHeight={12.1}
+                  letterSpacing={-0.04}>
                   ₹87.49
                 </Text>
                 <Text
                   fontFamily={'Inter_SemiBold'}
                   fontSize={scaleFontSize(14)}
-                  color={'accent.800'}>
+                  color={'accent.800'}
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
                   ₹87.49
                 </Text>
               </Center>
@@ -317,19 +354,23 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               <Text
                 fontFamily={'Inter_Regular'}
                 fontSize={scaleFontSize(12)}
-                color={'accent.500'}>
+                color={'accent.500'}
+                lineHeight={14.4}
+                letterSpacing={-0.03}>
                 Incl. all taxes and charges
               </Text>
               <Center
                 rounded={4}
                 bg={'#4ADE80'}
-                h={verticalScale(15)}
-                px={horizontalScale(5)}
+                py={verticalScale(4)}
+                px={horizontalScale(6)}
                 mb={verticalScale(5)}>
                 <Text
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(10)}
-                  color={'white'}>
+                  color={'white'}
+                  lineHeight={12.1}
+                  letterSpacing={-0.04}>
                   SAVING ₹9.51
                 </Text>
               </Center>
@@ -342,15 +383,18 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
             borderColor={'accent.200'}
             variant={'outline'}
             colorScheme={'muted'}
-            mt={5}
+            mt={verticalScale(20)}
+            px={horizontalScale(36)}
             w={'100%'}
-            h={50}
+            py={verticalScale(15)}
             alignSelf={'center'}
             rounded={16}
             _text={{
               fontFamily: 'Inter_Medium',
               fontSize: scaleFontSize(20),
               color: 'error.300',
+              lineHeight: 24.2,
+              letterSpacing: -0.04,
             }}
             onPress={() => CallNumber(1234567890)}>
             Need Help?

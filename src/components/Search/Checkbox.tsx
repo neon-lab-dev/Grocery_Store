@@ -52,7 +52,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
             fontSize={scaleFontSize(16)}
             color={
               selectedOptions.includes(option) ? 'accent.600' : 'accent.400'
-            }>
+            }
+            lineHeight={19.36}
+            letterSpacing={-0.04}>
             {option}
           </Text>
         </TouchableOpacity>

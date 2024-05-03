@@ -19,6 +19,7 @@ import GoBack from '../../components/Navigation/GoBack';
 import {Dimensions} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
 import {HelperText} from 'react-native-paper';
+import BottomSheet from '../../components/BottomSheet/BottomSheet';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -30,36 +31,51 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
   const recentSearch = ['Cat Food', 'Ice Cream', 'Cake'];
   const {width} = Dimensions.get('window');
-  const fontSize = width >= 360 ? scaleFontSize(17) : scaleFontSize(16);
+  const fontSize = width >= 400 ? scaleFontSize(18) : scaleFontSize(16);
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const openBottomSheet = () => {
+    setBottomSheetVisible(true);
+  };
+  const closeBottomSheet = () => {
+    setBottomSheetVisible(false);
+  };
+
+  const listToDetails = () => {
+    openBottomSheet();
+  };
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
-      <View mt={verticalScale(10)} px={horizontalScale(20)}>
+      <View mt={verticalScale(20)} px={horizontalScale(15)}>
         <View flexDir={'row'} justifyContent={'space-between'}>
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(14)}
-            color={'#1F2937'}>
+            color={'#1F2937'}
+            lineHeight={16.94}
+            letterSpacing={-0.04}>
             Recent Searches
           </Text>
           <Pressable onPress={() => setSelectedRecentSearch('')}>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(14)}
-              color={'primary.500'}>
+              color={'primary.500'}
+              lineHeight={16.94}
+              letterSpacing={-0.04}>
               Clear All
             </Text>
           </Pressable>
         </View>
-        <View flexDir={'row'} mt={horizontalScale(10)}>
+        <View flexDir={'row'} mt={verticalScale(5)}>
           {recentSearch.map((item, index) => (
             <Pressable
               key={index}
               borderRadius={100}
               borderWidth={1}
               mr={horizontalScale(10)}
-              py={verticalScale(7)}
-              px={horizontalScale(12)}
+              py={verticalScale(10)}
+              px={horizontalScale(15)}
               borderColor={
                 selectedRecentSearch === item ? 'accent.400' : 'accent.200'
               }
@@ -79,7 +95,9 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
                 fontWeight={selectedRecentSearch === item ? 600 : 500}
                 color={
                   selectedRecentSearch === item ? 'accent.700' : 'accent.400'
-                }>
+                }
+                lineHeight={16.94}
+                letterSpacing={-0.04}>
                 {item}
               </Text>
             </Pressable>
@@ -92,26 +110,33 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           justifyContent={'space-between'}
           alignItems={'center'}
           p={4}>
-          <View flexDir={'row'}>
+          <View flexDir={'row'} alignItems={'center'}>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={fontSize}
               color={'accent.500'}
-              numberOfLines={1}>
+              lineHeight={21.78}
+              letterSpacing={-0.04}
+              textAlign={'center'}>
               Showing Results for
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={fontSize}
-              color={'accent.700'}>
+              color={'accent.700'}
+              lineHeight={21.78}
+              letterSpacing={-0.04}
+              textAlign={'center'}>
               {searchInp ? ` ${searchInp}` : ' Product Name'}
             </Text>
           </View>
           <Text
             fontFamily={'Inter_Medium'}
-            adjustsFontSizeToFit
-            fontSize={scaleFontSize(14)}
-            color={'accent.500'}>
+            fontSize={width >= 400 ? scaleFontSize(14) : scaleFontSize(13)}
+            color={'accent.500'}
+            lineHeight={16.94}
+            letterSpacing={-0.04}
+            textAlign={'center'}>
             246 items
           </Text>
         </View>
@@ -159,7 +184,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           ListHeaderComponent={ListHeaderComponent}
           data={ProductData}
           renderItem={({item}) => (
-            <SearchProductCard onPress={() => {}} products={item} />
+            <SearchProductCard onPress={listToDetails} products={item} />
           )}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
@@ -176,6 +201,12 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       <FilterOverlay
         showModal={showModal}
         onClose={() => setShowModal(false)}
+      />
+      <BottomSheet
+        visible={bottomSheetVisible}
+        onClose={closeBottomSheet}
+        type={'Product-Details'}
+        onPress={listToDetails}
       />
     </View>
   );

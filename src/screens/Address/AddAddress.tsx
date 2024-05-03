@@ -17,7 +17,7 @@ import {
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
 import SelectAddress from '../../components/SelectingAddress';
-import TextInput from '../../components/input';
+import TextInput from '../../components/Input';
 
 const AddAddress = () => {
   const [landmark, setLandmark] = useState('');
@@ -58,7 +58,9 @@ const AddAddress = () => {
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
           fontWeight={500}
-          mb={verticalScale(5)}>
+          mb={verticalScale(5)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Landmark*
         </Text>
         <TextInput
@@ -72,14 +74,18 @@ const AddAddress = () => {
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(12)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter a Landmark*
           </Text>
         )}
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={verticalScale(5)}>
+          mb={verticalScale(5)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Address*
         </Text>
         <TextInput
@@ -93,7 +99,9 @@ const AddAddress = () => {
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(12)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter a Valid Address*
           </Text>
         )}
@@ -102,7 +110,9 @@ const AddAddress = () => {
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              mb={verticalScale(5)}>
+              mb={verticalScale(5)}
+              lineHeight={19.36}
+              letterSpacing={-0.04}>
               City*
             </Text>
             <TextInput
@@ -116,7 +126,9 @@ const AddAddress = () => {
                 fontFamily={'Inter_Regular'}
                 fontSize={scaleFontSize(14)}
                 color={'#EF4444'}
-                mt={-verticalScale(10)}>
+                mt={-verticalScale(12)}
+                lineHeight={16.8}
+                letterSpacing={-0.03}>
                 Enter a Valid City*
               </Text>
             )}
@@ -125,7 +137,9 @@ const AddAddress = () => {
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
-              mb={verticalScale(5)}>
+              mb={verticalScale(5)}
+              lineHeight={19.36}
+              letterSpacing={-0.04}>
               State*
             </Text>
             <TextInput
@@ -139,7 +153,9 @@ const AddAddress = () => {
                 fontFamily={'Inter_Regular'}
                 fontSize={scaleFontSize(14)}
                 color={'#EF4444'}
-                mt={-verticalScale(10)}>
+                mt={-verticalScale(12)}
+                lineHeight={16.8}
+                letterSpacing={-0.03}>
                 Enter a Valid State*
               </Text>
             )}
@@ -148,7 +164,9 @@ const AddAddress = () => {
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={verticalScale(5)}>
+          mb={verticalScale(5)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Pincode*
         </Text>
         <TextInput
@@ -163,14 +181,18 @@ const AddAddress = () => {
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(12)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter a Valid Pincode*
           </Text>
         )}
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={verticalScale(5)}>
+          mb={verticalScale(5)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Label*
         </Text>
         <View flexDir={'row'}>
@@ -189,6 +211,8 @@ const AddAddress = () => {
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(16)}
+                lineHeight={19.36}
+                letterSpacing={-0.04}
                 color={selectedLabel === item ? 'accent.700' : 'accent.400'}>
                 {item}
               </Text>
@@ -215,14 +239,16 @@ const AddAddress = () => {
         <Center flex={1} px={horizontalScale(15)}>
           <Button
             w={'100%'}
-            py={verticalScale(13)}
+            py={verticalScale(15)}
             rounded={12}
             colorScheme={'transparent'}
             bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
             _text={{
               fontFamily: 'Inter_SemiBold',
               fontSize: scaleFontSize(20),
-              color: isContinueDisabled ? 'accent.400' : 'white',
+              color: isContinueDisabled ? 'accent.400' : 'primary.50',
+              lineHeight: 24.2,
+              letterSpacing: -0.04,
             }}
             disabled={isContinueDisabled}
             onPress={() => setIsClicked(true)}>
