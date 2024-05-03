@@ -33,7 +33,7 @@ const Radio: React.FC<RadioProps> = ({options, onSelect}) => {
               borderColor:
                 selectedOption === option.value ? '#E5E7EB' : '#22C55E',
               marginHorizontal: horizontalScale(15),
-              marginVertical: verticalScale(2),
+              marginVertical: verticalScale(4),
             }}
           />
           <Text
@@ -41,7 +41,9 @@ const Radio: React.FC<RadioProps> = ({options, onSelect}) => {
             fontSize={scaleFontSize(16)}
             color={
               selectedOption === option.value ? 'accent.700' : 'accent.400'
-            }>
+            }
+            lineHeight={19.36}
+            letterSpacing={-0.04}>
             {option.label}
           </Text>
         </View>

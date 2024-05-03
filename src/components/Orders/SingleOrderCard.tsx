@@ -23,13 +23,17 @@ export const SingleOrderCard: React.FC = () => {
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
-          numberOfLines={2}>
+          numberOfLines={2}
+          lineHeight={16.98}
+          letterSpacing={-0.03}>
           Cadbury Bournville Rich Cocoa 70% Dark
         </Text>
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(12)}
-          color={'accent.400'}>
+          color={'accent.400'}
+          lineHeight={14.52}
+          letterSpacing={-0.04}>
           200g
         </Text>
       </View>
@@ -38,14 +42,18 @@ export const SingleOrderCard: React.FC = () => {
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
           color={'primary.500'}
-          mb={-verticalScale(3)}>
+          mb={-verticalScale(1)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           ₹42
         </Text>
         <Text
           fontFamily={'Inter_Regualar'}
           fontSize={scaleFontSize(12)}
           color={'accent.400'}
-          strikeThrough>
+          strikeThrough
+          lineHeight={14.52}
+          letterSpacing={-0.04}>
           ₹58
         </Text>
       </View>

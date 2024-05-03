@@ -24,5 +24,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(16),
     color: '#4B5563',
+    lineHeight: 20,
+    letterSpacing: -0.03,
   },
 });

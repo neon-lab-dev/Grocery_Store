@@ -28,8 +28,8 @@ const TextInput: React.FC<TextInputProps> = ({
         onChangeText={txt => setValue(txt)}
         variant={'filled'}
         rounded={15}
-        mb={verticalScale(10)}
-        py={verticalScale(12)}
+        mb={verticalScale(12)}
+        py={verticalScale(10)}
         pl={horizontalScale(15)}
         bg={'accent.100'}
         borderColor={isErrorShown ? 'error.300' : 'accent.100'}
@@ -38,7 +38,10 @@ const TextInput: React.FC<TextInputProps> = ({
           bgColor: 'accent.100',
         }}
         fontFamily={'Inter_Medium'}
+        lineHeight={19.36}
+        letterSpacing={-0.04}
         fontSize={scaleFontSize(16)}
+        color={'accent.800'}
         placeholderTextColor={'accent.400'}
         placeholder={placeholder}
         InputLeftElement={leftElement}

@@ -40,14 +40,18 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
-            color={'accent.900'}>
+            color={'accent.900'}
+            lineHeight={19.36}
+            letterSpacing={-0.04}>
             Home
           </Text>
           <Text
             color={'accent.400'}
             numberOfLines={2}
             fontFamily={'Inter_Regular'}
-            fontSize={scaleFontSize(14)}>
+            fontSize={scaleFontSize(14)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Lorem ipsum dolor sit amet consectetur. Et at lectus congue ut
             sagittis sed dui. Aliquet porta sed diam tellus.
           </Text>

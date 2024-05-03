@@ -53,7 +53,9 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={verticalScale(5)}>
+          mb={verticalScale(5)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Full Name*
         </Text>
         <TextInput
@@ -67,14 +69,18 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(12)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter Valid Name*
           </Text>
         )}
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={verticalScale(5)}>
+          mb={verticalScale(5)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Email ID*
         </Text>
         <TextInput
@@ -88,14 +94,18 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(12)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter Valid Email*
           </Text>
         )}
         <Text
           mb={verticalScale(5)}
           fontFamily={'Inter_Medium'}
-          fontSize={scaleFontSize(16)}>
+          fontSize={scaleFontSize(16)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Mobile Number*
         </Text>
         <TextInput
@@ -110,7 +120,10 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
               fontSize={scaleFontSize(16)}
               py={verticalScale(12)}
               pl={horizontalScale(15)}
-              mr={horizontalScale(-5)}>
+              mr={horizontalScale(-5)}
+              lineHeight={19.36}
+              letterSpacing={-0.04}
+              color={'accent.800'}>
               +91
             </Text>
           }
@@ -120,14 +133,18 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(12)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter Valid Mobile Number*
           </Text>
         )}
         <Text
           mb={verticalScale(5)}
           fontFamily={'Inter_Medium'}
-          fontSize={scaleFontSize(16)}>
+          fontSize={scaleFontSize(16)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Secondary Mobile Number(Optional)
         </Text>
         <TextInput
@@ -142,7 +159,10 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
               fontSize={scaleFontSize(16)}
               py={verticalScale(12)}
               pl={horizontalScale(15)}
-              mr={horizontalScale(-5)}>
+              mr={horizontalScale(-5)}
+              lineHeight={19.36}
+              letterSpacing={-0.04}
+              color={'accent.800'}>
               +91
             </Text>
           }
@@ -153,7 +173,9 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(12)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter Valid Mobile Number*
           </Text>
         )}
@@ -175,7 +197,9 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = () => {
             _text={{
               fontSize: scaleFontSize(20),
               fontFamily: 'Inter_SemiBold',
-              color: isContinueDisabled ? 'accent.400' : 'white',
+              color: isContinueDisabled ? 'accent.400' : 'primary.50',
+              lineHeight: 24.2,
+              letterSpacing: -0.04,
             }}
             colorScheme={'transparent'}
             disabled={isContinueDisabled}

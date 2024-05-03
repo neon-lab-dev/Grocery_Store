@@ -35,14 +35,18 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
           numberOfLines={2}
-          flexShrink={1}>
+          flexShrink={1}
+          lineHeight={16.94}
+          letterSpacing={-0.04}>
           Cadbury Bournville Rich Cocoa 70% Dark
         </Text>
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
-          ml={horizontalScale(70)}>
+          ml={horizontalScale(70)}
+          lineHeight={16.94}
+          letterSpacing={-0.04}>
           ₹87.49
         </Text>
       </View>
@@ -61,14 +65,18 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(12)}
             flexShrink={1}
-            color={'accent.400'}>
+            color={'accent.400'}
+            lineHeight={14.52}
+            letterSpacing={-0.04}>
             Order #897JDHK39392
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(12)}
             flexShrink={1}
-            color={'accent.400'}>
+            color={'accent.400'}
+            lineHeight={14.52}
+            letterSpacing={-0.04}>
             25/02/24 at 09:00pm
           </Text>
         </View>

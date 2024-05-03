@@ -42,15 +42,17 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
         <Button
           variant={'outline'}
           borderStyle={'dashed'}
-          borderRadius={10}
+          borderRadius={12}
           colorScheme={'muted'}
           borderColor={'primary.500'}
-          mt={5}
-          h={50}
+          mt={verticalScale(20)}
+          py={verticalScale(15)}
           _text={{
             color: 'primary.400',
             fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(20),
+            lineHeight: 24.2,
+            letterSpacing: -0.04,
           }}
           onPress={gotoAddAddress}>
           Add an Address

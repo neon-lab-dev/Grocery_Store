@@ -26,8 +26,8 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
   const filterOptions = ['Sort', 'Price', 'Brands'];
   const [selectedOption, setSelectedOption] = useState('Sort');
   const [selectedBrands, setSelectedBrands] = useState<string[]>(['Garnier']);
-  const [selectedMinValue, setSelectedMinValue] = useState<number>(0);
-  const [selectedMaxValue, setSelectedMaxValue] = useState<number>(100);
+  const [selectedMinValue, setSelectedMinValue] = useState<number>(24);
+  const [selectedMaxValue, setSelectedMaxValue] = useState<number>(149);
   const radioButtonsData = [
     {id: '0', label: 'Relevance (default)', value: 'default'},
     {id: '1', label: 'Price (low to high)', value: 'lowtohigh'},
@@ -48,8 +48,10 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           bottom={-40}>
           <Text
             fontFamily={'Inter_Medium'}
-            fontSize={scaleFontSize(14)}
-            color={'secondary.500'}>
+            fontSize={scaleFontSize(12)}
+            color={'#22C55E'}
+            lineHeight={14.52}
+            letterSpacing={-0.04}>
             ₹{selectedMinValue}
           </Text>
         </View>
@@ -61,8 +63,10 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           bottom={-40}>
           <Text
             fontFamily={'Inter_Medium'}
-            fontSize={scaleFontSize(14)}
-            color={'secondary.500'}>
+            fontSize={scaleFontSize(12)}
+            color={'#22C55E'}
+            lineHeight={14.52}
+            letterSpacing={-0.04}>
             ₹{selectedMaxValue}
           </Text>
         </View>
@@ -79,7 +83,9 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
               pl={horizontalScale(15)}
-              py={verticalScale(15)}>
+              py={verticalScale(15)}
+              lineHeight={21.78}
+              letterSpacing={-0.04}>
               Sort By
             </Text>
             <Radio
@@ -95,18 +101,22 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
-              mb={verticalScale(5)}>
+              mb={verticalScale(10)}
+              lineHeight={21.78}
+              letterSpacing={-0.04}>
               Price
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(14)}
               color={'accent.500'}
-              mb={verticalScale(5)}>
+              mb={verticalScale(5)}
+              lineHeight={16.94}
+              letterSpacing={-0.04}>
               Select Range
             </Text>
             <MultiSlider
-              values={[0, 100]}
+              values={[selectedMinValue, selectedMaxValue]}
               sliderLength={horizontalScale(200)}
               min={0}
               max={299}
@@ -127,14 +137,18 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
             <View flexDir={'row'} justifyContent={'space-between'}>
               <Text
                 fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.400'}>
+                fontSize={scaleFontSize(12)}
+                color={'accent.400'}
+                lineHeight={14.52}
+                letterSpacing={-0.04}>
                 ₹0
               </Text>
               <Text
                 fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.400'}>
+                fontSize={scaleFontSize(12)}
+                color={'accent.400'}
+                lineHeight={14.52}
+                letterSpacing={-0.04}>
                 ₹299
               </Text>
             </View>
@@ -147,7 +161,9 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(18)}
               color={'accent.700'}
-              mb={5}>
+              mb={5}
+              lineHeight={21.78}
+              letterSpacing={-0.04}>
               Sort By
             </Text>
             <Checkbox
@@ -177,7 +193,9 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
           <Text
             fontFamily={'Inter_Medium'}
             color={'accent.800'}
-            fontSize={scaleFontSize(18)}>
+            fontSize={scaleFontSize(18)}
+            lineHeight={21.78}
+            letterSpacing={-0.04}>
             Filter Items
           </Text>
           <Pressable onPress={onClose}>
@@ -202,7 +220,9 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                     color={
                       selectedOption === option ? 'primary.500' : 'accent.500'
                     }
-                    fontSize={scaleFontSize(18)}>
+                    fontSize={scaleFontSize(18)}
+                    lineHeight={21.78}
+                    letterSpacing={-0.04}>
                     {option}
                   </Text>
                   <View
