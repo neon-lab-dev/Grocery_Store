@@ -36,7 +36,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
         <SearchInput
           onChangeText={setText}
           value={text}
-          placeholder='Search "Beard"'
+          placeholder='Search "Bread"'
           editable
           width={90}
           onPress={() => {}}

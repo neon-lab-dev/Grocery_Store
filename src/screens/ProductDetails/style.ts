@@ -110,6 +110,7 @@ export const styles = StyleSheet.create({
     color: '#6B7280',
   },
   viewDetailsText: {
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(14),
     fontWeight: '500',
     textAlign: 'left',
@@ -196,6 +197,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: verticalScale(12),
-    gap: 1,
+    gap: 5,
   },
 });

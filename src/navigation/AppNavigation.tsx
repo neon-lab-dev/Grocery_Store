@@ -43,13 +43,13 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: () => (
             <View>
               <Text
-                fontFamily={'Inter_Medium'}
+                fontFamily={'Inter_SemiBold'}
                 color={'#1F2937'}
                 fontSize={scaleFontSize(18)}>
                 Payment Methods
               </Text>
               <Text
-                fontFamily={'Inter_Medium'}
+                fontFamily={'Inter_SemiBold'}
                 fontSize={scaleFontSize(12)}
                 color={'#6B7280'}>
                 1 Item | Total ₹42
@@ -95,7 +95,11 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         options={({navigation}) => ({
           headerTitle: () => (
             <View>
-              <Text fontSize={'fs18'}>Product</Text>
+              <Text
+                fontSize={'fs18'}
+                style={{fontFamily: 'Inter_SemiBold', fontWeight: '500'}}>
+                Product
+              </Text>
             </View>
           ),
           headerStyle: {height: 100},
