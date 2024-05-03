@@ -17,7 +17,7 @@ import {
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
 import SelectAddress from '../../components/SelectingAddress';
-import TextInput from '../../components/input';
+import TextInput from '../../components/Input';
 
 const AddAddress = () => {
   const [landmark, setLandmark] = useState('');

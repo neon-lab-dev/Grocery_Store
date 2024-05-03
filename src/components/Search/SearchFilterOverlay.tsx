@@ -166,7 +166,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
         mt={'auto'}
         borderTopLeftRadius={20}
         borderTopRightRadius={20}
-        h={'65%'}
+        h={'66%'}
         bgColor={'#ffffff'}>
         <View
           flexDir={'row'}
@@ -211,7 +211,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                     borderBottomLeftRadius={100}
                     height={'170%'}
                     width={horizontalScale(5)}
-                    ml={horizontalScale(20)}
+                    ml={horizontalScale(30)}
                     opacity={selectedOption === option ? 1 : 0}
                   />
                 </View>

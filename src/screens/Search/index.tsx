@@ -19,6 +19,7 @@ import GoBack from '../../components/Navigation/GoBack';
 import {Dimensions} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
 import {HelperText} from 'react-native-paper';
+import BottomSheet from '../../components/BottomSheet/BottomSheet';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -30,7 +31,18 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
   const recentSearch = ['Cat Food', 'Ice Cream', 'Cake'];
   const {width} = Dimensions.get('window');
-  const fontSize = width >= 360 ? scaleFontSize(17) : scaleFontSize(16);
+  const fontSize = width >= 400 ? scaleFontSize(18) : scaleFontSize(16);
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const openBottomSheet = () => {
+    setBottomSheetVisible(true);
+  };
+  const closeBottomSheet = () => {
+    setBottomSheetVisible(false);
+  };
+
+  const listToDetails = () => {
+    openBottomSheet();
+  };
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
@@ -97,20 +109,20 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               fontFamily={'Inter_Medium'}
               fontSize={fontSize}
               color={'accent.500'}
-              numberOfLines={1}>
+              letterSpacing={-0.04}>
               Showing Results for
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={fontSize}
-              color={'accent.700'}>
+              color={'accent.700'}
+              letterSpacing={-0.04}>
               {searchInp ? ` ${searchInp}` : ' Product Name'}
             </Text>
           </View>
           <Text
             fontFamily={'Inter_Medium'}
-            adjustsFontSizeToFit
-            fontSize={scaleFontSize(14)}
+            fontSize={width >= 400 ? scaleFontSize(14) : scaleFontSize(13)}
             color={'accent.500'}>
             246 items
           </Text>
@@ -159,7 +171,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           ListHeaderComponent={ListHeaderComponent}
           data={ProductData}
           renderItem={({item}) => (
-            <SearchProductCard onPress={() => {}} products={item} />
+            <SearchProductCard onPress={listToDetails} products={item} />
           )}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
@@ -176,6 +188,12 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       <FilterOverlay
         showModal={showModal}
         onClose={() => setShowModal(false)}
+      />
+      <BottomSheet
+        visible={bottomSheetVisible}
+        onClose={closeBottomSheet}
+        type={'Product-Details'}
+        onPress={listToDetails}
       />
     </View>
   );

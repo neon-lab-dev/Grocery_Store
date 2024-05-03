@@ -71,7 +71,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
         alignItems={'center'}
         pt={1}>
         <Text
-          fontFamily={'Inter_Medium'}
+          fontFamily={'Inter_SemiBold'}
           fontSize={scaleFontSize(14)}
           color={'accent.900'}>
           To Pay

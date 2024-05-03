@@ -44,7 +44,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   return (
     <View flex={1}>
-      <Pressable position={'relative'}>
+      <Pressable position={'relative'} onPress={onPress}>
         <View
           bgColor={'accent.50'}
           borderRadius={16}
