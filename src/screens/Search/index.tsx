@@ -44,6 +44,8 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     openBottomSheet();
   };
 
+  // console.log("test")
+
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
       <View mt={verticalScale(20)} px={horizontalScale(15)}>
