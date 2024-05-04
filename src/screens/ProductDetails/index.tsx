@@ -19,6 +19,7 @@ import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
 import {arrowDropRight} from '../../assets/images/icons/arrow_drop_right';
+import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 
 interface AlternativeImageProps {
   img: any;
@@ -237,9 +238,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
             source={require('../../assets/images/icons/arrow_drop_down.png')}
           /> */}
           {viewMoreDetails ? (
-            <SvgXml xml={arrowDropDown} width={8} height={8} />
+            <SvgXml xml={arrowUp} width={8} height={8} />
           ) : (
-            <SvgXml xml={arrowDropRight} width={8} height={8} />
+            <SvgXml xml={arrowDropDown} width={8} height={8} />
           )}
         </Pressable>
         {/* products Listings */}

@@ -19,6 +19,7 @@ import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {arrowDropRight} from '../../assets/images/icons/arrow_drop_right';
 import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
+import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 
 interface AlternativeImageProps {
   img: any;
@@ -191,14 +192,17 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
               source={require('../../assets/images/icons/arrow_drop_down.png')}
             /> */}
             {viewMoreDetails ? (
-              <SvgXml xml={arrowDropDown} width={8} height={8} />
+              <SvgXml xml={arrowUp} width={8} height={8} />
             ) : (
-              <SvgXml xml={arrowDropRight} width={8} height={8} />
+              <SvgXml xml={arrowDropDown} width={8} height={8} />
             )}
           </Pressable>
           {/* products Listings */}
           <View
-            style={{paddingHorizontal: horizontalScale(24), marginVertical: 5}}>
+            style={{
+              paddingHorizontal: horizontalScale(24),
+              marginVertical: verticalScale(5),
+            }}>
             <Text style={styles.similarProductsText}>Similar Products</Text>
           </View>
           <View
@@ -209,7 +213,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
             <ProductHorizontalScroll onPress={() => {}} />
           </View>
           <View
-            style={{paddingHorizontal: horizontalScale(24), marginVertical: 5}}>
+            style={{
+              paddingHorizontal: horizontalScale(24),
+              marginVertical: verticalScale(5),
+            }}>
             <Text style={styles.similarProductsText}>People also Bought</Text>
           </View>
           <View
