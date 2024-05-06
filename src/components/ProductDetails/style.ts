@@ -129,15 +129,20 @@ export const styles = StyleSheet.create({
   addToCartButton: {
     backgroundColor: '#F97316',
     textAlign: 'center',
-    paddingVertical: verticalScale(14),
-    borderRadius: 12,
-    paddingHorizontal: horizontalScale(24),
+    justifyContent: 'center',
+    alignItems: 'center',
+    // paddingVertical: verticalScale(14),
+    borderRadius: 15,
+    // paddingHorizontal: horizontalScale(24),
+    width: horizontalScale(131),
+    height: verticalScale(47),
   },
   addToCartText: {
     fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(16),
     textAlign: 'center',
     color: '#FFF7ED',
+    fontWeight: '500',
   },
   bottomLayoutContainer: {
     flexDirection: 'row',
@@ -190,6 +195,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: verticalScale(12),
-    gap: 1,
+    // justifyContent: 'center',
+    gap: 5,
   },
 });

@@ -16,6 +16,10 @@ import {
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
+import {SvgXml} from 'react-native-svg';
+import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
+import {arrowDropRight} from '../../assets/images/icons/arrow_drop_right';
+import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 
 interface AlternativeImageProps {
   img: any;
@@ -224,11 +228,20 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
           style={styles.viewMore}
           onPress={() => setViewMoreDetails(!viewMoreDetails)}>
           <Text style={styles.viewDetailsText}>
-            View <Text>{viewMoreDetails ? 'less' : 'more'}</Text> details
+            View{' '}
+            <Text style={styles.viewDetailsText}>
+              {viewMoreDetails ? 'less' : 'more'}
+            </Text>{' '}
+            details
           </Text>
-          <Image
+          {/* <Image
             source={require('../../assets/images/icons/arrow_drop_down.png')}
-          />
+          /> */}
+          {viewMoreDetails ? (
+            <SvgXml xml={arrowUp} width={8} height={8} />
+          ) : (
+            <SvgXml xml={arrowDropDown} width={8} height={8} />
+          )}
         </Pressable>
         {/* products Listings */}
         <View
