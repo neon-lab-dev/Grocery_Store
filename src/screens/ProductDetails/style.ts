@@ -126,6 +126,7 @@ export const styles = StyleSheet.create({
     letterSpacing: -0.03,
   },
   viewDetailsText: {
+    fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(14),
     fontFamily: 'Inter_Medium',
     textAlign: 'left',
@@ -216,6 +217,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: verticalScale(12),
-    gap: 1,
+    gap: 5,
   },
 });

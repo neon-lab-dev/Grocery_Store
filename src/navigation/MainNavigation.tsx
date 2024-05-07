@@ -37,6 +37,7 @@ export type AppNavigatorParamList = {
   Categories: undefined;
   CategoryProducts: undefined;
   Payment: undefined;
+  ProductDetails: undefined;
   Home: undefined;
   Search: undefined;
   Settings: undefined;

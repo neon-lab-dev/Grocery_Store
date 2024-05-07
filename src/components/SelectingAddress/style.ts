@@ -8,7 +8,7 @@ import {
 export const styles = StyleSheet.create({
   selectAddressBox: {
     width: '100%',
-    height: 72,
+    height: verticalScale(72),
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: horizontalScale(20),
@@ -22,11 +22,11 @@ export const styles = StyleSheet.create({
   },
   addAddress: {
     width: '100%',
-    height: 64,
+    height: verticalScale(64),
     borderRadius: horizontalScale(12),
     borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: 'rgba(243, 244, 246, 1.0)',
+    borderWidth: horizontalScale(1),
+    borderColor: '#F3F4F6',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
   },
   addressDetails: {
     width: horizontalScale(230),
-    height: 34,
+    height: verticalScale(34),
     color: '#9CA3AF',
     fontFamily: 'Inter_Regular',
     fontSize: scaleFontSize(14),
