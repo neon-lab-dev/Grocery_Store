@@ -209,7 +209,8 @@ export const styles = StyleSheet.create({
     marginHorizontal: horizontalScale(20),
   },
   ButtonText: {
-    fontFamily: 'Inter_Medium',
+    // fontFamily: 'Inter_Medium',
+     fontWeight:'500',
     color: Colors.primary[400],
     fontSize: scaleFontSize(15),
   },

@@ -42,7 +42,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
       <Text
         style={styles.OrderText}
         mt={width < 380 ? 0 : 2}
-        fontFamily={'Inter_SemiBold'}
+        // fontFamily={'Inter_Medium'}
         fontSize={width < 380 ? 'xl' : '2xl'}>
         Order Has been Placed Successfully
       </Text>
@@ -95,13 +95,16 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontSize={width < 380 ? 14 : 15}
             color={'accent.500'}
             ml={1}
-            fontFamily={'Inter_Medium'}>
+            fontWeight={500}
+            // fontFamily={'Inter_Medium'}
+            >
             Payment Method
           </Text>
           <Text
             fontSize={width < 380 ? 14 : 15}
             color={'primary.500'}
-            fontFamily={'Inter_Medium'}
+            fontWeight={500}
+            // fontFamily={'Inter_Medium'}
             ml={width < 380 ? 12 : 24}>
             Cash on Delivery
           </Text>
@@ -124,7 +127,9 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontSize={width < 380 ? 14 : 16}
             color={'accent.500'}
             ml={1}
-            fontFamily={'Inter_Medium'}>
+            fontWeight={500}
+            // fontFamily={'Inter_Medium'}
+            >
             2 items | ₹87.49
           </Text>
           <Center
@@ -135,7 +140,8 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             px={1.5}
             ml={1.5}>
             <Text
-              fontFamily={'Inter_Medium'}
+              fontWeight={500}
+              // fontFamily={'Inter_Medium'}
               fontSize={width < 380 ? 9 : 11}
               color={'white'}>
               SAVED ₹9.51
@@ -145,12 +151,13 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             <Text
               fontSize={width < 380 ? 12 : 14}
               color={'primary.500'}
-              fontFamily={'Inter_Medium'}
+              fontWeight={500}
+              // fontFamily={'Inter_Medium'}
               ml={width < 380 ? 3 : 12}>
               View Details
             </Text>
           </Pressable>
-          <View ml={horizontalScale(5)} alignItems={'center'}>
+          <View ml={horizontalScale(1)} alignItems={'center'}>
             <SvgXml xml={rightOrangeArrowIcon} height={14} width={14} />
           </View>
         </View>
