@@ -99,10 +99,15 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
         <View style={styles.offPerContainer}>
           <Text style={styles.percentageText}>20%</Text>
           <Text
-            style={[
-              styles.percentageText,
-              {fontSize: scaleFontSize(20), bottom: verticalScale(3)},
-            ]}>
+            style={{
+              fontFamily: 'Inter_Bold',
+              color: 'white',
+              textAlign: 'center',
+              fontSize: scaleFontSize(20),
+              lineHeight: 24.2,
+              letterSpacing: -0.04,
+              marginTop: -verticalScale(2),
+            }}>
             OFF
           </Text>
         </View>
@@ -121,9 +126,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
           }}>
           <FlatList
             showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={
+            ItemSeparatorComponent={() => (
               <View style={{marginLeft: horizontalScale(6)}} />
-            }
+            )}
             data={data.alternativeImages}
             renderItem={({item}) => (
               <AlternativeImage img={item.image} id={item.id} />
@@ -171,9 +176,11 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
             <Text
               numberOfLines={!viewMoreDetails ? 2 : 5}
               style={{
-                fontWeight: '400',
+                fontFamily: 'Inter_Regular',
                 fontSize: scaleFontSize(14),
                 color: '#6B7280',
+                lineHeight: 16.8,
+                letterSpacing: -0.03,
               }}>
               Lorem ipsum dolor sit amet consectetur. Volutpat arcu vitae tellus
               in dui mattis cursus lacus. Amet nisl a urna arcu senectus viverra

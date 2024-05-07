@@ -1,6 +1,10 @@
-import React, {FC, version} from 'react';
+import React, {FC} from 'react';
 import {View, Text, Center} from 'native-base';
-import {scaleFontSize, verticalScale} from '../../assets/scaling';
+import {
+  scaleFontSize,
+  verticalScale,
+  horizontalScale,
+} from '../../assets/scaling';
 
 interface BillSummaryCardProps {
   itemPrice: number;
@@ -18,7 +22,14 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
   savingPrice,
 }) => {
   return (
-    <View p={5} bgColor={'white'} borderRadius={14} m={'5'}>
+    <View
+      bgColor={'white'}
+      borderRadius={14}
+      px={horizontalScale(20)}
+      py={verticalScale(20)}
+      style={{gap: 10}}
+      my={verticalScale(20)}
+      mx={horizontalScale(20)}>
       <Text
         fontFamily={'Inter_SemiBold'}
         fontSize={scaleFontSize(20)}
@@ -30,8 +41,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
       <View
         flexDir={'row'}
         justifyContent={'space-between'}
-        alignItems={'center'}
-        my={1}>
+        alignItems={'center'}>
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
@@ -68,66 +78,61 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
           ₹{deliveryCharge}
         </Text>
       </View>
-      <View
-        borderWidth={1}
-        borderRadius={1}
-        borderColor={'accent.100'}
-        my={2}
-      />
-      <View
-        flexDir={'row'}
-        justifyContent={'space-between'}
-        alignItems={'center'}
-        pt={1}>
-        <Text
-          fontFamily={'Inter_SemiBold'}
-          fontSize={scaleFontSize(14)}
-          color={'accent.900'}
-          lineHeight={16.94}
-          letterSpacing={-0.04}>
-          To Pay
-        </Text>
-        <Center flexDir={'row'}>
-          <Text
-            fontFamily={'Inter_Regular'}
-            fontSize={scaleFontSize(10)}
-            color={'accent.500'}
-            strikeThrough
-            pr={1}
-            lineHeight={12.1}
-            letterSpacing={-0.04}>
-            ₹{cutOffPrice}
-          </Text>
-          <Text
-            fontFamily={'Inter_SemiBold'}
-            fontSize={scaleFontSize(14)}
-            color={'accent.800'}
-            lineHeight={16.94}
-            letterSpacing={-0.04}>
-            ₹{price}
-          </Text>
-        </Center>
-      </View>
+      <View borderWidth={1} borderRadius={1} borderColor={'accent.100'} />
       <View flexDir={'row'} justifyContent={'space-between'}>
-        <Text
-          fontFamily={'Inter_Regular'}
-          fontSize={scaleFontSize(12)}
-          color={'accent.500'}
-          mt={-verticalScale(1)}
-          lineHeight={14.4}
-          letterSpacing={-0.03}>
-          Incl. all taxes and charges
-        </Text>
-        <Center rounded={8} bg={'success.400'} w={'auto'} h={6} px={2}>
+        <View justifyContent={'center'} style={{gap: 2}}>
           <Text
             fontFamily={'Inter_Medium'}
-            fontSize={scaleFontSize(10)}
-            color={'white'}
-            lineHeight={12.1}
+            fontSize={scaleFontSize(14)}
+            color={'accent.900'}
+            lineHeight={16.94}
             letterSpacing={-0.04}>
-            SAVING ₹{savingPrice}
+            To Pay
           </Text>
-        </Center>
+          <Text
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(12)}
+            color={'accent.500'}
+            lineHeight={14.4}
+            letterSpacing={-0.03}>
+            Incl. all taxes and charges
+          </Text>
+        </View>
+        <View style={{gap: 4}}>
+          <View flexDir={'row'} alignItems={'center'} style={{gap: 4}}>
+            <Text
+              fontFamily={'Inter_Regular'}
+              fontSize={scaleFontSize(10)}
+              color={'accent.500'}
+              strikeThrough
+              lineHeight={12.1}
+              letterSpacing={-0.04}>
+              ₹{cutOffPrice}
+            </Text>
+            <Text
+              fontFamily={'Inter_SemiBold'}
+              fontSize={scaleFontSize(14)}
+              color={'accent.800'}
+              lineHeight={16.94}
+              letterSpacing={-0.04}>
+              ₹{price}
+            </Text>
+          </View>
+          <Center
+            rounded={4}
+            bg={'#4ADE80'}
+            py={verticalScale(4)}
+            px={horizontalScale(6)}>
+            <Text
+              fontFamily={'Inter_Medium'}
+              fontSize={scaleFontSize(10)}
+              color={'white'}
+              lineHeight={12.1}
+              letterSpacing={-0.04}>
+              SAVING ₹{savingPrice}
+            </Text>
+          </Center>
+        </View>
       </View>
     </View>
   );
