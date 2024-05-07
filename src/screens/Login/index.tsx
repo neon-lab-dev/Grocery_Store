@@ -48,14 +48,18 @@ const Login: React.FC<Props> = ({navigation}) => {
       <View style={styles.inputSection}>
         <Text
           fontFamily={'Inter_SemiBold'}
-          fontSize={scaleFontSize(25)}
-          color={'accent.800'}>
+          fontSize={scaleFontSize(26)}
+          color={'accent.800'}
+          lineHeight={33.89}
+          letterSpacing={-0.05}>
           Fresh Picks Just a Tap Away!
         </Text>
         <Text
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(15)}
-          color="accent.500">
+          color="accent.500"
+          lineHeight={20}
+          letterSpacing={-0.03}>
           Enter your phone number to receive an OTP.
         </Text>
         <Input
@@ -64,7 +68,10 @@ const Login: React.FC<Props> = ({navigation}) => {
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(26)}
               py={verticalScale(20)}
-              pl={horizontalScale(20)}>
+              pl={horizontalScale(20)}
+              lineHeight={33.89}
+              letterSpacing={-0.03}
+              color={'accent.700'}>
               +91
             </Text>
           }
@@ -76,9 +83,12 @@ const Login: React.FC<Props> = ({navigation}) => {
             borderColor: 'accent.100',
             bgColor: 'white',
           }}
+          color={'accent.700'}
           py={verticalScale(20)}
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(26)}
+          lineHeight={33.89}
+          letterSpacing={-0.03}
           keyboardType="number-pad"
           maxLength={10}
           blurOnSubmit
@@ -104,6 +114,8 @@ const Login: React.FC<Props> = ({navigation}) => {
             _text={{
               fontFamily: 'Inter_Medium',
               fontSize: scaleFontSize(18),
+              lineHeight: 21.78,
+              letterSpacing: -0.04,
             }}>
             Continue
           </Button>
@@ -113,14 +125,18 @@ const Login: React.FC<Props> = ({navigation}) => {
           <Text
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(10)}
-            color="accent.400">
+            color="accent.400"
+            lineHeight={14.4}
+            letterSpacing={-0.03}>
             By proceeding, you agree to our{' '}
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(10)}
-            color="accent.400"
-            underline>
+            color="accent.500"
+            underline
+            lineHeight={14.4}
+            letterSpacing={-0.03}>
             Terms & Conditions and Privacy policy.
           </Text>
         </View>

@@ -34,9 +34,12 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
       justifyContent={'space-between'}
       borderBottomWidth={index === length ? 0 : 1}
       borderBottomColor={'accent.100'}>
-      <View flexDir={'row'} alignItems={'center'}>
+      <View
+        flexDir={'row'}
+        alignItems={'center'}
+        style={{gap: horizontalScale(12)}}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
-        <View width={horizontalScale(180)} ml={horizontalScale(10)}>
+        <View width={horizontalScale(180)} style={{gap: horizontalScale(4)}}>
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
@@ -57,8 +60,8 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
           </Text>
         </View>
       </View>
-      <View flexDir={'row'}>
-        <Pressable onPress={gotoAddAddress} mr={horizontalScale(20)}>
+      <View flexDir={'row'} style={{gap: horizontalScale(32)}}>
+        <Pressable onPress={gotoAddAddress}>
           <SvgXml xml={edit} height={24} width={24} />
         </Pressable>
         <Pressable onPress={deleteAddress}>

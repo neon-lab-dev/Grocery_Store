@@ -17,8 +17,11 @@ export const SingleOrderCard: React.FC = () => {
       px={horizontalScale(20)}
       alignItems={'center'}
       mb={horizontalScale(1)}>
-      <SvgXml xml={sampleImage} width={48} height={48} />
-      <View flexShrink={1} ml={horizontalScale(10)}>
+      <SvgXml xml={sampleImage} />
+      <View
+        flexShrink={1}
+        ml={horizontalScale(10)}
+        style={{gap: verticalScale(2)}}>
         <Text
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(14)}
