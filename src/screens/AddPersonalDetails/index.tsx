@@ -49,7 +49,10 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          mb={verticalScale(5)}>
+          mb={verticalScale(5)}
+          lineHeight={19.36}
+          letterSpacing={-0.04}
+          color={'#1F2937'}>
           Full Name*
         </Text>
         <TextInput
@@ -64,11 +67,19 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(10)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter Valid Name*
           </Text>
         )}
-        <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
+        <Text
+          fontFamily={'Inter_Medium'}
+          fontSize={scaleFontSize(16)}
+          mb={2}
+          lineHeight={19.36}
+          letterSpacing={-0.04}
+          color={'#1F2937'}>
           Email ID*
         </Text>
         <TextInput
@@ -83,36 +94,49 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(10)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter Valid Email*
           </Text>
         )}
-        <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(16)} mb={2}>
+        <Text
+          fontFamily={'Inter_Medium'}
+          fontSize={scaleFontSize(16)}
+          mb={2}
+          lineHeight={19.36}
+          letterSpacing={-0.04}
+          color={'#1F2937'}>
           Secondary Mobile Number(Optional)
         </Text>
         <TextInput
           placeholder="Enter Here"
           value={mobileNo}
           setValue={setMobileNo}
-          maxLength={10}
           isErrorShown={isClicked && mobileNoErrorShown}
           leftElement={
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
+              lineHeight={19.36}
+              letterSpacing={-0.04}
+              color={'accent.800'}
               py={verticalScale(12)}
               pl={horizontalScale(15)}
               mr={horizontalScale(-5)}>
               +91
             </Text>
           }
+          maxLength={10}
         />
         {isClicked && mobileNoErrorShown && (
           <Text
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'#EF4444'}
-            mt={-verticalScale(10)}>
+            mt={-verticalScale(10)}
+            lineHeight={16.8}
+            letterSpacing={-0.03}>
             Enter Valid Mobile Number*
           </Text>
         )}
@@ -134,7 +158,9 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
             _text={{
               fontFamily: 'Inter_SemiBold',
               fontSize: scaleFontSize(20),
-              color: isContinueDisabled ? 'accent.400' : 'white',
+              color: isContinueDisabled ? 'accent.400' : 'primary.50',
+              lineHeight: 24.2,
+              letterSpacing: -0.04,
             }}
             disabled={isContinueDisabled}
             onPress={handleContinue}>

@@ -1,5 +1,13 @@
-import {Button, Center, Image, Modal, Text, View} from 'native-base';
-import React from 'react';
+import {
+  Button,
+  Center,
+  Image,
+  KeyboardAvoidingView,
+  Modal,
+  Text,
+  View,
+} from 'native-base';
+import React, {useState} from 'react';
 import SettingsOption from '../../components/Settings/SettingsOptionComponent';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -8,9 +16,10 @@ import {shoppingBag} from '../../assets/images/icons/shopping-bag';
 import {locationAlt} from '../../assets/images/icons/location-alt';
 import {comment} from '../../assets/images/icons/comment';
 import {user} from '../../assets/images/icons/user';
-import {Pressable, TextInput} from 'react-native';
+import {Platform, Pressable, TextInput} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {
+  height,
   horizontalScale,
   scaleFontSize,
   verticalScale,
@@ -27,6 +36,7 @@ interface SettingsProps {
 }
 export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const dispatch = useDispatch();
   const gotoPersonalDetails = () => {
     navigation.navigate('PersonalDetails');
@@ -48,6 +58,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   };
   const handleLogOut = () => {
     dispatch(logout());
+    navigation.replace('Auth', {screen: 'Login'});
   };
   return (
     <View flex={1} bgColor={'accent.50'}>
@@ -87,20 +98,20 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
       </View>
       <Modal isOpen={modalVisible} size={'full'} onClose={onclose}>
         <Modal.Content
-          mb={0}
+          mb={isClicked ? verticalScale(200) : 0}
           bg={'white'}
           mt={'auto'}
           h={'50%'}
           px={horizontalScale(15)}
-          borderTopLeftRadius={20}
-          borderTopRightRadius={20}>
-          <View>
+          borderTopLeftRadius={28}
+          borderTopRightRadius={28}>
+          <View flex={1}>
             <View style={styles.selectOverLayBox}>
               <Pressable onPress={onclose}>
                 <SvgXml xml={close} height={24} width={24} />
               </Pressable>
             </View>
-            <View alignItems={'center'}>
+            <View alignItems={'center'} mb={verticalScale(8)}>
               <Text style={[styles.SuggestText]}>Suggest Products</Text>
             </View>
             <View alignItems={'center'} mb={verticalScale(15)}>
@@ -109,11 +120,13 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
               </Text>
             </View>
             <TextInput
+              onFocus={() => setIsClicked(true)}
+              onBlur={() => setIsClicked(false)}
               textAlignVertical="top"
               placeholder="Enter Here"
               placeholderTextColor={'#9CA3AF'}
               style={{
-                height: 160,
+                flex: 1,
                 backgroundColor: '#F3F4F6',
                 borderRadius: 15,
                 paddingTop: verticalScale(15),
@@ -125,23 +138,23 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 letterSpacing: -0.04,
               }}
             />
-            <Center>
-              <Button
-                w={'100%'}
-                py={verticalScale(15)}
-                rounded={12}
-                colorScheme={'transparent'}
-                bg={'primary.500'}
-                _text={{
-                  fontFamily: 'Inter_SemiBold',
-                  fontSize: scaleFontSize(20),
-                  lineHeight: 24.2,
-                  letterSpacing: -0.04,
-                }}
-                onPress={() => {}}>
-                Send
-              </Button>
-            </Center>
+            <Button
+              mb={verticalScale(10)}
+              w={'100%'}
+              py={verticalScale(15)}
+              rounded={12}
+              colorScheme={'transparent'}
+              bg={'primary.500'}
+              _text={{
+                fontFamily: 'Inter_SemiBold',
+                fontSize: scaleFontSize(20),
+                lineHeight: 24.2,
+                letterSpacing: -0.04,
+                color: 'primary.50',
+              }}
+              onPress={() => {}}>
+              Send
+            </Button>
           </View>
         </Modal.Content>
       </Modal>

@@ -81,8 +81,11 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
               }}
               rounded={16}
               textAlign="center"
+              color={'accent.800'}
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(20)}
+              lineHeight={24.2}
+              letterSpacing={-0.01}
               keyboardType="numeric"
               maxLength={1}
             />
@@ -96,14 +99,18 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
           fontSize={scaleFontSize(16)}
           onPress={handleResend}
           disabled={!isResendEnabled}
-          color={isResendEnabled ? 'primary.500' : 'accent.500'}>
+          color={isResendEnabled ? 'primary.500' : 'accent.500'}
+          lineHeight={19.36}
+          letterSpacing={-0.04}>
           Resend OTP
         </Text>
         {resendTime > 0 && (
           <Text
             fontFamily={'Inter_SemiBold'}
             fontSize={scaleFontSize(16)}
-            color={'accent.500'}>
+            color={'accent.500'}
+            lineHeight={19.36}
+            letterSpacing={-0.04}>
             ({resendTime}s)
           </Text>
         )}

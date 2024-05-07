@@ -30,13 +30,17 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
             <Text
               fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
-              color={'accent.800'}>
+              color={'accent.800'}
+              lineHeight={24.2}
+              letterSpacing={-0.01}>
               We've sent you a Verification Code
             </Text>
             <Text
               fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
-              color={'accent.800'}>
+              color={'accent.800'}
+              lineHeight={24.2}
+              letterSpacing={-0.01}>
               {route.params.phoneNo}
             </Text>
           </Center>
