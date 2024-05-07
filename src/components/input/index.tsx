@@ -12,6 +12,7 @@ interface TextInputProps extends IInputProps {
   setValue: (val: any) => void;
   leftElement?: JSX.Element;
   isErrorShown: boolean;
+  maxLength?: number;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -20,6 +21,7 @@ const TextInput: React.FC<TextInputProps> = ({
   placeholder,
   leftElement,
   isErrorShown,
+  maxLength,
 }) => {
   return (
     <>
@@ -45,6 +47,7 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholderTextColor={'accent.400'}
         placeholder={placeholder}
         InputLeftElement={leftElement}
+        maxLength={maxLength}
       />
     </>
   );

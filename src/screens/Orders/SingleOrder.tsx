@@ -30,7 +30,7 @@ interface SingleOrderProps {
 }
 
 const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
-  const [orderStatus, setOrderStatus] = React.useState('Out For Delivery');
+  const [orderStatus, setOrderStatus] = React.useState('Packaging');
   const [orderInfo, setOrderInfo] = React.useState({
     receivedStatus: 'Order Received',
     deliveredStatus: 'Delivering to',
@@ -95,7 +95,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
         borderBottomColor={'accent.100'}>
         <View flexDir={'row'} alignItems={'center'}>
           <GoBack onPress={() => navigation.goBack()} />
-          <View ml={horizontalScale(5)}>
+          <View ml={horizontalScale(8)} style={{gap: verticalScale(2)}}>
             <Text
               fontFamily={'Inter_Medium'}
               color={'accent.800'}
@@ -117,7 +117,6 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
         <Center
           rounded={4}
           bg={orderInfo.color}
-          w={'auto'}
           py={verticalScale(4)}
           px={horizontalScale(6)}
           mr={horizontalScale(20)}>
@@ -154,7 +153,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                 borderColor={'primary.500'}>
                 <SvgXml xml={deliveryMan} height={20} width={20} />
               </Center>
-              <View ml={horizontalScale(10)}>
+              <View ml={horizontalScale(10)} style={{gap: verticalScale(2)}}>
                 <Text
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(16)}
@@ -193,16 +192,12 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           flexDir={'row'}
           alignItems={'center'}
           px={horizontalScale(20)}
-          mt={verticalScale(15)}>
-          <Center
-            borderRadius={100}
-            bg={'primary.400'}
-            h={10}
-            w={10}
-            mr={horizontalScale(10)}>
+          mt={verticalScale(15)}
+          style={{gap: horizontalScale(12)}}>
+          <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
             <SvgXml xml={timer} height={20} width={20} />
           </Center>
-          <View>
+          <View style={{gap: verticalScale(2)}}>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
@@ -228,16 +223,12 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           mt={verticalScale(1)}
           mb={verticalScale(15)}
           alignItems={'center'}
-          px={horizontalScale(20)}>
-          <Center
-            borderRadius={100}
-            bg={'primary.400'}
-            h={10}
-            w={10}
-            mr={horizontalScale(10)}>
+          px={horizontalScale(20)}
+          style={{gap: horizontalScale(12)}}>
+          <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
             <SvgXml xml={location} height={20} width={20} />
           </Center>
-          <View>
+          <View style={{gap: verticalScale(2)}}>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
@@ -258,27 +249,26 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
         </View>
         <View bg={'white'}>
           <SingleOrderCard />
-          <View borderWidth={0.5} borderColor={'accent.100'} />
+          <View borderWidth={1} borderColor={'accent.100'} />
           <SingleOrderCard />
           <View
             borderStyle={'dashed'}
-            borderWidth={0.5}
+            borderWidth={1}
             borderColor={'#D1D5DB'}
           />
-          <View px={horizontalScale(20)} py={verticalScale(10)}>
+          <View
+            px={horizontalScale(20)}
+            py={verticalScale(20)}
+            style={{gap: 10}}>
             <Text
               fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
               color={'accent.900'}
-              mb={verticalScale(5)}
               lineHeight={24.2}
               letterSpacing={-0.01}>
               Bill Summary
             </Text>
-            <View
-              flexDir={'row'}
-              justifyContent={'space-between'}
-              mb={verticalScale(10)}>
+            <View flexDir={'row'} justifyContent={'space-between'}>
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
@@ -314,66 +304,64 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                 ₹25
               </Text>
             </View>
-            <View
-              borderWidth={1}
-              borderRadius={1}
-              borderColor={'accent.100'}
-              my={2}
-            />
+            <View borderWidth={1} borderRadius={1} borderColor={'accent.100'} />
             <View flexDir={'row'} justifyContent={'space-between'}>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.900'}
-                lineHeight={16.94}
-                letterSpacing={-0.04}>
-                Total Bill
-              </Text>
-              <Center flexDir={'row'}>
-                <Text
-                  fontFamily={'Inter_Regular'}
-                  fontSize={scaleFontSize(10)}
-                  color={'accent.500'}
-                  strikeThrough
-                  pr={1}
-                  lineHeight={12.1}
-                  letterSpacing={-0.04}>
-                  ₹87.49
-                </Text>
-                <Text
-                  fontFamily={'Inter_SemiBold'}
-                  fontSize={scaleFontSize(14)}
-                  color={'accent.800'}
-                  lineHeight={16.94}
-                  letterSpacing={-0.04}>
-                  ₹87.49
-                </Text>
-              </Center>
-            </View>
-            <View flexDir={'row'} justifyContent={'space-between'}>
-              <Text
-                fontFamily={'Inter_Regular'}
-                fontSize={scaleFontSize(12)}
-                color={'accent.500'}
-                lineHeight={14.4}
-                letterSpacing={-0.03}>
-                Incl. all taxes and charges
-              </Text>
-              <Center
-                rounded={4}
-                bg={'#4ADE80'}
-                py={verticalScale(4)}
-                px={horizontalScale(6)}
-                mb={verticalScale(5)}>
+              <View
+                my={verticalScale(1)}
+                justifyContent={'center'}
+                style={{gap: 2}}>
                 <Text
                   fontFamily={'Inter_Medium'}
-                  fontSize={scaleFontSize(10)}
-                  color={'white'}
-                  lineHeight={12.1}
+                  fontSize={scaleFontSize(14)}
+                  color={'accent.900'}
+                  lineHeight={16.94}
                   letterSpacing={-0.04}>
-                  SAVING ₹9.51
+                  Total Bill
                 </Text>
-              </Center>
+                <Text
+                  fontFamily={'Inter_Regular'}
+                  fontSize={scaleFontSize(12)}
+                  color={'accent.500'}
+                  lineHeight={14.4}
+                  letterSpacing={-0.03}>
+                  Incl. all taxes and charges
+                </Text>
+              </View>
+              <View style={{gap: 4}}>
+                <View flexDir={'row'} alignItems={'center'} style={{gap: 4}}>
+                  <Text
+                    fontFamily={'Inter_Regular'}
+                    fontSize={scaleFontSize(10)}
+                    color={'accent.500'}
+                    strikeThrough
+                    lineHeight={12.1}
+                    letterSpacing={-0.04}>
+                    ₹87.49
+                  </Text>
+                  <Text
+                    fontFamily={'Inter_SemiBold'}
+                    fontSize={scaleFontSize(14)}
+                    color={'accent.800'}
+                    lineHeight={16.94}
+                    letterSpacing={-0.04}>
+                    ₹87.49
+                  </Text>
+                </View>
+                <Center
+                  rounded={4}
+                  bg={'#4ADE80'}
+                  py={verticalScale(4)}
+                  px={horizontalScale(6)}>
+                  <Text
+                    fontFamily={'Inter_Medium'}
+                    fontSize={scaleFontSize(10)}
+                    color={'white'}
+                    lineHeight={12.1}
+                    letterSpacing={-0.04}>
+                    SAVING ₹9.51
+                  </Text>
+                </Center>
+              </View>
             </View>
           </View>
         </View>
@@ -383,16 +371,15 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
             borderColor={'accent.200'}
             variant={'outline'}
             colorScheme={'muted'}
-            mt={verticalScale(20)}
+            mt={verticalScale(30)}
             px={horizontalScale(36)}
             w={'100%'}
             py={verticalScale(15)}
-            alignSelf={'center'}
             rounded={16}
             _text={{
               fontFamily: 'Inter_Medium',
               fontSize: scaleFontSize(20),
-              color: 'error.300',
+              color: '#EF4444',
               lineHeight: 24.2,
               letterSpacing: -0.04,
             }}
