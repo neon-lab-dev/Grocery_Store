@@ -4,6 +4,7 @@ interface ProductDataItem {
   image: string;
   Price: number;
   Quantity: string;
+  QuantityAvalaible:Number;
   DisPrice: number;
 }
 
@@ -13,6 +14,7 @@ const ProductData: ProductDataItem[] = [
     Title: "Desi Tomato (Nattu Thakkali)",
     Price: 42,
     Quantity: '1kg',
+    QuantityAvalaible:10,
     DisPrice: 58,
     image:
       'item1',
@@ -22,23 +24,26 @@ const ProductData: ProductDataItem[] = [
     Title: 'Ginger (Inji)',
     Price: 42,
     Quantity: '1kg',
+    QuantityAvalaible:0,
     DisPrice: 58,
     image:
       'item2',
   },
   {
     id: 3,
-    Title: 'Ginger (Inji)',
+    Title: "Desi Tomato (Nattu Thakkali)",
     Price: 42,
     Quantity: '1kg',
+    QuantityAvalaible:0,
     DisPrice: 58,
     image:
-      'item2',
+      'item1',
   },
   {
     id: 4,
     Title: 'Ginger (Inji)',
     Price: 42,
+    QuantityAvalaible:10,
     Quantity: '1kg',
     DisPrice: 58,
     image:
@@ -47,6 +52,7 @@ const ProductData: ProductDataItem[] = [
   {
     id: 5,
     Title: 'Ginger (Inji)',
+    QuantityAvalaible:0,
     Price: 42,
     Quantity: '1kg',
     DisPrice: 58,
@@ -56,6 +62,7 @@ const ProductData: ProductDataItem[] = [
   {
     id: 6,
     Title: 'Ginger (Inji)',
+    QuantityAvalaible:0,
     Price: 42,
     Quantity: '1kg',
     DisPrice: 58,
@@ -65,6 +72,7 @@ const ProductData: ProductDataItem[] = [
   {
     id: 7,
     Title: 'Ginger (Inji)',
+    QuantityAvalaible:10,
     Price: 42,
     Quantity: '1kg',
     DisPrice: 58,
@@ -74,6 +82,7 @@ const ProductData: ProductDataItem[] = [
   {
     id: 8,
     Title: 'Ginger (Inji)',
+    QuantityAvalaible:10,
     Price: 42,
     Quantity: '1kg',
     DisPrice: 58,

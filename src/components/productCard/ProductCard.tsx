@@ -16,7 +16,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 interface ProductDataItem {
   id: number;
   Title: string;
@@ -24,6 +24,7 @@ interface ProductDataItem {
   Price: number;
   Quantity: string;
   DisPrice: number;
+  QuantityAvalaible: Number;
 }
 interface ProductCardProps {
   onPress: () => void;
@@ -48,110 +49,104 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   const {width, height} = Dimensions.get('window');
   // console.log(width, height)
-  return (
-    <View style={styles.Container}>
-      <View
-        key={products.id}
-        style={{width: horizontalScale(105), height: verticalScale(width < 380 ? 210 : 220)}}>
-        <Pressable
-          onPress={onPress}
+  if (products.QuantityAvalaible != 0) {
+    return (
+      <View style={styles.Container}>
+        <View
+          key={products.id}
           style={{
-            borderRadius: 20,
-            backgroundColor: '#F9FAFB',
-            height: verticalScale(120),
-            width: horizontalScale(110),
-            overflow: 'hidden',
+            width: horizontalScale(105),
+            height: verticalScale(width < 380 ? 210 : 220),
           }}>
+          <Pressable
+            onPress={onPress}
+            style={{
+              borderRadius: 20,
+              backgroundColor: '#F9FAFB',
+              height: verticalScale(120),
+              width: horizontalScale(110),
+              overflow: 'hidden',
+            }}>
+            <View
+              style={{
+                backgroundColor: Colors.primary[500],
+                height: verticalScale(28),
+                width: horizontalScale(30),
+                marginLeft: horizontalScale(15),
+                borderBottomLeftRadius: horizontalScale(8),
+                borderBottomRightRadius: horizontalScale(8),
+              }}>
+              <Text
+                style={{
+                  fontFamily: 'Inter_Bold',
+                  alignSelf: 'center',
+                  color: 'white',
+                  fontSize: scaleFontSize(14),
+                }}>
+                {off.toFixed(0)}%
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Inter_Bold',
+                  alignSelf: 'center',
+                  position: 'absolute',
+                  fontSize: scaleFontSize(14),
+                  top: verticalScale(10),
+                  color: 'white',
+                }}>
+                OFF
+              </Text>
+            </View>
+            <Image
+              alt="Image"
+              source={getImage(products.image)}
+              style={styles.Image}
+            />
+          </Pressable>
+          <Text style={styles.Title}>{products.Title}</Text>
+          <Text style={styles.Quantity}>{products.Quantity}</Text>
           <View
             style={{
-              backgroundColor: Colors.primary[500],
-              height: verticalScale(28),
-              width: horizontalScale(30),
-              marginLeft: horizontalScale(15),
-              borderBottomLeftRadius: horizontalScale(8),
-              borderBottomRightRadius: horizontalScale(8),
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              position: 'absolute',
+              top: verticalScale(width < 380 ? 160 : 165),
             }}>
-            <Text
-              style={{
-                fontFamily: 'Inter_Bold',
-                alignSelf: 'center',
-                color: 'white',
-                fontSize: scaleFontSize(14),
-              }}>
-              {off.toFixed(0)}%
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Inter_Bold',
-                alignSelf: 'center',
-                position: 'absolute',
-                fontSize: scaleFontSize(14),
-                top: verticalScale(10),
-                color: 'white',
-              }}>
-              OFF
-            </Text>
-          </View>
-          <Image
-            alt="Image"
-            source={getImage(products.image)}
-            style={styles.Image}
-          />
-        </Pressable>
-        <Text style={styles.Title}>{products.Title}</Text>
-        <Text style={styles.Quantity}>{products.Quantity}</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            position: 'absolute',
-            top: verticalScale(width < 380 ? 160 : 165),
-          }}>
-          <View style={{marginTop: 24}}>
-            <Text style={styles.Price}>₹{products.Price}</Text>
-            <Text strikeThrough style={styles.DisPrice}>
-              ₹{products.DisPrice}
-            </Text>
-          </View>
-          <View>
-            {isButton1Visible ? (
-              <Pressable style={styles.Button} onPress={handleButtonPress}>
-                <Text style={styles.ButtonText}>ADD</Text>
-              </Pressable>
-            ) : (
-              <View
-                style={{
-                  paddingVertical: verticalScale(4),
-                  paddingHorizontal: horizontalScale(4),
-                  marginHorizontal: horizontalScale(30),
-                  backgroundColor: Colors.primary[500],
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 10,
-                }}>
-                <Pressable onPress={handleDecrease}>
-                  <Text
-                    style={{
-                      fontFamily: 'Inter_Medium',
-                      color: 'white',
-                      fontSize: scaleFontSize(18),
-                      marginHorizontal: horizontalScale(5),
-                    }}>
-                    -
-                  </Text>
+            <View style={{marginTop: 24}}>
+              <Text style={styles.Price}>₹{products.Price}</Text>
+              <Text strikeThrough style={styles.DisPrice}>
+                ₹{products.DisPrice}
+              </Text>
+            </View>
+            <View>
+              {isButton1Visible ? (
+                <Pressable style={styles.Button} onPress={handleButtonPress}>
+                  <Text style={styles.ButtonText}>ADD</Text>
                 </Pressable>
-                <Text
+              ) : (
+                <View
                   style={{
-                    fontFamily: 'Inter_Medium',
-                    color: 'white',
-                    fontSize: scaleFontSize(18),
-                    marginHorizontal: horizontalScale(5),
+                    paddingVertical: verticalScale(4),
+                    paddingHorizontal: horizontalScale(4),
+                    marginHorizontal: horizontalScale(30),
+                    backgroundColor: Colors.primary[500],
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
                   }}>
-                  {count}
-                </Text>
-                <Pressable onPress={handleIncrease}>
+                  <Pressable onPress={handleDecrease}>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      -
+                    </Text>
+                  </Pressable>
                   <Text
                     style={{
                       fontFamily: 'Inter_Medium',
@@ -159,16 +154,103 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                       fontSize: scaleFontSize(18),
                       marginHorizontal: horizontalScale(5),
                     }}>
-                    +
+                    {count}
                   </Text>
-                </Pressable>
-              </View>
-            )}
+                  <Pressable onPress={handleIncrease}>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      +
+                    </Text>
+                  </Pressable>
+                </View>
+              )}
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View style={styles.Container}>
+        <View
+          opacity={0.6}
+          key={products.id}
+          style={{
+            width: horizontalScale(105),
+            height: verticalScale(width < 380 ? 210 : 220),
+          }}>
+          <Pressable
+            onPress={onPress}
+            style={{
+              borderRadius: 20,
+              backgroundColor: '#F9FAFB',
+              height: verticalScale(120),
+              width: horizontalScale(110),
+              overflow: 'hidden',
+            }}>
+            <View
+              style={{
+                backgroundColor: Colors.primary[500],
+                height: verticalScale(28),
+                width: horizontalScale(30),
+                marginLeft: horizontalScale(15),
+                borderBottomLeftRadius: horizontalScale(8),
+                borderBottomRightRadius: horizontalScale(8),
+              }}>
+              <Text
+                style={{
+                  fontFamily: 'Inter_Bold',
+                  alignSelf: 'center',
+                  color: 'white',
+                  fontSize: scaleFontSize(14),
+                }}>
+                {off.toFixed(0)}%
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Inter_Bold',
+                  alignSelf: 'center',
+                  position: 'absolute',
+                  fontSize: scaleFontSize(14),
+                  top: verticalScale(10),
+                  color: 'white',
+                }}>
+                OFF
+              </Text>
+            </View>
+            <Image
+              alt="Image"
+              source={getImage(products.image)}
+              style={styles.Image}
+            />
+          </Pressable>
+          <Text style={styles.Title}>{products.Title}</Text>
+          <Text style={styles.Quantity}>{products.Quantity}</Text>
+            <View
+               style={{
+                width:125,
+                marginLeft:width < 380 ? 4 : 6,
+                alignItems: 'center',
+                position: 'absolute',
+                top: verticalScale(width < 380 ? 180 : 187),
+              }}
+              borderWidth={1}
+              borderColor={'primary.500'}
+              height={8}
+              borderRadius={10}>
+              <Text color={'primary.500'} fontWeight={500} p={0.5}>
+                Out Of Stock
+              </Text>
+            </View>
+        </View>
+      </View>
+    );
+  }
 };
 const getImage = (imageName: string) => {
   switch (imageName) {
