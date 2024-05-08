@@ -83,6 +83,14 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             height={150}
             width={150}
           />
+          <Text
+            fontFamily={'Inter_Medium'}
+            fontSize={scaleFontSize(16)}
+            color={'accent.800'}
+            lineHeight={19.36}
+            letterSpacing={-0.04}>
+            Cart is Empty, Continue Shopping
+          </Text>
         </View>
       ) : (
         <ScrollView flex={0.8}>
