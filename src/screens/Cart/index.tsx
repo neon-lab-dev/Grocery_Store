@@ -85,11 +85,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           />
           <Text
             fontFamily={'Inter_Medium'}
-            fontSize={scaleFontSize(16)}
-            color={'accent.800'}
+            fontSize={scaleFontSize(18)}
+            color={'accent.700'}
             lineHeight={19.36}
             letterSpacing={-0.04}>
-            Cart is Empty, Continue Shopping
+            Cart is Empty
           </Text>
         </View>
       ) : (
@@ -150,7 +150,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
               lineHeight: 24.2,
               letterSpacing: -0.04,
             }}>
-            Back to Shopping
+            Continue Shopping
           </Button>
         </View>
       ) : (
