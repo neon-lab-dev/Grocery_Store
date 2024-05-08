@@ -7,7 +7,8 @@ import {
   Text,
   View,
 } from 'native-base';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+
 import SettingsOption from '../../components/Settings/SettingsOptionComponent';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -16,7 +17,8 @@ import {shoppingBag} from '../../assets/images/icons/shopping-bag';
 import {locationAlt} from '../../assets/images/icons/location-alt';
 import {comment} from '../../assets/images/icons/comment';
 import {user} from '../../assets/images/icons/user';
-import {Platform, Pressable, TextInput} from 'react-native';
+import {Keyboard, KeyboardEvent, Pressable, TextInput} from 'react-native';
+
 import {StyleSheet} from 'react-native';
 import {
   height,
@@ -37,6 +39,31 @@ interface SettingsProps {
 export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  useEffect(() => {
+    function onKeyboardDidShow(e: KeyboardEvent) {
+      setKeyboardHeight(e.endCoordinates.height);
+      setIsClicked(true);
+    }
+
+    function onKeyboardDidHide() {
+      setKeyboardHeight(0);
+      setIsClicked(false);
+    }
+
+    const showSubscription = Keyboard.addListener(
+      'keyboardDidShow',
+      onKeyboardDidShow,
+    );
+    const hideSubscription = Keyboard.addListener(
+      'keyboardDidHide',
+      onKeyboardDidHide,
+    );
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
   const dispatch = useDispatch();
   const gotoPersonalDetails = () => {
     navigation.navigate('PersonalDetails');
@@ -98,7 +125,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
       </View>
       <Modal isOpen={modalVisible} size={'full'} onClose={onclose}>
         <Modal.Content
-          mb={isClicked ? verticalScale(200) : 0}
+          mb={keyboardHeight}
           bg={'white'}
           mt={'auto'}
           h={'50%'}

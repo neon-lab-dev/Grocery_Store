@@ -87,7 +87,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
     <View flex={1} bgColor={'accent.50'}>
       <View
         bgColor={'white'}
-        h={100}
+        h={128}
         flexDir={'row'}
         alignItems={'center'}
         justifyContent={'space-between'}

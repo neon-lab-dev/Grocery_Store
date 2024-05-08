@@ -56,7 +56,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
               </Text>
             </View>
           ),
-          headerStyle: {height: 100},
+          headerStyle: {height: 128},
           headerTitleAlign: 'left',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
           // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
@@ -84,7 +84,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             letterSpacing: -0.04,
           },
           headerStyle: {
-            height: 100,
+            height: 128,
             borderBottomColor: 'accent.100',
           },
           headerTitleAlign: 'center',
@@ -98,13 +98,16 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
           headerTitle: () => (
             <View>
               <Text
-                fontSize={'fs18'}
-                style={{fontFamily: 'Inter_SemiBold', fontWeight: '500'}}>
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(18)}
+                color={'#1F2937'}
+                lineHeight={19.36}
+                letterSpacing={-0.04}>
                 Product
               </Text>
             </View>
           ),
-          headerStyle: {height: 100},
+          headerStyle: {height: 128},
           headerTitleAlign: 'left',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
           // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
@@ -127,7 +130,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             lineHeight: 21.78,
             letterSpacing: -0.04,
           },
-          headerStyle: {height: 100},
+          headerStyle: {height: 128},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -143,7 +146,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             lineHeight: 21.78,
             letterSpacing: -0.04,
           },
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
+          headerStyle: {height: 128, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -164,7 +167,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             lineHeight: 21.78,
             letterSpacing: -0.04,
           },
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
+          headerStyle: {height: 128, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
@@ -180,32 +183,20 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             lineHeight: 21.78,
             letterSpacing: -0.04,
           },
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
+          headerStyle: {height: 128, borderBottomColor: 'accent.100'},
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
         })}
       />
       <Stack.Screen
         name="Cart"
         component={Cart}
-        options={({navigation}) => ({
-          headerTitle: 'Cart(3)',
-          headerStyle: {height: 100, borderBottomColor: 'accent.100'},
-          headerTitleStyle: {
-            fontFamily: 'Inter_Medium',
-            fontSize: scaleFontSize(18),
-            color: '#1F2937',
-            lineHeight: 21.78,
-            letterSpacing: -0.04,
-          },
-          headerTitleAlign: 'center',
-          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
-        })}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Categories"
         component={Categories}
         options={({navigation}) => ({
-          headerStyle: {height: 100},
+          headerStyle: {height: 128},
           headerTitleStyle: {
             fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(16),
@@ -237,7 +228,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
               </Text>
             </View>
           ),
-          headerStyle: {height: 100},
+          headerStyle: {height: 128},
           headerTitleAlign: 'left',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
           headerRight: () => (
