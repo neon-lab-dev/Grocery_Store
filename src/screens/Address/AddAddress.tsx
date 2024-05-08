@@ -17,7 +17,7 @@ import {
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
 import SelectAddress from '../../components/SelectingAddress';
-import TextInput from '../../components/Input';
+import TextInput from '../../components/input';
 
 const AddAddress = () => {
   const [landmark, setLandmark] = useState('');
@@ -204,16 +204,17 @@ const AddAddress = () => {
               mr={horizontalScale(10)}
               py={verticalScale(7)}
               px={horizontalScale(15)}
-              borderColor={selectedLabel === item ? 'accent.400' : 'accent.200'}
-              bgColor={selectedLabel === item ? 'accent.200' : 'accent.100'}
+              borderColor={selectedLabel === item ? 'primary.500' : 'accent.200'}
+              bgColor={selectedLabel === item ? 'primary.500' : 'accent.100'}
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>
               <Text
                 fontFamily={'Inter_Medium'}
+                fontWeight={500}
                 fontSize={scaleFontSize(16)}
                 lineHeight={19.36}
                 letterSpacing={-0.04}
-                color={selectedLabel === item ? 'accent.700' : 'accent.400'}>
+                color={selectedLabel === item ? 'white' : 'accent.400'}>
                 {item}
               </Text>
             </Pressable>

@@ -47,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   };
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   const {width, height} = Dimensions.get('window');
-  console.log(width, height)
+  // console.log(width, height)
   return (
     <View style={styles.Container}>
       <View

@@ -86,10 +86,12 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
       </Pressable>
       <View pb={verticalScale(45)}>
         <Text
-          fontFamily={'Inter_Medium'}
+          // fontFamily={'Inter_Medium'}
+          fontWeight={500}
           fontSize={scaleFontSize(16)}
           color={'accent.800'}
           lineHeight={19.36}
+          mt={1}
           letterSpacing={-0.04}>
           {products.Title}
         </Text>
@@ -134,7 +136,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             borderRadius={10}
             borderWidth={1}
             borderColor={'primary.500'}
-            w={horizontalScale(50)}
+            w={horizontalScale(60)}
             alignItems={'center'}
             justifyContent={'center'}
             py={verticalScale(5)}
@@ -144,13 +146,13 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
               fontSize={scaleFontSize(14)}
               color={'primary.500'}
               lineHeight={16.94}
-              letterSpacing={-0.04}>
+              letterSpacing={-0.08}>
               ADD
             </Text>
           </Pressable>
         ) : (
           <View
-            w={horizontalScale(50)}
+            w={horizontalScale(60)}
             borderRadius={10}
             bgColor={'primary.500'}
             py={verticalScale(5)}

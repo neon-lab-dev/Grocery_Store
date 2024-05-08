@@ -34,7 +34,8 @@ const style = StyleSheet.create({
   ExploreCatgoriesText: {
     fontSize: width < 370 ? 10 : 12,
     color: Colors.accent[600],
-    fontFamily: 'Inter_Medium',
+    // fontFamily: 'Inter_Medium',
+    fontWeight:'500',
     alignSelf: 'center',
     right: verticalScale(2),
     marginVertical: verticalScale(5),

@@ -9,7 +9,7 @@ import {
   width,
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
-import TextInput from '../../components/Input';
+import TextInput from '../../components/input';
 import {
   CommonActions,
   useNavigationContainerRef,

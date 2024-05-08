@@ -5,6 +5,7 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
+import { fontWeight } from '../../constants/fonts';
 export const styles = StyleSheet.create({
   Container: {
     flex: 1,
@@ -43,9 +44,10 @@ export const styles = StyleSheet.create({
     marginHorizontal: horizontalScale(30),
   },
   ButtonText: {
-    fontFamily: 'Inter_Medium',
+    // fontFamily: 'Inter_Medium',
     color: Colors.primary[400],
-    fontSize: scaleFontSize(15),
+    fontSize: scaleFontSize(16),
+    fontWeight:'500',
   },
   Quantity: {
     fontFamily: 'Inter_Medium',
