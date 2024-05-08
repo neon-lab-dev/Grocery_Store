@@ -119,6 +119,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
+    paddingHorizontal: horizontalScale(15),
   },
   codImage: {
     width: horizontalScale(24),
