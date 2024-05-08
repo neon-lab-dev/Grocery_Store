@@ -8,6 +8,7 @@ import {
   View,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
+
 import SettingsOption from '../../components/Settings/SettingsOptionComponent';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -17,6 +18,7 @@ import {locationAlt} from '../../assets/images/icons/location-alt';
 import {comment} from '../../assets/images/icons/comment';
 import {user} from '../../assets/images/icons/user';
 import {Keyboard, KeyboardEvent, Pressable, TextInput} from 'react-native';
+
 import {StyleSheet} from 'react-native';
 import {
   height,
@@ -145,6 +147,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
               </Text>
             </View>
             <TextInput
+              onFocus={() => setIsClicked(true)}
+              onBlur={() => setIsClicked(false)}
               textAlignVertical="top"
               placeholder="Enter Here"
               placeholderTextColor={'#9CA3AF'}
