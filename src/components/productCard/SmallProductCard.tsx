@@ -36,7 +36,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     setIsButton1Visible(false);
   };
   const {width, height} = Dimensions.get('window');
-  console.log(width, height)
+  // console.log(width, height)
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   return (
     <View style={styles.Container}>

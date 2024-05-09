@@ -4,7 +4,7 @@ interface ProductDataItem {
   image: string;
   Price: number;
   Quantity: string;
-  QuantityAvalaible:Number;
+  QuantityAvalaible:number;
   DisPrice: number;
 }
 
@@ -14,7 +14,7 @@ const ProductData: ProductDataItem[] = [
     Title: "Desi Tomato (Nattu Thakkali)",
     Price: 42,
     Quantity: '1kg',
-    QuantityAvalaible:10,
+    QuantityAvalaible:9,
     DisPrice: 58,
     image:
       'item1',
@@ -43,7 +43,7 @@ const ProductData: ProductDataItem[] = [
     id: 4,
     Title: 'Ginger (Inji)',
     Price: 42,
-    QuantityAvalaible:10,
+    QuantityAvalaible:6,
     Quantity: '1kg',
     DisPrice: 58,
     image:
@@ -72,7 +72,7 @@ const ProductData: ProductDataItem[] = [
   {
     id: 7,
     Title: 'Ginger (Inji)',
-    QuantityAvalaible:10,
+    QuantityAvalaible:5,
     Price: 42,
     Quantity: '1kg',
     DisPrice: 58,
@@ -82,7 +82,7 @@ const ProductData: ProductDataItem[] = [
   {
     id: 8,
     Title: 'Ginger (Inji)',
-    QuantityAvalaible:10,
+    QuantityAvalaible:8,
     Price: 42,
     Quantity: '1kg',
     DisPrice: 58,
