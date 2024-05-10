@@ -1,8 +1,12 @@
 export interface Item {
   id: number;
-  name: string;
-  price: number;
-  size: string;
+  Title: string;
+  image: string;
+  Price: number;
+  quantity:number,
+  Size: string;
+  DisPrice: number;
+  QuantityAvalaible: number;
 }
 
 export interface CartItem extends Item {

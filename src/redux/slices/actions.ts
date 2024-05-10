@@ -3,6 +3,7 @@ import {
   INCREMENT_ITEM,
   DECREMENT_ITEM,
   CLEAR_CART,
+  REMOVE_ITEM,
 } from './actionTypes';
 import {Item} from './index';
 
@@ -20,7 +21,10 @@ export const decrementItem = (itemId: number) => ({
   type: DECREMENT_ITEM,
   payload: itemId,
 });
-
+export const removeItem = (itemId: number) => ({
+  type: REMOVE_ITEM,
+  payload: itemId,
+});
 export const clearCart = () => ({
   type: CLEAR_CART,
 });

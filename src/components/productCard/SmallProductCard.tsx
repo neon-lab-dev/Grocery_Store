@@ -13,7 +13,8 @@ interface ProductDataItem {
   Title: string;
   image: string;
   Price: number;
-  Quantity: string;
+  quantity:number,
+  Size: string;
   DisPrice: number;
 }
 interface ProductCardProps {
@@ -91,7 +92,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
         <Text mr={horizontalScale(10)} style={styles.Title}>
           {products.Title}
         </Text>
-        <Text style={styles.Quantity}>{products.Quantity}</Text>
+        <Text style={styles.Quantity}>{products.Size}</Text>
         <View
           style={{
             flexDirection: 'row',

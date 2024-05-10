@@ -19,12 +19,16 @@ import {
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
 import {Alert, Dimensions} from 'react-native';
+import { addToCart, decrementItem, incrementItem, removeItem } from '../../redux/slices/actions';
+import { useDispatch } from 'react-redux';
+import sizes from 'native-base/lib/typescript/theme/base/sizes';
 interface ProductDataItem {
   id: number;
   Title: string;
   image: string;
   Price: number;
-  Quantity: string;
+  Size: string;
+  quantity:number,
   DisPrice: number;
   QuantityAvalaible: number;
 }
@@ -34,18 +38,25 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
+  // console.log(products)
+  const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
   const handleDecrease = () => {
     if (count == 1) {
+      dispatch(removeItem(products.id));
       setIsButton1Visible(true);
-    } else setCount(count - 1);
+      setCount(0);
+    } else {
+      dispatch(decrementItem(products.id));
+      setCount(count - 1);
+    }
   };
-
   const handleIncrease = () => {
     if (count < products.QuantityAvalaible) {
+    dispatch(addToCart(products));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -73,6 +84,9 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     }
   };
   const handleButtonPress = () => {
+    setCount(1);
+    products.quantity=1;
+    dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
@@ -133,7 +147,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             />
           </Pressable>
           <Text style={styles.Title}>{products.Title}</Text>
-          <Text style={styles.Quantity}>{products.Quantity}</Text>
+          <Text style={styles.Quantity}>{products.Size}</Text>
           <View
             style={{
               flexDirection: 'row',
@@ -259,7 +273,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             />
           </Pressable>
           <Text style={styles.Title}>{products.Title}</Text>
-          <Text style={styles.Quantity}>{products.Quantity}</Text>
+          <Text style={styles.Quantity}>{products.Size}</Text>
           <View
             style={{
               width: 125,

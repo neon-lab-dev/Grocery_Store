@@ -63,7 +63,7 @@ const RootNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Splash"
           component={Splash}
           options={{headerShown: false}}
@@ -72,7 +72,7 @@ const RootNavigation: React.FC = () => {
           name="Auth"
           component={AuthNavigation}
           options={{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
           name="App"
           component={AppNavigation}

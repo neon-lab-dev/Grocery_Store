@@ -13,7 +13,7 @@ interface ProductDataItem {
   Title: string;
   image: string;
   Price: number;
-  Quantity: string;
+  Size: string;
   DisPrice: number;
 }
 interface SearchProductCardProps {
@@ -101,7 +101,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           color={'accent.500'}
           lineHeight={14.52}
           letterSpacing={-0.04}>
-          {products.Quantity}
+          {products.Size}
         </Text>
       </View>
       <View

@@ -3,7 +3,8 @@ interface ProductDataItem {
   Title: string;
   image: string;
   Price: number;
-  Quantity: string;
+  Size: string;
+  quantity:number,
   QuantityAvalaible:number;
   DisPrice: number;
 }
@@ -13,7 +14,8 @@ const ProductData: ProductDataItem[] = [
     id: 1,
     Title: "Desi Tomato (Nattu Thakkali)",
     Price: 42,
-    Quantity: '1kg',
+    Size: '1kg',
+    quantity:0,
     QuantityAvalaible:9,
     DisPrice: 58,
     image:
@@ -23,7 +25,8 @@ const ProductData: ProductDataItem[] = [
     id: 2,
     Title: 'Ginger (Inji)',
     Price: 42,
-    Quantity: '1kg',
+    Size: '1kg',
+    quantity:0,
     QuantityAvalaible:0,
     DisPrice: 58,
     image:
@@ -33,7 +36,8 @@ const ProductData: ProductDataItem[] = [
     id: 3,
     Title: "Desi Tomato (Nattu Thakkali)",
     Price: 42,
-    Quantity: '1kg',
+    quantity:0,
+    Size: '1kg',
     QuantityAvalaible:0,
     DisPrice: 58,
     image:
@@ -42,9 +46,10 @@ const ProductData: ProductDataItem[] = [
   {
     id: 4,
     Title: 'Ginger (Inji)',
+    quantity:0,
     Price: 42,
     QuantityAvalaible:6,
-    Quantity: '1kg',
+    Size: '1kg',
     DisPrice: 58,
     image:
       'item2',
@@ -53,8 +58,9 @@ const ProductData: ProductDataItem[] = [
     id: 5,
     Title: 'Ginger (Inji)',
     QuantityAvalaible:0,
+    quantity:0,
     Price: 42,
-    Quantity: '1kg',
+    Size: '1kg',
     DisPrice: 58,
     image:
       'item2',
@@ -63,8 +69,9 @@ const ProductData: ProductDataItem[] = [
     id: 6,
     Title: 'Ginger (Inji)',
     QuantityAvalaible:0,
+    quantity:0,
     Price: 42,
-    Quantity: '1kg',
+    Size: '1kg',
     DisPrice: 58,
     image:
       'item2',
@@ -74,7 +81,8 @@ const ProductData: ProductDataItem[] = [
     Title: 'Ginger (Inji)',
     QuantityAvalaible:5,
     Price: 42,
-    Quantity: '1kg',
+    quantity:0,
+    Size: '1kg',
     DisPrice: 58,
     image:
       'item2',
@@ -83,8 +91,9 @@ const ProductData: ProductDataItem[] = [
     id: 8,
     Title: 'Ginger (Inji)',
     QuantityAvalaible:8,
+    quantity:0,
     Price: 42,
-    Quantity: '1kg',
+    Size: '1kg',
     DisPrice: 58,
     image:
       'item2',
