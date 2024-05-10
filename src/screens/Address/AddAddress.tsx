@@ -17,7 +17,7 @@ import {
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
 import SelectAddress from '../../components/SelectingAddress';
-import TextInput from '../../components/input';
+import TextInput from '../../components/Input';
 
 const AddAddress = () => {
   const [landmark, setLandmark] = useState('');
@@ -204,7 +204,9 @@ const AddAddress = () => {
               mr={horizontalScale(10)}
               py={verticalScale(7)}
               px={horizontalScale(15)}
-              borderColor={selectedLabel === item ? 'primary.500' : 'accent.200'}
+              borderColor={
+                selectedLabel === item ? 'primary.500' : 'accent.200'
+              }
               bgColor={selectedLabel === item ? 'primary.500' : 'accent.100'}
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>

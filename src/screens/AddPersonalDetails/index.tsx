@@ -9,13 +9,17 @@ import {
   width,
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
-import TextInput from '../../components/input';
+import TextInput from '../../components/Input';
 import {
   CommonActions,
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {login} from '../../redux/slices/auth.slice';
+import {APIClient} from '../../api/axios.config';
+import {signUp} from '../../api/auth';
+import {toast} from '../../components/Toast/Toast';
+import Loader from '../../components/Loader/Loader';
 
 type AddPersonalDetailsProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'PersonalDetails'>;
@@ -23,28 +27,51 @@ type AddPersonalDetailsProps = {
 
 export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
   navigation,
+  route,
 }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNo, setMobileNo] = useState('');
   const [isClicked, setIsClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const isContinueDisabled = name === '' || email === '';
   const nameErrorShown = !validators.stringWithSpace(name);
   const emailErrorShown = !validators.isEmail(email);
   const mobileNoErrorShown =
     mobileNo.length !== 0 && !validators.isPhoneNumber(mobileNo);
   const dispatch = useDispatch();
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
       setIsClicked(true);
     } else {
-      dispatch(login('User'));
-      navigation.replace('App', {screen: 'Home'});
+      setIsLoading(true);
+      try {
+        const response = await signUp(
+          name,
+          email,
+          route.params.phoneNo,
+          mobileNo,
+        );
+        if (response.statusCode === 200) {
+          toast.showToast(response.message);
+          dispatch(login(response.responseBody.token));
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'App'}],
+          });
+        } else {
+          toast.showToast(response.errorMessage);
+        }
+      } catch (error: any) {
+        toast.showToast(error.message);
+      }
+      setIsLoading(false);
     }
   };
 
   return (
     <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
+      <Loader isOpen={isLoading} />
       <View px={horizontalScale(20)} py={verticalScale(20)}>
         <Text
           fontFamily={'Inter_Medium'}

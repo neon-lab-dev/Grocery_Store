@@ -6,7 +6,7 @@ const BASE_URL =
     : process.env.REACT_APP_LOCAL_BASE_URl;
 
 export const APIClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: 'http://10.0.2.2:8801/v1',
   headers: {'Content-Type': 'application/json', 'Accept-Encoding': 'gzip'},
 });
 

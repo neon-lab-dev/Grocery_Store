@@ -85,7 +85,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   };
   const handleLogOut = () => {
     dispatch(logout());
-    navigation.replace('Auth', {screen: 'Login'});
+    navigation.reset({index: 0, routes: [{name: 'Auth'}]});
   };
   return (
     <View flex={1} bgColor={'accent.50'}>

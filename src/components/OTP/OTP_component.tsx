@@ -10,9 +10,10 @@ import {
 interface OTPProps {
   countdown: number;
   onOtpComplete: (otp: string) => void;
+  resendOTP: () => void;
 }
 
-const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
+const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete, resendOTP}) => {
   const inputRefs = useRef<any[]>([]);
   const [resendTime, setResendTime] = useState<number>(countdown);
   const [isResendEnabled, setIsResendEnabled] = useState<boolean>(false);
@@ -33,6 +34,7 @@ const OTP: React.FC<OTPProps> = ({countdown, onOtpComplete}) => {
   const handleResend = () => {
     setIsResendEnabled(false);
     setResendTime(countdown);
+    resendOTP();
   };
 
   useEffect(() => {
