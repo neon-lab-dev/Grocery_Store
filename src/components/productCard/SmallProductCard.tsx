@@ -49,7 +49,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
       if (!toast.isActive(id)) {
         toast.show({
           id,
-          duration: 1500,
+          duration: 2500,
           render: () => {
             return (
               <Box

@@ -53,7 +53,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
         toast.show({
           id,
           placement:'top',
-          duration: 1500,
+          duration: 2500,
           render: () => {
             return (
              <View  style={{zIndex:1000}}>
