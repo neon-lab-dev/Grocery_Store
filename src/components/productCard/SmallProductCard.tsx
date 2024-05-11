@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 import {Colors} from '../../constants/colors';
-import {View, Text, Image, Pressable} from 'native-base';
+import {View, Text, Image, Pressable, useToast, Box} from 'native-base';
 import {
   horizontalScale,
   verticalScale,
   scaleFontSize,
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, decrementItem, removeItem } from '../../redux/slices/actions';
 interface ProductDataItem {
   id: number;
   Title: string;
@@ -15,6 +17,7 @@ interface ProductDataItem {
   Price: number;
   quantity:number,
   Size: string;
+  QuantityAvalaible:number;
   DisPrice: number;
 }
 interface ProductCardProps {
@@ -22,18 +25,55 @@ interface ProductCardProps {
   products: ProductDataItem;
 }
 const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
-  const [count, setCount] = useState(1);
+  const cartItems = useSelector((state: any) => state.cart);
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const id = 'test-toast';
+  const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
   const handleDecrease = () => {
     if (count == 1) {
+      dispatch(removeItem(products.id));
       setIsButton1Visible(true);
-    } else setCount(count - 1);
+      setCount(0);
+    } else {
+      dispatch(decrementItem(products.id));
+      setCount(count - 1);
+    }
   };
-
   const handleIncrease = () => {
-    setCount(count + 1);
+    if (count < products.QuantityAvalaible) {
+    dispatch(addToCart(products));
+      setCount(count + 1);
+    } else {
+      if (!toast.isActive(id)) {
+        toast.show({
+          id,
+          duration: 1500,
+          render: () => {
+            return (
+              <Box
+                bg="primary.400"
+                px="2"
+                py="1"
+                rounded="sm"
+                mb={5}
+                _text={{
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                Sorry, you can't add more of this item
+              </Box>
+            );
+          },
+        });
+      }
+    }
   };
   const handleButtonPress = () => {
+    setCount(1);
+    products.quantity=1;
+    dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
   const {width, height} = Dimensions.get('window');

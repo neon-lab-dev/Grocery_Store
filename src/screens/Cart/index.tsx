@@ -31,34 +31,34 @@ import {CartItem} from '../../redux/slices';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
-// const item = {
-//   id: 1,
-//   name: 'Cadbury Bournville Rich Cocoa 70% Dark',
-//   image: require('../../assets/images/Product-Image/chocolate.png'),
-//   size: '200 g',
-//   quantity: 1,
-//   discount_price: 42,
-//   actual_price: 58,
-// };
+
 
 const Cart: React.FC<CartProps> = ({navigation}) => {
-  const [isCartEmpty,setisCartEmpty]=React.useState(Boolean)
+  const [isCartEmpty, setisCartEmpty] = React.useState(Boolean);
+  const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
   // console.log(cartItems);
-  const cartItemCount=cartItems.items.length;
-  const TotalPrice=cartItems.totalPrice+25;
-  console.log(cartItemCount,TotalPrice)
+  let temp = 0;
+  const cartItemCount = cartItems.items.length;
+  React.useEffect(() => {
+    let temp = 0;
+    cartItems.items.forEach((item: { DisPrice: number; quantity: number; }) => {
+      temp += item.DisPrice * item.quantity;
+    });
+    setTotalDiscountedPrice(temp);
+  }, [cartItems]);
+  // console.log(totalDiscountedPrice)
+  const TotalPrice = cartItems.totalPrice + 25;
+  // console.log(cartItemCount,TotalPrice)
   // const totalPrice = useSelector((state:CartItem)=> state.cart.totalPrice);
   const isAddressPresent = true;
   React.useEffect(() => {
-    if(cartItemCount <= 0){
+    if (cartItemCount <= 0) {
       setisCartEmpty(true);
-    }
-    else  {
+    } else {
       setisCartEmpty(false);
     }
   });
-
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const gotoPayment = () => {
@@ -113,16 +113,16 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       ) : (
         <ScrollView flex={0.8}>
           <View bg={'white'} mt={verticalScale(15)}>
-            {cartItems.items.map(data => (
+            {cartItems.items.map((data: { id: React.Key | null | undefined; }) => (
               <CartItemCard key={data.id} item={data} />
             ))}
           </View>
           <BillSummaryCard
-            cutOffPrice={87.49}
+            cutOffPrice={totalDiscountedPrice}
             deliveryCharge={25}
-            itemPrice={TotalPrice-25}
+            itemPrice={TotalPrice - 25}
             price={TotalPrice}
-            savingPrice={9.51}
+            savingPrice={totalDiscountedPrice-(TotalPrice-25)}
           />
         </ScrollView>
       )}
@@ -242,7 +242,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                     fontSize={scaleFontSize(20)}
                     lineHeight={24.2}
                     letterSpacing={-0.04}>
-                    1 Item |{' '}
+                    {cartItemCount} Item |{' '}
                   </Text>
                   <Text
                     fontFamily={'Inter_Bold'}
