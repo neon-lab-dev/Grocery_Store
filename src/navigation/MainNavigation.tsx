@@ -24,7 +24,7 @@ export type RootStackParamList = {
 export type AuthNavigatorParamList = {
   Login: undefined;
   OTP: {phoneNo: string};
-  PersonalDetails: undefined;
+  PersonalDetails: {phoneNo: string};
   Home: undefined;
   Categories: undefined;
   Settings: undefined;

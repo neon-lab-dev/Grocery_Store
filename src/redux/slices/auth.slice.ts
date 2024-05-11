@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {removeItem, setItem} from '../../api/localstorage';
 
 const initialState = {
   token: null,
@@ -13,11 +13,11 @@ const authReducer = createSlice({
     logout: state => {
       state.token = null;
       state.isAuthenticated = false;
-      AsyncStorage.removeItem('token');
+      removeItem('token');
     },
     login: (state, action) => {
       state.isAuthenticated = true;
-      AsyncStorage.setItem('token', action.payload);
+      setItem('token', action.payload);
     },
   },
 });
