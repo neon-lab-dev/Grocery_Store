@@ -1,40 +1,107 @@
-import {Image, Text, View, Pressable} from 'native-base';
+import {Image, Text, View, Pressable, useToast, Box} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
+import { useDispatch } from 'react-redux';
+import { addToCart, decrementItem, incrementItem, removeItem } from '../../redux/slices/actions';
 
-interface CartItem {
-  id: number;
-  name: string;
-  size: string;
-  image: any;
-  discount_price: number;
-  actual_price: number;
-  quantity: number;
-}
+// interface CartItem {
+//   id: number;
+//   Title: string;
+//   image: string;
+//   Price: number;
+//   quantity:number,
+//   Size: string;
+//   DisPrice: number;
+//   QuantityAvalaible: number;
+// item:[
+//   // id: number;
+//   // Title: string;
+//   // image: string;
+//   // Price: number;
+//   items:[
 
-export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
+//   ]
+//   // Size: string;
+//   // DisPrice: number;
+//   // QuantityAvalaible: number;
+// ]
+// }
+// interface items{
+//   id: number;
+//   Title: string;
+//   image: string;
+//   Price: number;
+//   quantity:number,
+//   Size: string;
+//   DisPrice: number;
+//   QuantityAvalaible: number;
+// }
+
+export const CartItemCard: React.FC<{item: any}> = ({item}) => {
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const id = 'test-toast';
+  // console.log(item);
   const [count, setCount] = useState(item.quantity);
-  const [discountPrice, setDiscountPrice] = useState(
-    item.discount_price * count,
-  );
-  const [actualPrice, setActualPrice] = useState(item.actual_price * count);
+  const [discountPrice, setDiscountPrice] = useState(item.DisPrice * count);
+  const [actualPrice, setActualPrice] = useState(item.Price * count);
 
   const handleDecrease = () => {
-    setCount(count - 1);
+    if (count == 1) {
+      dispatch(removeItem(item.id));
+      setCount(0);
+    } else {
+      dispatch(decrementItem(item.id));
+      setCount(count - 1);
+    }
   };
 
   const handleIncrease = () => {
-    setCount(count + 1);
+    if (count < item.QuantityAvalaible) {
+    dispatch(incrementItem(item.id));
+      setCount(count + 1);
+    } else {
+      if (!toast.isActive(id)) {
+        toast.show({
+          id,
+          duration: 1500,
+          render: () => {
+            return (
+              <Box
+                bg="primary.400"
+                px="2"
+                py="1"
+                rounded="sm"
+                mb={5}
+                _text={{
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                Sorry, you can't add more of this item
+              </Box>
+            );
+          },
+        });
+      }
+    }
   };
 
   useEffect(() => {
-    setDiscountPrice(item.discount_price * count);
-    setActualPrice(item.actual_price * count);
-  }, [count, item.actual_price, item.discount_price]);
+    setDiscountPrice(item.DisPrice * count);
+    setActualPrice(item.Price * count);
+  }, [count, item.Price, item.DisPrice]);
+  const getImage = (imageName: string) => {
+    switch (imageName) {
+      case 'item1':
+        return require('../../assets/images/Product-Image/Tomato.png');
+      case 'item2':
+        return require('../../assets/images/Product-Image/Ginger.png');
+    }
+  };
 
   return (
     <View
@@ -49,9 +116,13 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
       borderBottomColor={'accent.100'}>
       <View flex={1} flexDir={'row'}>
         <Image
-          source={item.image}
+        style={{
+          height:45,
+          width:50
+        }}
+          alt="Image"
+          source={getImage(item.image)}
           resizeMode="cover"
-          alt="item"
           mr={horizontalScale(10)}
         />
         <View justifyContent={'space-evenly'}>
@@ -62,7 +133,7 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
             numberOfLines={2}
             lineHeight={16.8}
             letterSpacing={-0.03}>
-            {item.name}
+            {item.Title}
           </Text>
           <Text
             fontFamily={'Inter_Medium'}
@@ -70,7 +141,7 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
             color={'accent.500'}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            {item.size}
+            {item.Size}
           </Text>
         </View>
       </View>
@@ -98,7 +169,6 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
               right: horizontalScale(10),
             }}
             onPress={handleDecrease}
-            disabled={count === 1}
             alignItems={'center'}>
             <Text
               fontFamily={'Inter_SemiBold'}
@@ -149,7 +219,7 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
             color={'primary.500'}
             lineHeight={19.36}
             letterSpacing={-0.04}>
-            ₹{discountPrice}
+            ₹{actualPrice}
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
@@ -159,7 +229,7 @@ export const CartItemCard: React.FC<{item: CartItem}> = ({item}) => {
             strikeThrough
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            ₹{actualPrice}
+            ₹{discountPrice}
           </Text>
         </View>
       </View>

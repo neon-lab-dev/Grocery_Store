@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Image, Pressable} from 'native-base';
+import {View, Text, Image, Pressable, useToast, Box} from 'native-base';
 import {styles} from './style';
 import {Colors} from '../../constants/colors';
 import {
@@ -8,12 +8,16 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
+import { useDispatch } from 'react-redux';
+import { addToCart, decrementItem, removeItem } from '../../redux/slices/actions';
 interface ProductDataItem {
   id: number;
   Title: string;
   image: string;
   Price: number;
-  Quantity: string;
+  Size: string;
+  QuantityAvalaible:number;
+  quantity:number;
   DisPrice: number;
 }
 interface SearchProductCardProps {
@@ -25,20 +29,57 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   onPress,
   products,
 }) => {
-  const [count, setCount] = useState(1);
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const id = 'test-toast';
+  const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
   const handleDecrease = () => {
-    if (count === 1) {
+    if (count == 1) {
+      dispatch(removeItem(products.id));
       setIsButton1Visible(true);
+      setCount(0);
     } else {
+      dispatch(decrementItem(products.id));
       setCount(count - 1);
     }
   };
-
   const handleIncrease = () => {
-    setCount(count + 1);
+    if (count < products.QuantityAvalaible) {
+    dispatch(addToCart(products));
+      setCount(count + 1);
+    } else {
+      if (!toast.isActive(id)) {
+        toast.show({
+          id,
+          placement:'top',
+          duration: 2500,
+          render: () => {
+            return (
+             <View  style={{zIndex:1000}}>
+              <Box
+              zIndex={1000}
+                bg="primary.400"
+                px="2"
+                py="1"
+                rounded="sm"
+                _text={{
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                Sorry, you can't add more of this item
+              </Box>
+              </View>
+            );
+          },
+        });
+      }
+    }
   };
   const handleButtonPress = () => {
+    setCount(1);
+    products.quantity=1;
+    dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
@@ -101,7 +142,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           color={'accent.500'}
           lineHeight={14.52}
           letterSpacing={-0.04}>
-          {products.Quantity}
+          {products.Size}
         </Text>
       </View>
       <View

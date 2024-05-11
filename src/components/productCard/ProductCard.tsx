@@ -7,7 +7,9 @@ import {
   ScrollView,
   Button,
   Center,
+  Box,
 } from 'native-base';
+import {useToast} from 'native-base';
 import {styles} from './style';
 import {Colors} from '../../constants/colors';
 import {
@@ -16,15 +18,19 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
-import {Dimensions} from 'react-native';
+import {Alert, Dimensions} from 'react-native';
+import { addToCart, decrementItem, incrementItem, removeItem } from '../../redux/slices/actions';
+import { useDispatch } from 'react-redux';
+import sizes from 'native-base/lib/typescript/theme/base/sizes';
 interface ProductDataItem {
   id: number;
   Title: string;
   image: string;
   Price: number;
-  Quantity: string;
+  Size: string;
+  quantity:number,
   DisPrice: number;
-  QuantityAvalaible: Number;
+  QuantityAvalaible: number;
 }
 interface ProductCardProps {
   onPress: () => void;
@@ -32,18 +38,55 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
-  const [count, setCount] = useState(1);
+  // console.log(products)
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const id = 'test-toast';
+  const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
   const handleDecrease = () => {
     if (count == 1) {
+      dispatch(removeItem(products.id));
       setIsButton1Visible(true);
-    } else setCount(count - 1);
+      setCount(0);
+    } else {
+      dispatch(decrementItem(products.id));
+      setCount(count - 1);
+    }
   };
-
   const handleIncrease = () => {
-    setCount(count + 1);
+    if (count < products.QuantityAvalaible) {
+    dispatch(addToCart(products));
+      setCount(count + 1);
+    } else {
+      if (!toast.isActive(id)) {
+        toast.show({
+          id,
+          duration: 2500,
+          render: () => {
+            return (
+              <Box
+                bg="primary.400"
+                px="2"
+                py="1"
+                rounded="sm"
+                mb={5}
+                _text={{
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                Sorry, you can't add more of this item
+              </Box>
+            );
+          },
+        });
+      }
+    }
   };
   const handleButtonPress = () => {
+    setCount(1);
+    products.quantity=1;
+    dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
   let off = calculateDiscountPercentage(products.DisPrice, products.Price);
@@ -104,7 +147,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             />
           </Pressable>
           <Text style={styles.Title}>{products.Title}</Text>
-          <Text style={styles.Quantity}>{products.Quantity}</Text>
+          <Text style={styles.Quantity}>{products.Size}</Text>
           <View
             style={{
               flexDirection: 'row',
@@ -230,23 +273,23 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             />
           </Pressable>
           <Text style={styles.Title}>{products.Title}</Text>
-          <Text style={styles.Quantity}>{products.Quantity}</Text>
-            <View
-               style={{
-                width:125,
-                marginLeft:width < 380 ? 4 : 6,
-                alignItems: 'center',
-                position: 'absolute',
-                top: verticalScale(width < 380 ? 180 : 187),
-              }}
-              borderWidth={1}
-              borderColor={'primary.500'}
-              height={8}
-              borderRadius={10}>
-              <Text color={'primary.500'} fontWeight={500} p={0.5}>
-                Out Of Stock
-              </Text>
-            </View>
+          <Text style={styles.Quantity}>{products.Size}</Text>
+          <View
+            style={{
+              width: 125,
+              marginLeft: width < 380 ? 4 : 6,
+              alignItems: 'center',
+              position: 'absolute',
+              top: verticalScale(width < 380 ? 180 : 187),
+            }}
+            borderWidth={1}
+            borderColor={'primary.500'}
+            height={8}
+            borderRadius={10}>
+            <Text color={'primary.500'} fontWeight={500} p={0.5}>
+              Out Of Stock
+            </Text>
+          </View>
         </View>
       </View>
     );
