@@ -61,5 +61,4 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
     </View>
   );
 };
-
 export default SelectAddress;
