@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Image, Text, View} from 'react-native';
+import {FlatList, Image, Text, View} from 'react-native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {Pressable} from 'native-base';
@@ -10,6 +10,8 @@ import {horizontalScale} from '../../assets/scaling';
 import {addIcon} from '../../assets/images/icons/add';
 import {edit} from '../../assets/images/icons/edit';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface SelectAddressProps {
   onClose: () => void;
@@ -17,20 +19,75 @@ interface SelectAddressProps {
 }
 
 const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
-  const AddressCard: FC = () => {
+  const navigation = useNavigation();
+  const storeUser = async () => {
+    try {
+      await AsyncStorage.setItem('primaryAddress', JSON.stringify(value));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addressList = [
+    {
+      id: 1,
+      landmark: 'NNR Appartment',
+      address: '5-13',
+      city: 'Vijayawada',
+      state: 'AndhraPradesh',
+      pincode: '521325',
+      label: 'Home',
+    },
+    {
+      id: 2,
+      landmark: 'Near Sachivalayam',
+      address: '5-123',
+      city: 'Vijayawada',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+    {
+      id: 3,
+
+      landmark: 'komalanagar',
+      address: '11-221',
+      city: 'challapalli',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+    {
+      id: 4,
+      landmark: 'Malaswaram',
+      address: 'Near RiceMill',
+      city: 'Malaswaram',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+  ];
+
+  const editPressed = location => {
+    console.log('location', location);
+    onClose();
+    navigation.navigate('AddAddress', {location: location, title: 'Edit'});
+  };
+  const AddressCard: FC = ({location}) => {
     return (
       <View style={styles.addressBox}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View>
-          <Text style={styles.addressType}>Home</Text>
+          <Text style={styles.addressType}>{location.label}</Text>
           <Text numberOfLines={2} style={styles.addressDetails}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-            sapiente architecto, vel alias labore consequuntur qui voluptatem
-            nihil fuga corrupti repellat voluptates. Excepturi voluptate nulla
-            et, maxime aliquid fuga officiis.
+            {`${location.address},${location.landmark},${location.city},${location.state},${location.pincode}`}
           </Text>
         </View>
-        <SvgXml xml={edit} height={24} width={24} />
+        <SvgXml
+          xml={edit}
+          height={24}
+          width={24}
+          onPress={() => editPressed(location)}
+        />
       </View>
     );
   };
@@ -53,12 +110,12 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
       <View style={styles.savedAdd}>
         <Text style={styles.selectAddressText}>SAVED ADDRESSES</Text>
       </View>
-      <AddressCard />
-      <View
-        style={{borderWidth: horizontalScale(0.5), borderColor: '#F3F4F6'}}
+      <FlatList
+        data={addressList}
+        renderItem={({item}) => <AddressCard location={item} />}
       />
-      <AddressCard />
     </View>
   );
 };
+
 export default SelectAddress;

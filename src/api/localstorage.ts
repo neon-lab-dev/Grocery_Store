@@ -24,4 +24,22 @@ const removeItem = async (itemName: string) => {
   }
 };
 
-export {setItem, getItem, removeItem};
+const storeAddress = async value => {
+  try {
+    await AsyncStorage.setItem(
+      'primaryAddress',
+      JSON.stringify({
+        landmark: 'NNR Appartment',
+        address: '5-13',
+        city: 'Vijayawada',
+        state: 'AndhraPradesh',
+        pincode: '521325',
+        label: 'Home',
+      }),
+    );
+  } catch (error) {
+    console.log('yess', error);
+  }
+};
+
+export {setItem, getItem, removeItem, storeAddress};

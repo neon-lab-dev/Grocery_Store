@@ -32,7 +32,6 @@ interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
-
 const Cart: React.FC<CartProps> = ({navigation}) => {
   const [isCartEmpty, setisCartEmpty] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
@@ -42,7 +41,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const cartItemCount = cartItems.items.length;
   React.useEffect(() => {
     let temp = 0;
-    cartItems.items.forEach((item: { DisPrice: number; quantity: number; }) => {
+    cartItems.items.forEach((item: {DisPrice: number; quantity: number}) => {
       temp += item.DisPrice * item.quantity;
     });
     setTotalDiscountedPrice(temp);
@@ -65,7 +64,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     navigation.navigate('Payment');
   };
   const gotoAddAddress = () => {
-    navigation.navigate('AddAddress');
+    navigation.navigate('AddAddress', {title: 'Add'});
   };
   const gotoHome = () => {
     navigation.popToTop();
@@ -113,7 +112,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       ) : (
         <ScrollView flex={0.8}>
           <View bg={'white'} mt={verticalScale(15)}>
-            {cartItems.items.map((data: { id: React.Key | null | undefined; }) => (
+            {cartItems.items.map((data: {id: React.Key | null | undefined}) => (
               <CartItemCard key={data.id} item={data} />
             ))}
           </View>
@@ -122,7 +121,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             deliveryCharge={25}
             itemPrice={TotalPrice - 25}
             price={TotalPrice}
-            savingPrice={totalDiscountedPrice-(TotalPrice-25)}
+            savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
           />
         </ScrollView>
       )}

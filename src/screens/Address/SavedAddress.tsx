@@ -12,30 +12,112 @@ import {deleteIcon} from '../../assets/images/icons/delete';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import SavedAddressComponent from '../../components/Addresses/SavedAddressComponent';
+import {storeAddress} from '../../api/localstorage';
 
 interface SavedAddressProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Addresses'>;
 }
 
 const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
-  const [Addresses, setAddresses] = React.useState([1, 2]);
+  const addressList = [
+    {
+      id: 1,
+      landmark: 'NNR Appartment',
+      address: '5-13',
+      city: 'Vijayawada',
+      state: 'AndhraPradesh',
+      pincode: '521325',
+      label: 'Home',
+    },
+    {
+      id: 2,
+      landmark: 'Near Sachivalayam',
+      address: '5-123',
+      city: 'Vijayawada',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+    {
+      id: 3,
+
+      landmark: 'komalanagar',
+      address: '11-221',
+      city: 'challapalli',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+    {
+      id: 4,
+      landmark: 'Malaswaram',
+      address: 'Near RiceMill',
+      city: 'Malaswaram',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+  ];
+  const [Addresses, setAddresses] = React.useState([
+    {
+      id: 1,
+      landmark: 'NNR Appartment',
+      address: '5-13',
+      city: 'Vijayawada',
+      state: 'AndhraPradesh',
+      pincode: '521325',
+      label: 'Home',
+    },
+    {
+      id: 2,
+      landmark: 'Near Sachivalayam',
+      address: '5-123',
+      city: 'Vijayawada',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+    {
+      id: 3,
+
+      landmark: 'komalanagar',
+      address: '11-221',
+      city: 'challapalli',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+    {
+      id: 4,
+      landmark: 'Malaswaram',
+      address: 'Near RiceMill',
+      city: 'Malaswaram',
+      state: 'AndhraPradesh',
+      pincode: '521345',
+      label: 'Work',
+    },
+  ]);
   const gotoAddAddress = () => {
-    navigation.navigate('AddAddress');
+    navigation.navigate('AddAddress', {title: 'Add'});
   };
   const handleDelete = (index: number) => {
     const updatedAddresses = [...Addresses];
     updatedAddresses.splice(index, 1);
     setAddresses(updatedAddresses);
   };
+  React.useEffect(() => {
+    storeAddress();
+  });
   return (
     <View flex={1} py={verticalScale(10)} bgColor={'accent.50'}>
-      {Addresses.map((_, index) => (
+      {Addresses.map((i, index) => (
         <SavedAddressComponent
           key={index}
           gotoAddAddress={gotoAddAddress}
           deleteAddress={() => handleDelete(index)}
           index={index + 1}
           length={Addresses.length}
+          address={i}
         />
       ))}
       <View flex={1} bgColor={'accent.50'} mx={horizontalScale(20)}>

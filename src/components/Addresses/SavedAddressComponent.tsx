@@ -9,7 +9,8 @@ import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {deleteIcon} from '../../assets/images/icons/delete';
 import {edit} from '../../assets/images/icons/edit';
-
+import {useNavigation} from '@react-navigation/native';
+import {location} from '../../assets/images/icons/location';
 interface SavedAddressComponentProps {
   gotoAddAddress: () => void;
   deleteAddress: () => void;
@@ -22,7 +23,12 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
   deleteAddress,
   index,
   length,
+  address,
 }) => {
+  const navigation = useNavigation();
+  const editPressed = () => {
+    navigation.navigate('AddAddress', {title: 'Edit', location: address});
+  };
   return (
     <View
       w={'100%'}
@@ -55,13 +61,12 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
             fontSize={scaleFontSize(14)}
             lineHeight={16.8}
             letterSpacing={-0.03}>
-            Lorem ipsum dolor sit amet consectetur. Et at lectus congue ut
-            sagittis sed dui. Aliquet porta sed diam tellus.
+            {`${address.address},${address.landmark},${address.city},${address.state},${address.pincode}`}
           </Text>
         </View>
       </View>
       <View flexDir={'row'} style={{gap: horizontalScale(32)}}>
-        <Pressable onPress={gotoAddAddress}>
+        <Pressable onPress={editPressed}>
           <SvgXml xml={edit} height={24} width={24} />
         </Pressable>
         <Pressable onPress={deleteAddress}>
