@@ -28,7 +28,7 @@ import {Dimensions} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {AuthAPIClient} from '../../api/axios.config';
-import {setItem} from '../../api/localstorage';
+import {getItem, setItem} from '../../api/localstorage';
 import {searchProduct} from '../../api/auth_routes';
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
@@ -50,20 +50,38 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [searchResults, setSearchResults] = useState([]);
   const [sortBy, setSortBy] = useState('default');
 
-  const addRecentSearch = async (searchTerm: string) => {
-    setRecentSearch(prevSearches => {
-      if (searchTerm !== '') {
-        if (prevSearches.length >= 4) {
-          const updatedSearches = [...prevSearches.slice(1), searchTerm];
-          return updatedSearches;
-        } else {
-          const updatedSearches = [...prevSearches, searchTerm];
-          return updatedSearches;
-        }
-      } else {
-        return [...prevSearches];
+  useEffect(() => {
+    const fetchRecentSearch = async () => {
+      const recentSearchData = await getItem('recentSearch');
+      if (recentSearchData) {
+        setRecentSearch(JSON.parse(recentSearchData));
       }
-    });
+    };
+    fetchRecentSearch();
+  }, []);
+
+  useEffect(() => {
+    const addRecentSearch = async () => {
+      await setItem('recentSearch', recentSearch);
+    };
+    addRecentSearch();
+  }, [recentSearch]);
+
+  const addRecentSearch = (searchTerm: string) => {
+    if (searchTerm !== '') {
+      setRecentSearch(prevSearches => {
+        const updatedSearches = prevSearches.filter(
+          term => term !== searchTerm,
+        );
+        updatedSearches.unshift(searchTerm);
+
+        if (updatedSearches.length > 4) {
+          updatedSearches.pop();
+        }
+
+        return updatedSearches;
+      });
+    }
   };
 
   const openBottomSheet = () => {
@@ -118,6 +136,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             onPress={() => {
               SetsearchInp('');
               setSelectedRecentSearch('');
+              setRecentSearch([]);
             }}>
             <Text
               fontFamily={'Inter_Medium'}
