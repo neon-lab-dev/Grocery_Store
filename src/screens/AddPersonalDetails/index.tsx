@@ -10,13 +10,8 @@ import {
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
 import TextInput from '../../components/Input';
-import {
-  CommonActions,
-  useNavigationContainerRef,
-} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {login} from '../../redux/slices/auth.slice';
-import {APIClient} from '../../api/axios.config';
 import {signUp} from '../../api/auth';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';

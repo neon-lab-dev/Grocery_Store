@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {getToken} from './localstorage';
+import {useState} from 'react';
 
 const BASE_URL =
   process.env.NODE_ENV === 'prod'
@@ -12,11 +14,26 @@ export const APIClient = axios.create({
 
 // FOR AUTHENTICATED ROUTES
 // TOKEN TO BE EXTRACTED FROM STORE
-// export const AuthAPIClient = axios.create({
-//   baseURL: BASE_URL,
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'Accept-Encoding': 'gzip',
-//     'Authorization': `Bearer ${token}`,
-//   },
-// });
+const AuthAPIClient = axios.create({
+  baseURL: 'http://10.0.2.2:8802/v1',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept-Encoding': 'gzip',
+  },
+});
+
+AuthAPIClient.interceptors.request.use(
+  async config => {
+    const storedToken = await getToken();
+    const token = JSON.parse(storedToken);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
+
+export {AuthAPIClient};

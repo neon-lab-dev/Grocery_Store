@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import style from './style';
 import {
   Text,
@@ -26,6 +26,7 @@ import ProductHorizontalScroll from '../../components/productCard/ProductHorizon
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
+import {AuthAPIClient} from '../../api/axios.config';
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
@@ -35,6 +36,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
+
   const openSettings = () => {
     navigation.navigate('Settings');
   };
