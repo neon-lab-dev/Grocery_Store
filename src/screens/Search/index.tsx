@@ -1,6 +1,14 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, {useState} from 'react';
-import {Center, FlatList, Pressable, Text, View} from 'native-base';
+import React, {useEffect, useState} from 'react';
+import {
+  Center,
+  FlatList,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from 'native-base';
 import {
   horizontalScale,
   scaleFontSize,
@@ -18,9 +26,10 @@ import ProductData from '../../assets/data/ProductData';
 import GoBack from '../../components/Navigation/GoBack';
 import {Dimensions} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
-import {HelperText} from 'react-native-paper';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
-
+import {AuthAPIClient} from '../../api/axios.config';
+import {setItem} from '../../api/localstorage';
+import {searchProduct} from '../../api/auth_routes';
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
 }
@@ -29,10 +38,34 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [searchInp, SetsearchInp] = useState('');
   const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
-  const recentSearch = ['Cat Food', 'Ice Cream', 'Cake'];
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorFetching, setErrorFetching] = useState(false);
+  const [minValue, setMinValue] = useState(0);
+  const [maxValue, setMaxValue] = useState(1000);
+  const [selectedBrand, setSelectedBrand] = useState('');
+  const [recentSearch, setRecentSearch] = useState<string[]>([]);
   const {width} = Dimensions.get('window');
   const fontSize = width >= 400 ? scaleFontSize(18) : scaleFontSize(16);
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [sortBy, setSortBy] = useState('default');
+
+  const addRecentSearch = async (searchTerm: string) => {
+    setRecentSearch(prevSearches => {
+      if (searchTerm !== '') {
+        if (prevSearches.length >= 4) {
+          const updatedSearches = [...prevSearches.slice(1), searchTerm];
+          return updatedSearches;
+        } else {
+          const updatedSearches = [...prevSearches, searchTerm];
+          return updatedSearches;
+        }
+      } else {
+        return [...prevSearches];
+      }
+    });
+  };
+
   const openBottomSheet = () => {
     setBottomSheetVisible(true);
   };
@@ -43,6 +76,31 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const listToDetails = () => {
     openBottomSheet();
   };
+
+  const searchProducts = async () => {
+    try {
+      setIsLoading(true);
+      const response = await searchProduct(
+        searchInp,
+        sortBy,
+        minValue,
+        maxValue,
+        selectedBrand,
+      );
+      if (response && response.content) {
+        setSearchResults(response.content);
+      } else {
+        setErrorFetching(true);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setErrorFetching(true);
+    }
+  };
+
+  useEffect(() => {
+    searchProducts();
+  }, [searchInp, sortBy, minValue, maxValue, selectedBrand]);
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
@@ -56,7 +114,11 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             letterSpacing={-0.04}>
             Recent Searches
           </Text>
-          <Pressable onPress={() => setSelectedRecentSearch('')}>
+          <Pressable
+            onPress={() => {
+              SetsearchInp('');
+              setSelectedRecentSearch('');
+            }}>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(14)}
@@ -67,42 +129,51 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             </Text>
           </Pressable>
         </View>
-        <View flexDir={'row'} mt={verticalScale(5)}>
-          {recentSearch.map((item, index) => (
-            <Pressable
-              key={index}
-              borderRadius={100}
-              borderWidth={1}
-              mr={horizontalScale(10)}
-              py={verticalScale(10)}
-              px={horizontalScale(15)}
-              borderColor={
-                selectedRecentSearch === item ? 'accent.400' : 'accent.200'
-              }
-              bgColor={
-                selectedRecentSearch === item ? 'accent.200' : 'accent.100'
-              }
-              alignItems={'center'}
-              onPress={() => {
-                selectedRecentSearch === item
-                  ? setSelectedRecentSearch('')
-                  : setSelectedRecentSearch(item);
-              }}>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                adjustsFontSizeToFit
-                fontWeight={selectedRecentSearch === item ? 600 : 500}
-                color={
-                  selectedRecentSearch === item ? 'accent.700' : 'accent.400'
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          flexDir={'row'}
+          mt={verticalScale(5)}>
+          {recentSearch.length !== 0 &&
+            recentSearch.map((item, index) => (
+              <Pressable
+                key={index}
+                borderRadius={100}
+                borderWidth={1}
+                mr={horizontalScale(10)}
+                py={verticalScale(10)}
+                px={horizontalScale(15)}
+                borderColor={
+                  selectedRecentSearch === item ? 'accent.400' : 'accent.200'
                 }
-                lineHeight={16.94}
-                letterSpacing={-0.04}>
-                {item}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
+                bgColor={
+                  selectedRecentSearch === item ? 'accent.200' : 'accent.100'
+                }
+                alignItems={'center'}
+                onPress={() => {
+                  if (selectedRecentSearch === item) {
+                    setSelectedRecentSearch('');
+                    SetsearchInp('');
+                  } else {
+                    setSelectedRecentSearch(item);
+                    SetsearchInp(item);
+                  }
+                }}>
+                <Text
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(14)}
+                  adjustsFontSizeToFit
+                  fontWeight={selectedRecentSearch === item ? 600 : 500}
+                  color={
+                    selectedRecentSearch === item ? 'accent.700' : 'accent.400'
+                  }
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
+                  {item}
+                </Text>
+              </Pressable>
+            ))}
+        </ScrollView>
       </View>
       <View flex={1} bg={'white'} mt={verticalScale(15)}>
         <View
@@ -137,7 +208,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             lineHeight={16.94}
             letterSpacing={-0.04}
             textAlign={'center'}>
-            246 items
+            {searchResults.length} Items
           </Text>
         </View>
       </View>
@@ -161,6 +232,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             onPress={() => {}}
             editable={true}
             width={100}
+            onSubmit={addRecentSearch}
           />
         </View>
         <TouchableOpacity
@@ -178,29 +250,58 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           </Center>
         </TouchableOpacity>
       </View>
-      <View flex={1} bg={'white'}>
-        <FlatList
+      {errorFetching ? (
+        <View flex={1} alignItems={'center'} justifyContent={'center'}>
+          <Text fontFamily={'Inter_Medium'} fontSize={scaleFontSize(18)}>
+            Error Fetching Products
+          </Text>
+        </View>
+      ) : isLoading ? (
+        <View
+          bg={'accent.300'}
           flex={1}
-          ListHeaderComponent={ListHeaderComponent}
-          data={ProductData}
-          renderItem={({item}) => (
-            <SearchProductCard onPress={listToDetails} products={item} />
-          )}
-          keyExtractor={item => item.id.toString()}
-          numColumns={2}
-          contentContainerStyle={{
-            paddingBottom: verticalScale(15),
-          }}
-          columnWrapperStyle={{
-            paddingHorizontal: horizontalScale(15),
-            marginBottom: verticalScale(15),
-            gap: horizontalScale(15),
-          }}
-        />
-      </View>
+          alignItems={'center'}
+          justifyContent={'center'}>
+          <Image
+            alt="loading"
+            source={require('../../assets/images/icons/loading.gif')}
+            h={250}
+            w={250}
+          />
+        </View>
+      ) : (
+        <View flex={1} bg={'white'}>
+          <FlatList
+            flex={1}
+            ListHeaderComponent={ListHeaderComponent}
+            data={searchResults}
+            renderItem={({item, index}) => (
+              <SearchProductCard
+                key={index}
+                onPress={listToDetails}
+                products={item}
+              />
+            )}
+            numColumns={2}
+            contentContainerStyle={{
+              paddingBottom: verticalScale(15),
+            }}
+            columnWrapperStyle={{
+              paddingHorizontal: horizontalScale(15),
+              marginBottom: verticalScale(15),
+              gap: horizontalScale(15),
+            }}
+          />
+        </View>
+      )}
+
       <FilterOverlay
         showModal={showModal}
         onClose={() => setShowModal(false)}
+        onSortByChange={option => setSortBy(option)}
+        onMinValueChange={value => setMinValue(value)}
+        onMaxValueChange={value => setMaxValue(value)}
+        onBrandValueChange={option => setSelectedBrand(option)}
       />
       <BottomSheet
         visible={bottomSheetVisible}

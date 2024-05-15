@@ -1,6 +1,5 @@
-import {Image, Modal, View} from 'native-base';
+import {Image, Modal} from 'native-base';
 import * as React from 'react';
-import {height} from '../../assets/scaling';
 
 interface LoaderProps {
   isOpen: boolean;
@@ -12,7 +11,10 @@ const Loader: React.FC<LoaderProps> = ({isOpen}) => {
       <Modal.Content
         alignItems={'center'}
         justifyContent={'center'}
-        bg={'accent.900'}>
+        bg={'#404040'}
+        borderRadius={20}
+        borderWidth={1}
+        borderColor={'white'}>
         <Image
           alt="Loader"
           source={require('../../assets/images/icons/loading.gif')}

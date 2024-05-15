@@ -6,8 +6,6 @@ import {
   Text,
   Image,
   KeyboardAvoidingView,
-  Toast,
-  useToast,
 } from 'native-base';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {styles} from './style';

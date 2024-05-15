@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {removeItem, setItem} from '../../api/localstorage';
+import {clear, setItem} from '../../api/localstorage';
 
 const initialState = {
   token: null,
@@ -13,7 +13,7 @@ const authReducer = createSlice({
     logout: state => {
       state.token = null;
       state.isAuthenticated = false;
-      removeItem('token');
+      clear();
     },
     login: (state, action) => {
       state.isAuthenticated = true;

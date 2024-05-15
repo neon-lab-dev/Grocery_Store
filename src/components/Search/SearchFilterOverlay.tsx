@@ -16,18 +16,27 @@ import Checkbox from './Checkbox';
 interface FilterOverlayProps extends IModalProps {
   showModal: boolean;
   onClose: () => void;
+  onSortByChange: (sortBy: string) => void;
+  onMinValueChange: (value: number) => void;
+  onMaxValueChange: (value: number) => void;
+  onBrandValueChange: (brand: string) => void;
 }
 
 const FilterOverlay: React.FC<FilterOverlayProps> = ({
   showModal,
   onClose,
+  onSortByChange,
+  onMinValueChange,
+  onMaxValueChange,
+  onBrandValueChange,
   ...props
 }) => {
   const filterOptions = ['Sort', 'Price', 'Brands'];
   const [selectedOption, setSelectedOption] = useState('Sort');
-  const [selectedBrands, setSelectedBrands] = useState<string[]>(['Garnier']);
-  const [selectedMinValue, setSelectedMinValue] = useState<number>(24);
-  const [selectedMaxValue, setSelectedMaxValue] = useState<number>(149);
+  const [selectedBrand, setSelectedBrand] = useState<string>('');
+  const [selectedSortBy, setSelectedSortBy] = useState('default');
+  const [selectedMinValue, setSelectedMinValue] = useState<number>(0);
+  const [selectedMaxValue, setSelectedMaxValue] = useState<number>(1000);
   const radioButtonsData = [
     {id: '0', label: 'Relevance (default)', value: 'default'},
     {id: '1', label: 'Price (low to high)', value: 'lowtohigh'},
@@ -90,7 +99,11 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
             </Text>
             <Radio
               options={radioButtonsData}
-              onSelect={option => console.log(option)}
+              selectedValue={selectedSortBy}
+              onSelect={option => {
+                setSelectedSortBy(option);
+                onSortByChange(option);
+              }}
             />
           </View>
         );
@@ -119,7 +132,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               values={[selectedMinValue, selectedMaxValue]}
               sliderLength={horizontalScale(200)}
               min={0}
-              max={299}
+              max={1000}
               step={1}
               minMarkerOverlapDistance={40}
               enableLabel
@@ -127,6 +140,8 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
               onValuesChange={values => {
                 setSelectedMinValue(values[0]);
                 setSelectedMaxValue(values[1]);
+                onMinValueChange(values[0]);
+                onMaxValueChange(values[1]);
               }}
               containerStyle={styles.sliderContainer}
               trackStyle={styles.sliderTrack}
@@ -149,7 +164,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                 color={'accent.400'}
                 lineHeight={14.52}
                 letterSpacing={-0.04}>
-                ₹299
+                ₹1000
               </Text>
             </View>
           </View>
@@ -168,8 +183,11 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
             </Text>
             <Checkbox
               options={brands}
-              selectedOptions={selectedBrands}
-              onChange={selectedOptions => setSelectedBrands(selectedOptions)}
+              selectedOption={selectedBrand}
+              onSelect={option => {
+                setSelectedBrand(option);
+                onBrandValueChange(option);
+              }}
             />
           </View>
         );

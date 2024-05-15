@@ -12,16 +12,16 @@ export const addToCart = (item: Item) => ({
   payload: item,
 });
 
-export const incrementItem = (itemId: number) => ({
+export const incrementItem = (itemId: string) => ({
   type: INCREMENT_ITEM,
   payload: itemId,
 });
 
-export const decrementItem = (itemId: number) => ({
+export const decrementItem = (itemId: string) => ({
   type: DECREMENT_ITEM,
   payload: itemId,
 });
-export const removeItem = (itemId: number) => ({
+export const removeItem = (itemId: string) => ({
   type: REMOVE_ITEM,
   payload: itemId,
 });

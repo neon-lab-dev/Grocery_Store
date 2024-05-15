@@ -11,6 +11,7 @@ interface SearchInputProps {
   onPress: () => void;
   editable: boolean;
   width: number;
+  onSubmit?: (value: string) => void;
 }
 
 const SearchInput: FC<SearchInputProps> = ({
@@ -20,6 +21,7 @@ const SearchInput: FC<SearchInputProps> = ({
   onPress,
   editable,
   width,
+  onSubmit,
 }) => {
   return (
     <TouchableOpacity
@@ -33,6 +35,7 @@ const SearchInput: FC<SearchInputProps> = ({
         placeholder={placeholder}
         placeholderTextColor={'#6B7280'}
         editable={editable}
+        onSubmitEditing={() => onSubmit && onSubmit(value)}
       />
       {/* <View style={styles.line} /> */}
       {/* <Image source={require('../../assets/images/icons/mic.png')} /> */}
