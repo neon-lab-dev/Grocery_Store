@@ -1,7 +1,8 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
 import {verticalScale} from '../../assets/scaling';
+import {getToken} from '../../api/localstorage';
 
 interface Category {
   id: number;
@@ -41,6 +42,9 @@ const CategoryCard: FC<CategoryCardProps> = ({
 };
 
 const Categories: FC = ({navigation}) => {
+  useEffect(() => {
+    getToken();
+  });
   const Data: Category[] = [
     {
       id: 1,

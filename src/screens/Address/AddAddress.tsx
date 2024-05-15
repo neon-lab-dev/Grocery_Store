@@ -18,9 +18,9 @@ import {
 import validators from '../../utils/validators';
 import SelectAddress from '../../components/SelectingAddress';
 import TextInput from '../../components/Input';
-import {addAddress} from '../../api/address';
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';
+import {addAddress, updateAddress} from '../../api/auth_routes';
 
 const AddAddress = ({route, navigation}) => {
   const {location, title} = route.params;
@@ -28,7 +28,7 @@ const AddAddress = ({route, navigation}) => {
     title === 'Edit' ? location.landmark : '',
   );
   const [address, setAddress] = useState(
-    title === 'Edit' ? location.address : '',
+    title === 'Edit' ? location.addressLine1 : '',
   );
   const [city, setCity] = useState(title === 'Edit' ? location.city : '');
   const [state, setState] = useState(title === 'Edit' ? location.state : '');
@@ -36,13 +36,12 @@ const AddAddress = ({route, navigation}) => {
     title === 'Edit' ? location.pincode : '',
   );
   const [selectedLabel, setSelectedLabel] = useState(
-    title === 'Edit' ? location.label : '',
+    title === 'Edit' ? location.addressName : '',
   );
   const label = ['Home', 'Work', 'Other'];
   const [isClicked, setIsClicked] = useState(false);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const isContinueDisabled =
-    title === 'Edit' ||
     landmark === '' ||
     address === '' ||
     city === '' ||
@@ -73,6 +72,27 @@ const AddAddress = ({route, navigation}) => {
       setLoaderVisible(false);
       navigation.goBack();
       toast.showToast(response.message || response.errorMessage);
+    } catch (error) {}
+  };
+
+  const editAddress = async () => {
+    setLoaderVisible(true);
+    try {
+      const getResponse = await updateAddress({
+        addressLine1: address,
+        addressLine2: null,
+        addressName: selectedLabel,
+        city: city,
+        id: location.id,
+        landmark: landmark,
+        pincode: pincode,
+        primaryAddress: true,
+        state: state,
+      });
+      console.log(getResponse);
+      setLoaderVisible(false);
+      navigation.goBack();
+      toast.showToast(getResponse.message || getResponse.errorMessage);
     } catch (error) {}
   };
 
@@ -287,7 +307,7 @@ const AddAddress = ({route, navigation}) => {
               letterSpacing: -0.04,
             }}
             disabled={isContinueDisabled}
-            onPress={saveAddress}>
+            onPress={title === 'Edit' ? editAddress : saveAddress}>
             Save Address
           </Button>
         </Center>

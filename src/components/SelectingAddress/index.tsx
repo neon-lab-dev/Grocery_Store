@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {FlatList, Image, Text, View} from 'react-native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
@@ -12,6 +12,7 @@ import {edit} from '../../assets/images/icons/edit';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getAddress} from '../../api/auth_routes';
 
 interface SelectAddressProps {
   onClose: () => void;
@@ -19,53 +20,57 @@ interface SelectAddressProps {
 }
 
 const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
-  const navigation = useNavigation();
-  const storeUser = async () => {
-    try {
-      await AsyncStorage.setItem('primaryAddress', JSON.stringify(value));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const addressList = [
-    {
-      id: 1,
-      landmark: 'NNR Appartment',
-      address: '5-13',
-      city: 'Vijayawada',
-      state: 'AndhraPradesh',
-      pincode: '521325',
-      label: 'Home',
-    },
-    {
-      id: 2,
-      landmark: 'Near Sachivalayam',
-      address: '5-123',
-      city: 'Vijayawada',
-      state: 'AndhraPradesh',
-      pincode: '521345',
-      label: 'Work',
-    },
-    {
-      id: 3,
+  const [addressList, setAddressList] = useState([]);
+  useEffect(() => {
+    fetchAddress();
+  }, []);
 
-      landmark: 'komalanagar',
-      address: '11-221',
-      city: 'challapalli',
-      state: 'AndhraPradesh',
-      pincode: '521345',
-      label: 'Work',
-    },
-    {
-      id: 4,
-      landmark: 'Malaswaram',
-      address: 'Near RiceMill',
-      city: 'Malaswaram',
-      state: 'AndhraPradesh',
-      pincode: '521345',
-      label: 'Work',
-    },
-  ];
+  const fetchAddress = async () => {
+    const getAddressList = await getAddress();
+    console.log(getAddressList);
+    setAddressList(getAddressList);
+  };
+  const navigation = useNavigation();
+
+  // const addressList = [
+  //   {
+  //     id: 1,
+  //     landmark: 'NNR Appartment',
+  //     address: '5-13',
+  //     city: 'Vijayawada',
+  //     state: 'AndhraPradesh',
+  //     pincode: '521325',
+  //     label: 'Home',
+  //   },
+  //   {
+  //     id: 2,
+  //     landmark: 'Near Sachivalayam',
+  //     address: '5-123',
+  //     city: 'Vijayawada',
+  //     state: 'AndhraPradesh',
+  //     pincode: '521345',
+  //     label: 'Work',
+  //   },
+  //   {
+  //     id: 3,
+
+  //     landmark: 'komalanagar',
+  //     address: '11-221',
+  //     city: 'challapalli',
+  //     state: 'AndhraPradesh',
+  //     pincode: '521345',
+  //     label: 'Work',
+  //   },
+  //   {
+  //     id: 4,
+  //     landmark: 'Malaswaram',
+  //     address: 'Near RiceMill',
+  //     city: 'Malaswaram',
+  //     state: 'AndhraPradesh',
+  //     pincode: '521345',
+  //     label: 'Work',
+  //   },
+  // ];
 
   const editPressed = location => {
     console.log('location', location);
@@ -77,9 +82,9 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
       <View style={styles.addressBox}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View>
-          <Text style={styles.addressType}>{location.label}</Text>
+          <Text style={styles.addressType}>{location.addressName}</Text>
           <Text numberOfLines={2} style={styles.addressDetails}>
-            {`${location.address},${location.landmark},${location.city},${location.state},${location.pincode}`}
+            {`${location.addressLine1},${location.landmark},${location.city},${location.state},${location.pincode}`}
           </Text>
         </View>
         <SvgXml

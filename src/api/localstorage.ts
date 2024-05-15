@@ -42,4 +42,14 @@ const storeAddress = async value => {
   }
 };
 
-export {setItem, getItem, removeItem, storeAddress};
+const getToken = async () => {
+  try {
+    const token = await getItem('token');
+    console.log(token);
+    return token;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {setItem, getItem, removeItem, storeAddress, getToken};

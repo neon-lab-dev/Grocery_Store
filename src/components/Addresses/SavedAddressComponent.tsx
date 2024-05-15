@@ -52,7 +52,7 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
             color={'accent.900'}
             lineHeight={19.36}
             letterSpacing={-0.04}>
-            Home
+            {address.addressName}
           </Text>
           <Text
             color={'accent.400'}
@@ -61,7 +61,7 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
             fontSize={scaleFontSize(14)}
             lineHeight={16.8}
             letterSpacing={-0.03}>
-            {`${address.address},${address.landmark},${address.city},${address.state},${address.pincode}`}
+            {`${address.addressLine1},${address.landmark},${address.city},${address.state},${address.pincode}`}
           </Text>
         </View>
       </View>
