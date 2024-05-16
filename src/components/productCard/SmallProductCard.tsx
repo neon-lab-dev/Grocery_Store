@@ -8,17 +8,22 @@ import {
   scaleFontSize,
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, decrementItem, removeItem } from '../../redux/slices/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 interface ProductDataItem {
-  id: number;
-  Title: string;
-  image: string;
-  Price: number;
-  quantity:number,
-  Size: string;
-  QuantityAvalaible:number;
-  DisPrice: number;
+  id: string;
+  name: string;
+  code: string;
+  category: string;
+  subCategory: string;
+  description: string;
+  brand: string;
+  discountPercent: number;
+  discountedPrice: number;
+  price: number;
+  quantity: number;
+  unit: string;
+  value: number;
 }
 interface ProductCardProps {
   onPress: () => void;
@@ -42,8 +47,8 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     }
   };
   const handleIncrease = () => {
-    if (count < products.QuantityAvalaible) {
-    dispatch(addToCart(products));
+    if (count < products.quantity) {
+      dispatch(addToCart(products));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -72,18 +77,21 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   };
   const handleButtonPress = () => {
     setCount(1);
-    products.quantity=1;
+    products.quantity = 1;
     dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
   const {width, height} = Dimensions.get('window');
   // console.log(width, height)
-  let off = calculateDiscountPercentage(products.DisPrice, products.Price);
+  // let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   return (
     <View style={styles.Container}>
       <View
         key={products.id}
-        style={{width: horizontalScale(110), height: verticalScale(width < 380 ? 180 : 200)}}>
+        style={{
+          width: horizontalScale(110),
+          height: verticalScale(width < 380 ? 180 : 200),
+        }}>
         <Pressable
           onPress={() => onPress()}
           style={{
@@ -93,46 +101,51 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             width: horizontalScale(100),
             overflow: 'hidden',
           }}>
-          <View
-            style={{
-              backgroundColor: Colors.primary[500],
-              height: verticalScale(25),
-              width: horizontalScale(28),
-              marginLeft: verticalScale(10),
-              borderBottomLeftRadius: 8,
-              borderBottomRightRadius: 8,
-            }}>
-            <Text
+          {products.discountPercent !== 0 && (
+            <View
               style={{
-                fontFamily: 'Inter_Bold',
-                fontSize: scaleFontSize(12),
-                alignSelf: 'center',
-                color: 'white',
+                backgroundColor: Colors.primary[500],
+                height: verticalScale(25),
+                width: horizontalScale(28),
+                marginLeft: verticalScale(10),
+                borderBottomLeftRadius: 8,
+                borderBottomRightRadius: 8,
               }}>
-              {off.toFixed(0)}%
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Inter_Bold',
-                fontSize: scaleFontSize(12),
-                alignSelf: 'center',
-                position: 'absolute',
-                top: verticalScale(8),
-                color: 'white',
-              }}>
-              OFF
-            </Text>
-          </View>
-          <Image
+              <Text
+                style={{
+                  fontFamily: 'Inter_Bold',
+                  fontSize: scaleFontSize(12),
+                  alignSelf: 'center',
+                  color: 'white',
+                }}>
+                {products.discountPercent}%
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Inter_Bold',
+                  fontSize: scaleFontSize(12),
+                  alignSelf: 'center',
+                  position: 'absolute',
+                  top: verticalScale(8),
+                  color: 'white',
+                }}>
+                OFF
+              </Text>
+            </View>
+          )}
+
+          {/* <Image
             alt="Image"
             source={getImage(products.image)}
             style={styles.Image}
-          />
+          /> */}
         </Pressable>
         <Text mr={horizontalScale(10)} style={styles.Title}>
-          {products.Title}
+          {products.name}
         </Text>
-        <Text style={styles.Quantity}>{products.Size}</Text>
+        <Text style={styles.Quantity}>
+          {products.value} {products.unit}
+        </Text>
         <View
           style={{
             flexDirection: 'row',
@@ -142,9 +155,9 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             top: verticalScale(width < 380 ? 130 : 140),
           }}>
           <View style={{marginTop: 18}}>
-            <Text style={styles.Price}>₹{products.Price}</Text>
+            <Text style={styles.Price}>₹{products.price}</Text>
             <Text strikeThrough style={styles.DisPrice}>
-              ₹{products.DisPrice}
+              ₹{products.discountedPrice}
             </Text>
           </View>
           <View>
@@ -226,7 +239,7 @@ export const styles = StyleSheet.create({
     fontSize: scaleFontSize(14),
     color: '#1F2937',
     marginTop: verticalScale(3),
-    fontWeight:'500'
+    fontWeight: '500',
     // fontFamily: 'Inter_Medium',
   },
   Price: {
@@ -251,7 +264,7 @@ export const styles = StyleSheet.create({
   },
   ButtonText: {
     // fontFamily: 'Inter_Medium',
-     fontWeight:'500',
+    fontWeight: '500',
     color: Colors.primary[400],
     fontSize: scaleFontSize(15),
   },

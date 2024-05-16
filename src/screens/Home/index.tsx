@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import style from './style';
 import {
-  Text,
-  View,
   TouchableOpacity,
   Image,
   ScrollView,
@@ -27,6 +25,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {AuthAPIClient} from '../../api/axios.config';
+import {Categories} from '../../constants/categories';
+import {View, Text} from 'native-base';
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
@@ -145,11 +145,14 @@ const Home: React.FC<Props> = ({navigation}) => {
           <Text style={[style.CategoryText, {marginBottom: 15}]}>
             Grocery & Kitchen
           </Text>
-          {CategoryData.map(data => {
-            let index = data.id;
+          {Categories['Grocery & Kitchen'].map((subCategory, ind) => {
+            let index = ind + 1;
             if (index % 4 === 0) {
               const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = CategoryData.slice(endIndex - 4, endIndex);
+              const currentSlice = Categories['Grocery & Kitchen'].slice(
+                endIndex - 4,
+                endIndex,
+              );
               return (
                 <View
                   key={index}
@@ -161,13 +164,37 @@ const Home: React.FC<Props> = ({navigation}) => {
                     <Pressable
                       key={subIndex}
                       onPress={() => {
-                        navigation.navigate('CategoryProducts');
+                        navigation.navigate('CategoryProducts', {
+                          SubCategory: item,
+                        });
                       }}>
-                      <Image
+                      {/* <Image
                         key={subIndex}
                         source={{uri: item.image}}
                         style={{width: 100, height: 150}}
-                      />
+                      /> */}
+                      <View
+                        alignItems={'center'}
+                        w={horizontalScale(90)}
+                        h={verticalScale(110)}
+                        style={{gap: 9}}>
+                        <View
+                          w={horizontalScale(70)}
+                          h={verticalScale(65)}
+                          borderRadius={16}
+                          bgColor={'primary.50'}
+                        />
+                        <Text
+                          fontFamily={'Inter_Medium'}
+                          fontSize={scaleFontSize(12)}
+                          lineHeight={14.52}
+                          letterSpacing={-0.04}
+                          color={'accent.600'}
+                          textAlign={'center'}
+                          mx={horizontalScale(5)}>
+                          {item}
+                        </Text>
+                      </View>
                     </Pressable>
                   ))}
                 </View>
@@ -181,11 +208,14 @@ const Home: React.FC<Props> = ({navigation}) => {
           <Text style={[style.CategoryText, {marginBottom: verticalScale(15)}]}>
             Snacks & Drinks
           </Text>
-          {CategoryData.map(data => {
-            let index = data.id;
+          {Categories['Snacks & Kitchen'].map((subCategory, ind) => {
+            let index = ind + 1;
             if (index % 4 === 0) {
               const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = CategoryData.slice(endIndex - 4, endIndex);
+              const currentSlice = Categories['Snacks & Kitchen'].slice(
+                endIndex - 4,
+                endIndex,
+              );
               return (
                 <View
                   key={index}
@@ -197,13 +227,37 @@ const Home: React.FC<Props> = ({navigation}) => {
                     <Pressable
                       key={subIndex}
                       onPress={() => {
-                        navigation.navigate('CategoryProducts');
+                        navigation.navigate('CategoryProducts', {
+                          SubCategory: item,
+                        });
                       }}>
-                      <Image
-                        key={subIndex}
-                        source={{uri: item.image}}
-                        style={{width: 100, height: 150}}
-                      />
+                      {/* <Image
+                      key={subIndex}
+                      source={{uri: item.image}}
+                      style={{width: 100, height: 150}}
+                    /> */}
+                      <View
+                        alignItems={'center'}
+                        w={horizontalScale(90)}
+                        h={verticalScale(110)}
+                        style={{gap: 9}}>
+                        <View
+                          w={horizontalScale(70)}
+                          h={verticalScale(65)}
+                          borderRadius={16}
+                          bgColor={'primary.50'}
+                        />
+                        <Text
+                          fontFamily={'Inter_Medium'}
+                          fontSize={scaleFontSize(12)}
+                          lineHeight={14.52}
+                          letterSpacing={-0.04}
+                          color={'accent.600'}
+                          textAlign={'center'}
+                          mx={horizontalScale(5)}>
+                          {item}
+                        </Text>
+                      </View>
                     </Pressable>
                   ))}
                 </View>
@@ -217,11 +271,14 @@ const Home: React.FC<Props> = ({navigation}) => {
           <Text style={[style.CategoryText, {marginBottom: 15}]}>
             Beauty & Personal Care
           </Text>
-          {CategoryData.map(data => {
-            let index = data.id;
+          {Categories['Beauty & Personal Care'].map((subCategory, ind) => {
+            let index = ind + 1;
             if (index % 4 === 0) {
               const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = CategoryData.slice(endIndex - 4, endIndex);
+              const currentSlice = Categories['Beauty & Personal Care'].slice(
+                endIndex - 4,
+                endIndex,
+              );
               return (
                 <View
                   key={index}
@@ -233,13 +290,37 @@ const Home: React.FC<Props> = ({navigation}) => {
                     <Pressable
                       key={subIndex}
                       onPress={() => {
-                        navigation.navigate('CategoryProducts');
+                        navigation.navigate('CategoryProducts', {
+                          SubCategory: item,
+                        });
                       }}>
-                      <Image
-                        key={subIndex}
-                        source={{uri: item.image}}
-                        style={{width: 100, height: 150}}
-                      />
+                      {/* <Image
+                    key={subIndex}
+                    source={{uri: item.image}}
+                    style={{width: 100, height: 150}}
+                  /> */}
+                      <View
+                        alignItems={'center'}
+                        w={horizontalScale(90)}
+                        h={verticalScale(110)}
+                        style={{gap: 9}}>
+                        <View
+                          w={horizontalScale(70)}
+                          h={verticalScale(65)}
+                          borderRadius={16}
+                          bgColor={'primary.50'}
+                        />
+                        <Text
+                          fontFamily={'Inter_Medium'}
+                          fontSize={scaleFontSize(12)}
+                          lineHeight={14.52}
+                          letterSpacing={-0.04}
+                          color={'accent.600'}
+                          textAlign={'center'}
+                          mx={horizontalScale(5)}>
+                          {item}
+                        </Text>
+                      </View>
                     </Pressable>
                   ))}
                 </View>
@@ -253,11 +334,14 @@ const Home: React.FC<Props> = ({navigation}) => {
           <Text style={[style.CategoryText, {marginBottom: 15}]}>
             Household Essentials
           </Text>
-          {CategoryData.map(data => {
-            let index = data.id;
+          {Categories['Household Essentials'].map((subCategory, ind) => {
+            let index = ind + 1;
             if (index % 4 === 0) {
               const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = CategoryData.slice(endIndex - 4, endIndex);
+              const currentSlice = Categories['Household Essentials'].slice(
+                endIndex - 4,
+                endIndex,
+              );
               return (
                 <View
                   key={index}
@@ -269,13 +353,37 @@ const Home: React.FC<Props> = ({navigation}) => {
                     <Pressable
                       key={subIndex}
                       onPress={() => {
-                        navigation.navigate('CategoryProducts');
+                        navigation.navigate('CategoryProducts', {
+                          SubCategory: item,
+                        });
                       }}>
-                      <Image
-                        key={subIndex}
-                        source={{uri: item.image}}
-                        style={{width: 100, height: 150}}
-                      />
+                      {/* <Image
+                  key={subIndex}
+                  source={{uri: item.image}}
+                  style={{width: 100, height: 150}}
+                /> */}
+                      <View
+                        alignItems={'center'}
+                        w={horizontalScale(90)}
+                        h={verticalScale(100)}
+                        style={{gap: 9}}>
+                        <View
+                          w={horizontalScale(70)}
+                          h={verticalScale(65)}
+                          borderRadius={16}
+                          bgColor={'primary.50'}
+                        />
+                        <Text
+                          fontFamily={'Inter_Medium'}
+                          fontSize={scaleFontSize(12)}
+                          lineHeight={14.52}
+                          letterSpacing={-0.04}
+                          color={'accent.600'}
+                          textAlign={'center'}
+                          mx={horizontalScale(5)}>
+                          {item}
+                        </Text>
+                      </View>
                     </Pressable>
                   ))}
                 </View>
