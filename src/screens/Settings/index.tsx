@@ -38,9 +38,10 @@ import {close} from '../../assets/images/icons/close';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
 import {APIClient} from '../../api/axios.config';
-import {createSuggestion} from '../../api/suggestion';
+
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import {createSuggestion} from '../../api/auth_routes';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
@@ -278,15 +279,6 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
         </Button>
       </Center>
       <Loader isOpen={loaderVisible} />
-      {/* <Modal isOpen={loaderVisible} onClose={setLoaderVisible} size={'xs'}>
-        <Modal.Content backgroundColor={'#41413F'} p={'10'}>
-          <Image
-            alt="loader"
-            source={require('../../assets/images/loader.gif')}
-            style={{height: 50, width: 'auto'}}
-          />
-        </Modal.Content>
-      </Modal> */}
     </View>
   );
 };

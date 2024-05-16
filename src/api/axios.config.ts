@@ -21,6 +21,13 @@ const AuthAPIClient = axios.create({
     'Accept-Encoding': 'gzip',
   },
 });
+const AuthAPIClient2 = axios.create({
+  baseURL: 'http://10.0.2.2:8801/v1',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept-Encoding': 'gzip',
+  },
+});
 
 AuthAPIClient.interceptors.request.use(
   async config => {
@@ -36,5 +43,19 @@ AuthAPIClient.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+AuthAPIClient2.interceptors.request.use(
+  async config => {
+    const storedToken = await getToken();
+    // console.log(storedToken);
+    // const token = JSON.parse(storedToken);
+    if (storedToken) {
+      config.headers.Authorization = `Bearer ${storedToken}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
 
-export {AuthAPIClient};
+export {AuthAPIClient, AuthAPIClient2};

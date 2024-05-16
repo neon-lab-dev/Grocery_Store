@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const setItem = async (itemName: string, item: any) => {
   try {
-    await AsyncStorage.setItem(itemName, item);
+    await AsyncStorage.setItem(itemName, JSON.stringify(item));
   } catch (error) {
     console.log(error);
   }
@@ -24,32 +24,40 @@ const removeItem = async (itemName: string) => {
   }
 };
 
-const storeAddress = async value => {
+const setPrimaryAddress = async (address: any) => {
   try {
-    await AsyncStorage.setItem(
-      'primaryAddress',
-      JSON.stringify({
-        landmark: 'NNR Appartment',
-        address: '5-13',
-        city: 'Vijayawada',
-        state: 'AndhraPradesh',
-        pincode: '521325',
-        label: 'Home',
-      }),
-    );
+    await setItem('primaryAddress', address);
+    console.log('success saving primary address');
   } catch (error) {
-    console.log('yess', error);
+    console.log(error);
+  }
+};
+
+const getPrimaryAddress = async () => {
+  try {
+    const primaryAddress = await getItem('primaryAddress');
+    console.log('primay', primaryAddress);
+    return primaryAddress;
+  } catch (error) {
+    console.log(error);
   }
 };
 
 const getToken = async () => {
   try {
     const token = await getItem('token');
-    console.log(token);
+    console.log('token', token);
     return token;
   } catch (error) {
     console.log(error);
   }
 };
 
-export {setItem, getItem, removeItem, storeAddress, getToken};
+export {
+  setItem,
+  getItem,
+  removeItem,
+  setPrimaryAddress,
+  getPrimaryAddress,
+  getToken,
+};
