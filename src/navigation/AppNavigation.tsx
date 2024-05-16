@@ -211,32 +211,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
       <Stack.Screen
         name="CategoryProducts"
         component={CategoryProducts}
-        options={({navigation}) => ({
-          headerTitle: () => (
-            <View>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(16)}
-                color={'accent.800'}>
-                Ice Creams & More
-              </Text>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.400'}>
-                703 items
-              </Text>
-            </View>
-          ),
-          headerStyle: {height: 128},
-          headerTitleAlign: 'left',
-          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
-          headerRight: () => (
-            <Pressable mr={horizontalScale(20)}>
-              <SvgXml xml={searchIcon} height={24} width={24} />
-            </Pressable>
-          ),
-        })}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

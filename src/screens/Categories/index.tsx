@@ -2,6 +2,7 @@ import React, {FC, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
 import {verticalScale} from '../../assets/scaling';
+import {Categories as CategoriesData} from '../../constants/categories';
 
 interface Category {
   id: number;
@@ -41,262 +42,18 @@ const CategoryCard: FC<CategoryCardProps> = ({
 };
 
 const Categories: FC = ({navigation}) => {
-  const Data: Category[] = [
-    {
-      id: 1,
-      name: 'Electronics',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Earphones & Headsets',
-        },
-        {
-          id: 3,
-          name: 'Speakers',
-        },
-        {
-          id: 4,
-          name: 'Mobile & Computer',
-        },
-        {
-          id: 5,
-          name: 'Decorative Lights',
-        },
-        {
-          id: 6,
-          name: 'Chargers & Cables',
-        },
-        {
-          id: 7,
-          name: 'Kitchen Appliances',
-        },
-        {
-          id: 8,
-          name: 'Batteries',
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Cleaners & Repellents',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Sexual Wellness',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: 'Beauty & Cosmetics',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: 'Sweets & Chocolates',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: 'Sweets & Chocolates',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 7,
-      name: 'Sweets & Chocolates',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 8,
-      name: 'Sweets & Chocolates',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 9,
-      name: 'Sweets & Chocolates',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-  ];
-  const [categoryId, setCategoryId] = useState<number>(Data[0].id);
-
-  const subCategory = Data.find(item => item.id === categoryId);
-  const SubCategory: FC<SubCategory> = ({id, name}) => {
+  const [categoryId, setCategoryId] = useState(0);
+  const selectedCategoryName = Object.keys(CategoriesData)[categoryId];
+  const subCategories = CategoriesData[selectedCategoryName] || [];
+  const SubCategory: FC<SubCategory> = ({name}) => {
     return (
       <TouchableOpacity
         style={styles.subCategoryCard}
-        onPress={() => navigation.navigate('CategoryProducts')}>
+        onPress={() =>
+          navigation.navigate('CategoryProducts', {
+            SubCategory: name,
+          })
+        }>
         <View style={styles.rightImage}></View>
 
         <Text style={styles.categoriesRight}>{name}</Text>
@@ -313,12 +70,11 @@ const Categories: FC = ({navigation}) => {
               paddingBottom: verticalScale(27),
             }}
             showsVerticalScrollIndicator={false}
-            data={Data}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => (
+            data={Object.keys(CategoriesData)}
+            renderItem={({item, index}) => (
               <CategoryCard
-                id={item.id}
-                categoryName={item.name}
+                id={index}
+                categoryName={item}
                 setCategoryId={setCategoryId}
                 categoryId={categoryId}
               />
@@ -328,7 +84,7 @@ const Categories: FC = ({navigation}) => {
       </View>
       <View style={styles.rightCard}>
         <View style={{padding: 13, marginVertical: 8}}>
-          <Text style={styles.categoriesTitle}>{subCategory?.name}</Text>
+          <Text style={styles.categoriesTitle}>{selectedCategoryName}</Text>
         </View>
         <FlatList
           contentContainerStyle={{
@@ -337,9 +93,8 @@ const Categories: FC = ({navigation}) => {
             // backgroundColor: 'red',
           }}
           numColumns={3}
-          data={subCategory?.subCategory}
-          renderItem={({item}) => <SubCategory id={item.id} name={item.name} />}
-          keyExtractor={item => item.id.toString()}
+          data={subCategories}
+          renderItem={({item, index}) => <SubCategory id={index} name={item} />}
         />
       </View>
     </View>

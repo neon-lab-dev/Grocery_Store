@@ -35,7 +35,7 @@ export type AuthNavigatorParamList = {
 
 export type AppNavigatorParamList = {
   Categories: undefined;
-  CategoryProducts: undefined;
+  CategoryProducts: {SubCategory: string};
   Payment: undefined;
   ProductDetails: undefined;
   Home: undefined;
