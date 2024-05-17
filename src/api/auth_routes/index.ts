@@ -98,7 +98,7 @@ export const updateAddress = async address => {
 };
 
 export const deleteAddress = async id => {
-  console.log(id);
+  console.log(typeof id);
   try {
     const response = await AuthAPIClient2.delete('/profile/address/delete', [
       id,

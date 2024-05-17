@@ -55,16 +55,18 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
 
   return (
     <View flex={1} py={verticalScale(10)} bgColor={'accent.50'}>
-      {addressList?.map((i, index) => (
-        <SavedAddressComponent
-          key={index}
-          gotoAddAddress={gotoAddAddress}
-          deleteAddress={() => {}}
-          index={index + 1}
-          length={addressList.length}
-          address={i}
-        />
-      ))}
+      {addressList?.length !== 0
+        ? addressList?.map((i, index) => (
+            <SavedAddressComponent
+              key={index}
+              gotoAddAddress={gotoAddAddress}
+              deleteAddress={() => {}}
+              index={index + 1}
+              length={addressList.length}
+              address={i}
+            />
+          ))
+        : null}
       <View flex={1} bgColor={'accent.50'} mx={horizontalScale(20)}>
         <Button
           variant={'outline'}
