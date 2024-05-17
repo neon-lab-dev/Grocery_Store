@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {Image, Text, View} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {FlatList, Image, Text, View} from 'react-native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {Pressable} from 'native-base';
@@ -10,6 +10,11 @@ import {horizontalScale} from '../../assets/scaling';
 import {addIcon} from '../../assets/images/icons/add';
 import {edit} from '../../assets/images/icons/edit';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getAddress} from '../../api/auth_routes';
+import {getPrimaryAddress, setPrimaryAddress} from '../../api/localstorage';
+import Loader from '../Loader/Loader';
 
 interface SelectAddressProps {
   onClose: () => void;
@@ -17,20 +22,46 @@ interface SelectAddressProps {
 }
 
 const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
-  const AddressCard: FC = () => {
+  const [addressList, setAddressList] = useState([]);
+  const [loaderVisible, setLoaderVisible] = useState(false);
+  useEffect(() => {
+    fetchAddress();
+    getPrimaryAddress();
+  }, []);
+
+  const fetchAddress = async () => {
+    setLoaderVisible(true);
+    const getAddressList = await getAddress();
+    setLoaderVisible(false);
+    console.log(getAddressList);
+    setAddressList(getAddressList);
+  };
+  const navigation = useNavigation();
+
+  const editPressed = location => {
+    console.log('location', location);
+    onClose();
+    navigation.navigate('AddAddress', {location: location, title: 'Edit'});
+  };
+  const AddressCard: FC = ({location}) => {
+    if (location.primaryAddress) {
+      setPrimaryAddress(location);
+    }
     return (
       <View style={styles.addressBox}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View>
-          <Text style={styles.addressType}>Home</Text>
+          <Text style={styles.addressType}>{location.addressName}</Text>
           <Text numberOfLines={2} style={styles.addressDetails}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-            sapiente architecto, vel alias labore consequuntur qui voluptatem
-            nihil fuga corrupti repellat voluptates. Excepturi voluptate nulla
-            et, maxime aliquid fuga officiis.
+            {`${location.addressLine1},${location.landmark},${location.city},${location.state},${location.pincode}`}
           </Text>
         </View>
-        <SvgXml xml={edit} height={24} width={24} />
+        <SvgXml
+          xml={edit}
+          height={24}
+          width={24}
+          onPress={() => editPressed(location)}
+        />
       </View>
     );
   };
@@ -53,11 +84,11 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
       <View style={styles.savedAdd}>
         <Text style={styles.selectAddressText}>SAVED ADDRESSES</Text>
       </View>
-      <AddressCard />
-      <View
-        style={{borderWidth: horizontalScale(0.5), borderColor: '#F3F4F6'}}
+      <Loader isOpen={loaderVisible} />
+      <FlatList
+        data={addressList}
+        renderItem={({item}) => <AddressCard location={item} />}
       />
-      <AddressCard />
     </View>
   );
 };

@@ -18,16 +18,29 @@ import {
 import validators from '../../utils/validators';
 import SelectAddress from '../../components/SelectingAddress';
 import TextInput from '../../components/Input';
+import Loader from '../../components/Loader/Loader';
+import {toast} from '../../components/Toast/Toast';
+import {addAddress, updateAddress} from '../../api/auth_routes';
 
-const AddAddress = () => {
-  const [landmark, setLandmark] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [selectedLabel, setSelectedLabel] = useState('');
+const AddAddress = ({route, navigation}) => {
+  const {location, title} = route.params;
+  const [landmark, setLandmark] = useState(
+    title === 'Edit' ? location.landmark : '',
+  );
+  const [address, setAddress] = useState(
+    title === 'Edit' ? location.addressLine1 : '',
+  );
+  const [city, setCity] = useState(title === 'Edit' ? location.city : '');
+  const [state, setState] = useState(title === 'Edit' ? location.state : '');
+  const [pincode, setPincode] = useState(
+    title === 'Edit' ? location.pincode : '',
+  );
+  const [selectedLabel, setSelectedLabel] = useState(
+    title === 'Edit' ? location.addressName : '',
+  );
   const label = ['Home', 'Work', 'Other'];
   const [isClicked, setIsClicked] = useState(false);
+  const [loaderVisible, setLoaderVisible] = useState(false);
   const isContinueDisabled =
     landmark === '' ||
     address === '' ||
@@ -42,6 +55,46 @@ const AddAddress = () => {
   const pincodeErrorShown = !validators.isPinCode(pincode);
 
   const ScrollViewRef = useRef<ScrollView>(null);
+
+  const saveAddress = async () => {
+    setLoaderVisible(true);
+    try {
+      const response = await addAddress({
+        addressLine1: address,
+        landmark: landmark,
+        city: city,
+        state: state,
+        pincode: pincode,
+        addressName: selectedLabel,
+        primaryAddress: true,
+      });
+      console.log(response);
+      setLoaderVisible(false);
+      navigation.goBack();
+      toast.showToast(response.message || response.errorMessage);
+    } catch (error) {}
+  };
+
+  const editAddress = async () => {
+    setLoaderVisible(true);
+    try {
+      const getResponse = await updateAddress({
+        addressLine1: address,
+        addressLine2: null,
+        addressName: selectedLabel,
+        city: city,
+        id: location.id,
+        landmark: landmark,
+        pincode: pincode,
+        primaryAddress: true,
+        state: state,
+      });
+      console.log(getResponse);
+      setLoaderVisible(false);
+      navigation.goBack();
+      toast.showToast(getResponse.message || getResponse.errorMessage);
+    } catch (error) {}
+  };
 
   return (
     <View
@@ -254,11 +307,12 @@ const AddAddress = () => {
               letterSpacing: -0.04,
             }}
             disabled={isContinueDisabled}
-            onPress={() => setIsClicked(true)}>
+            onPress={title === 'Edit' ? editAddress : saveAddress}>
             Save Address
           </Button>
         </Center>
       </View>
+      <Loader isOpen={loaderVisible} />
     </View>
   );
 };

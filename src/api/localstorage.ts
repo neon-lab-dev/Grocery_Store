@@ -41,4 +41,31 @@ const getToken = async () => {
   }
 };
 
-export {setItem, getItem, removeItem, getToken, clear};
+const setPrimaryAddress = async (address: any) => {
+  try {
+    await setItem('primaryAddress', address);
+    console.log('success saving primary address');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getPrimaryAddress = async () => {
+  try {
+    const primaryAddress = await getItem('primaryAddress');
+    console.log('primay', primaryAddress);
+    return primaryAddress;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  setItem,
+  getItem,
+  removeItem,
+  getToken,
+  clear,
+  setPrimaryAddress,
+  getPrimaryAddress,
+};

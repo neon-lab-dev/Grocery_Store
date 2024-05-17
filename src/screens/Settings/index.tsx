@@ -1,10 +1,13 @@
 import {
+  Box,
   Button,
   Center,
   Image,
   KeyboardAvoidingView,
   Modal,
   Text,
+  Toast,
+  useToast,
   View,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
@@ -25,6 +28,7 @@ import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
+  width,
 } from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
 import {CallNumber} from '../../utils/launchIntents';
@@ -33,14 +37,25 @@ import {accountIcon} from '../../assets/images/icons/account_circle';
 import {close} from '../../assets/images/icons/close';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
+import {APIClient} from '../../api/axios.config';
+
+import {toast} from '../../components/Toast/Toast';
+import Loader from '../../components/Loader/Loader';
+import {createSuggestion, getOrders} from '../../api/auth_routes';
+import axios from 'axios';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
 export const Settings: React.FC<SettingsProps> = ({navigation}) => {
+  const [showError, setShowError] = useState(false);
+  const [loaderVisible, setLoaderVisible] = useState(false);
+  const [resMsg, setResMsg] = useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [suggestion, setSuggestion] = useState('');
   useEffect(() => {
+    getOrders();
     function onKeyboardDidShow(e: KeyboardEvent) {
       setKeyboardHeight(e.endCoordinates.height);
       setIsClicked(true);
@@ -85,7 +100,43 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   };
   const handleLogOut = () => {
     dispatch(logout());
-    navigation.reset({index: 0, routes: [{name: 'Auth'}]});
+    navigation.replace('Auth', {screen: 'Login'});
+  };
+
+  // const sendSuggestion = async () => {
+  //   const headers = {
+  //     Authorization: 'Bearer 3e81f18d-e63c-4d39-a68c-044bc027a73b',
+  //   };
+  //   axios
+  //     .post(
+  //       'http://10.0.2.2:8802/v1/suggestion/create',
+  //       {
+  //         comment: 'nice',
+  //       },
+  //       {headers},
+  //     )
+  //     .then(response => console.log(response))
+  //     .catch(error => console.log(error));
+  // };
+
+  const sendSuggestion = async () => {
+    if (suggestion.length === 0) {
+      setShowError(true);
+    } else {
+      setModalVisible(false);
+      setLoaderVisible(true);
+      try {
+        const message = await createSuggestion(suggestion);
+        setSuggestion('');
+        setLoaderVisible(false);
+        console.log(message);
+        toast.showToast(message.message);
+      } catch {
+        Toast.show({
+          title: resMsg,
+        });
+      }
+    }
   };
   return (
     <View flex={1} bgColor={'accent.50'}>
@@ -147,6 +198,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
               </Text>
             </View>
             <TextInput
+              value={suggestion}
+              onChangeText={e => setSuggestion(e)}
               onFocus={() => setIsClicked(true)}
               onBlur={() => setIsClicked(false)}
               textAlignVertical="top"
@@ -165,6 +218,18 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 letterSpacing: -0.04,
               }}
             />
+            {showError && (
+              <Text
+                fontFamily={'Inter_Regular'}
+                fontSize={scaleFontSize(15)}
+                color={'#EF4444'}
+                mb={verticalScale(4)}
+                lineHeight={16.8}
+                letterSpacing={-0.03}>
+                Please fill this filed*
+              </Text>
+            )}
+
             <Button
               mb={verticalScale(10)}
               w={'100%'}
@@ -179,7 +244,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 letterSpacing: -0.04,
                 color: 'primary.50',
               }}
-              onPress={() => {}}>
+              onPress={sendSuggestion}>
               Send
             </Button>
           </View>
@@ -231,6 +296,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
           Log Out
         </Button>
       </Center>
+      <Loader isOpen={loaderVisible} />
     </View>
   );
 };
