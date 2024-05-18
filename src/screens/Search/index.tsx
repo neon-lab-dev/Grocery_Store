@@ -18,16 +18,13 @@ import {SvgXml} from 'react-native-svg';
 import {filter} from '../../assets/images/icons/filter';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
-import ProductCard from '../../components/productCard/ProductCard';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FilterOverlay from '../../components/Search/SearchFilterOverlay';
 import SearchInput from '../../components/SearchInput';
-import ProductData from '../../assets/data/ProductData';
 import GoBack from '../../components/Navigation/GoBack';
 import {Dimensions} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
-import {AuthAPIClient} from '../../api/axios.config';
 import {getItem, setItem} from '../../api/localstorage';
 import {searchProduct} from '../../api/auth_routes';
 interface SearchProps {

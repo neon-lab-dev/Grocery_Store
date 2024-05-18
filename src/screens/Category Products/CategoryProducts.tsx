@@ -1,8 +1,19 @@
-import React, {FC, useState} from 'react';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {FlatList, TouchableOpacity} from 'react-native';
 import {styles} from './style';
 import ProductData from '../../assets/data/ProductData';
 import SmallProductCard from '../../components/productCard/SmallProductCard';
+import {Categories, SubCategories} from '../../constants/categories';
+import {AuthAPIClient} from '../../api/axios.config';
+import {View, Text, Pressable, Image} from 'native-base';
+import GoBack from '../../components/Navigation/GoBack';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
+import {SvgXml} from 'react-native-svg';
+import {searchIcon} from '../../assets/images/icons/searchIcon';
 
 interface Category {
   id: number;
@@ -41,294 +52,135 @@ const CategoryCard: FC<CategoryCardProps> = ({
   );
 };
 
-const CategoryProducts: FC = ({navigation}) => {
+const CategoryProducts: FC = ({navigation, route}) => {
   const navigateToProductDetails = () => {
     navigation.navigate('ProductDetails');
   };
-  const Data: Category[] = [
-    {
-      id: 1,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Earphones & Headsets',
-        },
-        {
-          id: 3,
-          name: 'Speakers',
-        },
-        {
-          id: 4,
-          name: 'Mobile & Computer',
-        },
-        {
-          id: 5,
-          name: 'Decorative Lights',
-        },
-        {
-          id: 6,
-          name: 'Chargers & Cables',
-        },
-        {
-          id: 7,
-          name: 'Kitchen Appliances',
-        },
-        {
-          id: 8,
-          name: 'Batteries',
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 7,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 8,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-    {
-      id: 9,
-      name: 'Chicken, Meat & Fish',
-      subCategory: [
-        {
-          id: 1,
-          name: 'Smart Watches',
-        },
-        {
-          id: 2,
-          name: 'Smart Watches',
-        },
-        {
-          id: 3,
-          name: 'Smart Watches',
-        },
-        {
-          id: 4,
-          name: 'Smart Watches',
-        },
-        {
-          id: 5,
-          name: 'Smart Watches',
-        },
-      ],
-    },
-  ];
-  const [categoryId, setCategoryId] = useState<number>(Data[0].id);
-  console.log(categoryId);
+  const SubCategory = route.params.SubCategory;
+  const [categoryId, setCategoryId] = useState<number>(0);
+  const [CategoryData, setCategoryData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const fetchCategoryProducts = async () => {
+    try {
+      setIsLoading(true);
+      let url = '/product/list';
+      let queryParams = [];
+      if (SubCategory) {
+        queryParams.push(`subCategory=${SubCategory}`);
+      }
+      if (queryParams.length > 0) {
+        url += `?${queryParams.join('&')}`;
+      }
+      const response = await AuthAPIClient.get(url);
+      if (response.data.responseBody && response.data.responseBody.content) {
+        setCategoryData(response.data.responseBody.content);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategoryProducts();
+  }, [categoryId]);
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.leftCard}>
-        <View>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={Data}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => (
-              <CategoryCard
-                id={item.id}
-                categoryName={item.name}
-                setCategoryId={setCategoryId}
-                categoryId={categoryId}
-              />
-            )}
-          />
+    <>
+      <View
+        h={144}
+        bgColor={'white'}
+        flexDir={'row'}
+        alignItems={'center'}
+        justifyContent={'space-between'}
+        borderBottomWidth={1}
+        borderBottomColor={'accent.100'}>
+        <View
+          flexDir={'row'}
+          style={{gap: horizontalScale(12)}}
+          alignItems={'center'}>
+          <GoBack onPress={() => navigation.goBack()} />
+          <View style={{gap: verticalScale(4)}}>
+            <Text
+              fontFamily={'Inter_Medium'}
+              fontSize={scaleFontSize(16)}
+              lineHeight={19.36}
+              letterSpacing={-0.04}
+              color={'accent.800'}>
+              {SubCategory}
+            </Text>
+            <Text
+              fontFamily={'Inter_Regular'}
+              fontSize={scaleFontSize(14)}
+              lineHeight={16.8}
+              letterSpacing={-0.03}
+              color={'accent.500'}>
+              {CategoryData.length} Items
+            </Text>
+          </View>
         </View>
+        <Pressable mr={horizontalScale(20)}>
+          <SvgXml xml={searchIcon} height={24} width={24} />
+        </Pressable>
       </View>
-      <View style={styles.rightCard}>
-        <FlatList
-          numColumns={2}
-          data={ProductData}
-          renderItem={({item}) => (
-            <SmallProductCard
-              onPress={navigateToProductDetails}
-              products={item}
+      <View style={styles.mainContainer}>
+        <View style={styles.leftCard}>
+          <View>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={SubCategories[SubCategory]}
+              renderItem={({item, index}) => (
+                <CategoryCard
+                  id={index}
+                  categoryName={item}
+                  setCategoryId={setCategoryId}
+                  categoryId={categoryId}
+                />
+              )}
+            />
+          </View>
+        </View>
+        <View style={styles.rightCard}>
+          {isLoading ? (
+            <View
+              flex={1}
+              bgColor={'accent.300'}
+              justifyContent={'center'}
+              alignItems={'center'}>
+              <Image
+                alt="loading"
+                source={require('../../assets/images/icons/loading.gif')}
+                h={200}
+                w={200}
+              />
+            </View>
+          ) : CategoryData.length === 0 ? (
+            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(14)}
+                lineHeight={16.8}
+                letterSpacing={-0.03}
+                color={'accent.900'}>
+                No Products Found
+              </Text>
+            </View>
+          ) : (
+            <FlatList
+              numColumns={2}
+              data={CategoryData}
+              renderItem={({item, index}) => (
+                <SmallProductCard
+                  key={index}
+                  onPress={navigateToProductDetails}
+                  products={item}
+                />
+              )}
             />
           )}
-          keyExtractor={item => item.id.toString()}
-        />
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
