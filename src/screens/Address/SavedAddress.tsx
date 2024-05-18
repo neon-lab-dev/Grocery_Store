@@ -67,6 +67,10 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
             />
           ))
         : null}
+      {/* <FlatList
+        data={addressList}
+        renderItem={({item}) => <SavedAddressComponent />}
+      /> */}
       <View flex={1} bgColor={'accent.50'} mx={horizontalScale(20)}>
         <Button
           variant={'outline'}
