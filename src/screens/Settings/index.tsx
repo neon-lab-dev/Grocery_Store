@@ -103,22 +103,6 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
     navigation.replace('Auth', {screen: 'Login'});
   };
 
-  // const sendSuggestion = async () => {
-  //   const headers = {
-  //     Authorization: 'Bearer 3e81f18d-e63c-4d39-a68c-044bc027a73b',
-  //   };
-  //   axios
-  //     .post(
-  //       'http://10.0.2.2:8802/v1/suggestion/create',
-  //       {
-  //         comment: 'nice',
-  //       },
-  //       {headers},
-  //     )
-  //     .then(response => console.log(response))
-  //     .catch(error => console.log(error));
-  // };
-
   const sendSuggestion = async () => {
     if (suggestion.length === 0) {
       setShowError(true);
@@ -129,7 +113,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
         const message = await createSuggestion(suggestion);
         setSuggestion('');
         setLoaderVisible(false);
-        console.log(message);
+        // console.log(message);
         toast.showToast(message.message);
       } catch {
         Toast.show({
@@ -226,7 +210,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 mb={verticalScale(4)}
                 lineHeight={16.8}
                 letterSpacing={-0.03}>
-                Please fill this filed*
+                Suggestion field cannot be Empty*
               </Text>
             )}
 

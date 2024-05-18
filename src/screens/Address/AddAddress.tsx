@@ -66,9 +66,9 @@ const AddAddress = ({route, navigation}) => {
         state: state,
         pincode: pincode,
         addressName: selectedLabel,
-        primaryAddress: true,
+        primaryAddress: false,
       });
-      console.log(response);
+      // console.log(response);
       setLoaderVisible(false);
       navigation.goBack();
       toast.showToast(response.message || response.errorMessage);
@@ -89,7 +89,7 @@ const AddAddress = ({route, navigation}) => {
         primaryAddress: true,
         state: state,
       });
-      console.log(getResponse);
+      // console.log(getResponse);
       setLoaderVisible(false);
       navigation.goBack();
       toast.showToast(getResponse.message || getResponse.errorMessage);

@@ -1,5 +1,5 @@
 import {Button, Pressable, Text, View} from 'native-base';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import * as React from 'react';
 import {
   horizontalScale,
@@ -25,17 +25,29 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [addressList, setAddressList] = React.useState([]);
 
-  React.useEffect(() => {
-    fetchAddress();
-  }, []);
+  // React.useEffect(() => {
+  //   fetchAddress();
+  // }, []);
 
-  const fetchAddress = async () => {
-    setLoaderVisible(true);
-    const getAddressList = await getAddress();
-    console.log(getAddressList);
-    setAddressList(getAddressList);
-    setLoaderVisible(false);
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+
+      const fetchAddress = async () => {
+        setLoaderVisible(true);
+        const getAddressList = await getAddress();
+        // console.log(getAddressList);
+        setAddressList(getAddressList);
+        setLoaderVisible(false);
+      };
+
+      fetchAddress();
+
+      return () => {
+        isActive = false;
+      };
+    }, []),
+  );
 
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress', {title: 'Add'});
@@ -67,10 +79,6 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
             />
           ))
         : null}
-      {/* <FlatList
-        data={addressList}
-        renderItem={({item}) => <SavedAddressComponent />}
-      /> */}
       <View flex={1} bgColor={'accent.50'} mx={horizontalScale(20)}>
         <Button
           variant={'outline'}

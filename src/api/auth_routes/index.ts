@@ -46,7 +46,7 @@ export const searchProduct = async (
 export const getAddress = async () => {
   try {
     const response = await AuthAPIClient2.get('/profile/address/fetch');
-    console.log('getaddress', response);
+    // console.log('getaddress', response);
     return response.data.responseBody.content;
   } catch (error) {
     return error;
@@ -71,12 +71,10 @@ export const getAddress = async () => {
 // };
 
 export const addAddress = async address => {
-  console.log(address);
+  console.log('addAdress', address);
   try {
-    const response = await AuthAPIClient2.post('/profile/address/add', {
-      address,
-    });
-    console.log('Addaddress', response);
+    const response = await AuthAPIClient2.post('/profile/address/add', address);
+    // console.log('Addaddress', response);
     return response.data;
   } catch (error) {
     return error;
@@ -90,7 +88,7 @@ export const updateAddress = async address => {
       '/profile/address/update',
       address,
     );
-    console.log('updateddress', response);
+    // console.log('updateddress', response);
     return response.data;
   } catch (error) {
     return error;
@@ -103,7 +101,7 @@ export const deleteAddress = async id => {
     const response = await AuthAPIClient2.delete('/profile/address/delete', [
       id,
     ]);
-    console.log('deleteAddress', response);
+    // console.log('deleteAddress', response);
     return response.data;
   } catch (error) {
     return error;
