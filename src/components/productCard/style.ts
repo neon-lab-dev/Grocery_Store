@@ -15,6 +15,10 @@ export const styles = StyleSheet.create({
     width: horizontalScale(90),
     height: verticalScale(70),
     alignSelf: 'center',
+    borderRadius: 12,
+    backgroundColor: 'transparent',
+    borderColor: '#F9FAFB',
+    borderWidth: 1,
   },
   Title: {
     fontWeight: '500',

@@ -100,7 +100,7 @@ export const Categories = {
   'Household Essentials': [
     {
       subCategory: 'Home & Lifestyle',
-      image: require('../assets/images/Categories/sexual_wellness.png'),
+      image: require('../assets/images/Categories/home_lifestyle.png'),
     },
     {
       subCategory: 'Cleaners & Repellents',

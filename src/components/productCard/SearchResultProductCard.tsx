@@ -134,7 +134,9 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             alt="Product Image"
             height={113}
             width={118}
-            resizeMode="contain"
+            borderRadius={12}
+            borderWidth={1}
+            borderColor={'accent.500'}
           />
           {/* <View h={113} w={118} /> */}
         </View>

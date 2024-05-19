@@ -146,7 +146,6 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const navigation = useNavigation();
 
   const navigateToCart = () => {
-    Close();
     navigation.navigate('Cart');
   };
 

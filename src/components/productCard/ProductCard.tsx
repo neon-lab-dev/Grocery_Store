@@ -308,7 +308,11 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             borderColor={'primary.500'}
             height={8}
             borderRadius={10}>
-            <Text color={'primary.500'} fontWeight={500} p={0.5}>
+            <Text
+              fontFamily={'Inter_Medium'}
+              color={'primary.500'}
+              fontWeight={500}
+              p={0.5}>
               Out Of Stock
             </Text>
           </View>
