@@ -28,12 +28,15 @@ import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import GoBack from '../../components/Navigation/GoBack';
 import {useSelector} from 'react-redux';
 import {CartItem} from '../../redux/slices';
+import {getSelectedAddress} from '../../api/localstorage';
+import Loader from '../../components/Loader/Loader';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
-
 const Cart: React.FC<CartProps> = ({navigation}) => {
+  const [loaderVisible, setLoaderVisible] = React.useState(false);
+  const [selectAddress, setSelectAddress] = React.useState({});
   const [isCartEmpty, setisCartEmpty] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
@@ -42,7 +45,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const cartItemCount = cartItems.items.length;
   React.useEffect(() => {
     let temp = 0;
-    cartItems.items.forEach((item: { DisPrice: number; quantity: number; }) => {
+    cartItems.items.forEach((item: {DisPrice: number; quantity: number}) => {
       temp += item.DisPrice * item.quantity;
     });
     setTotalDiscountedPrice(temp);
@@ -53,19 +56,28 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   // const totalPrice = useSelector((state:CartItem)=> state.cart.totalPrice);
   const isAddressPresent = true;
   React.useEffect(() => {
+    selAddress();
     if (cartItemCount <= 0) {
       setisCartEmpty(true);
     } else {
       setisCartEmpty(false);
     }
-  });
+  }, []);
+
+  const selAddress = async () => {
+    setLoaderVisible(true);
+    const address = await getSelectedAddress();
+    console.log('sel', address);
+    setSelectAddress(address);
+    setLoaderVisible(false);
+  };
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const gotoPayment = () => {
     navigation.navigate('Payment');
   };
   const gotoAddAddress = () => {
-    navigation.navigate('AddAddress');
+    navigation.navigate('AddAddress', {title: 'Add'});
   };
   const gotoHome = () => {
     navigation.popToTop();
@@ -113,7 +125,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       ) : (
         <ScrollView flex={0.8}>
           <View bg={'white'} mt={verticalScale(15)}>
-            {cartItems.items.map((data: { id: React.Key | null | undefined; }) => (
+            {cartItems.items.map((data: {id: React.Key | null | undefined}) => (
               <CartItemCard key={data.id} item={data} />
             ))}
           </View>
@@ -122,7 +134,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             deliveryCharge={25}
             itemPrice={TotalPrice - 25}
             price={TotalPrice}
-            savingPrice={totalDiscountedPrice-(TotalPrice-25)}
+            savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
           />
         </ScrollView>
       )}
@@ -197,12 +209,17 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                   Deliver to
                 </Text>
                 <Text
+                  // numberOfLines={1}
+                  style={{width: '90%'}}
+                  // width={100}
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(12)}
                   color={'accent.600'}
-                  lineHeight={14.52}
+                  lineHeight={14}
                   letterSpacing={-0.04}>
-                  1st Floor, ABC street, XYZ City
+                  {selectAddress !== null
+                    ? `${selectAddress?.addressLine1},${selectAddress?.landmark},${selectAddress?.city},${selectAddress?.state}`
+                    : `Select the Address`}
                 </Text>
               </View>
               <Pressable onPress={() => setModalVisible(true)}>
@@ -272,6 +289,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           </Center>
         </View>
       )}
+      <Loader isOpen={loaderVisible} />
     </View>
   );
 };
