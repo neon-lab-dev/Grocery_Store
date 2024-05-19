@@ -16,6 +16,7 @@ import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
+  width,
 } from '../../assets/scaling';
 import {CallNumber} from '../../utils/launchIntents';
 import {SvgXml} from 'react-native-svg';
@@ -24,17 +25,28 @@ import {close} from '../../assets/images/icons/close';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
 import {fetchUserData} from '../../api/auth_routes';
+import {APIClient} from '../../api/axios.config';
+
+import {toast} from '../../components/Toast/Toast';
+import Loader from '../../components/Loader/Loader';
+import {createSuggestion, getOrders} from '../../api/auth_routes';
+import axios from 'axios';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
 export const Settings: React.FC<SettingsProps> = ({navigation}) => {
+  const [showError, setShowError] = useState(false);
+  const [loaderVisible, setLoaderVisible] = useState(false);
+  const [resMsg, setResMsg] = useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [suggestion, setSuggestion] = useState('');
   useEffect(() => {
+    getOrders();
     function onKeyboardDidShow(e: KeyboardEvent) {
       setKeyboardHeight(e.endCoordinates.height);
       setIsClicked(true);
@@ -97,7 +109,27 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   };
   const handleLogOut = () => {
     dispatch(logout());
-    navigation.reset({index: 0, routes: [{name: 'Auth'}]});
+    navigation.replace('Auth', {screen: 'Login'});
+  };
+
+  const sendSuggestion = async () => {
+    if (suggestion.length === 0) {
+      setShowError(true);
+    } else {
+      setModalVisible(false);
+      setLoaderVisible(true);
+      try {
+        const message = await createSuggestion(suggestion);
+        setSuggestion('');
+        setLoaderVisible(false);
+        // console.log(message);
+        toast.showToast(message.message);
+      } catch {
+        Toast.show({
+          title: resMsg,
+        });
+      }
+    }
   };
   return (
     <>
@@ -174,7 +206,9 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                   </Text>
                 </View>
                 <TextInput
-                  onFocus={() => setIsClicked(true)}
+                  value={suggestion}
+              onChangeText={e => setSuggestion(e)}
+              onFocus={() => setIsClicked(true)}
                   onBlur={() => setIsClicked(false)}
                   textAlignVertical="top"
                   placeholder="Enter Here"
@@ -192,7 +226,19 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                     letterSpacing: -0.04,
                   }}
                 />
-                <Button
+                {showError && (
+              <Text
+                fontFamily={'Inter_Regular'}
+                fontSize={scaleFontSize(15)}
+                color={'#EF4444'}
+                mb={verticalScale(4)}
+                lineHeight={16.8}
+                letterSpacing={-0.03}>
+                Suggestion field cannot be Empty*
+              </Text>
+            )}
+
+            <Button
                   mb={verticalScale(10)}
                   w={'100%'}
                   py={verticalScale(15)}
@@ -206,7 +252,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                     letterSpacing: -0.04,
                     color: 'primary.50',
                   }}
-                  onPress={() => {}}>
+                  onPress={sendSuggestion}>
                   Send
                 </Button>
               </View>
@@ -258,7 +304,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
               Log Out
             </Button>
           </Center>
-        </View>
+          <Loader isOpen={loaderVisible} />
+    </View>
       )}
     </>
   );

@@ -28,11 +28,15 @@ import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import GoBack from '../../components/Navigation/GoBack';
 import {useSelector} from 'react-redux';
 import {CartItem} from '../../redux/slices';
+import {getSelectedAddress} from '../../api/localstorage';
+import Loader from '../../components/Loader/Loader';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
 const Cart: React.FC<CartProps> = ({navigation}) => {
+  const [loaderVisible, setLoaderVisible] = React.useState(false);
+  const [selectAddress, setSelectAddress] = React.useState({});
   const [isCartEmpty, setisCartEmpty] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
@@ -54,6 +58,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   // const totalPrice = useSelector((state:CartItem)=> state.cart.totalPrice);
   const isAddressPresent = true;
   React.useEffect(() => {
+    selAddress();
     if (cartItemCount <= 0) {
       setisCartEmpty(true);
     } else {
@@ -66,7 +71,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     navigation.navigate('Payment');
   };
   const gotoAddAddress = () => {
-    navigation.navigate('AddAddress');
+    navigation.navigate('AddAddress', {title: 'Add'});
   };
   const gotoHome = () => {
     navigation.popToTop();
@@ -198,12 +203,17 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                   Deliver to
                 </Text>
                 <Text
+                  // numberOfLines={1}
+                  style={{width: '90%'}}
+                  // width={100}
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(12)}
                   color={'accent.600'}
-                  lineHeight={14.52}
+                  lineHeight={14}
                   letterSpacing={-0.04}>
-                  1st Floor, ABC street, XYZ City
+                  {selectAddress !== null
+                    ? `${selectAddress?.addressLine1},${selectAddress?.landmark},${selectAddress?.city},${selectAddress?.state}`
+                    : `Select the Address`}
                 </Text>
               </View>
               <Pressable onPress={() => setModalVisible(true)}>
@@ -273,6 +283,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           </Center>
         </View>
       )}
+      <Loader isOpen={loaderVisible} />
     </View>
   );
 };

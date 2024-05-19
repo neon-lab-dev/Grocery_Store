@@ -9,6 +9,7 @@ export const toast = {
       backgroundColor: 'primary.500',
       fontFamily: 'Inter_Regular',
       color: 'primary.50',
+      style: {marginBottom: 30},
     });
   },
 };

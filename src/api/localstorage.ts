@@ -41,4 +41,32 @@ const getToken = async () => {
   }
 };
 
-export {setItem, getItem, removeItem, getToken, clear};
+const setSelectedAddress = async (address: any) => {
+  try {
+    await setItem('primaryAddress', address);
+    // console.log('success saving primary address');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getSelectedAddress = async () => {
+  try {
+    const primaryAddress = await getItem('primaryAddress');
+    const address = JSON.parse(primaryAddress);
+    // console.log('primay', primaryAddress);
+    return address;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  setItem,
+  getItem,
+  removeItem,
+  getToken,
+  clear,
+  setSelectedAddress,
+  getSelectedAddress,
+};

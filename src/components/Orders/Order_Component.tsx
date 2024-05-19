@@ -14,10 +14,12 @@ interface OrderComponentProps {
 }
 
 export const OrderComponent: React.FC<OrderComponentProps> = ({
+  data,
   onPress,
   index,
   length,
 }) => {
+  console.log('data', data);
   return (
     <Pressable
       px={horizontalScale(20)}
@@ -38,7 +40,8 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
           flexShrink={1}
           lineHeight={16.94}
           letterSpacing={-0.04}>
-          Cadbury Bournville Rich Cocoa 70% Dark
+          {data.name}{' '}
+          {data.discountPercent !== 0 && `${data.discountPercent} %`}
         </Text>
         <Text
           fontFamily={'Inter_Medium'}

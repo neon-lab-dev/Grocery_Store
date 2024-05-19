@@ -9,6 +9,7 @@ const BASE_URL =
 
 export const APIClient = axios.create({
   baseURL: 'http://35.154.133.112:8801/v1',
+  baseURL: 'http://35.154.133.112:8801/v1',
   headers: {'Content-Type': 'application/json', 'Accept-Encoding': 'gzip'},
 });
 
@@ -28,6 +29,21 @@ AuthAPIClient.interceptors.request.use(
     const token = JSON.parse(storedToken);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      // console.log(token);
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
+AuthAPIClient2.interceptors.request.use(
+  async config => {
+    const storedToken = await getToken();
+    const token = JSON.parse(storedToken);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+      // console.log(token);
     }
     return config;
   },
