@@ -174,8 +174,8 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
       <Stack.Screen
         name="AddAddress"
         component={AddAddress}
-        options={({navigation}) => ({
-          headerTitle: 'Add Address Details',
+        options={({navigation, route}) => ({
+          headerTitle: `${route.params.title} Address Details`,
           headerTitleStyle: {
             fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(18),
