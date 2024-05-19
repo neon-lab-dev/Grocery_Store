@@ -66,7 +66,7 @@ export const Categories = {
   'Beauty & Personal Care': [
     {
       subCategory: 'Bath & Body',
-      image: require('../assets/images/Categories/Bath_body.png'),
+      image: require('../assets/images/Categories/bath_body.png'),
     },
     {
       subCategory: 'Hair',
