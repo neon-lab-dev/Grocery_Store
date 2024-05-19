@@ -45,9 +45,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const cartItemCount = cartItems.items.length;
   React.useEffect(() => {
     let temp = 0;
-    cartItems.items.forEach((item: {DisPrice: number; quantity: number}) => {
-      temp += item.DisPrice * item.quantity;
-    });
+    cartItems.items.forEach(
+      (item: {varietyList: any[]; discountPrice: number; quantity: number}) => {
+        temp += item.varietyList[0].discountPrice * item.quantity;
+      },
+    );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
   // console.log(totalDiscountedPrice)
@@ -62,15 +64,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     } else {
       setisCartEmpty(false);
     }
-  }, []);
-
-  const selAddress = async () => {
-    setLoaderVisible(true);
-    const address = await getSelectedAddress();
-    console.log('sel', address);
-    setSelectAddress(address);
-    setLoaderVisible(false);
-  };
+  }, [cartItemCount]);
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const gotoPayment = () => {
@@ -268,7 +262,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                     color={'primary.50'}
                     lineHeight={24.2}
                     letterSpacing={-0.04}>
-                    ₹{TotalPrice}
+                    ₹{TotalPrice.toFixed(2)}
                   </Text>
                 </View>
                 <View flexDir={'row'} alignItems={'center'}>

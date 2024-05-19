@@ -5,8 +5,13 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import { useDispatch } from 'react-redux';
-import { addToCart, decrementItem, incrementItem, removeItem } from '../../redux/slices/actions';
+import {useDispatch} from 'react-redux';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 
 // interface CartItem {
 //   id: number;
@@ -47,8 +52,12 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   const id = 'test-toast';
   // console.log(item);
   const [count, setCount] = useState(item.quantity);
-  const [discountPrice, setDiscountPrice] = useState(item.DisPrice * count);
-  const [actualPrice, setActualPrice] = useState(item.Price * count);
+  const [discountPrice, setDiscountPrice] = useState(
+    item.varietyList[0].discountPrice * count,
+  );
+  const [actualPrice, setActualPrice] = useState(
+    item.varietyList[0].price * count,
+  );
 
   const handleDecrease = () => {
     if (count == 1) {
@@ -61,8 +70,8 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   };
 
   const handleIncrease = () => {
-    if (count < item.QuantityAvalaible) {
-    dispatch(incrementItem(item.id));
+    if (count < item.varietyList[0].quantity) {
+      dispatch(incrementItem(item.id));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -91,9 +100,9 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   };
 
   useEffect(() => {
-    setDiscountPrice(item.DisPrice * count);
-    setActualPrice(item.Price * count);
-  }, [count, item.Price, item.DisPrice]);
+    setDiscountPrice(item.varietyList[0].discountPrice * count);
+    setActualPrice(item.varietyList[0].price * count);
+  }, [count, item.varietyList]);
   const getImage = (imageName: string) => {
     switch (imageName) {
       case 'item1':
@@ -116,12 +125,12 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
       borderBottomColor={'accent.100'}>
       <View flex={1} flexDir={'row'}>
         <Image
-        style={{
-          height:45,
-          width:50
-        }}
+          style={{
+            height: 45,
+            width: 50,
+          }}
           alt="Image"
-          source={getImage(item.image)}
+          source={{uri: item.varietyList[0].documentUrls[0]}}
           resizeMode="cover"
           mr={horizontalScale(10)}
         />
@@ -133,7 +142,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
             numberOfLines={2}
             lineHeight={16.8}
             letterSpacing={-0.03}>
-            {item.Title}
+            {item.name}
           </Text>
           <Text
             fontFamily={'Inter_Medium'}
@@ -141,7 +150,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
             color={'accent.500'}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            {item.Size}
+            {item.varietyList[0].value} {item.varietyList[0].unit}
           </Text>
         </View>
       </View>
@@ -219,7 +228,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
             color={'primary.500'}
             lineHeight={19.36}
             letterSpacing={-0.04}>
-            ₹{actualPrice}
+            ₹{discountPrice}
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
@@ -229,7 +238,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
             strikeThrough
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            ₹{discountPrice}
+            ₹{actualPrice}
           </Text>
         </View>
       </View>

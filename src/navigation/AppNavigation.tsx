@@ -94,24 +94,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
       <Stack.Screen
         name="ProductDetails"
         component={ProductDetails}
-        options={({navigation}) => ({
-          headerTitle: () => (
-            <View>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(18)}
-                color={'#1F2937'}
-                lineHeight={19.36}
-                letterSpacing={-0.04}>
-                Product
-              </Text>
-            </View>
-          ),
-          headerStyle: {height: 128},
-          headerTitleAlign: 'left',
-          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
-          // headerRight: () => <Delivered mr={3} h={horizontalScale(25)} />,
-        })}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="OrderSuccess"

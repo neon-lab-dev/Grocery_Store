@@ -1,8 +1,9 @@
 import React, {FC, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
-import {verticalScale} from '../../assets/scaling';
+import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Categories as CategoriesData} from '../../constants/categories';
+import {Image} from 'native-base';
 
 interface Category {
   id: number;
@@ -12,7 +13,8 @@ interface Category {
 
 interface SubCategory {
   id: number;
-  name: string;
+  subCategory: string;
+  image: any;
 }
 
 interface CategoryCardProps {
@@ -45,18 +47,26 @@ const Categories: FC = ({navigation}) => {
   const [categoryId, setCategoryId] = useState(0);
   const selectedCategoryName = Object.keys(CategoriesData)[categoryId];
   const subCategories = CategoriesData[selectedCategoryName] || [];
-  const SubCategory: FC<SubCategory> = ({name}) => {
+  const SubCategory: FC<SubCategory> = ({subCategory, image}) => {
     return (
       <TouchableOpacity
         style={styles.subCategoryCard}
         onPress={() =>
           navigation.navigate('CategoryProducts', {
-            SubCategory: name,
+            SubCategory: subCategory,
           })
         }>
-        <View style={styles.rightImage}></View>
+        <View style={styles.rightImage}>
+          <Image
+            alt="category"
+            source={image}
+            borderRadius={16}
+            width={horizontalScale(66)}
+            height={verticalScale(73)}
+          />
+        </View>
 
-        <Text style={styles.categoriesRight}>{name}</Text>
+        <Text style={styles.categoriesRight}>{subCategory}</Text>
       </TouchableOpacity>
     );
   };
@@ -94,7 +104,13 @@ const Categories: FC = ({navigation}) => {
           }}
           numColumns={3}
           data={subCategories}
-          renderItem={({item, index}) => <SubCategory id={index} name={item} />}
+          renderItem={({item, index}) => (
+            <SubCategory
+              id={index}
+              subCategory={item.subCategory}
+              image={item.image}
+            />
+          )}
         />
       </View>
     </View>

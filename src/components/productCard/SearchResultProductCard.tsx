@@ -15,13 +15,20 @@ interface ProductDataItem {
   category: string;
   subCategory: string;
   description: string;
-  brand: string;
-  discountPercent: number;
-  discountedPrice: number;
-  price: number;
-  quantity: number;
+  varietyList: ProductVariety[];
+}
+interface ProductVariety {
+  id: string;
+  type: string;
+  value: string;
   unit: string;
-  value: number;
+  description: string;
+  price: number;
+  discountPercent: number;
+  discountPrice: number;
+  quantity: number;
+  productId: string;
+  documentUrls: string[];
 }
 
 interface SearchProductCardProps {
@@ -39,7 +46,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
   const handleDecrease = () => {
-    if (count == 1) {
+    if (count === 1) {
       dispatch(removeItem(products.id));
       setIsButton1Visible(true);
       setCount(0);
@@ -49,7 +56,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
     }
   };
   const handleIncrease = () => {
-    if (count < products.quantity) {
+    if (count < products.varietyList[0].quantity) {
       dispatch(addToCart(products));
       setCount(count + 1);
     } else {
@@ -94,7 +101,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           borderRadius={16}
           px={horizontalScale(20)}
           py={verticalScale(20)}>
-          {products.discountPercent !== 0 && (
+          {products.varietyList[0].discountPercent !== 0 && (
             <View
               bgColor={'primary.500'}
               position={'absolute'}
@@ -103,13 +110,14 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
               px={horizontalScale(3)}
               py={verticalScale(2)}
               top={0}
-              left={horizontalScale(15)}>
+              left={horizontalScale(15)}
+              zIndex={10}>
               <Text
                 fontFamily={'Inter_Bold'}
                 color={'white'}
                 fontSize={scaleFontSize(11)}
                 alignSelf={'center'}>
-                {products.discountPercent}%
+                {products.varietyList[0].discountPercent}%
               </Text>
               <Text
                 fontFamily={'Inter_Bold'}
@@ -121,14 +129,16 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
               </Text>
             </View>
           )}
-          {/* <Image
-            source={getImage(products?.image)}
+          <Image
+            source={{uri: products.varietyList[0].documentUrls[0]}}
             alt="Product Image"
             height={113}
             width={118}
-            resizeMode="contain"
-          /> */}
-          <View h={113} w={118} />
+            borderRadius={12}
+            borderWidth={1}
+            borderColor={'accent.500'}
+          />
+          {/* <View h={113} w={118} /> */}
         </View>
       </Pressable>
       <View pb={verticalScale(30)}>
@@ -149,7 +159,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           color={'accent.500'}
           lineHeight={14.52}
           letterSpacing={-0.04}>
-          {`${products.value} ${products.unit}`}
+          {`${products.varietyList[0].value} ${products.varietyList[0].unit}`}
         </Text>
       </View>
       <View
@@ -166,7 +176,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             color={'accent.800'}
             lineHeight={16.94}
             letterSpacing={-0.04}>
-            ₹{products.price}
+            ₹{products.varietyList[0].discountPrice}
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
@@ -176,7 +186,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             mt={-verticalScale(1)}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            ₹{products.discountedPrice}
+            ₹{products.varietyList[0].price}
           </Text>
         </View>
         {isButton1Visible ? (

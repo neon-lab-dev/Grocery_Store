@@ -24,7 +24,9 @@ export const cartReducer = createReducer(initialState, builder => {
       const newItem = action.payload as CartItem;
       // console.log(newItem)
       const existingItem = state.items.find(
-        item => item.id === newItem.id && item.Size === newItem.Size,
+        item =>
+          item.id === newItem.id &&
+          item.varietyList[0].value === newItem.varietyList[0].value,
       );
       if (existingItem) {
         existingItem.quantity += newItem.quantity;
@@ -32,7 +34,8 @@ export const cartReducer = createReducer(initialState, builder => {
       } else {
         state.items.push(newItem);
       }
-      state.totalPrice += newItem.Price * newItem.quantity;
+      state.totalPrice +=
+        newItem.varietyList[0].discountPrice * newItem.quantity;
       console.log(state);
     })
     .addCase(INCREMENT_ITEM, (state, action) => {
@@ -40,16 +43,16 @@ export const cartReducer = createReducer(initialState, builder => {
       const itemToIncrement = state.items.find(item => item.id === itemId);
       if (itemToIncrement) {
         itemToIncrement.quantity++;
-        state.totalPrice += itemToIncrement.Price;
+        state.totalPrice += itemToIncrement.varietyList[0].discountPrice;
       }
-      console.log(state)
+      console.log(state);
     })
     .addCase(DECREMENT_ITEM, (state, action) => {
       const itemId = action.payload as number;
       const itemToDecrement = state.items.find(item => item.id === itemId);
       if (itemToDecrement && itemToDecrement.quantity >= 1) {
         itemToDecrement.quantity--;
-        state.totalPrice -= itemToDecrement.Price;
+        state.totalPrice -= itemToDecrement.varietyList[0].discountPrice;
       }
       console.log(state);
     })
@@ -58,7 +61,9 @@ export const cartReducer = createReducer(initialState, builder => {
       const itemToDecrement = state.items.find(item => item.id === itemId);
       if (itemToDecrement) {
         state.items = state.items.filter(item => item.id !== itemId);
-        state.totalPrice -= itemToDecrement ? itemToDecrement.Price : 0;
+        state.totalPrice -= itemToDecrement
+          ? itemToDecrement.varietyList[0].discountPrice
+          : 0;
       }
       console.log(state);
     })

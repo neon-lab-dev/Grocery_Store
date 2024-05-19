@@ -19,18 +19,35 @@ import {
 } from '../../assets/scaling';
 import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
 import {Alert, Dimensions} from 'react-native';
-import { addToCart, decrementItem, incrementItem, removeItem } from '../../redux/slices/actions';
-import { useDispatch } from 'react-redux';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
+import {useDispatch} from 'react-redux';
 import sizes from 'native-base/lib/typescript/theme/base/sizes';
 interface ProductDataItem {
-  id: number;
-  Title: string;
-  image: string;
-  Price: number;
-  Size: string;
-  quantity:number,
-  DisPrice: number;
-  QuantityAvalaible: number;
+  id: string;
+  name: string;
+  code: string;
+  category: string;
+  subCategory: string;
+  description: string;
+  varietyList: ProductVariety[];
+}
+interface ProductVariety {
+  id: string;
+  type: string;
+  value: string;
+  unit: string;
+  description: string;
+  price: number;
+  discountPercent: number;
+  discountPrice: number;
+  quantity: number;
+  productId: string;
+  documentUrls: string[];
 }
 interface ProductCardProps {
   onPress: () => void;
@@ -45,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
   const handleDecrease = () => {
-    if (count == 1) {
+    if (count === 1) {
       dispatch(removeItem(products.id));
       setIsButton1Visible(true);
       setCount(0);
@@ -55,8 +72,8 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     }
   };
   const handleIncrease = () => {
-    if (count < products.QuantityAvalaible) {
-    dispatch(addToCart(products));
+    if (count < products.varietyList[0].quantity) {
+      dispatch(addToCart(products));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -85,14 +102,13 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   };
   const handleButtonPress = () => {
     setCount(1);
-    products.quantity=1;
+    products.quantity = 1;
     dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
-  let off = calculateDiscountPercentage(products.DisPrice, products.Price);
-  const {width, height} = Dimensions.get('window');
+  const {width} = Dimensions.get('window');
   // console.log(width, height)
-  if (products.QuantityAvalaible != 0) {
+  if (products.varietyList[0].quantity !== 0) {
     return (
       <View style={styles.Container}>
         <View
@@ -107,7 +123,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               borderRadius: 20,
               backgroundColor: '#F9FAFB',
               height: verticalScale(120),
-              width: horizontalScale(110),
+              width: horizontalScale(130),
               overflow: 'hidden',
             }}>
             <View
@@ -126,7 +142,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   color: 'white',
                   fontSize: scaleFontSize(14),
                 }}>
-                {off.toFixed(0)}%
+                {products.varietyList[0].discountPercent}%
               </Text>
               <Text
                 style={{
@@ -142,12 +158,14 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             </View>
             <Image
               alt="Image"
-              source={getImage(products.image)}
+              source={{uri: products.varietyList[0].documentUrls[0]}}
               style={styles.Image}
             />
           </Pressable>
-          <Text style={styles.Title}>{products.Title}</Text>
-          <Text style={styles.Quantity}>{products.Size}</Text>
+          <Text style={styles.Title}>{products.name}</Text>
+          <Text style={styles.Quantity}>
+            {products.varietyList[0].value} {products.varietyList[0].unit}
+          </Text>
           <View
             style={{
               flexDirection: 'row',
@@ -157,9 +175,11 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               top: verticalScale(width < 380 ? 160 : 165),
             }}>
             <View style={{marginTop: 24}}>
-              <Text style={styles.Price}>₹{products.Price}</Text>
+              <Text style={styles.Price}>
+                ₹{products.varietyList[0].discountPrice}
+              </Text>
               <Text strikeThrough style={styles.DisPrice}>
-                ₹{products.DisPrice}
+                ₹{products.varietyList[0].price}
               </Text>
             </View>
             <View>
@@ -252,7 +272,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   color: 'white',
                   fontSize: scaleFontSize(14),
                 }}>
-                {off.toFixed(0)}%
+                {products.varietyList[0].discountPercent}%
               </Text>
               <Text
                 style={{
@@ -268,12 +288,14 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             </View>
             <Image
               alt="Image"
-              source={getImage(products.image)}
+              source={{uri: products.varietyList[0].documentUrls[0]}}
               style={styles.Image}
             />
           </Pressable>
-          <Text style={styles.Title}>{products.Title}</Text>
-          <Text style={styles.Quantity}>{products.Size}</Text>
+          <Text style={styles.Title}>{products.name}</Text>
+          <Text style={styles.Quantity}>
+            {products.varietyList[0].value} {products.varietyList[0].unit}
+          </Text>
           <View
             style={{
               width: 125,
@@ -286,7 +308,11 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             borderColor={'primary.500'}
             height={8}
             borderRadius={10}>
-            <Text color={'primary.500'} fontWeight={500} p={0.5}>
+            <Text
+              fontFamily={'Inter_Medium'}
+              color={'primary.500'}
+              fontWeight={500}
+              p={0.5}>
               Out Of Stock
             </Text>
           </View>

@@ -35,7 +35,6 @@ const Login: React.FC<Props> = ({navigation}) => {
       setIsLoading(true);
       try {
         const response = await sendOtp(phoneNo);
-        console.log(response);
         if (response.statusCode === 200) {
           toast.showToast(response.responseBody.message);
           navigation.navigate('OTP', {phoneNo: phoneNo});
@@ -43,7 +42,7 @@ const Login: React.FC<Props> = ({navigation}) => {
           toast.showToast(response.message);
         }
       } catch (error: any) {
-        toast.showToast(error.message);
+        toast.showToast('Something Went Wrong, Try Again');
       }
       setIsLoading(false);
     } else {

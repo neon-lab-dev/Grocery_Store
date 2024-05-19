@@ -35,7 +35,10 @@ interface UnitCardProps {
   };
 }
 
-const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
+const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
+  Close,
+  productName,
+}) => {
   const data = {
     productName: 'Desi Tomato (Nattu Thakkali)',
     alternativeImages: [

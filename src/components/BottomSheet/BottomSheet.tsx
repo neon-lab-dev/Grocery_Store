@@ -11,6 +11,7 @@ interface BottomSheetProps {
   onClose: () => void;
   type: string;
   onPress: () => void;
+  productName?: string;
 }
 
 const BottomSheet: FC<BottomSheetProps> = ({
@@ -18,11 +19,12 @@ const BottomSheet: FC<BottomSheetProps> = ({
   onClose,
   type,
   onPress,
+  productName,
 }) => {
   const getComponent = (type: string) => {
     switch (type) {
       case 'Product-Details':
-        return <ProductDetails Close={onClose} />;
+        return <ProductDetails Close={onClose} productName={productName} />;
       case 'Product-List':
         return <ProductsSpecialOverlay Close={onClose} onPress={onPress} />;
     }
