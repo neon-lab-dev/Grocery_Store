@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import style from './style';
 import {
@@ -5,10 +6,8 @@ import {
   Image,
   ScrollView,
   Pressable,
-  Alert,
   Dimensions,
 } from 'react-native';
-import ProductCard from '../../components/productCard/ProductCard';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
 import {Colors} from '../../constants/colors';
@@ -17,26 +16,42 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import Makelist from '../../components/Carousel/Makelist';
 import SearchInput from '../../components/SearchInput';
-import CategoryData from '../../assets/data/CategoriesData';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
-import {AuthAPIClient} from '../../api/axios.config';
 import {Categories} from '../../constants/categories';
 import {View, Text} from 'native-base';
+import {fetchUserData} from '../../api/auth_routes';
+import {openWhatsApp} from '../../utils/launchIntents';
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
 const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
+  const [name, setName] = useState('');
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
 
+  const fetchUser = async () => {
+    try {
+      const response = await fetchUserData();
+      if (response.responseBody && response.responseBody.name) {
+        const nameArr = response.responseBody.name.split(' ');
+        const firstName = nameArr[0];
+        setName(firstName);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
   const openSettings = () => {
     navigation.navigate('Settings');
   };
@@ -54,6 +69,7 @@ const Home: React.FC<Props> = ({navigation}) => {
 
   const listToDetails = () => {
     setOverLay('Product-Details');
+
     openBottomSheet();
   };
 
@@ -66,14 +82,18 @@ const Home: React.FC<Props> = ({navigation}) => {
     navigation.navigate('Search');
   };
 
-  const {width, height} = Dimensions.get('window');
+  const {width} = Dimensions.get('window');
   // console.log(width,height)
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
         <Text>Open Settings</Text>
       </Pressable> */}
-      <Header onSettingsPress={openSettings} onCartPress={gotoCart} />
+      <Header
+        name={name}
+        onSettingsPress={openSettings}
+        onCartPress={gotoCart}
+      />
       <SearchInput
         onChangeText={SetsearchInp}
         value={searchInp}
@@ -114,33 +134,6 @@ const Home: React.FC<Props> = ({navigation}) => {
 
         <ProductHorizontalScroll onPress={listToDetails} />
 
-        {/* <View style={{alignSelf: 'center', margin: 5}}>
-          <Image
-            source={require('../../assets/images/icons/SendList.png')}></Image>
-          <TouchableOpacity
-            style={{
-              width: horizontalScale(300),
-              height: 50,
-              margin: 5,
-              borderRadius: 20,
-              alignSelf: 'center',
-              backgroundColor: Colors.primary[500],
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onPress={() => {}}>
-            <View style={{flexDirection: 'row'}}>
-              <Text
-                style={{color: 'white', marginHorizontal: horizontalScale(5)}}>
-                Uplaod Your Shopping List
-              </Text>
-              <Image
-                source={require('../../assets/images/icons/CameraIcon.png')}
-              />
-            </View>
-          </TouchableOpacity>
-        </View> */}
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText, {marginBottom: 15}]}>
             Grocery & Kitchen
@@ -165,7 +158,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                       key={subIndex}
                       onPress={() => {
                         navigation.navigate('CategoryProducts', {
-                          SubCategory: item,
+                          SubCategory: item.subCategory,
                         });
                       }}>
                       {/* <Image
@@ -178,12 +171,16 @@ const Home: React.FC<Props> = ({navigation}) => {
                         w={horizontalScale(90)}
                         h={verticalScale(110)}
                         style={{gap: 9}}>
-                        <View
-                          w={horizontalScale(70)}
-                          h={verticalScale(65)}
-                          borderRadius={16}
-                          bgColor={'primary.50'}
-                        />
+                        <View>
+                          <Image
+                            source={item.image}
+                            borderRadius={16}
+                            style={{
+                              width: horizontalScale(70),
+                              height: verticalScale(65),
+                            }}
+                          />
+                        </View>
                         <Text
                           fontFamily={'Inter_Medium'}
                           fontSize={scaleFontSize(12)}
@@ -192,7 +189,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                           color={'accent.600'}
                           textAlign={'center'}
                           mx={horizontalScale(5)}>
-                          {item}
+                          {item.subCategory}
                         </Text>
                       </View>
                     </Pressable>
@@ -228,7 +225,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                       key={subIndex}
                       onPress={() => {
                         navigation.navigate('CategoryProducts', {
-                          SubCategory: item,
+                          SubCategory: item.subCategory,
                         });
                       }}>
                       {/* <Image
@@ -241,12 +238,17 @@ const Home: React.FC<Props> = ({navigation}) => {
                         w={horizontalScale(90)}
                         h={verticalScale(110)}
                         style={{gap: 9}}>
-                        <View
-                          w={horizontalScale(70)}
-                          h={verticalScale(65)}
-                          borderRadius={16}
-                          bgColor={'primary.50'}
-                        />
+                        <View>
+                          <Image
+                            source={item.image}
+                            borderRadius={16}
+                            resizeMode="contain"
+                            style={{
+                              width: horizontalScale(70),
+                              height: verticalScale(65),
+                            }}
+                          />
+                        </View>
                         <Text
                           fontFamily={'Inter_Medium'}
                           fontSize={scaleFontSize(12)}
@@ -255,7 +257,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                           color={'accent.600'}
                           textAlign={'center'}
                           mx={horizontalScale(5)}>
-                          {item}
+                          {item.subCategory}
                         </Text>
                       </View>
                     </Pressable>
@@ -291,7 +293,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                       key={subIndex}
                       onPress={() => {
                         navigation.navigate('CategoryProducts', {
-                          SubCategory: item,
+                          SubCategory: item.subCategory,
                         });
                       }}>
                       {/* <Image
@@ -304,12 +306,17 @@ const Home: React.FC<Props> = ({navigation}) => {
                         w={horizontalScale(90)}
                         h={verticalScale(110)}
                         style={{gap: 9}}>
-                        <View
-                          w={horizontalScale(70)}
-                          h={verticalScale(65)}
-                          borderRadius={16}
-                          bgColor={'primary.50'}
-                        />
+                        <View>
+                          <Image
+                            source={item.image}
+                            borderRadius={16}
+                            resizeMode="contain"
+                            style={{
+                              width: horizontalScale(70),
+                              height: verticalScale(65),
+                            }}
+                          />
+                        </View>
                         <Text
                           fontFamily={'Inter_Medium'}
                           fontSize={scaleFontSize(12)}
@@ -318,7 +325,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                           color={'accent.600'}
                           textAlign={'center'}
                           mx={horizontalScale(5)}>
-                          {item}
+                          {item.subCategory}
                         </Text>
                       </View>
                     </Pressable>
@@ -354,7 +361,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                       key={subIndex}
                       onPress={() => {
                         navigation.navigate('CategoryProducts', {
-                          SubCategory: item,
+                          SubCategory: item.subCategory,
                         });
                       }}>
                       {/* <Image
@@ -367,12 +374,17 @@ const Home: React.FC<Props> = ({navigation}) => {
                         w={horizontalScale(90)}
                         h={verticalScale(100)}
                         style={{gap: 9}}>
-                        <View
-                          w={horizontalScale(70)}
-                          h={verticalScale(65)}
-                          borderRadius={16}
-                          bgColor={'primary.50'}
-                        />
+                        <View>
+                          <Image
+                            source={item.image}
+                            borderRadius={16}
+                            resizeMode="contain"
+                            style={{
+                              width: horizontalScale(70),
+                              height: verticalScale(65),
+                            }}
+                          />
+                        </View>
                         <Text
                           fontFamily={'Inter_Medium'}
                           fontSize={scaleFontSize(12)}
@@ -381,7 +393,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                           color={'accent.600'}
                           textAlign={'center'}
                           mx={horizontalScale(5)}>
-                          {item}
+                          {item.subCategory}
                         </Text>
                       </View>
                     </Pressable>
@@ -393,7 +405,40 @@ const Home: React.FC<Props> = ({navigation}) => {
             }
           })}
         </View>
-        <View
+        <View style={{alignSelf: 'center', margin: 5}}>
+          <Image source={require('../../assets/images/icons/SendList.png')} />
+          <TouchableOpacity
+            style={{
+              width: horizontalScale(300),
+              height: 50,
+              margin: 5,
+              borderRadius: 20,
+              alignSelf: 'center',
+              backgroundColor: Colors.primary[500],
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => openWhatsApp('Hi', '1234567890')}>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  marginHorizontal: horizontalScale(5),
+                  fontFamily: 'Inter_Medium',
+                  fontSize: scaleFontSize(14),
+                  lineHeight: 16.94,
+                  letterSpacing: -0.04,
+                }}>
+                Upload Your Shopping List
+              </Text>
+              <Image
+                source={require('../../assets/images/icons/CameraIcon.png')}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -416,7 +461,7 @@ const Home: React.FC<Props> = ({navigation}) => {
             </Text>
           </Pressable>
         </View>
-        <ProductHorizontalScroll onPress={listToDetails} />
+        <ProductHorizontalScroll onPress={listToDetails} /> */}
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText]}>Explore New Categories</Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
@@ -426,7 +471,8 @@ const Home: React.FC<Props> = ({navigation}) => {
                   height: width < 380 ? 75 : 83,
                   width: width < 380 ? 77 : 85,
                 }}
-                source={require('../../assets/images/Newcategories/ExploreCategories1.jpg')}></Image>
+                source={require('../../assets/images/Newcategories/ExploreCategories1.jpg')}
+              />
               <Text style={style.ExploreCatgoriesText}>Baby Care</Text>
             </View>
             <View style={style.ExploreCatgories}>
@@ -435,7 +481,8 @@ const Home: React.FC<Props> = ({navigation}) => {
                   height: width < 380 ? 75 : 83,
                   width: width < 380 ? 77 : 85,
                 }}
-                source={require('../../assets/images/Newcategories/ExploreCategories2.jpg')}></Image>
+                source={require('../../assets/images/Newcategories/ExploreCategories2.jpg')}
+              />
               <Text style={style.ExploreCatgoriesText}>Gift Store</Text>
             </View>
             <View style={style.ExploreCatgories}>
@@ -444,7 +491,8 @@ const Home: React.FC<Props> = ({navigation}) => {
                   height: width < 380 ? 75 : 83,
                   width: width < 380 ? 77 : 85,
                 }}
-                source={require('../../assets/images/Newcategories/ExploreCategories3.jpg')}></Image>
+                source={require('../../assets/images/Newcategories/ExploreCategories3.jpg')}
+              />
               <Text style={style.ExploreCatgoriesText}>Party Essentials</Text>
             </View>
             <View style={style.ExploreCatgories}>
@@ -453,7 +501,8 @@ const Home: React.FC<Props> = ({navigation}) => {
                   height: width < 380 ? 75 : 83,
                   width: width < 380 ? 77 : 85,
                 }}
-                source={require('../../assets/images/Newcategories/ExploreCategories4.jpg')}></Image>
+                source={require('../../assets/images/Newcategories/ExploreCategories4.jpg')}
+              />
               <Text style={style.ExploreCatgoriesText}>Kitchen needs</Text>
             </View>
           </View>
@@ -476,6 +525,7 @@ const Home: React.FC<Props> = ({navigation}) => {
         onClose={closeBottomSheet}
         type={overLay}
         onPress={listToDetails}
+      
       />
     </View>
   );

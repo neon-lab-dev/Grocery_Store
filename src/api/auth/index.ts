@@ -1,4 +1,3 @@
-import {toast} from '../../components/Toast/Toast';
 import {APIClient} from '../axios.config';
 
 // AUTH RELATED END-POINTS
@@ -9,7 +8,7 @@ export const sendOtp = async (phoneNo: string) => {
     const response = await APIClient.post('/send-otp', {phone: phoneNo});
     return response.data;
   } catch (e: any) {
-    toast.showToast(e.message);
+    console.log(e.message);
   }
 };
 
@@ -22,7 +21,7 @@ export const verifyOTP = async (OTPValue: string, phoneNo: string) => {
     });
     return response.data;
   } catch (error: any) {
-    toast.showToast(error.message);
+    console.log(error.message);
   }
 };
 

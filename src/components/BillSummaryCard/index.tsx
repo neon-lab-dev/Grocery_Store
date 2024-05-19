@@ -56,7 +56,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
           color={'accent.800'}
           lineHeight={16.94}
           letterSpacing={-0.04}>
-          ₹{itemPrice}
+          ₹{itemPrice.toFixed(2)}
         </Text>
       </View>
       <View flexDir={'row'} justifyContent={'space-between'}>
@@ -107,7 +107,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
               strikeThrough
               lineHeight={12.1}
               letterSpacing={-0.04}>
-              ₹{cutOffPrice}
+              ₹{cutOffPrice.toFixed(2)}
             </Text>
             <Text
               fontFamily={'Inter_SemiBold'}
@@ -115,7 +115,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
               color={'accent.800'}
               lineHeight={16.94}
               letterSpacing={-0.04}>
-              ₹{price}
+              ₹{price.toFixed(2)}
             </Text>
           </View>
           <Center
@@ -129,7 +129,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
               color={'white'}
               lineHeight={12.1}
               letterSpacing={-0.04}>
-              SAVING ₹{savingPrice}
+              SAVING ₹{savingPrice.toFixed(2)}
             </Text>
           </Center>
         </View>

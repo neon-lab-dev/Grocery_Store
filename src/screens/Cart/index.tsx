@@ -32,7 +32,6 @@ interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
-
 const Cart: React.FC<CartProps> = ({navigation}) => {
   const [isCartEmpty, setisCartEmpty] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
@@ -42,9 +41,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const cartItemCount = cartItems.items.length;
   React.useEffect(() => {
     let temp = 0;
-    cartItems.items.forEach((item: { DisPrice: number; quantity: number; }) => {
-      temp += item.DisPrice * item.quantity;
-    });
+    cartItems.items.forEach(
+      (item: {varietyList: any[]; discountPrice: number; quantity: number}) => {
+        temp += item.varietyList[0].discountPrice * item.quantity;
+      },
+    );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
   // console.log(totalDiscountedPrice)
@@ -58,7 +59,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     } else {
       setisCartEmpty(false);
     }
-  });
+  }, [cartItemCount]);
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const gotoPayment = () => {
@@ -113,7 +114,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       ) : (
         <ScrollView flex={0.8}>
           <View bg={'white'} mt={verticalScale(15)}>
-            {cartItems.items.map((data: { id: React.Key | null | undefined; }) => (
+            {cartItems.items.map((data: {id: React.Key | null | undefined}) => (
               <CartItemCard key={data.id} item={data} />
             ))}
           </View>
@@ -122,7 +123,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             deliveryCharge={25}
             itemPrice={TotalPrice - 25}
             price={TotalPrice}
-            savingPrice={totalDiscountedPrice-(TotalPrice-25)}
+            savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
           />
         </ScrollView>
       )}
@@ -251,7 +252,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                     color={'primary.50'}
                     lineHeight={24.2}
                     letterSpacing={-0.04}>
-                    ₹{TotalPrice}
+                    ₹{TotalPrice.toFixed(2)}
                   </Text>
                 </View>
                 <View flexDir={'row'} alignItems={'center'}>

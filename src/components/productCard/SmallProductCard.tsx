@@ -7,7 +7,6 @@ import {
   verticalScale,
   scaleFontSize,
 } from '../../assets/scaling';
-import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
 import {useDispatch, useSelector} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 interface ProductDataItem {
@@ -17,16 +16,23 @@ interface ProductDataItem {
   category: string;
   subCategory: string;
   description: string;
-  brand: string;
-  discountPercent: number;
-  discountedPrice: number;
-  price: number;
-  quantity: number;
+  varietyList: ProductVariety[];
+}
+interface ProductVariety {
+  id: string;
+  type: string;
+  value: string;
   unit: string;
-  value: number;
+  description: string;
+  price: number;
+  discountPercent: number;
+  discountPrice: number;
+  quantity: number;
+  productId: string;
+  documentUrls: string[];
 }
 interface ProductCardProps {
-  onPress: () => void;
+  onPress: (name: string) => void;
   products: ProductDataItem;
 }
 const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
@@ -47,7 +53,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     }
   };
   const handleIncrease = () => {
-    if (count < products.quantity) {
+    if (count < products.varietyList[0].quantity) {
       dispatch(addToCart(products));
       setCount(count + 1);
     } else {
@@ -81,7 +87,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
-  const {width, height} = Dimensions.get('window');
+  const {width} = Dimensions.get('window');
   // console.log(width, height)
   // let off = calculateDiscountPercentage(products.DisPrice, products.Price);
   return (
@@ -93,7 +99,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
           height: verticalScale(width < 380 ? 180 : 200),
         }}>
         <Pressable
-          onPress={() => onPress()}
+          onPress={() => onPress(products.name)}
           style={{
             borderRadius: 16,
             backgroundColor: '#F9FAFB',
@@ -101,7 +107,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             width: horizontalScale(100),
             overflow: 'hidden',
           }}>
-          {products.discountPercent !== 0 && (
+          {products.varietyList[0].discountPercent !== 0 && (
             <View
               style={{
                 backgroundColor: Colors.primary[500],
@@ -118,7 +124,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   alignSelf: 'center',
                   color: 'white',
                 }}>
-                {products.discountPercent}%
+                {products.varietyList[0].discountPercent}%
               </Text>
               <Text
                 style={{
@@ -134,17 +140,17 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             </View>
           )}
 
-          {/* <Image
+          <Image
             alt="Image"
-            source={getImage(products.image)}
+            source={{uri: products.varietyList[0].documentUrls[0]}}
             style={styles.Image}
-          /> */}
+          />
         </Pressable>
         <Text mr={horizontalScale(10)} style={styles.Title}>
           {products.name}
         </Text>
         <Text style={styles.Quantity}>
-          {products.value} {products.unit}
+          {products.varietyList[0].value} {products.varietyList[0].unit}
         </Text>
         <View
           style={{
@@ -155,9 +161,11 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             top: verticalScale(width < 380 ? 130 : 140),
           }}>
           <View style={{marginTop: 18}}>
-            <Text style={styles.Price}>₹{products.price}</Text>
+            <Text style={styles.Price}>
+              ₹{products.varietyList[0].discountPrice}
+            </Text>
             <Text strikeThrough style={styles.DisPrice}>
-              ₹{products.discountedPrice}
+              ₹{products.varietyList[0].price}
             </Text>
           </View>
           <View>
@@ -239,8 +247,7 @@ export const styles = StyleSheet.create({
     fontSize: scaleFontSize(14),
     color: '#1F2937',
     marginTop: verticalScale(3),
-    fontWeight: '500',
-    // fontFamily: 'Inter_Medium',
+    fontFamily: 'Inter_Medium',
   },
   Price: {
     fontFamily: 'Inter_Medium',
@@ -263,8 +270,8 @@ export const styles = StyleSheet.create({
     marginHorizontal: horizontalScale(20),
   },
   ButtonText: {
-    // fontFamily: 'Inter_Medium',
-    fontWeight: '500',
+    fontFamily: 'Inter_Medium',
+    // fontWeight: '500',
     color: Colors.primary[400],
     fontSize: scaleFontSize(15),
   },

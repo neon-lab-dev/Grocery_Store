@@ -29,7 +29,6 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
     setIsLoading(true);
     try {
       const response = await verifyOTP(OTPValue, route.params.phoneNo);
-      console.log(response);
       if (response.statusCode === 200) {
         if (!response.responseBody.existing) {
           navigation.replace('PersonalDetails', {

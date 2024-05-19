@@ -6,16 +6,17 @@ import {Pressable} from 'native-base';
 import {SvgXml} from 'react-native-svg';
 import {cartIcon} from '../../assets/images/icons/cartIcon';
 import {accountIconBlack} from '../../assets/images/icons/accountIconBlack';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 interface HeaderProps {
   onCartPress: () => void;
   onSettingsPress: () => void;
+  name: string;
 }
 
-const Header: FC<HeaderProps> = ({onCartPress, onSettingsPress}) => {
+const Header: FC<HeaderProps> = ({onCartPress, onSettingsPress, name}) => {
   const cartItems = useSelector((state: any) => state.cart);
-  const cartItemCount=cartItems.items.length;
-  console.log(cartItemCount)
+  const cartItemCount = cartItems.items.length;
+  console.log(cartItemCount);
   return (
     <View style={styles.mainContainer}>
       <View style={styles.profileContainer}>
@@ -23,7 +24,7 @@ const Header: FC<HeaderProps> = ({onCartPress, onSettingsPress}) => {
           <SvgXml xml={accountIconBlack} height={27} width={27} />
         </Pressable>
 
-        <Text style={styles.profileName}>Hi, Salman</Text>
+        <Text style={styles.profileName}>Hi, {name}</Text>
       </View>
       <View style={styles.cartFlex}>
         <View style={styles.cartContainer}>

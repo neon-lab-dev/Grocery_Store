@@ -53,8 +53,8 @@ const CategoryCard: FC<CategoryCardProps> = ({
 };
 
 const CategoryProducts: FC = ({navigation, route}) => {
-  const navigateToProductDetails = () => {
-    navigation.navigate('ProductDetails');
+  const navigateToProductDetails = (name: string) => {
+    navigation.navigate('ProductDetails', {productName: name});
   };
   const SubCategory = route.params.SubCategory;
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -119,9 +119,9 @@ const CategoryProducts: FC = ({navigation, route}) => {
             </Text>
           </View>
         </View>
-        <Pressable mr={horizontalScale(20)}>
+        {/* <Pressable mr={horizontalScale(20)}>
           <SvgXml xml={searchIcon} height={24} width={24} />
-        </Pressable>
+        </Pressable> */}
       </View>
       <View style={styles.mainContainer}>
         <View style={styles.leftCard}>
@@ -169,10 +169,11 @@ const CategoryProducts: FC = ({navigation, route}) => {
             <FlatList
               numColumns={2}
               data={CategoryData}
+              showsVerticalScrollIndicator={false}
               renderItem={({item, index}) => (
                 <SmallProductCard
                   key={index}
-                  onPress={navigateToProductDetails}
+                  onPress={name => navigateToProductDetails(name)}
                   products={item}
                 />
               )}

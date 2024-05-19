@@ -5,12 +5,11 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import { fontWeight } from '../../constants/fonts';
 export const styles = StyleSheet.create({
   Container: {
     flex: 1,
     width: '100%',
-    marginLeft: horizontalScale(18),
+    marginHorizontal: horizontalScale(25),
   },
   Image: {
     width: horizontalScale(90),
@@ -18,7 +17,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   Title: {
-    fontWeight:'500',
+    fontWeight: '500',
     fontSize: scaleFontSize(16),
     color: '#1F2937',
     marginTop: verticalScale(4),
@@ -47,7 +46,7 @@ export const styles = StyleSheet.create({
     // fontFamily: 'Inter_Medium',
     color: Colors.primary[400],
     fontSize: scaleFontSize(16),
-    fontWeight:'500',
+    fontWeight: '500',
   },
   Quantity: {
     fontFamily: 'Inter_Medium',
@@ -55,4 +54,3 @@ export const styles = StyleSheet.create({
     color: Colors.accent[500],
   },
 });
-

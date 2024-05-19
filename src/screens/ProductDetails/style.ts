@@ -200,7 +200,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F97316',
     position: 'absolute',
     left: horizontalScale(240),
-    bottom: verticalScale(100),
+    bottom: verticalScale(750),
     borderRadius: 80,
     justifyContent: 'center',
     alignItems: 'center',

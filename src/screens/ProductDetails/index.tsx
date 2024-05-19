@@ -1,13 +1,7 @@
-import React, {FC, useState} from 'react';
-import {
-  FlatList,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React, {FC, useEffect, useState} from 'react';
+import {FlatList, Image, Pressable} from 'react-native';
+import {View, Text, ScrollView, useToast, Box} from 'native-base';
 import {
   horizontalScale,
   verticalScale,
@@ -20,6 +14,10 @@ import {SvgXml} from 'react-native-svg';
 import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
 import {arrowDropRight} from '../../assets/images/icons/arrow_drop_right';
 import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
+import GoBack from '../../components/Navigation/GoBack';
+import {searchProduct} from '../../api/auth_routes';
+import {useDispatch} from 'react-redux';
+import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 
 interface AlternativeImageProps {
   img: any;
@@ -35,29 +33,84 @@ interface UnitCardProps {
   };
 }
 
-const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
-  const data = {
-    productName: 'Desi Tomato (Nattu Thakkali)',
-    alternativeImages: [
-      {id: 1, image: require('../../assets/images/Vegetables/tomato-lg.png')},
-      {id: 2, image: require('../../assets/images/Vegetables/tomato-lg.png')},
-      {id: 3, image: require('../../assets/images/Vegetables/tomato-lg.png')},
-      {id: 4, image: require('../../assets/images/Vegetables/tomato-lg.png')},
-      {id: 5, image: require('../../assets/images/Vegetables/tomato-lg.png')},
-      {id: 6, image: require('../../assets/images/Vegetables/tomato-lg.png')},
-    ],
-    units: [
-      {id: 1, kg: 1, Newprice: 42, price: 58},
-      {id: 2, kg: 2, Newprice: 84, price: 58},
-    ],
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit accusamus aliquam ullam odio nulla nisi architecto consectetur officiis voluptates facere, atque et?  Tempora dolorum maiores corporis esse alias voluptas rem. ',
-  };
+const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
+  const productName = route.params.productName;
+  const [productDetails, setProductDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedImage, setSelectedImage] = useState<number>(1);
-  const [selectedUnit, setSelectedUnit] = useState<number>(1);
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        setIsLoading(true);
+        const response = await searchProduct(productName);
+        if (response.content) {
+          setProductDetails(response.content[0]);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProductDetails();
+  }, [productName]);
+
+  const [selectedImage, setSelectedImage] = useState<number>(0);
+  const [selectedUnit, setSelectedUnit] = useState<number>(0);
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
   const [showCartButton, setShowCartButton] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const id = 'test-toast';
+  const [count, setCount] = useState(0);
+  const [isButton1Visible, setIsButton1Visible] = useState(true);
+
+  const handleDecrease = () => {
+    if (count === 1) {
+      dispatch(removeItem(productDetails.id));
+      setIsButton1Visible(true);
+      setCount(0);
+    } else {
+      dispatch(decrementItem(productDetails.id));
+      setCount(count - 1);
+    }
+  };
+  const handleIncrease = () => {
+    if (count < productDetails.varietyList[0].quantity) {
+      dispatch(addToCart(productDetails));
+      setCount(count + 1);
+    } else {
+      if (!toast.isActive(id)) {
+        toast.show({
+          id,
+          duration: 2500,
+          render: () => {
+            return (
+              <Box
+                bg="primary.400"
+                px="2"
+                py="1"
+                rounded="sm"
+                mb={5}
+                _text={{
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                Sorry, you can't add more of this item
+              </Box>
+            );
+          },
+        });
+      }
+    }
+  };
+  const handleButtonPress = () => {
+    setCount(1);
+    productDetails.quantity = 1;
+    dispatch(addToCart(productDetails));
+    setIsButton1Visible(false);
+    setShowCartButton(true);
+  };
 
   const AlternativeImage: FC<AlternativeImageProps> = ({img, id}) => {
     return (
@@ -72,18 +125,18 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
     );
   };
 
-  const UnitCard: FC<UnitCardProps> = ({item}) => {
+  const UnitCard: FC<UnitCardProps> = ({item, id}) => {
     return (
       <Pressable
-        onPress={() => setSelectedUnit(item.id)}
+        onPress={() => setSelectedUnit(id)}
         style={
-          item.id === selectedUnit
+          id === selectedUnit
             ? styles.selectUnitCardContainer
             : styles.unitCardContainer
         }>
-        <Text style={styles.unitCardKgText}>{item.kg} kg</Text>
+        <Text style={styles.unitCardKgText}>{item.value} kg</Text>
         <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-          <Text style={styles.unitCardPriceText}>₹{item.Newprice}</Text>
+          <Text style={styles.unitCardPriceText}>₹{item.discountPrice}</Text>
           <Text style={styles.unitCardCutOffprice}>₹{item.price}</Text>
         </View>
       </Pressable>
@@ -98,103 +151,150 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
-      <View style={styles.imageContainer}>
-        <View style={styles.offPerContainer}>
-          <Text style={styles.percentageText}>20%</Text>
-          <Text
-            style={{
-              fontFamily: 'Inter_Bold',
-              color: 'white',
-              textAlign: 'center',
-              fontSize: scaleFontSize(20),
-              lineHeight: 24.2,
-              letterSpacing: -0.04,
-              marginTop: -verticalScale(2),
-            }}>
-            OFF
-          </Text>
-        </View>
-        <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
+    <>
+      {!productDetails ? (
+        <View flex={1} alignItems={'center'} justifyContent={'center'}>
           <Image
-            source={require('../../assets/images/Vegetables/tomato-lg.png')}
+            source={require('../../assets/images/icons/loading.gif')}
+            style={{height: 250, width: 250}}
           />
         </View>
-        <View
-          style={{
-            width: horizontalScale(245),
-            marginHorizontal: horizontalScale(50),
-            marginVertical: verticalScale(18),
-            marginTop: verticalScale(40),
-            flex: 1,
-          }}>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={() => (
-              <View style={{marginLeft: horizontalScale(6)}} />
-            )}
-            data={data.alternativeImages}
-            renderItem={({item}) => (
-              <AlternativeImage img={item.image} id={item.id} />
-            )}
-            horizontal
-          />
-        </View>
-      </View>
-      {/* product details and other options */}
-      <View
-        style={{backgroundColor: '#FFFFFF', paddingBottom: verticalScale(40)}}>
-        {/* product Name */}
-        <View
-          style={{
-            paddingTop: verticalScale(16),
-            paddingHorizontal: horizontalScale(24),
-            backgroundColor: '#FFFFFF',
-            borderBottomWidth: horizontalScale(2),
-            borderBottomColor: '#F3F4F6',
-            paddingBottom: verticalScale(12),
-          }}>
-          <Text style={styles.productName}>{data.productName}</Text>
-        </View>
-        {/* Product units */}
-        <View
-          style={{
-            paddingHorizontal: horizontalScale(24),
-            marginTop: verticalScale(15),
-          }}>
-          <Text style={styles.selectUnitText}>Select Unit</Text>
-          <FlatList
-            data={data.units}
-            renderItem={({item}) => <UnitCard item={item} />}
-            horizontal
-            contentContainerStyle={{
-              marginVertical: verticalScale(15),
-              gap: 12,
-              marginBottom: verticalScale(19),
-            }}
-          />
-          <Text style={styles.productDetailsText}>Product Details</Text>
-          {/* product description */}
-          <View style={{marginTop: verticalScale(10), gap: 2}}>
-            <Text style={styles.descriptionText}>Description</Text>
-            <Text
-              numberOfLines={!viewMoreDetails ? 2 : 5}
-              style={{
-                fontFamily: 'Inter_Regular',
-                fontSize: scaleFontSize(14),
-                color: '#6B7280',
-                lineHeight: 16.8,
-                letterSpacing: -0.03,
-              }}>
-              Lorem ipsum dolor sit amet consectetur. Volutpat arcu vitae tellus
-              in dui mattis cursus lacus. Amet nisl a urna arcu senectus viverra
-              congue adipiscing. Viverra in natoque nec feugiat. Elit laoreet
-              amet enim nulla euismod mattis augue.
-            </Text>
+      ) : (
+        <>
+          <View
+            h={128}
+            bgColor={'white'}
+            flexDir={'row'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            borderBottomWidth={1}
+            borderBottomColor={'accent.100'}>
+            <View
+              flexDir={'row'}
+              style={{gap: horizontalScale(8)}}
+              alignItems={'center'}>
+              <GoBack onPress={() => navigation.goBack()} />
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(16)}
+                lineHeight={19.36}
+                letterSpacing={-0.04}
+                color={'accent.800'}>
+                {productName}
+              </Text>
+            </View>
           </View>
-        </View>
-        {/* added newly */}
-        {/* <View
+          <ScrollView style={{flex: 1}}>
+            <View style={styles.imageContainer}>
+              <View style={styles.offPerContainer}>
+                <Text style={styles.percentageText}>
+                  {[productDetails.varietyList[0].value]}%
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    color: 'white',
+                    textAlign: 'center',
+                    fontSize: scaleFontSize(20),
+                    lineHeight: 24.2,
+                    letterSpacing: -0.04,
+                    marginTop: -verticalScale(2),
+                  }}>
+                  OFF
+                </Text>
+              </View>
+              <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
+                <Image
+                  source={{uri: productDetails.varietyList[0].documentUrls[0]}}
+                  style={{height: 200, width: 200}}
+                  resizeMode="contain"
+                />
+              </View>
+              <View
+                style={{
+                  width: horizontalScale(245),
+                  marginHorizontal: horizontalScale(50),
+                  marginVertical: verticalScale(18),
+                  marginTop: verticalScale(40),
+                  flex: 1,
+                }}>
+                <FlatList
+                  showsHorizontalScrollIndicator={false}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginLeft: horizontalScale(6)}} />
+                  )}
+                  data={productDetails.varietyList[0].documentUrls.map(
+                    (url: string, index: number) => ({id: index, image: url}),
+                  )}
+                  renderItem={({item}) => (
+                    <AlternativeImage img={{uri: item.image}} id={item.id} />
+                  )}
+                  horizontal
+                />
+              </View>
+            </View>
+            {/* product details and other options */}
+            <View
+              style={{
+                backgroundColor: '#FFFFFF',
+                paddingBottom: verticalScale(40),
+              }}>
+              {/* product Name */}
+              <View
+                style={{
+                  paddingTop: verticalScale(16),
+                  paddingHorizontal: horizontalScale(24),
+                  backgroundColor: '#FFFFFF',
+                  borderBottomWidth: horizontalScale(2),
+                  borderBottomColor: '#F3F4F6',
+                  paddingBottom: verticalScale(12),
+                }}>
+                <Text style={styles.productName}>{productName}</Text>
+              </View>
+              {/* Product units */}
+              <View
+                style={{
+                  paddingHorizontal: horizontalScale(24),
+                  marginTop: verticalScale(15),
+                }}>
+                <Text style={styles.selectUnitText}>Select Unit</Text>
+                <FlatList
+                  data={productDetails.varietyList}
+                  renderItem={({item, index}) => (
+                    <UnitCard item={item} id={index} />
+                  )}
+                  horizontal
+                  contentContainerStyle={{
+                    marginVertical: verticalScale(15),
+                    gap: 12,
+                    marginBottom: verticalScale(19),
+                  }}
+                />
+                <Text style={styles.productDetailsText}>Product Details</Text>
+                {/* product description */}
+                <View style={{marginTop: verticalScale(10), gap: 2}}>
+                  <Text style={styles.descriptionText}>Description</Text>
+                  <Text
+                    numberOfLines={!viewMoreDetails ? 2 : 5}
+                    style={{
+                      fontFamily: 'Inter_Regular',
+                      fontSize: scaleFontSize(14),
+                      color: '#6B7280',
+                      lineHeight: 16.8,
+                      letterSpacing: -0.03,
+                    }}>
+                    {productDetails.description}
+                    {'\n'}
+                    Category: {productDetails.category}
+                    {'\n'}
+                    SubCategory: {productDetails.subCategory}
+                    {'\n'}
+                    Brand: {productDetails.brand}
+                  </Text>
+                </View>
+              </View>
+              {/* added newly */}
+              {/* <View
           style={{
             paddingHorizontal: horizontalScale(24),
             paddingVertical: verticalScale(8),
@@ -230,51 +330,144 @@ const ProductDetails: FC<{Close: () => void}> = ({Close}) => {
             sollicitudin habitant urna aliquet.
           </Text>
         </View> */}
-        {/* added newly */}
-        <Pressable
-          style={styles.viewMore}
-          onPress={() => setViewMoreDetails(!viewMoreDetails)}>
-          <Text style={styles.viewDetailsText}>
-            View{' '}
-            <Text style={styles.viewDetailsText}>
-              {viewMoreDetails ? 'less' : 'more'}
-            </Text>{' '}
-            details
-          </Text>
-          {/* <Image
+              {/* added newly */}
+              <Pressable
+                style={styles.viewMore}
+                onPress={() => setViewMoreDetails(!viewMoreDetails)}>
+                <Text style={styles.viewDetailsText}>
+                  View{' '}
+                  <Text style={styles.viewDetailsText}>
+                    {viewMoreDetails ? 'less' : 'more'}
+                  </Text>{' '}
+                  details
+                </Text>
+                {/* <Image
             source={require('../../assets/images/icons/arrow_drop_down.png')}
           /> */}
-          {viewMoreDetails ? (
-            <SvgXml xml={arrowUp} width={8} height={8} />
-          ) : (
-            <SvgXml xml={arrowDropDown} width={8} height={8} />
-          )}
-        </Pressable>
-        {/* products Listings */}
-        <View
-          style={{paddingHorizontal: horizontalScale(24), marginVertical: 5}}>
-          <Text style={styles.similarProductsText}>Similar Products</Text>
-        </View>
-        <View
-          style={{
-            marginVertical: verticalScale(12),
-            paddingHorizontal: horizontalScale(5),
-          }}>
-          <ProductHorizontalScroll onPress={() => {}} />
-        </View>
-        <View
-          style={{paddingHorizontal: horizontalScale(24), marginVertical: 5}}>
-          <Text style={styles.similarProductsText}>People also Bought</Text>
-        </View>
-        <View
-          style={{
-            marginVertical: verticalScale(12),
-            paddingHorizontal: horizontalScale(5),
-          }}>
-          <ProductHorizontalScroll onPress={() => {}} />
-        </View>
-      </View>
-    </ScrollView>
+                {viewMoreDetails ? (
+                  <SvgXml xml={arrowUp} width={8} height={8} />
+                ) : (
+                  <SvgXml xml={arrowDropDown} width={8} height={8} />
+                )}
+              </Pressable>
+
+              {isButton1Visible ? (
+                <Pressable
+                  onPress={handleButtonPress}
+                  style={{
+                    width: horizontalScale(120),
+                    height: verticalScale(50),
+                    backgroundColor: '#F97316',
+                    borderRadius: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: horizontalScale(25),
+                  }}>
+                  <Text
+                    color={'primary.50'}
+                    fontFamily={'Inter_Medium'}
+                    fontSize={scaleFontSize(16)}
+                    lineHeight={19.38}
+                    letterSpacing={-0.04}>
+                    Add To Cart
+                  </Text>
+                </Pressable>
+              ) : (
+                <View
+                  w={horizontalScale(120)}
+                  h={verticalScale(50)}
+                  bgColor={'primary.500'}
+                  flexDir={'row'}
+                  alignItems={'center'}
+                  justifyContent={'space-evenly'}
+                  ml={horizontalScale(25)}
+                  borderRadius={12}>
+                  <Pressable onPress={handleDecrease}>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      -
+                    </Text>
+                  </Pressable>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
+                    {count}
+                  </Text>
+                  <Pressable onPress={handleIncrease}>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      +
+                    </Text>
+                  </Pressable>
+                </View>
+              )}
+              {count !== 0 && (
+                <Pressable
+                  style={styles.floatingButton}
+                  onPress={navigateToCart}>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      gap: 3,
+                    }}>
+                    <Image
+                      source={require('../../assets/images/icons/cart-white.png')}
+                    />
+                    <Text style={styles.floatingButtonText}>{count} item</Text>
+                  </View>
+                </Pressable>
+              )}
+              {/* products Listings */}
+              <View
+                style={{
+                  paddingHorizontal: horizontalScale(24),
+                  marginVertical: 5,
+                }}>
+                <Text style={styles.similarProductsText}>Similar Products</Text>
+              </View>
+              <View
+                style={{
+                  marginVertical: verticalScale(12),
+                  paddingHorizontal: horizontalScale(5),
+                }}>
+                <ProductHorizontalScroll onPress={() => {}} />
+              </View>
+              <View
+                style={{
+                  paddingHorizontal: horizontalScale(24),
+                  marginVertical: 5,
+                }}>
+                <Text style={styles.similarProductsText}>
+                  People also Bought
+                </Text>
+              </View>
+              <View
+                style={{
+                  marginVertical: verticalScale(12),
+                  paddingHorizontal: horizontalScale(5),
+                }}>
+                <ProductHorizontalScroll onPress={() => {}} />
+              </View>
+            </View>
+          </ScrollView>
+        </>
+      )}
+    </>
   );
 };
 
