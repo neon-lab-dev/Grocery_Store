@@ -29,17 +29,17 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   //   fetchAddress();
   // }, []);
 
+  const fetchAddress = async () => {
+    setLoaderVisible(true);
+    const getAddressList = await getAddress();
+    // console.log(getAddressList);
+    setAddressList(getAddressList);
+    setLoaderVisible(false);
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
-
-      const fetchAddress = async () => {
-        setLoaderVisible(true);
-        const getAddressList = await getAddress();
-        // console.log(getAddressList);
-        setAddressList(getAddressList);
-        setLoaderVisible(false);
-      };
 
       fetchAddress();
 
@@ -54,12 +54,12 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   };
   const handleDelete = async deleteId => {
     try {
-      const newArray = addressList.filter(item => item.id !== deleteId);
-      setAddressList(newArray);
+      setLoaderVisible(true);
       const res = await deleteAddress(deleteId);
       console.log(res);
-      // setLoaderVisible(false);
-      // toast.showToast(res.message || res.errorMessage);
+      fetchAddress();
+      setLoaderVisible(false);
+      toast.showToast(res.message || res.errorMessage);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +72,7 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
             <SavedAddressComponent
               key={index}
               gotoAddAddress={gotoAddAddress}
-              deleteAddress={() => {}}
+              deleteAddress={() => handleDelete(i.id)}
               index={index + 1}
               length={addressList.length}
               address={i}

@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Image, Pressable, Text, View, Alert, FlatList} from 'react-native';
 import {
   horizontalScale,
@@ -18,6 +18,8 @@ import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {orangeDownArrow} from '../../assets/images/icons/orangeDownArrow';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
+import {getSelectedAddress} from '../../api/localstorage';
+import Loader from '../../components/Loader/Loader';
 
 interface Address {
   id: number;
@@ -245,8 +247,24 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     setModalVisible(false);
     navigation.navigate('AddAddress');
   };
+  const [loaderVisible, setLoaderVisible] = useState(false);
   const [value, setValue] = useState('one');
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectAddress, setSelectAddress] = useState({});
+
+  useEffect(() => {
+    selAddress();
+  }, []);
+
+  const selAddress = async () => {
+    setLoaderVisible(true);
+    const address = await getSelectedAddress();
+    if (address === null) {
+      console.log('sel', address);
+      setSelectAddress(address);
+      setLoaderVisible(false);
+    }
+  };
   return (
     <View style={styles.mainContainer}>
       {/* Drop Down List  */}
@@ -266,12 +284,15 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
         <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
           <SvgXml xml={orangeLocation} height={20} width={20} />
           <Text
+            numberOfLines={2}
             style={{
               fontSize: scaleFontSize(12),
               fontFamily: 'Inter_Medium',
               color: '#374151',
             }}>
-            No. 23, ABC Street, XYZ area, City, State
+            {selectAddress !== null
+              ? `${selectAddress?.addressLine1},${selectAddress?.landmark},${selectAddress?.city},${selectAddress?.state}`
+              : `Select the Address`}
           </Text>
         </View>
         <SvgXml xml={orangeDownArrow} height={20} width={20} />
@@ -340,6 +361,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           />
         </Modal.Content>
       </Modal>
+      <Loader isOpen={loaderVisible} />
     </View>
   );
 };

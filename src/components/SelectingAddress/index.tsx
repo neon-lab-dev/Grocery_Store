@@ -13,7 +13,7 @@ import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getAddress} from '../../api/auth_routes';
-import {getPrimaryAddress, setPrimaryAddress} from '../../api/localstorage';
+import {setSelectedAddress} from '../../api/localstorage';
 import Loader from '../Loader/Loader';
 
 interface SelectAddressProps {
@@ -26,7 +26,6 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
   const [loaderVisible, setLoaderVisible] = useState(false);
   useEffect(() => {
     fetchAddress();
-    getPrimaryAddress();
   }, []);
 
   const fetchAddress = async () => {
@@ -38,17 +37,21 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
   };
   const navigation = useNavigation();
 
+  const saveSelectAddress = location => {
+    console.log('address Pressed', location);
+    setSelectedAddress(location);
+  };
+
   const editPressed = location => {
     console.log('location', location);
     onClose();
     navigation.navigate('AddAddress', {location: location, title: 'Edit'});
   };
   const AddressCard: FC = ({location}) => {
-    if (location.primaryAddress) {
-      setPrimaryAddress(location);
-    }
     return (
-      <View style={styles.addressBox}>
+      <Pressable
+        style={styles.addressBox}
+        onPress={() => saveSelectAddress(location)}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View>
           <Text style={styles.addressType}>{location.addressName}</Text>
@@ -62,7 +65,7 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
           width={24}
           onPress={() => editPressed(location)}
         />
-      </View>
+      </Pressable>
     );
   };
   return (

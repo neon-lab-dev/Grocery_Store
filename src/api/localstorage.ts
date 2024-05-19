@@ -41,20 +41,21 @@ const getToken = async () => {
   }
 };
 
-const setPrimaryAddress = async (address: any) => {
+const setSelectedAddress = async (address: any) => {
   try {
     await setItem('primaryAddress', address);
-    console.log('success saving primary address');
+    // console.log('success saving primary address');
   } catch (error) {
     console.log(error);
   }
 };
 
-const getPrimaryAddress = async () => {
+const getSelectedAddress = async () => {
   try {
     const primaryAddress = await getItem('primaryAddress');
-    console.log('primay', primaryAddress);
-    return primaryAddress;
+    const address = JSON.parse(primaryAddress);
+    // console.log('primay', primaryAddress);
+    return address;
   } catch (error) {
     console.log(error);
   }
@@ -66,6 +67,6 @@ export {
   removeItem,
   getToken,
   clear,
-  setPrimaryAddress,
-  getPrimaryAddress,
+  setSelectedAddress,
+  getSelectedAddress,
 };
