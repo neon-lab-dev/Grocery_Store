@@ -64,7 +64,17 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     } else {
       setisCartEmpty(false);
     }
-  }, [cartItemCount]);
+  }, []);
+
+  const selAddress = async () => {
+    setLoaderVisible(true);
+    const address = await getSelectedAddress();
+    if (address === null) {
+      console.log('sel', address);
+      setSelectAddress(address);
+      setLoaderVisible(false);
+    }
+  };
 
   const [modalVisible, setModalVisible] = React.useState(false);
   const gotoPayment = () => {
