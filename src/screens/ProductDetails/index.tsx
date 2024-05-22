@@ -37,14 +37,19 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const productName = route.params.productName;
   const [productDetails, setProductDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [selectedProduct, setSelectedProduct] = useState(null);
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         setIsLoading(true);
         const response = await searchProduct(productName);
         if (response.content) {
+          const initialSelectedProduct = {...response.content[0]};
+          initialSelectedProduct.varietyList = [
+            response.content[0].varietyList[0],
+          ];
           setProductDetails(response.content[0]);
+          setSelectedProduct(initialSelectedProduct);
         }
       } catch (error) {
         console.log(error);
@@ -67,17 +72,17 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
 
   const handleDecrease = () => {
     if (count === 1) {
-      dispatch(removeItem(productDetails.id));
+      dispatch(removeItem(selectedProduct.id));
       setIsButton1Visible(true);
       setCount(0);
     } else {
-      dispatch(decrementItem(productDetails.id));
+      dispatch(decrementItem(selectedProduct.id));
       setCount(count - 1);
     }
   };
   const handleIncrease = () => {
-    if (count < productDetails.varietyList[0].quantity) {
-      dispatch(addToCart(productDetails));
+    if (count < selectedProduct.varietyList[0].quantity) {
+      dispatch(addToCart(selectedProduct));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -106,10 +111,17 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   };
   const handleButtonPress = () => {
     setCount(1);
-    productDetails.quantity = 1;
-    dispatch(addToCart(productDetails));
+    selectedProduct.quantity = 1;
+    dispatch(addToCart(selectedProduct));
     setIsButton1Visible(false);
     setShowCartButton(true);
+  };
+
+  const handleUnitSelection = (unitIndex: number) => {
+    setSelectedUnit(unitIndex);
+    const updatedProduct = {...productDetails};
+    updatedProduct.varietyList = [productDetails.varietyList[unitIndex]];
+    setSelectedProduct(updatedProduct);
   };
 
   const AlternativeImage: FC<AlternativeImageProps> = ({img, id}) => {
@@ -120,7 +132,11 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
           styles.smImage,
           {borderColor: id === selectedImage ? '#F97316' : '#E5E7EB'},
         ]}>
-        <Image source={img} style={{width: 33, height: 33}} />
+        <Image
+          source={img}
+          style={{width: 33, height: 33}}
+          resizeMode="contain"
+        />
       </Pressable>
     );
   };
@@ -128,7 +144,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const UnitCard: FC<UnitCardProps> = ({item, id}) => {
     return (
       <Pressable
-        onPress={() => setSelectedUnit(id)}
+        onPress={() => handleUnitSelection(id)}
         style={
           id === selectedUnit
             ? styles.selectUnitCardContainer
@@ -185,23 +201,26 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
           </View>
           <ScrollView style={{flex: 1}}>
             <View style={styles.imageContainer}>
-              <View style={styles.offPerContainer}>
-                <Text style={styles.percentageText}>
-                  {[productDetails.varietyList[0].value]}%
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'Inter_Bold',
-                    color: 'white',
-                    textAlign: 'center',
-                    fontSize: scaleFontSize(20),
-                    lineHeight: 24.2,
-                    letterSpacing: -0.04,
-                    marginTop: -verticalScale(2),
-                  }}>
-                  OFF
-                </Text>
-              </View>
+              {productDetails.varietyList[0].discountPercent !== 0 && (
+                <View style={styles.offPerContainer}>
+                  <Text style={styles.percentageText}>
+                    {[productDetails.varietyList[0].value]}%
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Bold',
+                      color: 'white',
+                      textAlign: 'center',
+                      fontSize: scaleFontSize(20),
+                      lineHeight: 24.2,
+                      letterSpacing: -0.04,
+                      marginTop: -verticalScale(2),
+                    }}>
+                    OFF
+                  </Text>
+                </View>
+              )}
+
               <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
                 <Image
                   source={{uri: productDetails.varietyList[0].documentUrls[0]}}

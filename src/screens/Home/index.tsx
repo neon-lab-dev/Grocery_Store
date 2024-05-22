@@ -59,6 +59,7 @@ const Home: React.FC<Props> = ({navigation}) => {
     navigation.navigate('Cart');
   };
 
+  const [selectedProduct, setSelectedProduct] = useState('');
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const openBottomSheet = () => {
     setBottomSheetVisible(true);
@@ -67,9 +68,9 @@ const Home: React.FC<Props> = ({navigation}) => {
     setBottomSheetVisible(false);
   };
 
-  const listToDetails = () => {
+  const listToDetails = (productName: string) => {
     setOverLay('Product-Details');
-
+    setSelectedProduct(productName);
     openBottomSheet();
   };
 
@@ -132,7 +133,7 @@ const Home: React.FC<Props> = ({navigation}) => {
           </Pressable>
         </View>
 
-        <ProductHorizontalScroll onPress={listToDetails} />
+        <ProductHorizontalScroll onPress={item => listToDetails(item)} />
 
         <View style={{marginHorizontal: horizontalScale(18)}}>
           <Text style={[style.CategoryText, {marginBottom: 15}]}>
@@ -524,8 +525,8 @@ const Home: React.FC<Props> = ({navigation}) => {
         visible={bottomSheetVisible}
         onClose={closeBottomSheet}
         type={overLay}
-        onPress={listToDetails}
-      
+        productName={selectedProduct}
+        onPress={product => listToDetails(product)}
       />
     </View>
   );

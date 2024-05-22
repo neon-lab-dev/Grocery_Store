@@ -10,7 +10,7 @@ interface BottomSheetProps {
   visible: boolean;
   onClose: () => void;
   type: string;
-  onPress: () => void;
+  onPress?: (product: any) => void;
   productName?: string;
 }
 
@@ -26,7 +26,14 @@ const BottomSheet: FC<BottomSheetProps> = ({
       case 'Product-Details':
         return <ProductDetails Close={onClose} productName={productName} />;
       case 'Product-List':
-        return <ProductsSpecialOverlay Close={onClose} onPress={onPress} />;
+        return (
+          <ProductsSpecialOverlay
+            Close={onClose}
+            onPress={selectedProduct => {
+              onPress?.(selectedProduct);
+            }}
+          />
+        );
     }
   };
 

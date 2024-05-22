@@ -103,14 +103,6 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
     setDiscountPrice(item.varietyList[0].discountPrice * count);
     setActualPrice(item.varietyList[0].price * count);
   }, [count, item.varietyList]);
-  const getImage = (imageName: string) => {
-    switch (imageName) {
-      case 'item1':
-        return require('../../assets/images/Product-Image/Tomato.png');
-      case 'item2':
-        return require('../../assets/images/Product-Image/Ginger.png');
-    }
-  };
 
   return (
     <View
@@ -131,7 +123,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
           }}
           alt="Image"
           source={{uri: item.varietyList[0].documentUrls[0]}}
-          resizeMode="cover"
+          resizeMode="contain"
           mr={horizontalScale(10)}
         />
         <View justifyContent={'space-evenly'}>

@@ -46,6 +46,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [sortBy, setSortBy] = useState('default');
+  const [selectedProduct, setSelectedProduct] = useState('');
 
   useEffect(() => {
     const fetchRecentSearch = async () => {
@@ -88,7 +89,8 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     setBottomSheetVisible(false);
   };
 
-  const listToDetails = () => {
+  const listToDetails = (name: string) => {
+    setSelectedProduct(name);
     openBottomSheet();
   };
 
@@ -294,7 +296,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             renderItem={({item, index}) => (
               <SearchProductCard
                 key={index}
-                onPress={listToDetails}
+                onPress={() => listToDetails(item.name)}
                 products={item}
               />
             )}
@@ -323,7 +325,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
         visible={bottomSheetVisible}
         onClose={closeBottomSheet}
         type={'Product-Details'}
-        onPress={listToDetails}
+        productName={selectedProduct}
       />
     </View>
   );

@@ -144,6 +144,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             alt="Image"
             source={{uri: products.varietyList[0].documentUrls[0]}}
             style={styles.Image}
+            resizeMode="contain"
           />
         </Pressable>
         <Text mr={horizontalScale(10)} style={styles.Title}>

@@ -32,7 +32,7 @@ interface ProductVariety {
 }
 
 interface SearchProductCardProps {
-  onPress: () => void;
+  onPress: (name: string) => void;
   products: ProductDataItem;
 }
 
@@ -95,7 +95,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   };
   return (
     <View h={260} w={width / 2 - 25}>
-      <Pressable position={'relative'} onPress={onPress}>
+      <Pressable position={'relative'} onPress={() => onPress(products.name)}>
         <View
           bgColor={'accent.50'}
           borderRadius={16}
@@ -135,6 +135,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             height={113}
             width={118}
             borderRadius={12}
+            resizeMode="contain"
           />
           {/* <View h={113} w={118} /> */}
         </View>
@@ -196,7 +197,8 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             alignItems={'center'}
             justifyContent={'center'}
             py={verticalScale(5)}
-            onPress={handleButtonPress}>
+            onPress={handleButtonPress}
+            position={'relative'}>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(14)}
@@ -205,6 +207,23 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
               letterSpacing={-0.08}>
               ADD
             </Text>
+            {products.varietyList.length > 1 && (
+              <View
+                position={'absolute'}
+                bottom={-verticalScale(5)}
+                bgColor={'white'}
+                alignItems={'center'}
+                px={horizontalScale(1)}>
+                <Text
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(8)}
+                  lineHeight={9.68}
+                  letterSpacing={-0.04}
+                  color={'accent.500'}>
+                  {products.varietyList.length} Options
+                </Text>
+              </View>
+            )}
           </Pressable>
         ) : (
           <View
@@ -262,13 +281,5 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
       </View>
     </View>
   );
-};
-const getImage = (imageName: string) => {
-  switch (imageName) {
-    case 'item1':
-      return require('../../assets/images/Product-Image/Tomato.png');
-    case 'item2':
-      return require('../../assets/images/Product-Image/Ginger.png');
-  }
 };
 export default SearchProductCard;
