@@ -42,6 +42,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.primary[400],
     marginHorizontal: horizontalScale(30),
+    alignItems: 'center',
   },
   ButtonText: {
     // fontFamily: 'Inter_Medium',

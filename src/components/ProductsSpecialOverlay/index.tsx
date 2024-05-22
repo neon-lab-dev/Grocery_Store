@@ -10,7 +10,7 @@ import {searchProduct} from '../../api/auth_routes';
 
 interface ProductsSpecialOverlayProps {
   Close: () => void;
-  onPress: () => void;
+  onPress: (name: string) => void;
 }
 
 const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
@@ -78,7 +78,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
             <SearchProductCard
               products={item}
               key={item.id}
-              onPress={onPress}
+              onPress={() => onPress(item.name)}
             />
           )}
         />

@@ -7,7 +7,7 @@ import ProductCard from './ProductCard';
 import {getProducts} from '../../api/auth_routes';
 
 interface ProductCardProps {
-  onPress: () => void;
+  onPress: (name: string) => void;
 }
 
 const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
@@ -35,7 +35,7 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
         {products.map(data => {
           return (
             <View key={data.id}>
-              <ProductCard onPress={onPress} products={data} />
+              <ProductCard onPress={() => onPress(data.name)} products={data} />
             </View>
           );
         })}

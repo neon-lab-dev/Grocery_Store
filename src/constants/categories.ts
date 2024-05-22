@@ -17,15 +17,15 @@ export const Categories = {
       image: require('../assets/images/Categories/daily_bread.png'),
     },
     {
-      subcategory: 'Bakery & Biscuit',
+      subCategory: 'Bakery & Biscuit',
       image: require('../assets/images/Categories/bakery.png'),
     },
     {
-      subcategory: 'Dry Fruits & Cereals',
+      subCategory: 'Dry Fruits & Cereals',
       image: require('../assets/images/Categories/dry_fruits.png'),
     },
     {
-      subcategory: 'Kitchenware & Appliances',
+      subCategory: 'Kitchenware & Appliances',
       image: require('../assets/images/Categories/kitchen.png'),
     },
   ],

@@ -1,14 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  ScrollView,
-  Button,
-  Center,
-  Box,
-} from 'native-base';
+import {View, Text, Image, Pressable, Box} from 'native-base';
 import {useToast} from 'native-base';
 import {styles} from './style';
 import {Colors} from '../../constants/colors';
@@ -17,8 +9,7 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
-import {Alert, Dimensions} from 'react-native';
+import {Dimensions} from 'react-native';
 import {
   addToCart,
   decrementItem,
@@ -26,7 +17,6 @@ import {
   removeItem,
 } from '../../redux/slices/actions';
 import {useDispatch} from 'react-redux';
-import sizes from 'native-base/lib/typescript/theme/base/sizes';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -126,40 +116,44 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               width: horizontalScale(130),
               overflow: 'hidden',
             }}>
-            <View
-              style={{
-                backgroundColor: Colors.primary[500],
-                height: verticalScale(28),
-                width: horizontalScale(30),
-                marginLeft: horizontalScale(15),
-                borderBottomLeftRadius: horizontalScale(8),
-                borderBottomRightRadius: horizontalScale(8),
-              }}>
-              <Text
+            {products.varietyList[0].discountPercent !== 0 && (
+              <View
                 style={{
-                  fontFamily: 'Inter_Bold',
-                  alignSelf: 'center',
-                  color: 'white',
-                  fontSize: scaleFontSize(14),
+                  backgroundColor: Colors.primary[500],
+                  height: verticalScale(28),
+                  width: horizontalScale(30),
+                  marginLeft: horizontalScale(15),
+                  borderBottomLeftRadius: horizontalScale(8),
+                  borderBottomRightRadius: horizontalScale(8),
                 }}>
-                {products.varietyList[0].discountPercent}%
-              </Text>
-              <Text
-                style={{
-                  fontFamily: 'Inter_Bold',
-                  alignSelf: 'center',
-                  position: 'absolute',
-                  fontSize: scaleFontSize(14),
-                  top: verticalScale(10),
-                  color: 'white',
-                }}>
-                OFF
-              </Text>
-            </View>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    alignSelf: 'center',
+                    color: 'white',
+                    fontSize: scaleFontSize(14),
+                  }}>
+                  {products.varietyList[0].discountPercent}%
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    alignSelf: 'center',
+                    position: 'absolute',
+                    fontSize: scaleFontSize(14),
+                    top: verticalScale(10),
+                    color: 'white',
+                  }}>
+                  OFF
+                </Text>
+              </View>
+            )}
+
             <Image
               alt="Image"
               source={{uri: products.varietyList[0].documentUrls[0]}}
               style={styles.Image}
+              resizeMode="contain"
             />
           </Pressable>
           <Text style={styles.Title}>{products.name}</Text>
@@ -184,8 +178,29 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             </View>
             <View>
               {isButton1Visible ? (
-                <Pressable style={styles.Button} onPress={handleButtonPress}>
+                <Pressable
+                  style={styles.Button}
+                  onPress={handleButtonPress}
+                  position={'relative'}>
                   <Text style={styles.ButtonText}>ADD</Text>
+                  {products.varietyList.length > 1 && (
+                    <View
+                      position={'absolute'}
+                      w={horizontalScale(40)}
+                      bottom={-verticalScale(5)}
+                      bgColor={'white'}
+                      alignItems={'center'}
+                      px={horizontalScale(1)}>
+                      <Text
+                        fontFamily={'Inter_Medium'}
+                        fontSize={scaleFontSize(8)}
+                        lineHeight={9.68}
+                        letterSpacing={-0.04}
+                        color={'accent.500'}>
+                        {products.varietyList.length} Options
+                      </Text>
+                    </View>
+                  )}
                 </Pressable>
               ) : (
                 <View
@@ -256,40 +271,44 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               width: horizontalScale(110),
               overflow: 'hidden',
             }}>
-            <View
-              style={{
-                backgroundColor: Colors.primary[500],
-                height: verticalScale(28),
-                width: horizontalScale(30),
-                marginLeft: horizontalScale(15),
-                borderBottomLeftRadius: horizontalScale(8),
-                borderBottomRightRadius: horizontalScale(8),
-              }}>
-              <Text
+            {products.varietyList[0].discountPercent !== 0 && (
+              <View
                 style={{
-                  fontFamily: 'Inter_Bold',
-                  alignSelf: 'center',
-                  color: 'white',
-                  fontSize: scaleFontSize(14),
+                  backgroundColor: Colors.primary[500],
+                  height: verticalScale(28),
+                  width: horizontalScale(30),
+                  marginLeft: horizontalScale(15),
+                  borderBottomLeftRadius: horizontalScale(8),
+                  borderBottomRightRadius: horizontalScale(8),
                 }}>
-                {products.varietyList[0].discountPercent}%
-              </Text>
-              <Text
-                style={{
-                  fontFamily: 'Inter_Bold',
-                  alignSelf: 'center',
-                  position: 'absolute',
-                  fontSize: scaleFontSize(14),
-                  top: verticalScale(10),
-                  color: 'white',
-                }}>
-                OFF
-              </Text>
-            </View>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    alignSelf: 'center',
+                    color: 'white',
+                    fontSize: scaleFontSize(14),
+                  }}>
+                  {products.varietyList[0].discountPercent}%
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    alignSelf: 'center',
+                    position: 'absolute',
+                    fontSize: scaleFontSize(14),
+                    top: verticalScale(10),
+                    color: 'white',
+                  }}>
+                  OFF
+                </Text>
+              </View>
+            )}
+
             <Image
               alt="Image"
               source={{uri: products.varietyList[0].documentUrls[0]}}
               style={styles.Image}
+              resizeMode="contain"
             />
           </Pressable>
           <Text style={styles.Title}>{products.name}</Text>
@@ -321,12 +340,5 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     );
   }
 };
-const getImage = (imageName: string) => {
-  switch (imageName) {
-    case 'item1':
-      return require('../../assets/images/Product-Image/Tomato.png');
-    case 'item2':
-      return require('../../assets/images/Product-Image/Ginger.png');
-  }
-};
+
 export default ProductCard;
