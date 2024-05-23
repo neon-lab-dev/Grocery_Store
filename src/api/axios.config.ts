@@ -8,14 +8,14 @@ const BASE_URL =
     : process.env.REACT_APP_LOCAL_BASE_URl;
 
 export const APIClient = axios.create({
-  baseURL: 'http://35.154.133.112:8801/v1',
+  baseURL: 'http://10.0.2.2:8801/v1',
   headers: {'Content-Type': 'application/json', 'Accept-Encoding': 'gzip'},
 });
 
 // FOR AUTHENTICATED ROUTES
 // TOKEN TO BE EXTRACTED FROM STORE
 const AuthAPIClient = axios.create({
-  baseURL: 'http://35.154.133.112:8802/v1',
+  baseURL: 'http://10.0.2.2:8802/v1',
   headers: {
     'Content-Type': 'application/json',
     'Accept-Encoding': 'gzip',
@@ -38,7 +38,7 @@ AuthAPIClient.interceptors.request.use(
 );
 
 const AuthAPIClient2 = axios.create({
-  baseURL: 'http://35.154.133.112:8801/v1',
+  baseURL: 'http://10.0.2.2:8801/v1',
   headers: {
     'Content-Type': 'application/json',
     'Accept-Encoding': 'gzip',
