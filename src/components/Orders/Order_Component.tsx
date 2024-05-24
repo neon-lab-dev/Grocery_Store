@@ -19,7 +19,34 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
   index,
   length,
 }) => {
-  console.log('data', data);
+  console.log('data', data.boughtProductDetailsList);
+
+  let time = new Date(data.createdAt);
+
+  let formattedDate =
+    time.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }) +
+    ' at ' +
+    time.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'});
+
+  console.log(formattedDate);
+
+  let productName = '';
+
+  const getProductNames = () => {
+    data.boughtProductDetailsList.map((item, i) => {
+      const name = item.name;
+      const both = `${name} ${
+        i !== data.boughtProductDetailsList.length - 1 ? ',' : ''
+      }`;
+      productName += both;
+    });
+  };
+
+  getProductNames();
   return (
     <Pressable
       px={horizontalScale(20)}
@@ -27,7 +54,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
       bg={'white'}
       borderBottomWidth={index === length ? 0 : 1}
       borderBottomColor={'accent.200'}
-      onPress={onPress}>
+      onPress={() => onPress(data)}>
       <View
         flexDir={'row'}
         justifyContent={'space-between'}
@@ -40,8 +67,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
           flexShrink={1}
           lineHeight={16.94}
           letterSpacing={-0.04}>
-          {data.name}{' '}
-          {data.discountPercent !== 0 && `${data.discountPercent} %`}
+          {productName}
         </Text>
         <Text
           fontFamily={'Inter_Medium'}
@@ -50,7 +76,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
           ml={horizontalScale(70)}
           lineHeight={16.94}
           letterSpacing={-0.04}>
-          ₹87.49
+          ₹{data.totalItemCost}
         </Text>
       </View>
       <View
@@ -71,7 +97,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
             color={'accent.400'}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            Order #897JDHK39392
+            Order #{data.id}
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
@@ -80,10 +106,10 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
             color={'accent.400'}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            25/02/24 at 09:00pm
+            {formattedDate}
           </Text>
         </View>
-        <Delivered />
+        <Delivered status={data.orderStatus} />
       </View>
     </Pressable>
   );

@@ -1,5 +1,5 @@
-import {Button, Pressable, Text, View} from 'native-base';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {Button, View} from 'native-base';
+import {useFocusEffect} from '@react-navigation/native';
 import * as React from 'react';
 import {
   horizontalScale,
@@ -10,12 +10,9 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import SavedAddressComponent from '../../components/Addresses/SavedAddressComponent';
-import {storeAddress} from '../../api/localstorage';
 import {deleteAddress, getAddress} from '../../api/auth_routes';
 import {toast} from '../../components/Toast/Toast';
-import axios from 'axios';
 import Loader from '../../components/Loader/Loader';
-import {FlatList} from 'react-native';
 
 interface SavedAddressProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Addresses'>;
@@ -24,10 +21,6 @@ interface SavedAddressProps {
 const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [addressList, setAddressList] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   fetchAddress();
-  // }, []);
 
   const fetchAddress = async () => {
     setLoaderVisible(true);
@@ -57,9 +50,15 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
       setLoaderVisible(true);
       const res = await deleteAddress(deleteId);
       console.log(res);
-      fetchAddress();
-      setLoaderVisible(false);
-      toast.showToast(res.message || res.errorMessage);
+      if (res.statusCode === 400) {
+        fetchAddress();
+        setLoaderVisible(false);
+        toast.showToast('Please make another address as primary');
+      } else {
+        fetchAddress();
+        setLoaderVisible(false);
+        toast.showToast(res.message || res.errorMessage);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -7,21 +7,32 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
+import {Image} from 'react-native';
 
-export const SingleOrderCard: React.FC = () => {
+export const SingleOrderCard: React.FC = ({product}) => {
+  console.log('producttCard', product.documents[0]);
   return (
     <View
       bg={'white'}
+      justifyContent={'space-between'}
       flexDir={'row'}
       py={verticalScale(10)}
       px={horizontalScale(20)}
       alignItems={'center'}
       mb={horizontalScale(1)}>
-      <SvgXml xml={sampleImage} />
+      {/* <SvgXml xml={sampleImage} /> */}
+      <Image
+        alt="image"
+        source={{
+          uri: product.documents[0],
+        }}
+        width={48}
+        height={48}
+      />
       <View
         flexShrink={1}
         ml={horizontalScale(10)}
-        style={{gap: verticalScale(2)}}>
+        style={{gap: verticalScale(2), marginRight: 'auto'}}>
         <Text
           fontFamily={'Inter_Regular'}
           fontSize={scaleFontSize(14)}
@@ -29,16 +40,16 @@ export const SingleOrderCard: React.FC = () => {
           numberOfLines={2}
           lineHeight={16.98}
           letterSpacing={-0.03}>
-          Cadbury Bournville Rich Cocoa 70% Dark
+          {product.name}
         </Text>
-        <Text
+        {/* <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(12)}
           color={'accent.400'}
           lineHeight={14.52}
           letterSpacing={-0.04}>
           200g
-        </Text>
+        </Text> */}
       </View>
       <View ml={horizontalScale(60)} alignItems={'center'}>
         <Text
@@ -48,7 +59,7 @@ export const SingleOrderCard: React.FC = () => {
           mb={-verticalScale(1)}
           lineHeight={19.36}
           letterSpacing={-0.04}>
-          ₹42
+          ₹{product.discountedPrice}
         </Text>
         <Text
           fontFamily={'Inter_Regualar'}
@@ -57,7 +68,7 @@ export const SingleOrderCard: React.FC = () => {
           strikeThrough
           lineHeight={14.52}
           letterSpacing={-0.04}>
-          ₹58
+          ₹{product.price}
         </Text>
       </View>
     </View>

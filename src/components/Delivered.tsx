@@ -6,7 +6,7 @@ import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types
 const Delivered: React.FC<IViewProps> = props => {
   return (
     <View
-      {...props}
+      // {...props}
       rounded={4}
       py={verticalScale(5)}
       bg={'success.400'}
@@ -17,7 +17,7 @@ const Delivered: React.FC<IViewProps> = props => {
         color={'white'}
         lineHeight={12.1}
         letterSpacing={-0.04}>
-        Delivered
+        {props.status}
       </Text>
     </View>
   );

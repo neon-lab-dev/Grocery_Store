@@ -24,13 +24,17 @@ import {deliveryMan} from '../../assets/images/icons/deliveryMan';
 import {phone} from '../../assets/images/icons/phone';
 import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
+import {FlatList} from 'react-native';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
 }
 
-const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
-  const [orderStatus, setOrderStatus] = React.useState('Packaging');
+const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
+  const {order} = route.params;
+  const {shippingInfo} = order;
+  console.log('orderr', order);
+  const [orderStatus, setOrderStatus] = React.useState(order.orderStatus);
   const [orderInfo, setOrderInfo] = React.useState({
     receivedStatus: 'Order Received',
     deliveredStatus: 'Delivering to',
@@ -47,7 +51,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           time: '10:20PM, 8 Mar, 2024',
         });
         break;
-      case 'Packaging':
+      case 'PACKAGING':
         setOrderInfo({
           receivedStatus: 'Order Packaging',
           deliveredStatus: 'Delivering to',
@@ -83,6 +87,29 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
     }
   }, [orderStatus]);
 
+  let allSavings = 0;
+
+  const getSavings = () => {
+    order.boughtProductDetailsList.map(item => {
+      const saving = item.savings;
+      allSavings += saving;
+    });
+  };
+
+  getSavings();
+
+  let time = new Date(order.createdAt);
+
+  let formattedDate =
+    time.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }) +
+    ' at ' +
+    time.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'});
+
+  console.log(formattedDate);
   return (
     <View flex={1} bgColor={'accent.50'}>
       <View
@@ -97,12 +124,15 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           <GoBack onPress={() => navigation.goBack()} />
           <View ml={horizontalScale(8)} style={{gap: verticalScale(2)}}>
             <Text
+              numberOfLines={1}
+              width={horizontalScale(200)}
               fontFamily={'Inter_Medium'}
               color={'accent.800'}
               fontSize={scaleFontSize(18)}
-              lineHeight={21.78}
-              letterSpacing={-0.04}>
-              Order #189073202237
+              // lineHeight={21.78}
+              // letterSpacing={-0.04}
+            >
+              Order{order.id}
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
@@ -110,7 +140,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               color={'accent.400'}
               lineHeight={14.52}
               letterSpacing={-0.04}>
-              Placed at 07/03/2024 at 09:12PM
+              Placed at {formattedDate}
             </Text>
           </View>
         </View>
@@ -243,18 +273,24 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               color={'accent.400'}
               lineHeight={14.52}
               letterSpacing={-0.04}>
-              No. 46, 1st floor, near police
+              {`${shippingInfo.addressLine1},${shippingInfo.landmark},${shippingInfo.city},${shippingInfo.state},`}
             </Text>
           </View>
         </View>
         <View bg={'white'}>
-          <SingleOrderCard />
-          <View borderWidth={1} borderColor={'accent.100'} />
-          <SingleOrderCard />
-          <View
-            borderStyle={'dashed'}
-            borderWidth={1}
-            borderColor={'#D1D5DB'}
+          <FlatList
+            ItemSeparatorComponent={
+              <View borderWidth={1} borderColor={'accent.100'} />
+            }
+            ListFooterComponent={
+              <View
+                borderStyle={'dashed'}
+                borderWidth={1}
+                borderColor={'#D1D5DB'}
+              />
+            }
+            data={order.boughtProductDetailsList}
+            renderItem={({item}) => <SingleOrderCard product={item} />}
           />
           <View
             px={horizontalScale(20)}
@@ -283,7 +319,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                 color={'accent.800'}
                 lineHeight={16.94}
                 letterSpacing={-0.04}>
-                ₹33
+                ₹{order.totalItemCost}
               </Text>
             </View>
             <View flexDir={'row'} justifyContent={'space-between'}>
@@ -301,7 +337,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                 color={'accent.800'}
                 lineHeight={16.94}
                 letterSpacing={-0.04}>
-                ₹25
+                ₹{order.deliveryCharges}
               </Text>
             </View>
             <View borderWidth={1} borderRadius={1} borderColor={'accent.100'} />
@@ -336,7 +372,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                     strikeThrough
                     lineHeight={12.1}
                     letterSpacing={-0.04}>
-                    ₹87.49
+                    ₹{order.totalCost + allSavings}
                   </Text>
                   <Text
                     fontFamily={'Inter_SemiBold'}
@@ -344,7 +380,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                     color={'accent.800'}
                     lineHeight={16.94}
                     letterSpacing={-0.04}>
-                    ₹87.49
+                    ₹{order.totalCost}
                   </Text>
                 </View>
                 <Center
@@ -358,7 +394,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
                     color={'white'}
                     lineHeight={12.1}
                     letterSpacing={-0.04}>
-                    SAVING ₹9.51
+                    SAVING ₹{allSavings}
                   </Text>
                 </Center>
               </View>

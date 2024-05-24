@@ -12,8 +12,8 @@ interface OrdersProps {
 
 const Orders: React.FC<OrdersProps> = ({navigation}) => {
   const [productsList, setProductList] = React.useState([]);
-  const handlePress = () => {
-    navigation.navigate('SingleOrder');
+  const handlePress = data => {
+    navigation.navigate('SingleOrder', {order: data});
   };
 
   React.useEffect(() => {
@@ -23,8 +23,8 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
   const fetchOrders = async () => {
     try {
       const response = await getOrders();
-      console.log(response.boughtProductDetailsList);
-      setProductList(response.boughtProductDetailsList);
+      console.log(response);
+      setProductList(response);
       console.log('productList', productsList);
     } catch (error) {}
   };
@@ -43,7 +43,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
         renderItem={({item, index}) => (
           <OrderComponent
             data={item}
-            key={item.varietyId}
+            key={item.id}
             onPress={handlePress}
             length={productsList}
             index={index}
