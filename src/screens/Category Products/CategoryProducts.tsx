@@ -1,19 +1,15 @@
 import React, {FC, useEffect, useState} from 'react';
 import {FlatList, TouchableOpacity} from 'react-native';
 import {styles} from './style';
-import ProductData from '../../assets/data/ProductData';
 import SmallProductCard from '../../components/productCard/SmallProductCard';
-import {Categories, SubCategories} from '../../constants/categories';
 import {AuthAPIClient} from '../../api/axios.config';
-import {View, Text, Pressable, Image} from 'native-base';
+import {View, Text, Image} from 'native-base';
 import GoBack from '../../components/Navigation/GoBack';
 import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import {SvgXml} from 'react-native-svg';
-import {searchIcon} from '../../assets/images/icons/searchIcon';
 
 interface Category {
   id: number;
@@ -31,6 +27,7 @@ interface CategoryCardProps {
   setCategoryId: (id: number) => void;
   id: number;
   categoryId: number;
+  imageUrl: any;
 }
 
 const CategoryCard: FC<CategoryCardProps> = ({
@@ -38,13 +35,21 @@ const CategoryCard: FC<CategoryCardProps> = ({
   setCategoryId,
   id,
   categoryId,
+  imageUrl,
 }) => {
   return (
     <TouchableOpacity
       style={styles.mainCategoryCard}
       onPress={() => setCategoryId(id)}>
       <View style={styles.categoryCard}>
-        <View style={styles.leftImage}></View>
+        <View style={styles.leftImage}>
+          <Image
+            alt="subcategory2 image"
+            source={{uri: imageUrl}}
+            h={50}
+            w={50}
+          />
+        </View>
         <Text style={styles.categoriesLeft}>{categoryName}</Text>
       </View>
       {categoryId === id && <View style={styles.selectedItem} />}
@@ -57,9 +62,27 @@ const CategoryProducts: FC = ({navigation, route}) => {
     navigation.navigate('ProductDetails', {productName: name});
   };
   const SubCategory = route.params.SubCategory;
+  const categoryIndex = route.params.categoryIndex;
+  const subCategoryIndex = route.params.subCategoryIndex;
+  const [subCategory2, setSubCategory2] = useState([]);
   const [categoryId, setCategoryId] = useState<number>(0);
   const [CategoryData, setCategoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const fetchCategory = async () => {
+    try {
+      const response = await AuthAPIClient.get('/category/all');
+      if (response.data && response.data.responseBody) {
+        setSubCategory2(
+          response.data.responseBody[categoryIndex].subCategoryDtoList[
+            subCategoryIndex
+          ].subCategory2DtoList,
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const fetchCategoryProducts = async () => {
     try {
       setIsLoading(true);
@@ -81,6 +104,9 @@ const CategoryProducts: FC = ({navigation, route}) => {
     }
   };
 
+  useEffect(() => {
+    fetchCategory();
+  }, []);
   useEffect(() => {
     fetchCategoryProducts();
   }, [categoryId]);
@@ -128,13 +154,14 @@ const CategoryProducts: FC = ({navigation, route}) => {
           <View>
             <FlatList
               showsVerticalScrollIndicator={false}
-              data={SubCategories[SubCategory]}
+              data={subCategory2}
               renderItem={({item, index}) => (
                 <CategoryCard
                   id={index}
-                  categoryName={item}
+                  categoryName={item.name}
                   setCategoryId={setCategoryId}
                   categoryId={categoryId}
+                  imageUrl={item.documentUrl}
                 />
               )}
             />
