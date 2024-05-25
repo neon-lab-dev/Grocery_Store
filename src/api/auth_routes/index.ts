@@ -45,6 +45,7 @@ export const searchProduct = async (
     }
 
     const response = await AuthAPIClient.get(url);
+    console.log('response-rr', response);
     return response.data.responseBody;
   } catch (error) {
     console.log(error);
@@ -153,6 +154,16 @@ export const getOrders = async () => {
     const response = await AuthAPIClient.get('/order/list');
     console.log('response-orders', response.data.responseBody.content[0]);
     return response.data.responseBody.content[0];
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const CreateOrders = async (orderData: { paymentId: string; }) => {
+  try {
+    const response = await AuthAPIClient.post('/order/create',
+      orderData,
+    );
+    return response
   } catch (error) {
     console.log(error);
   }

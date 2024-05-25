@@ -1,9 +1,8 @@
 import {Text, View, Image, Center, ChevronRightIcon, Button} from 'native-base';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   horizontalScale,
   scaleFontSize,
-  verticalScale,
 } from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
 import {SvgXml} from 'react-native-svg';
@@ -16,15 +15,42 @@ import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {walletIcon} from '../../assets/images/icons/walletIcon';
 import {receiptIcon} from '../../assets/images/icons/receiptIcon';
 import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
+import { getSelectedAddress } from '../../api/localstorage';
+import Loader from '../../components/Loader/Loader';
 interface OrderSuccessProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'OrderSuccess'>;
 }
-const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
+
+const OrderSuccess: React.FC<OrderSuccessProps> = ({ route,navigation }) => {
+  const { item,Method} = route.params;
+const ItemCount=item.boughtProductDetailsList.length;
+var saving =0;
+var boughtPrice =0;
+item.boughtProductDetailsList.forEach(
+  (item: { boughtPrice: number; savings: number}) => {
+    boughtPrice += item.boughtPrice;
+    saving += item.savings;
+  },
+);
+  const [loaderVisible, setLoaderVisible] = useState(false);
+  const [selectAddress, setSelectAddress] = useState({});
   const gotoOrderDetails = () => {
-    navigation.navigate('SingleOrder');
+    navigation.navigate('SingleOrder',{data:item});
   };
   const gotoHome = () => {
     navigation.navigate('Home');
+  };
+  useEffect(() => {
+    selAddress();
+  }, []);
+
+  const selAddress = async () => {
+    setLoaderVisible(true);
+    const address = await getSelectedAddress();
+    if (address != null) {
+      setSelectAddress(address);
+      setLoaderVisible(false);
+    }
   };
   return (
     <View style={{flex: 1, backgroundColor: '#F9FAFB'}}>
@@ -75,7 +101,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontSize={width < 380 ? 10 : 12}
             color={'accent.400'}
             fontFamily={'Inter_Medium'}>
-            No.46, 1st floor, near police
+            {`${selectAddress?.addressLine1},${selectAddress?.landmark},${selectAddress?.city},${selectAddress?.state}`}
           </Text>
         </View>
       </View>
@@ -106,7 +132,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
             ml={width < 380 ? 12 : 24}>
-            Cash on Delivery
+           {Method=='one'? 'Cash on Delivery':'Pay Online'} 
           </Text>
         </View>
       </View>
@@ -130,7 +156,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
             >
-            2 items | ₹87.49
+            {ItemCount} items | ₹{boughtPrice}
           </Text>
           <Center
             rounded={6}
@@ -144,7 +170,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
               // fontFamily={'Inter_Medium'}
               fontSize={width < 380 ? 9 : 11}
               color={'white'}>
-              SAVED ₹9.51
+              SAVED ₹{saving}
             </Text>
           </Center>
           <Pressable onPress={gotoOrderDetails}>
@@ -181,6 +207,8 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
           </Button>
         </Center>
       </View>
+      <Loader isOpen={loaderVisible} />
+
     </View>
   );
 };

@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Image, Pressable, Text, View, Alert, FlatList} from 'react-native';
+import {Pressable, View, } from 'react-native';
+import {Box, Text, useToast} from 'native-base';
 import {
   horizontalScale,
   scaleFontSize,
-  verticalScale,
 } from '../../assets/scaling';
 import {Modal} from 'native-base';
 import {styles} from './style';
@@ -11,15 +11,16 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BillSummaryCard from '../../components/BillSummaryCard';
 import PaymentPreferred from '../../components/PaymentPreferred';
-import AddressDropDownList from '../../components/AddressDropDownList';
 import SelectAddress from '../../components/SelectingAddress';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {orangeDownArrow} from '../../assets/images/icons/orangeDownArrow';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
-import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
+import {CreateOrders} from '../../api/auth_routes';
+import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 interface Address {
   id: number;
@@ -240,18 +241,126 @@ interface PaymentProps {
 // };
 
 const Payment: FC<PaymentProps> = ({navigation}) => {
-  const gotoOrderSuccess = () => {
-    navigation.navigate('OrderSuccess');
+  const [loaderVisible, setLoaderVisible] = useState(false);
+  const [value, setValue] = useState("one");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectAddress, setSelectAddress] = useState({});
+  const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
+  const toast = useToast();
+  const id = 'test-toast';
+  const Navigation= useNavigation();
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: () => (
+        <View>
+          <Text
+            fontFamily={'Inter_SemiBold'}
+            color={'#1F2937'}
+            fontSize={scaleFontSize(18)}>
+            Payment Methods
+          </Text>
+          <Text
+            fontFamily={'Inter_SemiBold'}
+            fontSize={scaleFontSize(12)}
+            color={'#6B7280'}>
+            {cartItemCount} Item | Total ₹{TotalPrice.toFixed(2)}
+          </Text>
+        </View>
+      ),
+    });
+  }, [Navigation]);
+  var orderData = {
+    paymentId: 'payment_id_456',
+    boughtProductDetailsList: [
+      {
+        varietyId: '28bd5ce7-145d-4fbe-b472-3747999859ae',
+        boughtQuantity: 2,
+      },
+      {
+        varietyId: '1be7142c-4465-4733-a202-5cf48912765b',
+        boughtQuantity: 1,
+      },
+    ],
+    shippingInfo: {
+      id: selectAddress.id,
+    },
+  };
+
+  const gotoOrderSuccess = async () => {
+    setLoaderVisible(true);
+    try{
+      const orderStatus = await CreateOrders(orderData);
+      if(orderStatus?.data.statusCode==200)
+        {
+          navigation.navigate('OrderSuccess',{ item: orderStatus?.data.responseBody,Method:value});
+          setLoaderVisible(false);
+        }
+      
+    else{
+      setLoaderVisible(false);
+      toast.show({
+        id,
+        duration: 2500,
+        render: () => {
+          return (
+            <Box
+              bg="primary.400"
+              px="2"
+              py="1"
+              rounded="sm"
+              mb={5}
+              _text={{
+                fontWeight: '500',
+                color: 'white',
+              }}>
+              something went wrong
+            </Box>
+          );
+        },
+      });
+    }
+    }
+   catch(error) {
+    toast.show({
+      id,
+      duration: 2500,
+      render: () => {
+        return (
+          <Box
+            bg="primary.400"
+            px="2"
+            py="1"
+            rounded="sm"
+            mb={5}
+            _text={{
+              fontWeight: '500',
+              color: 'white',
+            }}>
+            something went wrong
+          </Box>
+        );
+      },
+    });
+   }
+
   };
   const gotoAddAddress = () => {
     setModalVisible(false);
-    navigation.navigate('AddAddress');
+    navigation.navigate('AddAddress', {title: 'Add'});
   };
-  const [loaderVisible, setLoaderVisible] = useState(false);
-  const [value, setValue] = useState('one');
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectAddress, setSelectAddress] = useState({});
-
+  const cartItems = useSelector((state: any) => state.cart);
+  const cartItemCount = cartItems.items.length;
+  React.useEffect(() => {
+    const cartItemCount = cartItems.items.length;
+    let temp = 0;
+    cartItems.items.forEach(
+      (item: {varietyList: any[]; discountPrice: number; quantity: number}) => {
+        temp += item.varietyList[0].price * item.quantity;
+      },
+    );
+    setTotalDiscountedPrice(temp);
+  }, [cartItems]);
+  const TotalPrice = cartItems.totalPrice + 25;
   useEffect(() => {
     selAddress();
   }, []);
@@ -259,8 +368,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
   const selAddress = async () => {
     setLoaderVisible(true);
     const address = await getSelectedAddress();
-    if (address === null) {
-      console.log('sel', address);
+    if (address != null) {
       setSelectAddress(address);
       setLoaderVisible(false);
     }
@@ -299,11 +407,11 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       </Pressable>
       <View>
         <BillSummaryCard
-          cutOffPrice={87.49}
+          cutOffPrice={totalDiscountedPrice}
           deliveryCharge={25}
-          itemPrice={33}
-          price={87.49}
-          savingPrice={9.51}
+          itemPrice={TotalPrice - 25}
+          price={TotalPrice}
+          savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
         />
         <PaymentPreferred setValue={setValue} value={value} />
       </View>
@@ -317,10 +425,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                 alignItems: 'center',
                 gap: 4,
               }}>
-              <Text style={styles.bottomCardText}>1 Item |</Text>
+              <Text style={styles.bottomCardText}>{cartItemCount} Item |</Text>
               {/* <View style={styles.straightLine} /> */}
               <Text style={[styles.bottomCardText, {fontFamily: 'Inter_Bold'}]}>
-                ₹42
+                ₹{TotalPrice.toFixed(2)}
               </Text>
             </View>
             <View
@@ -348,7 +456,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       <Modal
         isOpen={modalVisible}
         size={'full'}
-        onClose={() => setModalVisible(false)}>
+        onClose={() => {
+          setModalVisible(false);
+          selAddress();
+        }}>
         <Modal.Content
           mb={0}
           mt={'auto'}
@@ -356,7 +467,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           borderTopLeftRadius={12}
           borderTopRightRadius={12}>
           <SelectAddress
-            onClose={() => setModalVisible(false)}
+            onClose={() => {
+              setModalVisible(false);
+              selAddress();
+            }}
             onAddAddress={gotoAddAddress}
           />
         </Modal.Content>

@@ -37,12 +37,13 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
   };
   const navigation = useNavigation();
 
-  const saveSelectAddress = location => {
+  const saveSelectAddress = (location: any) => {
     console.log('address Pressed', location);
     setSelectedAddress(location);
+    onClose();
   };
 
-  const editPressed = location => {
+  const editPressed = (location: any) => {
     console.log('location', location);
     onClose();
     navigation.navigate('AddAddress', {location: location, title: 'Edit'});

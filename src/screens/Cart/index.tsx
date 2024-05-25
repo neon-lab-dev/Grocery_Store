@@ -1,7 +1,6 @@
 import {
   Button,
   Center,
-  ChevronRightIcon,
   Image,
   Modal,
   Pressable,
@@ -23,65 +22,75 @@ import SelectAddress from '../../components/SelectingAddress';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BillSummaryCard from '../../components/BillSummaryCard';
-import {useIsFocused} from '@react-navigation/native';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import GoBack from '../../components/Navigation/GoBack';
 import {useSelector} from 'react-redux';
-import {CartItem} from '../../redux/slices';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
+import {getAddress} from '../../api/auth_routes';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
 const Cart: React.FC<CartProps> = ({navigation}) => {
+  const [modalVisible, setModalVisible] = React.useState(false);
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [selectAddress, setSelectAddress] = React.useState({});
   const [isCartEmpty, setisCartEmpty] = React.useState(Boolean);
+  const [addresscount, setaddresscount] = React.useState(0);
+  const [isAddressPresent, setisAddressPresent] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
-  // console.log(cartItems);
-  let temp = 0;
   const cartItemCount = cartItems.items.length;
+  React.useEffect(() => {
+    selAddress();
+  }, []);
+  const selAddress = async () => {
+    setLoaderVisible(true);
+    const address = await getSelectedAddress();
+    setSelectAddress(address);
+    if (address != null) {
+      setSelectAddress(address);
+      setisAddressPresent(true);
+      setLoaderVisible(false);
+    } else if (address == null) {
+      setisAddressPresent(false);
+    }
+  };
+  const fetchAddress = async () => {
+    const getAddressList = await getAddress();
+    const addresscount = getAddressList.length;
+    setaddresscount(addresscount);
+  };
   React.useEffect(() => {
     let temp = 0;
     cartItems.items.forEach(
       (item: {varietyList: any[]; discountPrice: number; quantity: number}) => {
-        temp += item.varietyList[0].discountPrice * item.quantity;
+        temp += item.varietyList[0].price * item.quantity;
       },
     );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
-  // console.log(totalDiscountedPrice)
   const TotalPrice = cartItems.totalPrice + 25;
-  // console.log(cartItemCount,TotalPrice)
-  // const totalPrice = useSelector((state:CartItem)=> state.cart.totalPrice);
-  const isAddressPresent = true;
   React.useEffect(() => {
-    selAddress();
+    fetchAddress();
     if (cartItemCount <= 0) {
       setisCartEmpty(true);
     } else {
       setisCartEmpty(false);
     }
-  }, []);
-
-  const selAddress = async () => {
-    setLoaderVisible(true);
-    const address = await getSelectedAddress();
-    if (address === null) {
-      console.log('sel', address);
-      setSelectAddress(address);
-      setLoaderVisible(false);
-    }
-  };
-
-  const [modalVisible, setModalVisible] = React.useState(false);
+  });
   const gotoPayment = () => {
-    navigation.navigate('Payment');
+    if (isAddressPresent) navigation.navigate('Payment');
+    else if (addresscount == 0)
+      navigation.navigate('AddAddress', {title: 'Add'});
+    else if(addresscount>0){
+      setModalVisible(true)
+    }
   };
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress', {title: 'Add'});
+    setModalVisible(false);
   };
   const gotoHome = () => {
     navigation.popToTop();
@@ -145,7 +154,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       <Modal
         isOpen={modalVisible}
         size={'full'}
-        onClose={() => setModalVisible(false)}>
+        onClose={() => {
+          setModalVisible(false);
+          selAddress();
+        }}>
         <Modal.Content
           mb={0}
           mt={'auto'}
@@ -154,7 +166,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           borderTopLeftRadius={12}
           borderTopRightRadius={12}>
           <SelectAddress
-            onClose={() => setModalVisible(false)}
+            onClose={() => {
+              setModalVisible(false);
+              selAddress();
+            }}
             onAddAddress={gotoAddAddress}
           />
         </Modal.Content>

@@ -15,7 +15,7 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
-import TextInput from '..//../components/Input';
+import TextInput from '..//../components/input';
 import validators from '../../utils/validators';
 import {Platform} from 'react-native';
 import {fetchUserData, updateUserData} from '../../api/auth_routes';
