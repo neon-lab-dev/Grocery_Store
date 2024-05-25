@@ -9,6 +9,7 @@ import {
 } from '../../assets/scaling';
 import {useDispatch, useSelector} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -148,7 +149,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
           />
         </Pressable>
         <Text mr={horizontalScale(10)} style={styles.Title}>
-          {products.name}
+          {capitalizeFirstLetter(products.name)}
         </Text>
         <Text style={styles.Quantity}>
           {products.varietyList[0].value} {products.varietyList[0].unit}
@@ -162,7 +163,12 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             top: verticalScale(width < 380 ? 130 : 140),
           }}>
           <View style={{marginTop: 18}}>
-            <Text style={styles.Price}>
+            <Text
+              style={[
+                products.varietyList[0].discountPrice < 1000
+                  ? styles.Price
+                  : styles.adjPrice,
+              ]}>
               ₹{products.varietyList[0].discountPrice}
             </Text>
             <Text strikeThrough style={styles.DisPrice}>
@@ -253,6 +259,11 @@ export const styles = StyleSheet.create({
   Price: {
     fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(15),
+    color: '#1F2937',
+  },
+  adjPrice: {
+    fontFamily: 'Inter_Medium',
+    fontSize: scaleFontSize(11),
     color: '#1F2937',
   },
   DisPrice: {

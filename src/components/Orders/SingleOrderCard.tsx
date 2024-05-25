@@ -8,6 +8,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {Image} from 'react-native';
+import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 
 export const SingleOrderCard: React.FC = ({product}) => {
   console.log('producttCard', product.documents[0]);
@@ -40,7 +41,7 @@ export const SingleOrderCard: React.FC = ({product}) => {
           numberOfLines={2}
           lineHeight={16.98}
           letterSpacing={-0.03}>
-          {product.name}
+          {capitalizeFirstLetter(product.name)}
         </Text>
         {/* <Text
           fontFamily={'Inter_Medium'}

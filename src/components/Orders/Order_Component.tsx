@@ -6,11 +6,13 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
+import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 
 interface OrderComponentProps {
   onPress?: () => void;
   index: number;
   length: number;
+  data: any;
 }
 
 export const OrderComponent: React.FC<OrderComponentProps> = ({
@@ -67,7 +69,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
           flexShrink={1}
           lineHeight={16.94}
           letterSpacing={-0.04}>
-          {productName}
+          {capitalizeFirstLetter(productName)}
         </Text>
         <Text
           fontFamily={'Inter_Medium'}
@@ -91,11 +93,12 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
         alignItems={'center'}>
         <View>
           <Text
+            style={{width: '80%'}}
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(12)}
             flexShrink={1}
             color={'accent.400'}
-            lineHeight={14.52}
+            lineHeight={18.52}
             letterSpacing={-0.04}>
             Order #{data.id}
           </Text>

@@ -8,6 +8,7 @@ import {
 } from '../../assets/scaling';
 import {useDispatch} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -150,7 +151,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           mt={1}
           letterSpacing={-0.04}
           numberOfLines={2}>
-          {products.name}
+          {capitalizeFirstLetter(products.name)}
         </Text>
         <Text
           fontFamily={'Inter_Medium'}
@@ -171,7 +172,11 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
         <View>
           <Text
             fontFamily={'Inter_Medium'}
-            fontSize={scaleFontSize(14)}
+            fontSize={
+              products.varietyList[0].discountPrice < 1000
+                ? scaleFontSize(14)
+                : scaleFontSize(13)
+            }
             color={'accent.800'}
             lineHeight={16.94}
             letterSpacing={-0.04}>

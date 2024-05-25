@@ -7,7 +7,7 @@ interface LoaderProps {
 
 const Loader: React.FC<LoaderProps> = ({isOpen}) => {
   return (
-    <Modal isOpen={isOpen} size={'xs'}>
+    <Modal isOpen={isOpen} height={'full'}>
       <Modal.Content
         alignItems={'center'}
         justifyContent={'center'}
