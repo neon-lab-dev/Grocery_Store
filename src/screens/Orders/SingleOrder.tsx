@@ -17,6 +17,7 @@ import {phone} from '../../assets/images/icons/phone';
 import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
 import {FlatList} from 'react-native';
+import {all} from 'axios';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
@@ -393,7 +394,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                       color={'white'}
                       lineHeight={12.1}
                       letterSpacing={-0.04}>
-                      SAVING ₹{allSavings}
+                      SAVING ₹{allSavings.toFixed(2)}
                     </Text>
                   </Center>
                 </View>

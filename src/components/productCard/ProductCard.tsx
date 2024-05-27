@@ -17,6 +17,7 @@ import {
   removeItem,
 } from '../../redux/slices/actions';
 import {useDispatch} from 'react-redux';
+import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -156,7 +157,9 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               resizeMode="contain"
             />
           </Pressable>
-          <Text style={styles.Title}>{products.name}</Text>
+          <Text style={styles.Title}>
+            {capitalizeFirstLetter(products.name)}
+          </Text>
           <Text style={styles.Quantity}>
             {products.varietyList[0].value} {products.varietyList[0].unit}
           </Text>
