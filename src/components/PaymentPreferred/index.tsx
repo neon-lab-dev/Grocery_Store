@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
-import {View, Image} from 'react-native';
-import {Radio, Text} from 'native-base';
+import {View} from 'react-native';
+import {Radio, Text,Image} from 'native-base';
 import {verticalScale} from '../../assets/scaling';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
@@ -37,7 +37,7 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
               <SvgXml xml={codIcon} height={20} width={20} />
               <Text style={styles.paymentPreferredText}>Cash on Delivery</Text>
             </View>
-            <Radio value="one" my={1} aria-label="Cash on Delivery" />
+            <Radio value="Cash_on_Delivery" my={1} aria-label="Cash on Delivery" />
           </View>
           <View style={styles.line} />
           <View
@@ -49,7 +49,20 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
               <SvgXml xml={podIcon} height={20} width={20} />
               <Text style={styles.paymentPreferredText}>Pay Online</Text>
             </View>
-            <Radio value="two" my={1} aria-label="Pay Online" />
+            <Radio value="payment_id_456" my={1} aria-label="Pay Online" />
+          </View>
+          <View style={styles.line} />
+          <View
+            style={[
+              styles.totalCard,
+              {height: verticalScale(23), marginVertical: verticalScale(15)},
+            ]}>
+            <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
+              <Image height={6} width={5} source={require('../../assets/images/box.png')}></Image>
+              {/* <SvgXml xml={podIcon} height={20} width={20} /> */}
+              <Text style={styles.paymentPreferredText}>Pick Up From store</Text>
+            </View>
+            <Radio value="Pick_Up_From_store" my={1} aria-label="Pick Up From store" />
           </View>
         </Radio.Group>
       </View>

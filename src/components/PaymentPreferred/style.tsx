@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
   },
   paymentPreferredCard: {
     width: horizontalScale(315),
-    height: verticalScale(140),
+    height: verticalScale(200),
     backgroundColor: '#FFFFFF',
     borderRadius: horizontalScale(14),
     padding: 17,

@@ -242,10 +242,11 @@ interface PaymentProps {
 
 const Payment: FC<PaymentProps> = ({navigation}) => {
   const [loaderVisible, setLoaderVisible] = useState(false);
-  const [value, setValue] = useState("one");
+  const [value, setValue] = useState("Cash_on_Delivery");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
+  const cartItems = useSelector((state: any) => state.cart);
   const toast = useToast();
   const id = 'test-toast';
   const Navigation= useNavigation();
@@ -269,23 +270,18 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       ),
     });
   }, [Navigation]);
+
   var orderData = {
-    paymentId: 'payment_id_456',
-    boughtProductDetailsList: [
-      {
-        varietyId: '28bd5ce7-145d-4fbe-b472-3747999859ae',
-        boughtQuantity: 2,
-      },
-      {
-        varietyId: '1be7142c-4465-4733-a202-5cf48912765b',
-        boughtQuantity: 1,
-      },
-    ],
+    paymentId: value,
+    boughtProductDetailsList: cartItems.items.map((item: { varietyList: any;id: any; quantity: any; }) => ({
+      varietyId: item.varietyList[0].id,
+      boughtQuantity: item.quantity,
+    })),
     shippingInfo: {
       id: selectAddress.id,
     },
   };
-
+console.log(orderData)
   const gotoOrderSuccess = async () => {
     setLoaderVisible(true);
     try{
@@ -344,11 +340,11 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
    }
 
   };
+  
   const gotoAddAddress = () => {
     setModalVisible(false);
     navigation.navigate('AddAddress', {title: 'Add'});
   };
-  const cartItems = useSelector((state: any) => state.cart);
   const cartItemCount = cartItems.items.length;
   React.useEffect(() => {
     const cartItemCount = cartItems.items.length;

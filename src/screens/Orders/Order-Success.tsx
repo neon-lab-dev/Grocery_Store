@@ -1,9 +1,6 @@
 import {Text, View, Image, Center, ChevronRightIcon, Button} from 'native-base';
-import React, { useEffect, useState } from 'react';
-import {
-  horizontalScale,
-  scaleFontSize,
-} from '../../assets/scaling';
+import React, {useEffect, useState} from 'react';
+import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
 import {SvgXml} from 'react-native-svg';
 import {width} from '../../assets/scaling';
@@ -15,27 +12,27 @@ import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {walletIcon} from '../../assets/images/icons/walletIcon';
 import {receiptIcon} from '../../assets/images/icons/receiptIcon';
 import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
-import { getSelectedAddress } from '../../api/localstorage';
+import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 interface OrderSuccessProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'OrderSuccess'>;
 }
 
-const OrderSuccess: React.FC<OrderSuccessProps> = ({ route,navigation }) => {
-  const { item,Method} = route.params;
-const ItemCount=item.boughtProductDetailsList.length;
-var saving =0;
-var boughtPrice =0;
-item.boughtProductDetailsList.forEach(
-  (item: { boughtPrice: number; savings: number}) => {
-    boughtPrice += item.boughtPrice;
-    saving += item.savings;
-  },
-);
+const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
+  const {item, Method} = route.params;
+  const ItemCount = item.boughtProductDetailsList.length;
+  var saving = 0;
+  var boughtPrice = 0;
+  item.boughtProductDetailsList.forEach(
+    (item: {boughtPrice: number; savings: number}) => {
+      boughtPrice += item.boughtPrice;
+      saving += item.savings;
+    },
+  );
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const gotoOrderDetails = () => {
-    navigation.navigate('SingleOrder',{data:item});
+    navigation.navigate('SingleOrder', {data: item});
   };
   const gotoHome = () => {
     navigation.navigate('Home');
@@ -52,15 +49,25 @@ item.boughtProductDetailsList.forEach(
       setLoaderVisible(false);
     }
   };
+  const getMarginLeft = () => {
+    if (Method === 'Cash_on_Delivery') {
+      return width < 380 ? '12' : '20';
+    } else if (Method === 'Pick_Up_From_store') {
+      return width < 380 ? '8' : '16';
+    } else {
+      return width < 380 ? '12' : '120';
+    }
+  };
+  const marginLeft = getMarginLeft();
   return (
     <View style={{flex: 1, backgroundColor: '#F9FAFB'}}>
       <View style={{alignSelf: 'center'}}>
         <Image
           alt="OrderAnimation"
           style={{
-            marginTop: width < 380 ? 28 : 45,
-            width: width < 380 ? 120 : 140,
-            height: width < 380 ? 120 : 140,
+            marginTop: width < 380 ? 28 : 2,
+            width: width < 380 ? 120 : 120,
+            height: width < 380 ? 120 : 120,
           }}
           source={require('../../assets/images/icons/orderSuccess.gif')}
         />
@@ -79,7 +86,7 @@ item.boughtProductDetailsList.forEach(
         marginLeft={width < 380 ? 4 : 4}
         bg={'white'}
         flexDir={'row'}
-        mt={width < 380 ? 12 : 12}
+        mt={width < 380 ? 12 : 4}
         alignItems={'center'}
         px={2}>
         <Center
@@ -123,7 +130,7 @@ item.boughtProductDetailsList.forEach(
             ml={1}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
-            >
+          >
             Payment Method
           </Text>
           <Text
@@ -131,8 +138,12 @@ item.boughtProductDetailsList.forEach(
             color={'primary.500'}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
-            ml={width < 380 ? 12 : 24}>
-           {Method=='one'? 'Cash on Delivery':'Pay Online'} 
+            ml={marginLeft}>
+            {Method == 'Cash_on_Delivery'
+              ? 'Cash On Delivery'
+              : Method == 'Pick_Up_From_store'
+              ? 'Pick Up From Store'
+              : 'Pay Online'}
           </Text>
         </View>
       </View>
@@ -155,8 +166,8 @@ item.boughtProductDetailsList.forEach(
             ml={1}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
-            >
-            {ItemCount} items | ₹{boughtPrice}
+          >
+            {ItemCount} items | ₹{boughtPrice+25}
           </Text>
           <Center
             rounded={6}
@@ -208,7 +219,6 @@ item.boughtProductDetailsList.forEach(
         </Center>
       </View>
       <Loader isOpen={loaderVisible} />
-
     </View>
   );
 };

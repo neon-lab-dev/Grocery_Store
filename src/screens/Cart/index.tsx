@@ -28,6 +28,7 @@ import {useSelector} from 'react-redux';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 import {getAddress} from '../../api/auth_routes';
+import { useFocusEffect } from '@react-navigation/native';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
@@ -41,27 +42,33 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const [isAddressPresent, setisAddressPresent] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
+  
   const cartItemCount = cartItems.items.length;
+
   React.useEffect(() => {
     selAddress();
   }, []);
+
   const selAddress = async () => {
     setLoaderVisible(true);
     const address = await getSelectedAddress();
-    setSelectAddress(address);
     if (address != null) {
       setSelectAddress(address);
       setisAddressPresent(true);
       setLoaderVisible(false);
     } else if (address == null) {
       setisAddressPresent(false);
+      setLoaderVisible(false);
     }
+    setLoaderVisible(false);
   };
+
   const fetchAddress = async () => {
     const getAddressList = await getAddress();
     const addresscount = getAddressList.length;
     setaddresscount(addresscount);
   };
+
   React.useEffect(() => {
     let temp = 0;
     cartItems.items.forEach(
@@ -71,8 +78,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
+
   const TotalPrice = cartItems.totalPrice + 25;
-  React.useEffect(() => {
+
+  useFocusEffect(() => {
     fetchAddress();
     if (cartItemCount <= 0) {
       setisCartEmpty(true);
@@ -80,18 +89,21 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       setisCartEmpty(false);
     }
   });
+
   const gotoPayment = () => {
     if (isAddressPresent) navigation.navigate('Payment');
     else if (addresscount == 0)
       navigation.navigate('AddAddress', {title: 'Add'});
-    else if(addresscount>0){
-      setModalVisible(true)
+    else if (addresscount > 0) {
+      setModalVisible(true);
     }
   };
+
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress', {title: 'Add'});
     setModalVisible(false);
   };
+
   const gotoHome = () => {
     navigation.popToTop();
   };
