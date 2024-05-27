@@ -25,6 +25,7 @@ interface SubCategory {
 interface CategoryCardProps {
   categoryName: string;
   setCategoryId: (id: number) => void;
+  setSubCategory2: (name: string) => void;
   id: number;
   categoryId: number;
   imageUrl: any;
@@ -33,6 +34,7 @@ interface CategoryCardProps {
 const CategoryCard: FC<CategoryCardProps> = ({
   categoryName,
   setCategoryId,
+  setSubCategory2,
   id,
   categoryId,
   imageUrl,
@@ -40,7 +42,10 @@ const CategoryCard: FC<CategoryCardProps> = ({
   return (
     <TouchableOpacity
       style={styles.mainCategoryCard}
-      onPress={() => setCategoryId(id)}>
+      onPress={() => {
+        setCategoryId(id);
+        setSubCategory2(categoryName);
+      }}>
       <View style={styles.categoryCard}>
         <View style={styles.leftImage}>
           <Image
@@ -64,33 +69,42 @@ const CategoryProducts: FC = ({navigation, route}) => {
   const SubCategory = route.params.SubCategory;
   const categoryIndex = route.params.categoryIndex;
   const subCategoryIndex = route.params.subCategoryIndex;
-  const [subCategory2, setSubCategory2] = useState([]);
+  const [subCategory2List, setSubCategory2List] = useState([]);
+  const [subCategory2, setSubCategory2] = useState('');
   const [categoryId, setCategoryId] = useState<number>(0);
   const [CategoryData, setCategoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchCategory = async () => {
     try {
+      setIsLoading(true);
       const response = await AuthAPIClient.get('/category/all');
       if (response.data && response.data.responseBody) {
-        setSubCategory2(
+        const fetchedSubCategory2List =
           response.data.responseBody[categoryIndex].subCategoryDtoList[
             subCategoryIndex
-          ].subCategory2DtoList,
-        );
+          ].subCategory2DtoList;
+        setSubCategory2List(fetchedSubCategory2List);
+        if (fetchedSubCategory2List.length > 0) {
+          setSubCategory2(fetchedSubCategory2List[0].name);
+        }
       }
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
   const fetchCategoryProducts = async () => {
+    if (!subCategory2) {
+      return;
+    }
     try {
       setIsLoading(true);
       let url = '/product/list';
       let queryParams = [];
-      if (SubCategory) {
-        queryParams.push(`subCategory=${SubCategory}`);
-      }
+      queryParams.push(`subCategory=${SubCategory}`);
+      queryParams.push(`subCategory2=${subCategory2}`);
+
       if (queryParams.length > 0) {
         url += `?${queryParams.join('&')}`;
       }
@@ -109,7 +123,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
   }, []);
   useEffect(() => {
     fetchCategoryProducts();
-  }, [categoryId]);
+  }, [categoryId, subCategory2]);
 
   return (
     <>
@@ -154,7 +168,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
           <View>
             <FlatList
               showsVerticalScrollIndicator={false}
-              data={subCategory2}
+              data={subCategory2List}
               renderItem={({item, index}) => (
                 <CategoryCard
                   id={index}
@@ -162,6 +176,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
                   setCategoryId={setCategoryId}
                   categoryId={categoryId}
                   imageUrl={item.documentUrl}
+                  setSubCategory2={setSubCategory2}
                 />
               )}
             />

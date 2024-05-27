@@ -21,10 +21,10 @@ import ProductHorizontalScroll from '../../components/productCard/ProductHorizon
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
+import {Categories} from '../../constants/categories';
 import {View, Text} from 'native-base';
 import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
-import {AuthAPIClient} from '../../api/axios.config';
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
@@ -32,26 +32,9 @@ const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
   const [name, setName] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
-
-  const fetchCategories = async () => {
-    try {
-      setIsLoading(true);
-      const response = await AuthAPIClient.get('/category/all');
-      console.log(response.data);
-      if (response.data && response.data.responseBody) {
-        setCategories(response.data.responseBody);
-        console.log(categories);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
 
   const fetchUser = async () => {
     try {
@@ -68,7 +51,6 @@ const Home: React.FC<Props> = ({navigation}) => {
 
   useEffect(() => {
     fetchUser();
-    fetchCategories();
   }, []);
   const openSettings = () => {
     navigation.navigate('Settings');
@@ -103,20 +85,6 @@ const Home: React.FC<Props> = ({navigation}) => {
 
   const {width} = Dimensions.get('window');
   // console.log(width,height)
-  if (isLoading) {
-    return (
-      <View
-        flex={1}
-        alignItems={'center'}
-        justifyContent={'center'}
-        bgColor={'accent.300'}>
-        <Image
-          source={require('../../assets/images/icons/loading.gif')}
-          style={{height: 250, width: 250}}
-        />
-      </View>
-    );
-  }
   return (
     <View style={style.container}>
       {/* <Pressable onPress={openDrawer}>
@@ -151,6 +119,7 @@ const Home: React.FC<Props> = ({navigation}) => {
               get your health on line :)
             </Text>
           </View>
+
           <Pressable onPress={seeAll}>
             <Text
               style={{
@@ -164,13 +133,13 @@ const Home: React.FC<Props> = ({navigation}) => {
             </Text>
           </Pressable>
         </View>
-
         <ProductHorizontalScroll onPress={item => listToDetails(item)} />
-        {categories.length > 0 &&
-          categories.map((category, index) => (
+        {Categories.length > 0 &&
+          Categories.map((category, catIndex) => (
             <View
-              key={index}
+              key={catIndex}
               px={horizontalScale(20)}
+              mt={verticalScale(20)}
               style={{gap: verticalScale(20)}}>
               <Text
                 fontFamily={'Inter_SemiBold'}
@@ -181,16 +150,18 @@ const Home: React.FC<Props> = ({navigation}) => {
                 {category.name}
               </Text>
               <View
-                flexDir={'row'}
-                flexWrap={'wrap'}
-                style={{gap: horizontalScale(8)}}>
-                {category.subCategoryDtoList.map((subCategory, subIndex) => (
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  gap: horizontalScale(13),
+                }}>
+                {category.subCategory.map((subCategory, subIndex) => (
                   <Pressable
                     key={subIndex}
                     onPress={() => {
                       navigation.navigate('CategoryProducts', {
                         SubCategory: subCategory.name,
-                        categoryIndex: index,
+                        categoryIndex: catIndex,
                         subCategoryIndex: subIndex,
                       });
                     }}
@@ -198,11 +169,10 @@ const Home: React.FC<Props> = ({navigation}) => {
                       width:
                         (width - 2 * horizontalScale(20)) / 4 -
                         horizontalScale(10),
-                      marginBottom: verticalScale(20),
                     }}>
                     <View alignItems={'center'} style={{gap: 9}}>
                       <Image
-                        source={{uri: subCategory.documentUrl}}
+                        source={subCategory.image}
                         borderRadius={16}
                         style={{
                           width: horizontalScale(70),
@@ -224,6 +194,7 @@ const Home: React.FC<Props> = ({navigation}) => {
               </View>
             </View>
           ))}
+
         <View style={{alignSelf: 'center', margin: 5}}>
           <Image source={require('../../assets/images/icons/SendList.png')} />
           <TouchableOpacity

@@ -1,121 +1,133 @@
-export const Categories = {
-  'Grocery & Kitchen': [
-    {
-      subCategory: 'Vegetable & Fruits',
-      image: require('../assets/images/Categories/fruits_veg.png'),
-    },
-    {
-      subCategory: 'Atta, Rice & Dal',
-      image: require('../assets/images/Categories/Atta_rice.png'),
-    },
-    {
-      subCategory: 'Oil, Ghee & Masala',
-      image: require('../assets/images/Categories/oil_ghee.png'),
-    },
-    {
-      subCategory: 'Daily Bread',
-      image: require('../assets/images/Categories/daily_bread.png'),
-    },
-    {
-      subCategory: 'Bakery & Biscuit',
-      image: require('../assets/images/Categories/bakery.png'),
-    },
-    {
-      subCategory: 'Dry Fruits & Cereals',
-      image: require('../assets/images/Categories/dry_fruits.png'),
-    },
-    {
-      subCategory: 'Kitchenware & Appliances',
-      image: require('../assets/images/Categories/kitchen.png'),
-    },
-  ],
-  'Snacks & Kitchen': [
-    {
-      subCategory: 'Chips & Namkeens',
-      image: require('../assets/images/Categories/chips.png'),
-    },
-    {
-      subCategory: 'Sweets & Chocolates',
-      image: require('../assets/images/Categories/sweet_chocolate.png'),
-    },
-    {
-      subCategory: 'Drinks & Juices',
-      image: require('../assets/images/Categories/drinks.png'),
-    },
-    {
-      subCategory: 'Tea, Coffee & Milk drinks',
-      image: require('../assets/images/Categories/Tea.png'),
-    },
-    {
-      subCategory: 'Instant Food',
-      image: require('../assets/images/Categories/instant_food.png'),
-    },
-    {
-      subCategory: 'Sauces & Spreads',
-      image: require('../assets/images/Categories/sauces.png'),
-    },
-    {
-      subCategory: 'Paan Corner',
-      image: require('../assets/images/Categories/paan_corner.png'),
-    },
-    {
-      subCategory: 'Ice Cream & More',
-      image: require('../assets/images/Categories/icecream.png'),
-    },
-  ],
-  'Beauty & Personal Care': [
-    {
-      subCategory: 'Bath & Body',
-      image: require('../assets/images/Categories/bath_body.png'),
-    },
-    {
-      subCategory: 'Hair',
-      image: require('../assets/images/Categories/hair.png'),
-    },
-    {
-      subCategory: 'Skin & face',
-      image: require('../assets/images/Categories/skin_face.png'),
-    },
-    {
-      subCategory: 'Beauty & Cosmetics',
-      image: require('../assets/images/Categories/beauty_cosmetics.png'),
-    },
-    {
-      subCategory: 'Feminine Hygiene',
-      image: require('../assets/images/Categories/female_hygiene.png'),
-    },
-    {
-      subCategory: 'Baby Care',
-      image: require('../assets/images/Categories/baby_care.png'),
-    },
-    {
-      subCategory: 'Health & Pharma',
-      image: require('../assets/images/Categories/Health_pharma.png'),
-    },
-    {
-      subCategory: 'Sexual Wellness',
-      image: require('../assets/images/Categories/sexual_wellness.png'),
-    },
-  ],
-  'Household Essentials': [
-    {
-      subCategory: 'Home & Lifestyle',
-      image: require('../assets/images/Categories/home_lifestyle.png'),
-    },
-    {
-      subCategory: 'Cleaners & Repellents',
-      image: require('../assets/images/Categories/cleaner_repellents.png'),
-    },
-    {
-      subCategory: 'Electronics',
-      image: require('../assets/images/Categories/electronics.png'),
-    },
-    {
-      subCategory: 'Stationary & Games',
-      image: require('../assets/images/Categories/stationary.png'),
-    },
-  ],
-};
+export const Categories = [
+  {
+    name: 'Grocery & Kitchen',
+    subCategory: [
+      {
+        name: 'Vegetable & Fruits',
+        image: require('../assets/images/Categories/fruits_veg.png'),
+      },
+      {
+        name: 'Atta, Rice & Dal',
+        image: require('../assets/images/Categories/Atta_rice.png'),
+      },
+      {
+        name: 'Oil, Ghee & Masala',
+        image: require('../assets/images/Categories/oil_ghee.png'),
+      },
+      {
+        name: 'Daily Bread',
+        image: require('../assets/images/Categories/daily_bread.png'),
+      },
+      {
+        name: 'Bakery & Biscuit',
+        image: require('../assets/images/Categories/bakery.png'),
+      },
+      {
+        name: 'Dry Fruits & Cereals',
+        image: require('../assets/images/Categories/dry_fruits.png'),
+      },
+      {
+        name: 'Kitchenware & Appliances',
+        image: require('../assets/images/Categories/kitchen.png'),
+      },
+    ],
+  },
+  {
+    name: 'Snacks & Kitchen',
+    subCategory: [
+      {
+        name: 'Chips & Namkeens',
+        image: require('../assets/images/Categories/chips.png'),
+      },
+      {
+        name: 'Sweets & Chocolates',
+        image: require('../assets/images/Categories/sweet_chocolate.png'),
+      },
+      {
+        name: 'Drinks & Juices',
+        image: require('../assets/images/Categories/drinks.png'),
+      },
+      {
+        name: 'Tea, Coffee & Milk drinks',
+        image: require('../assets/images/Categories/Tea.png'),
+      },
+      {
+        name: 'Instant Food',
+        image: require('../assets/images/Categories/instant_food.png'),
+      },
+      {
+        name: 'Sauces & Spreads',
+        image: require('../assets/images/Categories/sauces.png'),
+      },
+      {
+        name: 'Paan Corner',
+        image: require('../assets/images/Categories/paan_corner.png'),
+      },
+      {
+        name: 'Ice Cream & More',
+        image: require('../assets/images/Categories/icecream.png'),
+      },
+    ],
+  },
+  {
+    name: 'Beauty & Personal Care',
+    subCategory: [
+      {
+        name: 'Bath & Body',
+        image: require('../assets/images/Categories/bath_body.png'),
+      },
+      {
+        name: 'Hair',
+        image: require('../assets/images/Categories/hair.png'),
+      },
+      {
+        name: 'Skin & face',
+        image: require('../assets/images/Categories/skin_face.png'),
+      },
+      {
+        name: 'Beauty & Cosmetics',
+        image: require('../assets/images/Categories/beauty_cosmetics.png'),
+      },
+      {
+        name: 'Feminine Hygiene',
+        image: require('../assets/images/Categories/female_hygiene.png'),
+      },
+      {
+        name: 'Baby Care',
+        image: require('../assets/images/Categories/baby_care.png'),
+      },
+      {
+        name: 'Health & Pharma',
+        image: require('../assets/images/Categories/Health_pharma.png'),
+      },
+      {
+        name: 'Sexual Wellness',
+        image: require('../assets/images/Categories/sexual_wellness.png'),
+      },
+    ],
+  },
+  {
+    name: 'Household Essentials',
+    subCategory: [
+      {
+        name: 'Home & Lifestyle',
+        image: require('../assets/images/Categories/home_lifestyle.png'),
+      },
+      {
+        name: 'Cleaners & Repellents',
+        image: require('../assets/images/Categories/cleaner_repellents.png'),
+      },
+      {
+        name: 'Electronics',
+        image: require('../assets/images/Categories/electronics.png'),
+      },
+      {
+        name: 'Stationary & Games',
+        image: require('../assets/images/Categories/stationary.png'),
+      },
+    ],
+  },
+];
 
 export const SubCategories = {
   'Vegetable & Fruits': [

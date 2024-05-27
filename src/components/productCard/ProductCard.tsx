@@ -148,13 +148,16 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                 </Text>
               </View>
             )}
-
-            <Image
-              alt="Image"
-              source={{uri: products.varietyList[0].documentUrls[0]}}
-              style={styles.Image}
-              resizeMode="contain"
-            />
+            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+              {products?.varietyList[0]?.documentUrls[0] ? (
+                <Image
+                  alt="Image"
+                  source={{uri: products?.varietyList[0]?.documentUrls[0]}}
+                  style={styles.Image}
+                  resizeMode="contain"
+                />
+              ) : null}
+            </View>
           </Pressable>
           <Text style={styles.Title}>{products.name}</Text>
           <Text style={styles.Quantity}>
@@ -304,12 +307,16 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               </View>
             )}
 
-            <Image
-              alt="Image"
-              source={{uri: products.varietyList[0].documentUrls[0]}}
-              style={styles.Image}
-              resizeMode="contain"
-            />
+            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+              {products?.varietyList[0]?.documentUrls[0] ? (
+                <Image
+                  alt="Image"
+                  source={{uri: products?.varietyList[0]?.documentUrls[0]}}
+                  style={styles.Image}
+                  resizeMode="contain"
+                />
+              ) : null}
+            </View>
           </Pressable>
           <Text style={styles.Title}>{products.name}</Text>
           <Text style={styles.Quantity}>
