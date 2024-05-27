@@ -89,11 +89,12 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
       />
       <View
         flexDir={'row'}
+        px={'0.5'}
         justifyContent={'space-between'}
         alignItems={'center'}>
         <View>
           <Text
-            style={{width: '80%'}}
+            style={{width: '70%'}}
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(12)}
             flexShrink={1}

@@ -341,7 +341,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                 borderRadius={1}
                 borderColor={'accent.100'}
               />
-              <View flexDir={'row'} justifyContent={'space-between'}>
+              {/* <View flexDir={'row'} justifyContent={'space-around'}>
                 <View
                   my={verticalScale(1)}
                   justifyContent={'center'}
@@ -364,7 +364,11 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                   </Text>
                 </View>
                 <View style={{gap: 4}}>
-                  <View flexDir={'row'} alignItems={'center'} style={{gap: 4}}>
+                  <View
+                    flexDir={'row'}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    style={{gap: 4}}>
                     <Text
                       fontFamily={'Inter_Regular'}
                       fontSize={scaleFontSize(10)}
@@ -383,6 +387,66 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                       ₹{order.totalCost}
                     </Text>
                   </View>
+                  <Center
+                    rounded={4}
+                    bg={'#4ADE80'}
+                    py={verticalScale(4)}
+                    px={horizontalScale(6)}>
+                    <Text
+                      fontFamily={'Inter_Medium'}
+                      fontSize={scaleFontSize(10)}
+                      color={'white'}
+                      lineHeight={12.1}
+                      letterSpacing={-0.04}>
+                      SAVING ₹{allSavings.toFixed(2)}
+                    </Text>
+                  </Center>
+                </View>
+              </View> */}
+
+              <View style={{gap: 3}}>
+                <View flexDir={'row'} justifyContent={'space-between'}>
+                  <Text
+                    fontFamily={'Inter_Medium'}
+                    fontSize={scaleFontSize(14)}
+                    color={'accent.900'}
+                    lineHeight={16.94}
+                    letterSpacing={-0.04}>
+                    Total Bill
+                  </Text>
+                  <View
+                    style={{gap: 6}}
+                    flexDir={'row'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}>
+                    <Text
+                      fontFamily={'Inter_Regular'}
+                      fontSize={scaleFontSize(10)}
+                      color={'accent.500'}
+                      strikeThrough
+                      lineHeight={12.1}
+                      letterSpacing={-0.04}>
+                      ₹{order.totalCost + allSavings}
+                    </Text>
+                    <Text
+                      fontFamily={'Inter_SemiBold'}
+                      fontSize={scaleFontSize(14)}
+                      color={'accent.800'}
+                      lineHeight={16.94}
+                      letterSpacing={-0.04}>
+                      ₹{order.totalCost}
+                    </Text>
+                  </View>
+                </View>
+                <View flexDir={'row'} justifyContent={'space-between'}>
+                  <Text
+                    fontFamily={'Inter_Regular'}
+                    fontSize={scaleFontSize(12)}
+                    color={'accent.500'}
+                    lineHeight={14.4}
+                    letterSpacing={-0.03}>
+                    Incl. all taxes and charges
+                  </Text>
                   <Center
                     rounded={4}
                     bg={'#4ADE80'}
