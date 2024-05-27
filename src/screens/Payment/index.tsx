@@ -281,14 +281,14 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       id: selectAddress.id,
     },
   };
-console.log(orderData)
   const gotoOrderSuccess = async () => {
     setLoaderVisible(true);
     try{
       const orderStatus = await CreateOrders(orderData);
       if(orderStatus?.data.statusCode==200)
         {
-          navigation.navigate('OrderSuccess',{ item: orderStatus?.data.responseBody,Method:value});
+          navigation.replace('OrderSuccess',{ item: orderStatus?.data,Method:value});
+          
           setLoaderVisible(false);
         }
       

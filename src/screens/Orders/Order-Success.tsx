@@ -20,10 +20,10 @@ interface OrderSuccessProps {
 
 const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
   const {item, Method} = route.params;
-  const ItemCount = item.boughtProductDetailsList.length;
+  const ItemCount = item.responseBody.boughtProductDetailsList.length;
   var saving = 0;
   var boughtPrice = 0;
-  item.boughtProductDetailsList.forEach(
+  item.responseBody.boughtProductDetailsList.forEach(
     (item: {boughtPrice: number; savings: number}) => {
       boughtPrice += item.boughtPrice;
       saving += item.savings;
