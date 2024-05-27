@@ -36,6 +36,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   productName,
 }) => {
   const [selectedImage, setSelectedImage] = useState<number>(0);
+  const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
   const [showCartButton, setShowCartButton] = useState<boolean>(false);
@@ -61,6 +62,9 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             ];
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
+            setSelectedImageUrl(
+              response.content[0].varietyList[0].documentUrls[0],
+            );
           }
         }
       } catch (error) {
@@ -129,7 +133,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   const AlternativeImage: FC<AlternativeImageProps> = ({img, id}) => {
     return (
       <Pressable
-        onPress={() => setSelectedImage(id)}
+        onPress={() => {
+          setSelectedImage(id);
+          setSelectedImageUrl(img.uri);
+        }}
         style={[
           styles.smImage,
           {borderColor: id === selectedImage ? '#F97316' : '#E5E7EB'},
@@ -197,7 +204,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
               )}
               <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
                 <Image
-                  source={{uri: productDetails.varietyList[0].documentUrls[0]}}
+                  source={{uri: selectedImageUrl}}
                   style={{height: 200, width: 200}}
                   resizeMode="contain"
                 />
@@ -340,19 +347,21 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                 <Text style={styles.bottomLayoutPrice}>
                   ₹{productDetails.varietyList[0].discountPrice}
                 </Text>
-                <View
-                  style={[
-                    styles.percentageOff,
-                    {
-                      flexDirection: 'row',
-                      gap: 3,
-                    },
-                  ]}>
-                  <Text style={styles.percentageOffText}>
-                    {productDetails.varietyList[0].discountPercent}%
-                  </Text>
-                  <Text style={styles.percentageOffText}>OFF</Text>
-                </View>
+                {productDetails.varietyList[0].discountPercent !== 0 && (
+                  <View
+                    style={[
+                      styles.percentageOff,
+                      {
+                        flexDirection: 'row',
+                        gap: 3,
+                      },
+                    ]}>
+                    <Text style={styles.percentageOffText}>
+                      {productDetails.varietyList[0].discountPercent}%
+                    </Text>
+                    <Text style={styles.percentageOffText}>OFF</Text>
+                  </View>
+                )}
               </View>
             </View>
             {/* Add To Cart Button */}
