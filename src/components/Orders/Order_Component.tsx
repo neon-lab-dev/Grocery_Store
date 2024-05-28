@@ -63,7 +63,6 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
         justifyContent={'space-between'}
         my={verticalScale(5)}>
         <Text
-        
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
@@ -77,7 +76,6 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
-          ml={horizontalScale(70)}
           lineHeight={verticalScale(16.94)}
           letterSpacing={-0.04}>
           ₹{data.totalItemCost}

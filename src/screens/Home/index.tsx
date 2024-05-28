@@ -119,6 +119,7 @@ const Home: React.FC<Props> = ({navigation}) => {
               get your health on line :)
             </Text>
           </View>
+
           <Pressable onPress={seeAll}>
             <Text
               style={{
@@ -132,280 +133,68 @@ const Home: React.FC<Props> = ({navigation}) => {
             </Text>
           </Pressable>
         </View>
-
         <ProductHorizontalScroll onPress={item => listToDetails(item)} />
-
-        <View style={{marginHorizontal: horizontalScale(18)}}>
-          <Text style={[style.CategoryText, {marginBottom: 15}]}>
-            Grocery & Kitchen
-          </Text>
-          {Categories['Grocery & Kitchen'].map((subCategory, ind) => {
-            let index = ind + 1;
-            if (index % 4 === 0) {
-              const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = Categories['Grocery & Kitchen'].slice(
-                endIndex - 4,
-                endIndex,
-              );
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                  }}>
-                  {currentSlice.map((item, subIndex) => (
-                    <Pressable
-                      key={subIndex}
-                      onPress={() => {
-                        navigation.navigate('CategoryProducts', {
-                          SubCategory: item.subCategory,
-                        });
-                      }}>
-                      {/* <Image
-                        key={subIndex}
-                        source={{uri: item.image}}
-                        style={{width: 100, height: 150}}
-                      /> */}
-                      <View
-                        alignItems={'center'}
-                        w={horizontalScale(90)}
-                        h={verticalScale(110)}
-                        style={{gap: 9}}>
-                        <View>
-                          <Image
-                            source={item.image}
-                            borderRadius={16}
-                            style={{
-                              width: horizontalScale(70),
-                              height: verticalScale(65),
-                            }}
-                          />
-                        </View>
-                        <Text
-                          fontFamily={'Inter_Medium'}
-                          fontSize={scaleFontSize(12)}
-                          lineHeight={14.52}
-                          letterSpacing={-0.04}
-                          color={'accent.600'}
-                          textAlign={'center'}
-                          mx={horizontalScale(5)}>
-                          {item.subCategory}
-                        </Text>
-                      </View>
-                    </Pressable>
-                  ))}
-                </View>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </View>
-        <View style={{marginHorizontal: horizontalScale(18)}}>
-          <Text style={[style.CategoryText, {marginBottom: verticalScale(15)}]}>
-            Snacks & Drinks
-          </Text>
-          {Categories['Snacks & Kitchen'].map((subCategory, ind) => {
-            let index = ind + 1;
-            if (index % 4 === 0) {
-              const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = Categories['Snacks & Kitchen'].slice(
-                endIndex - 4,
-                endIndex,
-              );
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                  }}>
-                  {currentSlice.map((item, subIndex) => (
-                    <Pressable
-                      key={subIndex}
-                      onPress={() => {
-                        navigation.navigate('CategoryProducts', {
-                          SubCategory: item.subCategory,
-                        });
-                      }}>
-                      {/* <Image
-                      key={subIndex}
-                      source={{uri: item.image}}
-                      style={{width: 100, height: 150}}
-                    /> */}
-                      <View
-                        alignItems={'center'}
-                        w={horizontalScale(90)}
-                        h={verticalScale(110)}
-                        style={{gap: 9}}>
-                        <View>
-                          <Image
-                            source={item.image}
-                            borderRadius={16}
-                            resizeMode="contain"
-                            style={{
-                              width: horizontalScale(70),
-                              height: verticalScale(65),
-                            }}
-                          />
-                        </View>
-                        <Text
-                          fontFamily={'Inter_Medium'}
-                          fontSize={scaleFontSize(12)}
-                          lineHeight={14.52}
-                          letterSpacing={-0.04}
-                          color={'accent.600'}
-                          textAlign={'center'}
-                          mx={horizontalScale(5)}>
-                          {item.subCategory}
-                        </Text>
-                      </View>
-                    </Pressable>
-                  ))}
-                </View>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </View>
-        <View style={{marginHorizontal: horizontalScale(18)}}>
-          <Text style={[style.CategoryText, {marginBottom: 15}]}>
-            Beauty & Personal Care
-          </Text>
-          {Categories['Beauty & Personal Care'].map((subCategory, ind) => {
-            let index = ind + 1;
-            if (index % 4 === 0) {
-              const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = Categories['Beauty & Personal Care'].slice(
-                endIndex - 4,
-                endIndex,
-              );
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                  }}>
-                  {currentSlice.map((item, subIndex) => (
-                    <Pressable
-                      key={subIndex}
-                      onPress={() => {
-                        navigation.navigate('CategoryProducts', {
-                          SubCategory: item.subCategory,
-                        });
-                      }}>
-                      {/* <Image
+        {Categories.length > 0 &&
+          Categories.map((category, catIndex) => (
+            <View
+              key={catIndex}
+              px={horizontalScale(20)}
+              mt={verticalScale(20)}
+              style={{gap: verticalScale(20)}}>
+              <Text
+                fontFamily={'Inter_SemiBold'}
+                fontSize={scaleFontSize(20)}
+                lineHeight={24.2}
+                letterSpacing={-0.05}
+                color={'accent.700'}>
+                {category.name}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  gap: horizontalScale(13),
+                }}>
+                {category.subCategory.map((subCategory, subIndex) => (
+                  <Pressable
                     key={subIndex}
-                    source={{uri: item.image}}
-                    style={{width: 100, height: 150}}
-                  /> */}
-                      <View
-                        alignItems={'center'}
-                        w={horizontalScale(90)}
-                        h={verticalScale(110)}
-                        style={{gap: 9}}>
-                        <View>
-                          <Image
-                            source={item.image}
-                            borderRadius={16}
-                            resizeMode="contain"
-                            style={{
-                              width: horizontalScale(70),
-                              height: verticalScale(65),
-                            }}
-                          />
-                        </View>
-                        <Text
-                          fontFamily={'Inter_Medium'}
-                          fontSize={scaleFontSize(12)}
-                          lineHeight={14.52}
-                          letterSpacing={-0.04}
-                          color={'accent.600'}
-                          textAlign={'center'}
-                          mx={horizontalScale(5)}>
-                          {item.subCategory}
-                        </Text>
-                      </View>
-                    </Pressable>
-                  ))}
-                </View>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </View>
-        <View style={{marginHorizontal: horizontalScale(18)}}>
-          <Text style={[style.CategoryText, {marginBottom: 15}]}>
-            Household Essentials
-          </Text>
-          {Categories['Household Essentials'].map((subCategory, ind) => {
-            let index = ind + 1;
-            if (index % 4 === 0) {
-              const endIndex = Math.min(index, Math.ceil(index / 4) * 4);
-              const currentSlice = Categories['Household Essentials'].slice(
-                endIndex - 4,
-                endIndex,
-              );
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                  }}>
-                  {currentSlice.map((item, subIndex) => (
-                    <Pressable
-                      key={subIndex}
-                      onPress={() => {
-                        navigation.navigate('CategoryProducts', {
-                          SubCategory: item.subCategory,
-                        });
-                      }}>
-                      {/* <Image
-                  key={subIndex}
-                  source={{uri: item.image}}
-                  style={{width: 100, height: 150}}
-                /> */}
-                      <View
-                        alignItems={'center'}
-                        w={horizontalScale(90)}
-                        h={verticalScale(100)}
-                        style={{gap: 9}}>
-                        <View>
-                          <Image
-                            source={item.image}
-                            borderRadius={16}
-                            resizeMode="contain"
-                            style={{
-                              width: horizontalScale(70),
-                              height: verticalScale(65),
-                            }}
-                          />
-                        </View>
-                        <Text
-                          fontFamily={'Inter_Medium'}
-                          fontSize={scaleFontSize(12)}
-                          lineHeight={14.52}
-                          letterSpacing={-0.04}
-                          color={'accent.600'}
-                          textAlign={'center'}
-                          mx={horizontalScale(5)}>
-                          {item.subCategory}
-                        </Text>
-                      </View>
-                    </Pressable>
-                  ))}
-                </View>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </View>
+                    onPress={() => {
+                      navigation.navigate('CategoryProducts', {
+                        SubCategory: subCategory.name,
+                        categoryIndex: catIndex,
+                        subCategoryIndex: subIndex,
+                      });
+                    }}
+                    style={{
+                      width:
+                        (width - 2 * horizontalScale(20)) / 4 -
+                        horizontalScale(10),
+                    }}>
+                    <View alignItems={'center'} style={{gap: 9}}>
+                      <Image
+                        source={subCategory.image}
+                        borderRadius={16}
+                        style={{
+                          width: horizontalScale(70),
+                          height: verticalScale(65),
+                        }}
+                      />
+                      <Text
+                        fontFamily={'Inter_Medium'}
+                        fontSize={scaleFontSize(12)}
+                        lineHeight={14.52}
+                        letterSpacing={-0.04}
+                        color={'accent.600'}
+                        textAlign={'center'}>
+                        {subCategory.name}
+                      </Text>
+                    </View>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          ))}
+
         <View style={{alignSelf: 'center', margin: 5}}>
           <Image source={require('../../assets/images/icons/SendList.png')} />
           <TouchableOpacity

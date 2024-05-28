@@ -104,6 +104,10 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
     time.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'});
 
   // console.log(formattedDate);
+
+  const convertFormat = (string: String) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
   return (
     <View flex={1} bgColor={'accent.50'}>
       <View
@@ -150,7 +154,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
             color={'white'}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            {orderStatus}
+            {convertFormat(orderStatus)}
           </Text>
         </Center>
       </View>
