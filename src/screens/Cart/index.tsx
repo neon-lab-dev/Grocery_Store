@@ -305,9 +305,9 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                 <View flexDir={'row'} alignItems={'center'}>
                   <Text
                     color={'primary.50'}
-                    mr={horizontalScale(10)}
+                    ml={horizontalScale(10)}
                     fontFamily={'Inter_SemiBold'}
-                    fontSize={scaleFontSize(18)}
+                    fontSize={scaleFontSize(17)}
                     textAlign={'center'}
                     lineHeight={21.78}
                     letterSpacing={-0.04}>

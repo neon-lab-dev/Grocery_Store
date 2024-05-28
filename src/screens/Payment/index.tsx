@@ -242,7 +242,7 @@ interface PaymentProps {
 
 const Payment: FC<PaymentProps> = ({navigation}) => {
   const [loaderVisible, setLoaderVisible] = useState(false);
-  const [value, setValue] = useState("Cash_on_Delivery");
+  const [value, setValue] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
