@@ -159,7 +159,9 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             ? styles.selectUnitCardContainer
             : styles.unitCardContainer
         }>
-        <Text style={styles.unitCardKgText}>{item.value} kg</Text>
+        <Text style={styles.unitCardKgText}>
+          {item.value} {item.unit}
+        </Text>
         <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
           <Text style={styles.unitCardPriceText}>₹{item.discountPrice}</Text>
           <Text style={styles.unitCardCutOffprice}>₹{item.price}</Text>
@@ -174,6 +176,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     Close();
     navigation.navigate('Cart');
   };
+
+  const aggregatedImageUrls = productDetails?.varietyList
+    .map(variety => variety.documentUrls)
+    .flat();
 
   return (
     <>
@@ -203,11 +209,13 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                 </View>
               )}
               <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
-                <Image
-                  source={{uri: selectedImageUrl}}
-                  style={{height: 200, width: 200}}
-                  resizeMode="contain"
-                />
+                {selectedImageUrl && (
+                  <Image
+                    source={{uri: selectedImageUrl}}
+                    style={{height: 200, width: 200}}
+                    resizeMode="contain"
+                  />
+                )}
               </View>
               <View
                 style={{
@@ -222,11 +230,11 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   ItemSeparatorComponent={() => (
                     <View style={{marginLeft: horizontalScale(6)}} />
                   )}
-                  data={productDetails.varietyList[0].documentUrls.map(
+                  data={aggregatedImageUrls.map(
                     (url: string, index: number) => ({id: index, image: url}),
                   )}
                   renderItem={({item}) => (
-                    <AlternativeImage img={{uri: item.image}} id={item.id} />
+                    <AlternativeImage img={{uri: item?.image}} id={item.id} />
                   )}
                   horizontal
                 />
@@ -337,33 +345,36 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             </View>
           </ScrollView>
           {/* Bottom Layout Container */}
-          <View style={styles.bottomLayoutContainer}>
-            <View style={{gap: 2, marginTop: verticalScale(8)}}>
-              <Text style={styles.bottomLayoutkgText}>
-                {productDetails.varietyList[0].value}{' '}
-                {productDetails.varietyList[0].unit}
-              </Text>
-              <View style={{flexDirection: 'row', gap: 8}}>
-                <Text style={styles.bottomLayoutPrice}>
-                  ₹{productDetails.varietyList[0].discountPrice}
+          <View shadow={5} style={styles.bottomLayoutContainer}>
+            {selectedProduct && (
+              <View style={{gap: 2, marginTop: verticalScale(8)}}>
+                <Text style={styles.bottomLayoutkgText}>
+                  {selectedProduct.varietyList[0].value}{' '}
+                  {selectedProduct.varietyList[0].unit}
                 </Text>
-                {productDetails.varietyList[0].discountPercent !== 0 && (
-                  <View
-                    style={[
-                      styles.percentageOff,
-                      {
-                        flexDirection: 'row',
-                        gap: 3,
-                      },
-                    ]}>
-                    <Text style={styles.percentageOffText}>
-                      {productDetails.varietyList[0].discountPercent}%
-                    </Text>
-                    <Text style={styles.percentageOffText}>OFF</Text>
-                  </View>
-                )}
+                <View style={{flexDirection: 'row', gap: 8}}>
+                  <Text style={styles.bottomLayoutPrice}>
+                    ₹{selectedProduct.varietyList[0].discountPrice}
+                  </Text>
+                  {selectedProduct.varietyList[0].discountPercent !== 0 && (
+                    <View
+                      style={[
+                        styles.percentageOff,
+                        {
+                          flexDirection: 'row',
+                          gap: 3,
+                        },
+                      ]}>
+                      <Text style={styles.percentageOffText}>
+                        {selectedProduct.varietyList[0].discountPercent}%
+                      </Text>
+                      <Text style={styles.percentageOffText}>OFF</Text>
+                    </View>
+                  )}
+                </View>
               </View>
-            </View>
+            )}
+
             {/* Add To Cart Button */}
             {isButton1Visible ? (
               <Pressable
