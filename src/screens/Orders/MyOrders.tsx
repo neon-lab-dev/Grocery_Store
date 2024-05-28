@@ -27,9 +27,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
     try {
       setLoaderVisible(true);
       const response = await getOrders();
-      console.log(response);
       setProductList(response);
-      console.log('productList', productsList);
       setLoaderVisible(false);
     } catch (error) {}
   };

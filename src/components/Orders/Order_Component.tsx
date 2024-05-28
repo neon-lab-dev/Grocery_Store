@@ -51,6 +51,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
   getProductNames();
   return (
     <Pressable
+      width={'full'}
       px={horizontalScale(20)}
       py={verticalScale(10)}
       bg={'white'}
@@ -62,12 +63,13 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
         justifyContent={'space-between'}
         my={verticalScale(5)}>
         <Text
+        
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
           numberOfLines={2}
           flexShrink={1}
-          lineHeight={16.94}
+          lineHeight={verticalScale(16.94)}
           letterSpacing={-0.04}>
           {capitalizeFirstLetter(productName)}
         </Text>
@@ -76,7 +78,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
           fontSize={scaleFontSize(14)}
           color={'accent.800'}
           ml={horizontalScale(70)}
-          lineHeight={16.94}
+          lineHeight={verticalScale(16.94)}
           letterSpacing={-0.04}>
           ₹{data.totalItemCost}
         </Text>
@@ -89,10 +91,32 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
       />
       <View
         flexDir={'row'}
-        px={'0.5'}
-        justifyContent={'space-between'}
+        justifyContent={'space-around'}
         alignItems={'center'}>
         <View>
+          <Text
+            marginLeft={horizontalScale(5)}
+            style={{width: '70%'}}
+            fontFamily={'Inter_Medium'}
+            fontSize={scaleFontSize(12)}
+            flexShrink={1}
+            color={'accent.400'}
+            lineHeight={verticalScale(16)}
+            letterSpacing={-0.04}>
+            Order #{data.id}
+          </Text>
+          <Text
+            marginLeft={horizontalScale(7)}
+            fontFamily={'Inter_Regular'}
+            fontSize={scaleFontSize(12)}
+            flexShrink={1}
+            color={'accent.400'}
+            lineHeight={verticalScale(14.52)}
+            letterSpacing={-0.04}>
+            {formattedDate}
+          </Text>
+        </View>
+        {/* <View ml={'15'}>
           <Text
             style={{width: '70%'}}
             fontFamily={'Inter_Medium'}
@@ -112,7 +136,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
             letterSpacing={-0.04}>
             {formattedDate}
           </Text>
-        </View>
+        </View> */}
         <Delivered status={data.orderStatus} />
       </View>
     </Pressable>

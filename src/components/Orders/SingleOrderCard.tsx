@@ -11,7 +11,6 @@ import {Image} from 'react-native';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 
 export const SingleOrderCard: React.FC = ({product}) => {
-  console.log('producttCard', product.documents[0]);
   return (
     <View
       bg={'white'}

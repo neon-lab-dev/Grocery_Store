@@ -103,7 +103,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
     ' at ' +
     time.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'});
 
-  console.log(formattedDate);
+  // console.log(formattedDate);
   return (
     <View flex={1} bgColor={'accent.50'}>
       <View
