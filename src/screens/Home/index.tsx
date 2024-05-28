@@ -32,6 +32,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
   const [name, setName] = useState('');
+  const [userDetails, setUserDetails] = useState({});
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
@@ -43,6 +44,7 @@ const Home: React.FC<Props> = ({navigation}) => {
         const nameArr = response.responseBody.name.split(' ');
         const firstName = nameArr[0];
         setName(firstName);
+        setUserDetails(response.responseBody);
       }
     } catch (error) {
       console.log(error);
@@ -53,7 +55,7 @@ const Home: React.FC<Props> = ({navigation}) => {
     fetchUser();
   }, []);
   const openSettings = () => {
-    navigation.navigate('Settings');
+    navigation.navigate('Settings', {userDetails: userDetails});
   };
   const gotoCart = () => {
     navigation.navigate('Cart');
