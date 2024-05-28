@@ -139,13 +139,16 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               </Text>
             </View>
           )}
-
-          <Image
-            alt="Image"
-            source={{uri: products.varietyList[0].documentUrls[0]}}
-            style={styles.Image}
-            resizeMode="contain"
-          />
+          <View flex={1} alignItems={'center'} justifyContent={'center'}>
+            {products?.varietyList[0]?.documentUrls[0] ? (
+              <Image
+                alt="Image"
+                source={{uri: products?.varietyList[0]?.documentUrls[0]}}
+                style={styles.Image}
+                resizeMode="contain"
+              />
+            ) : null}
+          </View>
         </Pressable>
         <Text mr={horizontalScale(10)} style={styles.Title}>
           {products.name}
@@ -225,15 +228,6 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     </View>
   );
 };
-const getImage = (imageName: string) => {
-  switch (imageName) {
-    case 'item1':
-      return require('../../assets/images/Product-Image/Tomato.png');
-    case 'item2':
-      return require('../../assets/images/Product-Image/Ginger.png');
-  }
-};
-
 export const styles = StyleSheet.create({
   Container: {
     flex: 1,

@@ -1,9 +1,10 @@
-import React, {FC, useState} from 'react';
+/* eslint-disable react/no-unstable-nested-components */
+import React, {FC, useEffect, useState} from 'react';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './style';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
-import {Categories as CategoriesData} from '../../constants/categories';
 import {Image} from 'native-base';
+import {AuthAPIClient} from '../../api/axios.config';
 
 interface Category {
   id: number;
@@ -22,6 +23,7 @@ interface CategoryCardProps {
   setCategoryId: (id: number) => void;
   id: number;
   categoryId: number;
+  imageUrl: any;
 }
 
 const CategoryCard: FC<CategoryCardProps> = ({
@@ -29,13 +31,16 @@ const CategoryCard: FC<CategoryCardProps> = ({
   setCategoryId,
   id,
   categoryId,
+  imageUrl,
 }) => {
   return (
     <TouchableOpacity
       style={styles.mainCategoryCard}
       onPress={() => setCategoryId(id)}>
       <View style={styles.categoryCard}>
-        <View style={styles.leftImage}></View>
+        <View style={styles.leftImage}>
+          <Image alt="category image" source={{uri: imageUrl}} h={50} w={50} />
+        </View>
         <Text style={styles.categoriesLeft}>{categoryName}</Text>
       </View>
       {categoryId === id && <View style={styles.selectedItem} />}
@@ -45,21 +50,46 @@ const CategoryCard: FC<CategoryCardProps> = ({
 
 const Categories: FC = ({navigation}) => {
   const [categoryId, setCategoryId] = useState(0);
-  const selectedCategoryName = Object.keys(CategoriesData)[categoryId];
-  const subCategories = CategoriesData[selectedCategoryName] || [];
-  const SubCategory: FC<SubCategory> = ({subCategory, image}) => {
+  const [selectedCategoryName, setSelectedCategoryName] = useState('');
+  const [subCategories, setSubCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const fetchCategory = async () => {
+    try {
+      const response = await AuthAPIClient.get('/category/all');
+      if (response.data && response.data.responseBody) {
+        setCategories(response.data.responseBody);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setSelectedCategoryName(categories[categoryId].name);
+      setSubCategories(categories[categoryId].subCategoryDtoList);
+    }
+  }, [categories, categoryId]);
+
+  const SubCategory: FC<SubCategory> = ({id, subCategory, image}) => {
     return (
       <TouchableOpacity
         style={styles.subCategoryCard}
         onPress={() =>
           navigation.navigate('CategoryProducts', {
             SubCategory: subCategory,
+            categoryIndex: categoryId,
+            subCategoryIndex: id,
           })
         }>
         <View style={styles.rightImage}>
           <Image
             alt="category"
-            source={image}
+            source={{uri: image}}
             borderRadius={16}
             width={horizontalScale(66)}
             height={verticalScale(73)}
@@ -80,13 +110,14 @@ const Categories: FC = ({navigation}) => {
               paddingBottom: verticalScale(27),
             }}
             showsVerticalScrollIndicator={false}
-            data={Object.keys(CategoriesData)}
+            data={categories}
             renderItem={({item, index}) => (
               <CategoryCard
                 id={index}
-                categoryName={item}
+                categoryName={item.name}
                 setCategoryId={setCategoryId}
                 categoryId={categoryId}
+                imageUrl={item.documentUrl}
               />
             )}
           />
@@ -107,8 +138,8 @@ const Categories: FC = ({navigation}) => {
           renderItem={({item, index}) => (
             <SubCategory
               id={index}
-              subCategory={item.subCategory}
-              image={item.image}
+              subCategory={item.name}
+              image={item.documentUrl}
             />
           )}
         />

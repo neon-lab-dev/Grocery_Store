@@ -129,15 +129,18 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
               </Text>
             </View>
           )}
-          <Image
-            source={{uri: products.varietyList[0].documentUrls[0]}}
-            alt="Product Image"
-            height={113}
-            width={118}
-            borderRadius={12}
-            resizeMode="contain"
-          />
-          {/* <View h={113} w={118} /> */}
+          {products.varietyList[0].documentUrls[0] ? (
+            <Image
+              source={{uri: products.varietyList[0].documentUrls[0]}}
+              alt="Product Image"
+              height={113}
+              width={118}
+              borderRadius={12}
+              resizeMode="contain"
+            />
+          ) : (
+            <View h={113} w={118} />
+          )}
         </View>
       </Pressable>
       <View pb={verticalScale(30)}>
