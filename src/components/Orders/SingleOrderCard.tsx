@@ -1,7 +1,5 @@
 import {Text, View} from 'native-base';
 import * as React from 'react';
-import {SvgXml} from 'react-native-svg';
-import {sampleImage} from '../../assets/images/icons/Rectangle';
 import {
   horizontalScale,
   scaleFontSize,

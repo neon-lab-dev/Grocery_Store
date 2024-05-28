@@ -21,7 +21,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
   index,
   length,
 }) => {
-  console.log('data', data.boughtProductDetailsList);
+  // console.log('data', data.boughtProductDetailsList);
 
   let time = new Date(data.createdAt);
 
@@ -34,7 +34,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
     ' at ' +
     time.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'});
 
-  console.log(formattedDate);
+  // console.log(formattedDate);
 
   let productName = '';
 

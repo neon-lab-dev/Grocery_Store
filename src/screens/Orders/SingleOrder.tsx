@@ -27,7 +27,6 @@ interface SingleOrderProps {
 const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
   const {order} = route.params;
   const {shippingInfo} = order;
-  console.log('orderr', order);
   const [orderStatus, setOrderStatus] = React.useState(order.orderStatus);
   const [orderInfo, setOrderInfo] = React.useState({
     receivedStatus: 'Order Received',

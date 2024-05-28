@@ -5,7 +5,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {getOrders} from '../../api/auth_routes';
 import {FlatList, Text} from 'react-native';
-import Loader from '../../components/Loader/Loader';
 import {verticalScale, scaleFontSize} from '../../assets/scaling';
 
 interface OrdersProps {
