@@ -57,6 +57,8 @@ export const styles = StyleSheet.create({
     height: verticalScale(70),
     borderRadius: horizontalScale(16),
     backgroundColor: '#FFF7ED',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   selectedItem: {
