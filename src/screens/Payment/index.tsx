@@ -282,18 +282,64 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     },
   };
   const gotoOrderSuccess = async () => {
-    setLoaderVisible(true);
-    try{
-      const orderStatus = await CreateOrders(orderData);
-      if(orderStatus?.data.statusCode==200)
-        {
-          navigation.replace('OrderSuccess',{ item: orderStatus?.data,Method:value});
-          
-          setLoaderVisible(false);
-        }
-      
-    else{
-      setLoaderVisible(false);
+    if(orderData.paymentId==''){
+      toast.show({
+        id,
+        duration: 3500,
+        render: () => {
+          return (
+            <Box
+              bg="primary.400"
+              px="2"
+              py="1"
+              rounded="sm"
+              mb={5}
+              _text={{
+                fontWeight: '500',
+                color: 'white',
+              }}>
+              Please Select Payment Method
+            </Box>
+          );
+        },
+      });
+    }
+    else{ 
+       setLoaderVisible(true);
+      try{
+        const orderStatus = await CreateOrders(orderData);
+        if(orderStatus?.data.statusCode==200)
+          {
+            navigation.replace('OrderSuccess',{ item: orderStatus?.data,Method:value});
+            
+            setLoaderVisible(false);
+          }
+        
+      else{
+        setLoaderVisible(false);
+        toast.show({
+          id,
+          duration: 2500,
+          render: () => {
+            return (
+              <Box
+                bg="primary.400"
+                px="2"
+                py="1"
+                rounded="sm"
+                mb={5}
+                _text={{
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                something went wrong
+              </Box>
+            );
+          },
+        });
+      }
+      }
+     catch(error) {
       toast.show({
         id,
         duration: 2500,
@@ -314,30 +360,8 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           );
         },
       });
-    }
-    }
-   catch(error) {
-    toast.show({
-      id,
-      duration: 2500,
-      render: () => {
-        return (
-          <Box
-            bg="primary.400"
-            px="2"
-            py="1"
-            rounded="sm"
-            mb={5}
-            _text={{
-              fontWeight: '500',
-              color: 'white',
-            }}>
-            something went wrong
-          </Box>
-        );
-      },
-    });
-   }
+     }}
+  
 
   };
   
