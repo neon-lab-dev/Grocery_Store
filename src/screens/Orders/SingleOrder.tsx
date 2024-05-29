@@ -129,7 +129,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
               // lineHeight={21.78}
               // letterSpacing={-0.04}
             >
-              Order{order.id}
+              Order #{order.id}
             </Text>
             <Text
               fontFamily={'Inter_Medium'}

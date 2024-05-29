@@ -35,7 +35,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
       {loaderVisible ? (
         <View
           flex={1}
-          bgColor={'accent.300'}
+          bgColor={'white'}
           alignItems={'center'}
           justifyContent={'center'}>
           <Image
