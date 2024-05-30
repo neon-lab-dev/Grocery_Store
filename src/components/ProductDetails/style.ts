@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
   unitCardKgText: {
     color: '#1F2937',
     fontFamily: 'Inter_Regular',
-    fontSize: scaleFontSize(16),
+    fontSize: scaleFontSize(14),
   },
   unitCardPriceText: {
     fontFamily: 'Inter_SemiBold',

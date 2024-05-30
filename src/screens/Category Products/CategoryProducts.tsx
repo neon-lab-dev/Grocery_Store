@@ -48,12 +48,14 @@ const CategoryCard: FC<CategoryCardProps> = ({
       }}>
       <View style={styles.categoryCard}>
         <View style={styles.leftImage}>
-          <Image
-            alt="subcategory2 image"
-            source={{uri: imageUrl}}
-            h={50}
-            w={50}
-          />
+          {imageUrl && (
+            <Image
+              alt="subcategory2 image"
+              source={{uri: imageUrl}}
+              h={50}
+              w={50}
+            />
+          )}
         </View>
         <Text style={styles.categoriesLeft}>{categoryName}</Text>
       </View>
@@ -75,15 +77,34 @@ const CategoryProducts: FC = ({navigation, route}) => {
   const [CategoryData, setCategoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const extractSubCategory2 = categories => {
+    return categories.flatMap(category =>
+      category.subCategoryDtoList.flatMap(subCategory =>
+        subCategory.subCategory2DtoList.map(subCategory2 => ({
+          ...subCategory2,
+          parentCategory: category.name,
+          parentSubCategory: subCategory.name,
+        })),
+      ),
+    );
+  };
+
   const fetchCategory = async () => {
     try {
       setIsLoading(true);
       const response = await AuthAPIClient.get('/category/all');
       if (response.data && response.data.responseBody) {
-        const fetchedSubCategory2List =
-          response.data.responseBody[categoryIndex].subCategoryDtoList[
-            subCategoryIndex
-          ].subCategory2DtoList;
+        // const fetchedSubCategory2List =
+        //   response.data.responseBody[categoryIndex].subCategoryDtoList[
+        //     subCategoryIndex
+        //   ].subCategory2DtoList;
+        // setSubCategory2List(fetchedSubCategory2List);
+        // if (fetchedSubCategory2List.length > 0) {
+        //   setSubCategory2(fetchedSubCategory2List[0].name);
+        // }
+        const fetchedSubCategory2List = extractSubCategory2(
+          response.data.responseBody,
+        );
         setSubCategory2List(fetchedSubCategory2List);
         if (fetchedSubCategory2List.length > 0) {
           setSubCategory2(fetchedSubCategory2List[0].name);
@@ -102,7 +123,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
       setIsLoading(true);
       let url = '/product/list';
       let queryParams = [];
-      queryParams.push(`subCategory=${SubCategory}`);
+      // queryParams.push(`subCategory=${SubCategory}`);
       queryParams.push(`subCategory2=${subCategory2}`);
 
       if (queryParams.length > 0) {
@@ -175,7 +196,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
                   categoryName={item.name}
                   setCategoryId={setCategoryId}
                   categoryId={categoryId}
-                  imageUrl={item.documentUrl}
+                  imageUrl={item?.documentUrl}
                   setSubCategory2={setSubCategory2}
                 />
               )}
