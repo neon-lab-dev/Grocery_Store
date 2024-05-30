@@ -1,13 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Button,
-  Center,
-  ChevronLeftIcon,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from 'native-base';
+import {Button, Center, Pressable, ScrollView, Text, View} from 'native-base';
 import * as React from 'react';
 import {SvgXml} from 'react-native-svg';
 import {timer} from '../../assets/images/icons/time-svgrepo';
@@ -24,13 +16,18 @@ import {deliveryMan} from '../../assets/images/icons/deliveryMan';
 import {phone} from '../../assets/images/icons/phone';
 import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
+import {FlatList} from 'react-native';
+import {all} from 'axios';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
+  route: any;
 }
 
-const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
-  const [orderStatus, setOrderStatus] = React.useState('Packaging');
+const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
+  const {order} = route.params;
+  const {shippingInfo} = order;
+  const [orderStatus, setOrderStatus] = React.useState(order.orderStatus);
   const [orderInfo, setOrderInfo] = React.useState({
     receivedStatus: 'Order Received',
     deliveredStatus: 'Delivering to',
@@ -47,7 +44,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           time: '10:20PM, 8 Mar, 2024',
         });
         break;
-      case 'Packaging':
+      case 'PACKAGING':
         setOrderInfo({
           receivedStatus: 'Order Packaging',
           deliveredStatus: 'Delivering to',
@@ -83,6 +80,33 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
     }
   }, [orderStatus]);
 
+  let allSavings = 0;
+
+  const getSavings = () => {
+    order.boughtProductDetailsList.map(item => {
+      const saving = item.savings;
+      allSavings += saving;
+    });
+  };
+
+  getSavings();
+
+  let time = new Date(order.createdAt);
+
+  let formattedDate =
+    time.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }) +
+    ' at ' +
+    time.toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'});
+
+  // console.log(formattedDate);
+
+  const convertFormat = (string: String) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
   return (
     <View flex={1} bgColor={'accent.50'}>
       <View
@@ -97,12 +121,15 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
           <GoBack onPress={() => navigation.goBack()} />
           <View ml={horizontalScale(8)} style={{gap: verticalScale(2)}}>
             <Text
+              numberOfLines={1}
+              width={horizontalScale(200)}
               fontFamily={'Inter_Medium'}
               color={'accent.800'}
               fontSize={scaleFontSize(18)}
-              lineHeight={21.78}
-              letterSpacing={-0.04}>
-              Order #189073202237
+              // lineHeight={21.78}
+              // letterSpacing={-0.04}
+            >
+              Order #{order.id}
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
@@ -110,7 +137,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
               color={'accent.400'}
               lineHeight={14.52}
               letterSpacing={-0.04}>
-              Placed at 07/03/2024 at 09:12PM
+              Placed at {formattedDate}
             </Text>
           </View>
         </View>
@@ -126,266 +153,343 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation}) => {
             color={'white'}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            {orderStatus}
+            {convertFormat(orderStatus)}
           </Text>
         </Center>
       </View>
-      <ScrollView flex={1} bgColor={'accent.50'}>
-        {(orderStatus === 'Out For Delivery' ||
-          orderStatus === 'Delivered') && (
-          <View
-            bg={'white'}
-            borderRadius={100}
-            borderWidth={1}
-            borderColor={'accent.100'}
-            p={3}
-            mx={horizontalScale(15)}
-            mt={verticalScale(15)}
-            flexDir={'row'}
-            alignItems={'center'}
-            justifyContent={'space-between'}>
-            <View flexDir={'row'} alignItems={'center'}>
-              <Center
-                bgColor={'primary.50'}
-                p={3}
-                borderRadius={100}
-                borderWidth={1}
-                borderColor={'primary.500'}>
-                <SvgXml xml={deliveryMan} height={20} width={20} />
-              </Center>
-              <View ml={horizontalScale(10)} style={{gap: verticalScale(2)}}>
-                <Text
-                  fontFamily={'Inter_Medium'}
-                  fontSize={scaleFontSize(16)}
-                  color={'accent.900'}
-                  lineHeight={19.36}
-                  letterSpacing={-0.04}>
-                  John Doe
-                </Text>
-                <Text
-                  fontFamily={'Inter_Medium'}
-                  fontSize={scaleFontSize(14)}
-                  color={'accent.600'}
-                  lineHeight={16.94}
-                  letterSpacing={-0.04}>
-                  TN 23 AC 2942
-                </Text>
-              </View>
-            </View>
-            {orderStatus === 'Out For Delivery' && (
-              <Pressable onPress={() => CallNumber(1234567890)}>
+      <ScrollView style={{paddingBottom: 300}} flex={1} bgColor={'accent.50'}>
+        <View>
+          {(orderStatus === 'Out For Delivery' ||
+            orderStatus === 'Delivered') && (
+            <View
+              bg={'white'}
+              borderRadius={100}
+              borderWidth={1}
+              borderColor={'accent.100'}
+              p={3}
+              mx={horizontalScale(15)}
+              mt={verticalScale(15)}
+              flexDir={'row'}
+              alignItems={'center'}
+              justifyContent={'space-between'}>
+              <View flexDir={'row'} alignItems={'center'}>
                 <Center
-                  borderWidth={4}
-                  bg={'primary.500'}
-                  borderColor={'#FED7AA'}
+                  bgColor={'primary.50'}
+                  p={3}
                   borderRadius={100}
-                  p={1}>
-                  <SvgXml xml={phone} height={34} width={34} />
+                  borderWidth={1}
+                  borderColor={'primary.500'}>
+                  <SvgXml xml={deliveryMan} height={20} width={20} />
                 </Center>
-              </Pressable>
-            )}
-          </View>
-        )}
-        <View
-          h={verticalScale(60)}
-          bg={'white'}
-          flexDir={'row'}
-          alignItems={'center'}
-          px={horizontalScale(20)}
-          mt={verticalScale(15)}
-          style={{gap: horizontalScale(12)}}>
-          <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
-            <SvgXml xml={timer} height={20} width={20} />
-          </Center>
-          <View style={{gap: verticalScale(2)}}>
-            <Text
-              fontFamily={'Inter_Medium'}
-              fontSize={scaleFontSize(16)}
-              color={'accent.900'}
-              lineHeight={19.36}
-              letterSpacing={-0.04}>
-              {orderInfo.receivedStatus}
-            </Text>
-            <Text
-              fontFamily={'Inter_Medium'}
-              fontSize={scaleFontSize(12)}
-              color={'accent.400'}
-              lineHeight={14.52}
-              letterSpacing={-0.04}>
-              {orderInfo.time}
-            </Text>
-          </View>
-        </View>
-        <View
-          h={verticalScale(60)}
-          bg={'white'}
-          flexDir={'row'}
-          mt={verticalScale(1)}
-          mb={verticalScale(15)}
-          alignItems={'center'}
-          px={horizontalScale(20)}
-          style={{gap: horizontalScale(12)}}>
-          <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
-            <SvgXml xml={location} height={20} width={20} />
-          </Center>
-          <View style={{gap: verticalScale(2)}}>
-            <Text
-              fontFamily={'Inter_Medium'}
-              fontSize={scaleFontSize(16)}
-              color={'accent.900'}
-              lineHeight={19.36}
-              letterSpacing={-0.04}>
-              {orderInfo.deliveredStatus}
-            </Text>
-            <Text
-              fontFamily={'Inter_Medium'}
-              fontSize={scaleFontSize(12)}
-              color={'accent.400'}
-              lineHeight={14.52}
-              letterSpacing={-0.04}>
-              No. 46, 1st floor, near police
-            </Text>
-          </View>
-        </View>
-        <View bg={'white'}>
-          <SingleOrderCard />
-          <View borderWidth={1} borderColor={'accent.100'} />
-          <SingleOrderCard />
-          <View
-            borderStyle={'dashed'}
-            borderWidth={1}
-            borderColor={'#D1D5DB'}
-          />
-          <View
-            px={horizontalScale(20)}
-            py={verticalScale(20)}
-            style={{gap: 10}}>
-            <Text
-              fontFamily={'Inter_SemiBold'}
-              fontSize={scaleFontSize(20)}
-              color={'accent.900'}
-              lineHeight={24.2}
-              letterSpacing={-0.01}>
-              Bill Summary
-            </Text>
-            <View flexDir={'row'} justifyContent={'space-between'}>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.500'}
-                lineHeight={16.94}
-                letterSpacing={-0.04}>
-                Item Total
-              </Text>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.800'}
-                lineHeight={16.94}
-                letterSpacing={-0.04}>
-                ₹33
-              </Text>
-            </View>
-            <View flexDir={'row'} justifyContent={'space-between'}>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.500'}
-                lineHeight={16.94}
-                letterSpacing={-0.04}>
-                Delivery Charge
-              </Text>
-              <Text
-                fontFamily={'Inter_Medium'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.800'}
-                lineHeight={16.94}
-                letterSpacing={-0.04}>
-                ₹25
-              </Text>
-            </View>
-            <View borderWidth={1} borderRadius={1} borderColor={'accent.100'} />
-            <View flexDir={'row'} justifyContent={'space-between'}>
-              <View
-                my={verticalScale(1)}
-                justifyContent={'center'}
-                style={{gap: 2}}>
-                <Text
-                  fontFamily={'Inter_Medium'}
-                  fontSize={scaleFontSize(14)}
-                  color={'accent.900'}
-                  lineHeight={16.94}
-                  letterSpacing={-0.04}>
-                  Total Bill
-                </Text>
-                <Text
-                  fontFamily={'Inter_Regular'}
-                  fontSize={scaleFontSize(12)}
-                  color={'accent.500'}
-                  lineHeight={14.4}
-                  letterSpacing={-0.03}>
-                  Incl. all taxes and charges
-                </Text>
-              </View>
-              <View style={{gap: 4}}>
-                <View flexDir={'row'} alignItems={'center'} style={{gap: 4}}>
-                  <Text
-                    fontFamily={'Inter_Regular'}
-                    fontSize={scaleFontSize(10)}
-                    color={'accent.500'}
-                    strikeThrough
-                    lineHeight={12.1}
-                    letterSpacing={-0.04}>
-                    ₹87.49
-                  </Text>
-                  <Text
-                    fontFamily={'Inter_SemiBold'}
-                    fontSize={scaleFontSize(14)}
-                    color={'accent.800'}
-                    lineHeight={16.94}
-                    letterSpacing={-0.04}>
-                    ₹87.49
-                  </Text>
-                </View>
-                <Center
-                  rounded={4}
-                  bg={'#4ADE80'}
-                  py={verticalScale(4)}
-                  px={horizontalScale(6)}>
+                <View ml={horizontalScale(10)} style={{gap: verticalScale(2)}}>
                   <Text
                     fontFamily={'Inter_Medium'}
-                    fontSize={scaleFontSize(10)}
-                    color={'white'}
-                    lineHeight={12.1}
+                    fontSize={scaleFontSize(16)}
+                    color={'accent.900'}
+                    lineHeight={19.36}
                     letterSpacing={-0.04}>
-                    SAVING ₹9.51
+                    John Doe
                   </Text>
-                </Center>
+                  <Text
+                    fontFamily={'Inter_Medium'}
+                    fontSize={scaleFontSize(14)}
+                    color={'accent.600'}
+                    lineHeight={16.94}
+                    letterSpacing={-0.04}>
+                    TN 23 AC 2942
+                  </Text>
+                </View>
+              </View>
+              {orderStatus === 'Out For Delivery' && (
+                <Pressable onPress={() => CallNumber(1234567890)}>
+                  <Center
+                    borderWidth={4}
+                    bg={'primary.500'}
+                    borderColor={'#FED7AA'}
+                    borderRadius={100}
+                    p={1}>
+                    <SvgXml xml={phone} height={34} width={34} />
+                  </Center>
+                </Pressable>
+              )}
+            </View>
+          )}
+          <View
+            h={verticalScale(60)}
+            bg={'white'}
+            flexDir={'row'}
+            alignItems={'center'}
+            px={horizontalScale(20)}
+            mt={verticalScale(15)}
+            style={{gap: horizontalScale(12)}}>
+            <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
+              <SvgXml xml={timer} height={20} width={20} />
+            </Center>
+            <View style={{gap: verticalScale(2)}}>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(16)}
+                color={'accent.900'}
+                lineHeight={19.36}
+                letterSpacing={-0.04}>
+                {orderInfo.receivedStatus}
+              </Text>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(12)}
+                color={'accent.400'}
+                lineHeight={14.52}
+                letterSpacing={-0.04}>
+                {orderInfo.time}
+              </Text>
+            </View>
+          </View>
+          <View
+            h={verticalScale(60)}
+            bg={'white'}
+            flexDir={'row'}
+            mt={verticalScale(1)}
+            mb={verticalScale(15)}
+            alignItems={'center'}
+            px={horizontalScale(20)}
+            style={{gap: horizontalScale(12)}}>
+            <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
+              <SvgXml xml={location} height={20} width={20} />
+            </Center>
+            <View style={{gap: verticalScale(2)}}>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(16)}
+                color={'accent.900'}
+                lineHeight={19.36}
+                letterSpacing={-0.04}>
+                {orderInfo.deliveredStatus}
+              </Text>
+              <Text
+                fontFamily={'Inter_Medium'}
+                fontSize={scaleFontSize(12)}
+                color={'accent.400'}
+                lineHeight={14.52}
+                letterSpacing={-0.04}>
+                {`${shippingInfo.addressLine1},${shippingInfo.landmark},${shippingInfo.city},${shippingInfo.state},`}
+              </Text>
+            </View>
+          </View>
+          <View bg={'white'}>
+            <FlatList
+              scrollEnabled={false}
+              ItemSeparatorComponent={
+                <View borderWidth={1} borderColor={'accent.100'} />
+              }
+              ListFooterComponent={
+                <View
+                  borderStyle={'dashed'}
+                  borderWidth={1}
+                  borderColor={'#D1D5DB'}
+                />
+              }
+              data={order.boughtProductDetailsList}
+              renderItem={({item}) => <SingleOrderCard product={item} />}
+            />
+            <View
+              px={horizontalScale(20)}
+              py={verticalScale(20)}
+              style={{gap: 10}}>
+              <Text
+                fontFamily={'Inter_SemiBold'}
+                fontSize={scaleFontSize(20)}
+                color={'accent.900'}
+                lineHeight={24.2}
+                letterSpacing={-0.01}>
+                Bill Summary
+              </Text>
+              <View flexDir={'row'} justifyContent={'space-between'}>
+                <Text
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(14)}
+                  color={'accent.500'}
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
+                  Item Total
+                </Text>
+                <Text
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(14)}
+                  color={'accent.800'}
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
+                  ₹{order.totalItemCost}
+                </Text>
+              </View>
+              <View flexDir={'row'} justifyContent={'space-between'}>
+                <Text
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(14)}
+                  color={'accent.500'}
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
+                  Delivery Charge
+                </Text>
+                <Text
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(14)}
+                  color={'accent.800'}
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
+                  ₹{order.deliveryCharges}
+                </Text>
+              </View>
+              <View
+                borderWidth={1}
+                borderRadius={1}
+                borderColor={'accent.100'}
+              />
+              {/* <View flexDir={'row'} justifyContent={'space-around'}>
+                <View
+                  my={verticalScale(1)}
+                  justifyContent={'center'}
+                  style={{gap: 2}}>
+                  <Text
+                    fontFamily={'Inter_Medium'}
+                    fontSize={scaleFontSize(14)}
+                    color={'accent.900'}
+                    lineHeight={16.94}
+                    letterSpacing={-0.04}>
+                    Total Bill
+                  </Text>
+                  <Text
+                    fontFamily={'Inter_Regular'}
+                    fontSize={scaleFontSize(12)}
+                    color={'accent.500'}
+                    lineHeight={14.4}
+                    letterSpacing={-0.03}>
+                    Incl. all taxes and charges
+                  </Text>
+                </View>
+                <View style={{gap: 4}}>
+                  <View
+                    flexDir={'row'}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    style={{gap: 4}}>
+                    <Text
+                      fontFamily={'Inter_Regular'}
+                      fontSize={scaleFontSize(10)}
+                      color={'accent.500'}
+                      strikeThrough
+                      lineHeight={12.1}
+                      letterSpacing={-0.04}>
+                      ₹{order.totalCost + allSavings}
+                    </Text>
+                    <Text
+                      fontFamily={'Inter_SemiBold'}
+                      fontSize={scaleFontSize(14)}
+                      color={'accent.800'}
+                      lineHeight={16.94}
+                      letterSpacing={-0.04}>
+                      ₹{order.totalCost}
+                    </Text>
+                  </View>
+                  <Center
+                    rounded={4}
+                    bg={'#4ADE80'}
+                    py={verticalScale(4)}
+                    px={horizontalScale(6)}>
+                    <Text
+                      fontFamily={'Inter_Medium'}
+                      fontSize={scaleFontSize(10)}
+                      color={'white'}
+                      lineHeight={12.1}
+                      letterSpacing={-0.04}>
+                      SAVING ₹{allSavings.toFixed(2)}
+                    </Text>
+                  </Center>
+                </View>
+              </View> */}
+
+              <View style={{gap: 3}}>
+                <View flexDir={'row'} justifyContent={'space-between'}>
+                  <Text
+                    fontFamily={'Inter_Medium'}
+                    fontSize={scaleFontSize(14)}
+                    color={'accent.900'}
+                    lineHeight={16.94}
+                    letterSpacing={-0.04}>
+                    Total Bill
+                  </Text>
+                  <View
+                    style={{gap: 6}}
+                    flexDir={'row'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}>
+                    <Text
+                      fontFamily={'Inter_Regular'}
+                      fontSize={scaleFontSize(10)}
+                      color={'accent.500'}
+                      strikeThrough
+                      lineHeight={12.1}
+                      letterSpacing={-0.04}>
+                      ₹{order.totalCost + allSavings}
+                    </Text>
+                    <Text
+                      fontFamily={'Inter_SemiBold'}
+                      fontSize={scaleFontSize(14)}
+                      color={'accent.800'}
+                      lineHeight={16.94}
+                      letterSpacing={-0.04}>
+                      ₹{order.totalCost}
+                    </Text>
+                  </View>
+                </View>
+                <View flexDir={'row'} justifyContent={'space-between'}>
+                  <Text
+                    fontFamily={'Inter_Regular'}
+                    fontSize={scaleFontSize(12)}
+                    color={'accent.500'}
+                    lineHeight={14.4}
+                    letterSpacing={-0.03}>
+                    Incl. all taxes and charges
+                  </Text>
+                  <Center
+                    rounded={4}
+                    bg={'#4ADE80'}
+                    py={verticalScale(4)}
+                    px={horizontalScale(6)}>
+                    <Text
+                      fontFamily={'Inter_Medium'}
+                      fontSize={scaleFontSize(10)}
+                      color={'white'}
+                      lineHeight={12.1}
+                      letterSpacing={-0.04}>
+                      SAVING ₹{allSavings.toFixed(2)}
+                    </Text>
+                  </Center>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <View flex={1} mb={horizontalScale(50)} mx={horizontalScale(20)}>
-          <Button
-            borderWidth={2}
-            borderColor={'accent.200'}
-            variant={'outline'}
-            colorScheme={'muted'}
-            mt={verticalScale(30)}
-            px={horizontalScale(36)}
-            w={'100%'}
-            py={verticalScale(15)}
-            rounded={16}
-            _text={{
-              fontFamily: 'Inter_Medium',
-              fontSize: scaleFontSize(20),
-              color: '#EF4444',
-              lineHeight: 24.2,
-              letterSpacing: -0.04,
-            }}
-            onPress={() => CallNumber(1234567890)}>
-            Need Help?
-          </Button>
+          <View flex={1} mb={horizontalScale(50)} mx={horizontalScale(20)}>
+            <Button
+              borderWidth={2}
+              borderColor={'accent.200'}
+              variant={'outline'}
+              colorScheme={'muted'}
+              mt={verticalScale(30)}
+              px={horizontalScale(36)}
+              w={'100%'}
+              py={verticalScale(15)}
+              rounded={16}
+              _text={{
+                fontFamily: 'Inter_Medium',
+                fontSize: scaleFontSize(20),
+                color: '#EF4444',
+                lineHeight: 24.2,
+                letterSpacing: -0.04,
+              }}
+              onPress={() => CallNumber(1234567890)}>
+              Need Help?
+            </Button>
+          </View>
         </View>
       </ScrollView>
     </View>
