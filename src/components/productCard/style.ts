@@ -35,6 +35,11 @@ export const styles = StyleSheet.create({
     marginBottom: verticalScale(17),
     marginTop: verticalScale(-4),
   },
+  adjPrice: {
+    fontFamily: 'Inter_Medium',
+    fontSize: scaleFontSize(14),
+    color: '#1F2937',
+  },
   Button: {
     borderRadius: 10,
     paddingVertical: verticalScale(3),
