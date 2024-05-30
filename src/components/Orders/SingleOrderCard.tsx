@@ -8,7 +8,14 @@ import {
 import {Image} from 'react-native';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 
-export const SingleOrderCard: React.FC = ({product}) => {
+interface Product {
+  documents: string[]; // Array of image URLs
+  name: string;
+  discountedPrice: number;
+  price: number;
+}
+
+export const SingleOrderCard: React.FC<{product: Product}> = ({product}) => {
   return (
     <View
       bg={'white'}
