@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/no-unstable-nested-components */
 import React, {FC, useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, ScrollView} from 'react-native';
 import {View, Text} from 'native-base';
@@ -15,7 +17,7 @@ import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 import {searchProduct} from '../../api/auth_routes';
 import {useDispatch} from 'react-redux';
 import {Box, useToast} from 'native-base';
-import {addToCart, removeItem} from '../../redux/slices/actions';
+import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 
 interface AlternativeImageProps {
   img: any;
