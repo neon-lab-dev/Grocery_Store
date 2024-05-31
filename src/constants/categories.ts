@@ -74,7 +74,7 @@ export const Categories = [
     subCategory: [
       {
         name: 'Bath & Body',
-        image: require('../assets/images/Categories/Bath_body.png'),
+        image: require('../assets/images/Categories/bath_body.png'),
       },
       {
         name: 'Hair',
