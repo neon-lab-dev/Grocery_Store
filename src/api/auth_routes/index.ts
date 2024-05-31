@@ -130,7 +130,6 @@ export const deleteAddress = async id => {
     const response = await AuthAPIClient2.delete('/profile/address/delete', {
       data: [id],
     });
-    console.log('deleteAddress', response);
     return response.data;
   } catch (error) {
     return error;
@@ -152,8 +151,7 @@ export const createSuggestion = async comment => {
 export const getOrders = async () => {
   try {
     const response = await AuthAPIClient.get('/order/list');
-    console.log('response-orders', response.data.responseBody.content[0]);
-    return response.data.responseBody.content[0];
+    return response.data.responseBody.content;
   } catch (error) {
     console.log(error);
   }

@@ -16,7 +16,6 @@ import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
-  width,
 } from '../../assets/scaling';
 import {CallNumber} from '../../utils/launchIntents';
 import {SvgXml} from 'react-native-svg';
@@ -24,17 +23,14 @@ import {accountIcon} from '../../assets/images/icons/account_circle';
 import {close} from '../../assets/images/icons/close';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
-import {fetchUserData} from '../../api/auth_routes';
-import {APIClient} from '../../api/axios.config';
-
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
 import {createSuggestion, getOrders} from '../../api/auth_routes';
-import axios from 'axios';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
+  route: any;
 }
-export const Settings: React.FC<SettingsProps> = ({navigation}) => {
+export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
   const [showError, setShowError] = useState(false);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [resMsg, setResMsg] = useState('');
@@ -45,6 +41,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const [phoneNo, setPhoneNo] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [suggestion, setSuggestion] = useState('');
+  const userDetails = route.params.userDetails;
   useEffect(() => {
     getOrders();
     function onKeyboardDidShow(e: KeyboardEvent) {
@@ -71,23 +68,12 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
     };
   }, []);
 
-  const fetchUser = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetchUserData();
-      if (response.responseBody) {
-        setName(response.responseBody.name);
-        setPhoneNo(response.responseBody.primaryPhoneNo);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    fetchUser();
-  }, []);
+    if (userDetails) {
+      setName(userDetails.name);
+      setPhoneNo(userDetails.primaryPhoneNo);
+    }
+  }, [userDetails]);
   const dispatch = useDispatch();
   const gotoPersonalDetails = () => {
     navigation.navigate('PersonalDetails');
@@ -207,8 +193,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 </View>
                 <TextInput
                   value={suggestion}
-              onChangeText={e => setSuggestion(e)}
-              onFocus={() => setIsClicked(true)}
+                  onChangeText={e => setSuggestion(e)}
+                  onFocus={() => setIsClicked(true)}
                   onBlur={() => setIsClicked(false)}
                   textAlignVertical="top"
                   placeholder="Enter Here"
@@ -227,18 +213,18 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                   }}
                 />
                 {showError && (
-              <Text
-                fontFamily={'Inter_Regular'}
-                fontSize={scaleFontSize(15)}
-                color={'#EF4444'}
-                mb={verticalScale(4)}
-                lineHeight={16.8}
-                letterSpacing={-0.03}>
-                Suggestion field cannot be Empty*
-              </Text>
-            )}
+                  <Text
+                    fontFamily={'Inter_Regular'}
+                    fontSize={scaleFontSize(15)}
+                    color={'#EF4444'}
+                    mb={verticalScale(4)}
+                    lineHeight={16.8}
+                    letterSpacing={-0.03}>
+                    Suggestion field cannot be Empty*
+                  </Text>
+                )}
 
-            <Button
+                <Button
                   mb={verticalScale(10)}
                   w={'100%'}
                   py={verticalScale(15)}
@@ -305,7 +291,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
             </Button>
           </Center>
           <Loader isOpen={loaderVisible} />
-    </View>
+        </View>
       )}
     </>
   );
