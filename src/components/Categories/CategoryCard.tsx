@@ -1,6 +1,10 @@
 import * as React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {horizontalScale, scaleFontSize, verticalScale} from '../../assets/scaling';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling';
 import {Image, Text, View} from 'native-base';
 
 interface CategoryCardProps {
@@ -31,12 +35,14 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
       }}>
       <View style={styles.categoryCard}>
         <View style={styles.leftImage}>
-          <Image
-            alt="subcategory2 image"
-            source={{uri: imageUrl}}
-            h={50}
-            w={50}
-          />
+          {imageUrl && (
+            <Image
+              alt="subcategory2 image"
+              source={{uri: imageUrl}}
+              h={50}
+              w={50}
+            />
+          )}
         </View>
         <Text style={styles.categoriesLeft}>{categoryName}</Text>
       </View>

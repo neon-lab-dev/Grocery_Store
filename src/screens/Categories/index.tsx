@@ -5,7 +5,7 @@ import {styles} from './style';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Image} from 'native-base';
 import {AuthAPIClient} from '../../api/axios.config';
-import { CategoryCard } from '../../components/Categories/CategoryCard';
+import {CategoryCard} from '../../components/Categories/CategoryCard';
 
 interface Category {
   id: number;
@@ -58,13 +58,15 @@ const Categories: FC = ({navigation}) => {
           })
         }>
         <View style={styles.rightImage}>
-          <Image
-            alt="category"
-            source={{uri: image}}
-            borderRadius={16}
-            width={horizontalScale(66)}
-            height={verticalScale(73)}
-          />
+          {image && (
+            <Image
+              alt="category"
+              source={{uri: image}}
+              borderRadius={16}
+              width={horizontalScale(66)}
+              height={verticalScale(73)}
+            />
+          )}
         </View>
 
         <Text style={styles.categoriesRight}>{subCategory}</Text>
