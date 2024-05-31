@@ -16,7 +16,6 @@ import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
-  width,
 } from '../../assets/scaling';
 import {CallNumber} from '../../utils/launchIntents';
 import {SvgXml} from 'react-native-svg';
@@ -24,13 +23,9 @@ import {accountIcon} from '../../assets/images/icons/account_circle';
 import {close} from '../../assets/images/icons/close';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
-import {fetchUserData} from '../../api/auth_routes';
-import {APIClient} from '../../api/axios.config';
-
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
 import {createSuggestion, getOrders} from '../../api/auth_routes';
-import axios from 'axios';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
   route: any;
