@@ -10,6 +10,7 @@ import {
   scaleFontSize,
   verticalScale,
 } from '../../assets/scaling';
+import {CategoryCard} from '../../components/Categories/CategoryCard';
 
 interface Category {
   id: number;
@@ -21,48 +22,6 @@ interface SubCategory {
   id: number;
   name: string;
 }
-
-interface CategoryCardProps {
-  categoryName: string;
-  setCategoryId: (id: number) => void;
-  setSubCategory2: (name: string) => void;
-  id: number;
-  categoryId: number;
-  imageUrl: any;
-}
-
-const CategoryCard: FC<CategoryCardProps> = ({
-  categoryName,
-  setCategoryId,
-  setSubCategory2,
-  id,
-  categoryId,
-  imageUrl,
-}) => {
-  return (
-    <TouchableOpacity
-      style={styles.mainCategoryCard}
-      onPress={() => {
-        setCategoryId(id);
-        setSubCategory2(categoryName);
-      }}>
-      <View style={styles.categoryCard}>
-        <View style={styles.leftImage}>
-          {imageUrl && (
-            <Image
-              alt="subcategory2 image"
-              source={{uri: imageUrl}}
-              h={50}
-              w={50}
-            />
-          )}
-        </View>
-        <Text style={styles.categoriesLeft}>{categoryName}</Text>
-      </View>
-      {categoryId === id && <View style={styles.selectedItem} />}
-    </TouchableOpacity>
-  );
-};
 
 const CategoryProducts: FC = ({navigation, route}) => {
   const navigateToProductDetails = (name: string) => {
