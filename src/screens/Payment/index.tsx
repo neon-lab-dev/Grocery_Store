@@ -280,6 +280,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     shippingInfo: {
       id: selectAddress.id,
     },
+    paymentMode:value
   };
   const gotoOrderSuccess = async () => {
     if(orderData.paymentId==''){

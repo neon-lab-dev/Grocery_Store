@@ -45,14 +45,14 @@ export type AppNavigatorParamList = {
   Home: undefined;
   Search: undefined;
   Settings: undefined;
-  OrderSuccess:  { item: number , Method:string};
+  OrderSuccess:  { item: undefined , Method:string};
   PersonalDetails: undefined;
   Addresses: undefined;
   AddAddress: undefined;
   Help: undefined;
   FAQ: undefined;
   Orders: undefined;
-  SingleOrder: {data:string};
+  SingleOrder: {order:string};
   Cart: undefined;
   Splash: undefined;
 };

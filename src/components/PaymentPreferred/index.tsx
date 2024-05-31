@@ -37,7 +37,7 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
               <SvgXml xml={codIcon} height={20} width={20} />
               <Text style={styles.paymentPreferredText}>Cash on Delivery</Text>
             </View>
-            <Radio value="Cash_on_Delivery" my={1} aria-label="Cash on Delivery" />
+            <Radio value="CASH_ON_DELIVERY" my={1} aria-label="Cash on Delivery" />
           </View>
           <View style={styles.line} />
           <View
@@ -49,7 +49,7 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
               <SvgXml xml={podIcon} height={20} width={20} />
               <Text style={styles.paymentPreferredText}>Pay Online</Text>
             </View>
-            <Radio value="payment_id_456" my={1} aria-label="Pay Online" />
+            <Radio value="ONLINE_PAYMENT" my={1} aria-label="Pay Online" />
           </View>
           <View style={styles.line} />
           <View
@@ -62,7 +62,7 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
               {/* <SvgXml xml={podIcon} height={20} width={20} /> */}
               <Text style={styles.paymentPreferredText}>Pick Up From store</Text>
             </View>
-            <Radio value="Pick_Up_From_store" my={1} aria-label="Pick Up From store" />
+            <Radio value="PICKUP_AT_SHOP" my={1} aria-label="Pick Up From store" />
           </View>
         </Radio.Group>
       </View>

@@ -32,7 +32,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const gotoOrderDetails = () => {
-    navigation.navigate('SingleOrder', {data: item});
+    navigation.navigate('SingleOrder', {order: item.responseBody});
   };
   const gotoHome = () => {
     navigation.navigate('Home');
@@ -50,9 +50,9 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
     }
   };
   const getMarginLeft = () => {
-    if (Method === 'Cash_on_Delivery') {
+    if (Method === 'CASH_ON_DELIVERY') {
       return width < 380 ? '12' : '20';
-    } else if (Method === 'Pick_Up_From_store') {
+    } else if (Method === 'PICKUP_AT_SHOP') {
       return width < 380 ? '8' : '16';
     } else {
       return width < 380 ? '12' : '120';
@@ -139,9 +139,9 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
             ml={marginLeft}>
-            {Method == 'Cash_on_Delivery'
+            {Method == 'CASH_ON_DELIVERY'
               ? 'Cash On Delivery'
-              : Method == 'Pick_Up_From_store'
+              : Method == 'PICKUP_AT_SHOP'
               ? 'Pick Up From Store'
               : 'Pay Online'}
           </Text>
