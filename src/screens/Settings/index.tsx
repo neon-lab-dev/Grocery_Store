@@ -95,7 +95,10 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
   };
   const handleLogOut = () => {
     dispatch(logout());
-    navigation.replace('Auth', {screen: 'Login'});
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Auth'}],
+    });
   };
 
   const sendSuggestion = async () => {
