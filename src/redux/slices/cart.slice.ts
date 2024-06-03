@@ -36,7 +36,7 @@ export const cartReducer = createReducer(initialState, builder => {
       }
       state.totalPrice +=
         newItem.varietyList[0].discountPrice * newItem.quantity;
-      console.log(state);
+      // console.log(state);
     })
     .addCase(INCREMENT_ITEM, (state, action) => {
       const itemId = action.payload as number;
@@ -45,7 +45,7 @@ export const cartReducer = createReducer(initialState, builder => {
         itemToIncrement.quantity++;
         state.totalPrice += itemToIncrement.varietyList[0].discountPrice;
       }
-      console.log(state);
+      // console.log(state);
     })
     .addCase(DECREMENT_ITEM, (state, action) => {
       const itemId = action.payload as number;
@@ -54,7 +54,7 @@ export const cartReducer = createReducer(initialState, builder => {
         itemToDecrement.quantity--;
         state.totalPrice -= itemToDecrement.varietyList[0].discountPrice;
       }
-      console.log(state);
+      // console.log(state);
     })
     .addCase(REMOVE_ITEM, (state, action) => {
       const itemId = action.payload as number;
@@ -65,7 +65,7 @@ export const cartReducer = createReducer(initialState, builder => {
           ? itemToDecrement.varietyList[0].discountPrice
           : 0;
       }
-      console.log(state);
+      // console.log(state);
     })
     .addCase(CLEAR_CART, state => {
       state.items = [];

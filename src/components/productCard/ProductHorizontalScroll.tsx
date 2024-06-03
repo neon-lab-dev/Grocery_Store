@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, Pressable, ScrollView} from 'native-base';
-import ProductData from '../../assets/data/ProductData';
-import {horizontalScale, verticalScale} from '../../assets/scaling';
-import {calculateDiscountPercentage} from '../../utils/calculatePercentage';
+import {View, ScrollView} from 'native-base';
+import {horizontalScale} from '../../assets/scaling';
 import ProductCard from './ProductCard';
 import {getProducts} from '../../api/auth_routes';
 

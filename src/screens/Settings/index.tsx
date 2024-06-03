@@ -114,7 +114,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
         // console.log(message);
         toast.showToast(message.message);
       } catch {
-        Toast.show({
+        toast.showToast({
           title: resMsg,
         });
       }

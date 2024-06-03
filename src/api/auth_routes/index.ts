@@ -111,7 +111,6 @@ export const addAddress = async address => {
 };
 
 export const updateAddress = async address => {
-  console.log('edited', address);
   try {
     const response = await AuthAPIClient2.post(
       '/profile/address/update',

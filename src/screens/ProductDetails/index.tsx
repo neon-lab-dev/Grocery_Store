@@ -12,7 +12,6 @@ import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
-import {arrowDropRight} from '../../assets/images/icons/arrow_drop_right';
 import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 import GoBack from '../../components/Navigation/GoBack';
 import {searchProduct} from '../../api/auth_routes';

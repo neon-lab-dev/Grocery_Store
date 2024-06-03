@@ -1,9 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  horizontalScale,
-  scaleFontSize,
-  verticalScale,
-} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 export const styles = StyleSheet.create({
   selectAddressBox: {
     width: '100%',

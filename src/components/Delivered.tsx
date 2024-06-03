@@ -1,8 +1,7 @@
-import {View, Text, ICenterProps} from 'native-base';
+import {View, Text} from 'native-base';
 import * as React from 'react';
 import {horizontalScale, scaleFontSize, verticalScale} from '../assets/scaling';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
-import {capitalizeFirstLetter} from '../utils/capitalizeWord';
 
 const Delivered: React.FC<IViewProps> = props => {
   const convertFormat = (string: String) => {

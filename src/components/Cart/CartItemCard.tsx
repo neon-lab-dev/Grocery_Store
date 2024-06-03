@@ -7,7 +7,6 @@ import {
 } from '../../assets/scaling';
 import {useDispatch} from 'react-redux';
 import {
-  addToCart,
   decrementItem,
   incrementItem,
   removeItem,

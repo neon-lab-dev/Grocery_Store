@@ -2,8 +2,7 @@ import React, {useEffect} from 'react';
 import {ImageBackground, StatusBar} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/MainNavigation';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+
 import {getItem} from '../../api/localstorage';
 
 export interface SplashProps {

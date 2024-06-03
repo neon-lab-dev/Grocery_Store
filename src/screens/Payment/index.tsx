@@ -1,23 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Image, Pressable, Text, View, Alert, FlatList} from 'react-native';
-import {
-  horizontalScale,
-  scaleFontSize,
-  verticalScale,
-} from '../../assets/scaling';
+import {Pressable, Text, View} from 'react-native';
+import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Modal} from 'native-base';
 import {styles} from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BillSummaryCard from '../../components/BillSummaryCard';
 import PaymentPreferred from '../../components/PaymentPreferred';
-import AddressDropDownList from '../../components/AddressDropDownList';
 import SelectAddress from '../../components/SelectingAddress';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {orangeDownArrow} from '../../assets/images/icons/orangeDownArrow';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
-import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 
@@ -260,7 +254,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     setLoaderVisible(true);
     const address = await getSelectedAddress();
     if (address === null) {
-      console.log('sel', address);
+      // console.log('sel', address);
       setSelectAddress(address);
       setLoaderVisible(false);
     }
