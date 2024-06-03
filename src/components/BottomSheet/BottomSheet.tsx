@@ -44,13 +44,15 @@ const BottomSheet: FC<BottomSheetProps> = ({
       animationType="none"
       onRequestClose={onClose}>
       <View style={styles.modalContainer}>
-        <Pressable
-          style={{alignItems: 'center', marginVertical: verticalScale(10)}}
-          onPress={onClose}>
-          <View style={styles.closeButton}>
-            <SvgXml xml={overlayCloseIcon} />
-          </View>
-        </Pressable>
+        {type === 'Product-Details' && (
+          <Pressable
+            style={{alignItems: 'center', marginVertical: verticalScale(10)}}
+            onPress={onClose}>
+            <View style={styles.closeButton}>
+              <SvgXml xml={overlayCloseIcon} />
+            </View>
+          </Pressable>
+        )}
         <View style={[styles.bottomSheet]}>{getComponent(type)}</View>
       </View>
     </Modal>

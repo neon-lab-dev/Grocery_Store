@@ -5,6 +5,7 @@ import {styles} from './style';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Image} from 'native-base';
 import {AuthAPIClient} from '../../api/axios.config';
+import {CategoryCard} from '../../components/Categories/CategoryCard';
 
 interface Category {
   id: number;
@@ -17,36 +18,6 @@ interface SubCategory {
   subCategory: string;
   image: any;
 }
-
-interface CategoryCardProps {
-  categoryName: string;
-  setCategoryId: (id: number) => void;
-  id: number;
-  categoryId: number;
-  imageUrl: any;
-}
-
-const CategoryCard: FC<CategoryCardProps> = ({
-  categoryName,
-  setCategoryId,
-  id,
-  categoryId,
-  imageUrl,
-}) => {
-  return (
-    <TouchableOpacity
-      style={styles.mainCategoryCard}
-      onPress={() => setCategoryId(id)}>
-      <View style={styles.categoryCard}>
-        <View style={styles.leftImage}>
-          <Image alt="category image" source={{uri: imageUrl}} h={50} w={50} />
-        </View>
-        <Text style={styles.categoriesLeft}>{categoryName}</Text>
-      </View>
-      {categoryId === id && <View style={styles.selectedItem} />}
-    </TouchableOpacity>
-  );
-};
 
 const Categories: FC = ({navigation}) => {
   const [categoryId, setCategoryId] = useState(0);
@@ -87,13 +58,15 @@ const Categories: FC = ({navigation}) => {
           })
         }>
         <View style={styles.rightImage}>
-          <Image
-            alt="category"
-            source={{uri: image}}
-            borderRadius={16}
-            width={horizontalScale(66)}
-            height={verticalScale(73)}
-          />
+          {image && (
+            <Image
+              alt="category"
+              source={{uri: image}}
+              borderRadius={16}
+              width={horizontalScale(66)}
+              height={verticalScale(73)}
+            />
+          )}
         </View>
 
         <Text style={styles.categoriesRight}>{subCategory}</Text>

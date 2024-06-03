@@ -23,15 +23,14 @@ import {accountIcon} from '../../assets/images/icons/account_circle';
 import {close} from '../../assets/images/icons/close';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
-import {fetchUserData} from '../../api/auth_routes';
-
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
 import {createSuggestion, getOrders} from '../../api/auth_routes';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
+  route: any;
 }
-export const Settings: React.FC<SettingsProps> = ({navigation}) => {
+export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
   const [showError, setShowError] = useState(false);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [resMsg, setResMsg] = useState('');
@@ -42,6 +41,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const [phoneNo, setPhoneNo] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [suggestion, setSuggestion] = useState('');
+  const userDetails = route.params.userDetails;
   useEffect(() => {
     getOrders();
     function onKeyboardDidShow(e: KeyboardEvent) {
@@ -68,23 +68,12 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
     };
   }, []);
 
-  const fetchUser = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetchUserData();
-      if (response.responseBody) {
-        setName(response.responseBody.name);
-        setPhoneNo(response.responseBody.primaryPhoneNo);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    fetchUser();
-  }, []);
+    if (userDetails) {
+      setName(userDetails.name);
+      setPhoneNo(userDetails.primaryPhoneNo);
+    }
+  }, [userDetails]);
   const dispatch = useDispatch();
   const gotoPersonalDetails = () => {
     navigation.navigate('PersonalDetails');
@@ -106,7 +95,10 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
   };
   const handleLogOut = () => {
     dispatch(logout());
-    navigation.replace('Auth', {screen: 'Login'});
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Auth'}],
+    });
   };
 
   const sendSuggestion = async () => {
