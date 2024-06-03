@@ -1,10 +1,6 @@
-import {Text, View, Image, Center, ChevronRightIcon, Button} from 'native-base';
+import {Text, View, Image, Center, Button} from 'native-base';
 import React from 'react';
-import {
-  horizontalScale,
-  scaleFontSize,
-  verticalScale,
-} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
 import {SvgXml} from 'react-native-svg';
 import {width} from '../../assets/scaling';
@@ -97,7 +93,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             ml={1}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
-            >
+          >
             Payment Method
           </Text>
           <Text
@@ -129,7 +125,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             ml={1}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
-            >
+          >
             2 items | ₹87.49
           </Text>
           <Center

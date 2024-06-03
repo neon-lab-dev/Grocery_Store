@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IInputProps, Input, Text} from 'native-base';
+import {IInputProps, Input} from 'native-base';
 import {
   verticalScale,
   scaleFontSize,

@@ -1,22 +1,11 @@
-import {
-  Button,
-  Center,
-  Input,
-  Modal,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from 'native-base';
+import {Button, Center, Pressable, ScrollView, Text, View} from 'native-base';
 import React, {useRef, useState} from 'react';
 import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
-  width,
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
-import SelectAddress from '../../components/SelectingAddress';
 import TextInput from '../../components/Input';
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';

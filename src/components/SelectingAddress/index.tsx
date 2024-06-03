@@ -1,17 +1,14 @@
 import React, {FC, useEffect, useState} from 'react';
-import {FlatList, Image, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {Pressable} from 'native-base';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {close} from '../../assets/images/icons/close';
 import {horizontalScale} from '../../assets/scaling';
 import {addIcon} from '../../assets/images/icons/add';
 import {edit} from '../../assets/images/icons/edit';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getAddress} from '../../api/auth_routes';
 import {setSelectedAddress} from '../../api/localstorage';
 import Loader from '../Loader/Loader';

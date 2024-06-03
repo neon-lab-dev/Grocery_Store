@@ -19,7 +19,6 @@ import TextInput from '../../components/Input';
 import validators from '../../utils/validators';
 import {Platform} from 'react-native';
 import {fetchUserData, updateUserData} from '../../api/auth_routes';
-import {AuthAPIClient2} from '../../api/axios.config';
 import {toast} from '../../components/Toast/Toast';
 
 interface PersonalDetailsProps {

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {getToken} from './localstorage';
-import {useState} from 'react';
 
 const BASE_URL =
   process.env.NODE_ENV === 'prod'

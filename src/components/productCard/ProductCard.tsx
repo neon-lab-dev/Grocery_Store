@@ -10,12 +10,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {Dimensions} from 'react-native';
-import {
-  addToCart,
-  decrementItem,
-  incrementItem,
-  removeItem,
-} from '../../redux/slices/actions';
+import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {useDispatch} from 'react-redux';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 interface ProductDataItem {

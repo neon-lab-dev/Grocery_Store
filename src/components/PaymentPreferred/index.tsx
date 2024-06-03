@@ -1,5 +1,5 @@
-import React, {FC, useState} from 'react';
-import {View, Image} from 'react-native';
+import React, {FC} from 'react';
+import {View} from 'react-native';
 import {Radio, Text} from 'native-base';
 import {verticalScale} from '../../assets/scaling';
 import {styles} from './style';

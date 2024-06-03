@@ -16,7 +16,6 @@ import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
-  width,
 } from '../../assets/scaling';
 import {CallNumber} from '../../utils/launchIntents';
 import {SvgXml} from 'react-native-svg';
@@ -25,12 +24,10 @@ import {close} from '../../assets/images/icons/close';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
 import {fetchUserData} from '../../api/auth_routes';
-import {APIClient} from '../../api/axios.config';
 
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
 import {createSuggestion, getOrders} from '../../api/auth_routes';
-import axios from 'axios';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
 }
@@ -125,7 +122,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
         // console.log(message);
         toast.showToast(message.message);
       } catch {
-        Toast.show({
+        toast.showToast({
           title: resMsg,
         });
       }
@@ -207,8 +204,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                 </View>
                 <TextInput
                   value={suggestion}
-              onChangeText={e => setSuggestion(e)}
-              onFocus={() => setIsClicked(true)}
+                  onChangeText={e => setSuggestion(e)}
+                  onFocus={() => setIsClicked(true)}
                   onBlur={() => setIsClicked(false)}
                   textAlignVertical="top"
                   placeholder="Enter Here"
@@ -227,18 +224,18 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
                   }}
                 />
                 {showError && (
-              <Text
-                fontFamily={'Inter_Regular'}
-                fontSize={scaleFontSize(15)}
-                color={'#EF4444'}
-                mb={verticalScale(4)}
-                lineHeight={16.8}
-                letterSpacing={-0.03}>
-                Suggestion field cannot be Empty*
-              </Text>
-            )}
+                  <Text
+                    fontFamily={'Inter_Regular'}
+                    fontSize={scaleFontSize(15)}
+                    color={'#EF4444'}
+                    mb={verticalScale(4)}
+                    lineHeight={16.8}
+                    letterSpacing={-0.03}>
+                    Suggestion field cannot be Empty*
+                  </Text>
+                )}
 
-            <Button
+                <Button
                   mb={verticalScale(10)}
                   w={'100%'}
                   py={verticalScale(15)}
@@ -305,7 +302,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation}) => {
             </Button>
           </Center>
           <Loader isOpen={loaderVisible} />
-    </View>
+        </View>
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
-import {Image, Modal, Pressable, StyleSheet, View} from 'react-native';
+import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import ProductsSpecialOverlay from '../ProductsSpecialOverlay';
-import {horizontalScale, verticalScale} from '../../assets/scaling';
+import {verticalScale} from '../../assets/scaling';
 import ProductDetails from '../ProductDetails';
 import {SvgXml} from 'react-native-svg';
 import {overlayCloseIcon} from '../../assets/images/icons/overlayClose';

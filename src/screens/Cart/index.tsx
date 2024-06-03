@@ -1,7 +1,6 @@
 import {
   Button,
   Center,
-  ChevronRightIcon,
   Image,
   Modal,
   Pressable,
@@ -23,11 +22,9 @@ import SelectAddress from '../../components/SelectingAddress';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BillSummaryCard from '../../components/BillSummaryCard';
-import {useIsFocused} from '@react-navigation/native';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import GoBack from '../../components/Navigation/GoBack';
 import {useSelector} from 'react-redux';
-import {CartItem} from '../../redux/slices';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 interface CartProps {
