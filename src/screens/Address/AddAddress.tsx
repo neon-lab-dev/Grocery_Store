@@ -6,12 +6,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
-<<<<<<< HEAD
 import TextInput from '../../components/Input';
-=======
-import SelectAddress from '../../components/SelectingAddress';
-import TextInput from '../../components/input';
->>>>>>> latesstst/develop
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';
 import {addAddress, updateAddress} from '../../api/auth_routes';
