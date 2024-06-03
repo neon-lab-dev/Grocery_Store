@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {spacing} from '../../constants/spacing';
 import {
   horizontalScale,
   scaleFontSize,

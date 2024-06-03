@@ -131,6 +131,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
           >
+          >
             Payment Method
           </Text>
           <Text

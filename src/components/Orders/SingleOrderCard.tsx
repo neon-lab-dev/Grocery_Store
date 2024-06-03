@@ -31,7 +31,7 @@ export const SingleOrderCard: React.FC<{product: Product}> = ({product}) => {
       <Image
         alt="image"
         source={{
-          uri: product.documents[0],
+          uri: product?.documents[0],
         }}
         width={48}
         height={48}

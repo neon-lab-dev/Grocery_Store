@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {styles} from './style';
-import {spacing} from '../../constants/spacing';
 import {Pressable} from 'native-base';
 import {SvgXml} from 'react-native-svg';
 import {cartIcon} from '../../assets/images/icons/cartIcon';
@@ -16,7 +15,6 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({onCartPress, onSettingsPress, name}) => {
   const cartItems = useSelector((state: any) => state.cart);
   const cartItemCount = cartItems.items.length;
-  console.log(cartItemCount);
   return (
     <View style={styles.mainContainer}>
       <View style={styles.profileContainer}>

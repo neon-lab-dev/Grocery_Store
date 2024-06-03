@@ -5,7 +5,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const style = StyleSheet.create({
   container: {
@@ -35,7 +35,7 @@ const style = StyleSheet.create({
     fontSize: width < 370 ? 10 : 12,
     color: Colors.accent[600],
     // fontFamily: 'Inter_Medium',
-    fontWeight:'500',
+    fontWeight: '500',
     alignSelf: 'center',
     right: verticalScale(2),
     marginVertical: verticalScale(5),

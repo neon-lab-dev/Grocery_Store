@@ -17,7 +17,6 @@ import {phone} from '../../assets/images/icons/phone';
 import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
 import {FlatList} from 'react-native';
-import {all} from 'axios';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
@@ -266,6 +265,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                 {orderInfo.deliveredStatus}
               </Text>
               <Text
+                width={'90%'}
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(12)}
                 color={'accent.400'}

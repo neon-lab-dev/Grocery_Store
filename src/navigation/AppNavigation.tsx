@@ -5,13 +5,12 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 import {AppNavigatorParamList, RootStackParamList} from './MainNavigation';
-import {ChevronLeftIcon, Pressable, SearchIcon, Text, View} from 'native-base';
+import {Text, View} from 'native-base';
 import {Settings} from '../screens/Settings';
 import PersonalDetails from '../screens/PersonalDetails';
 import Orders from '../screens/Orders/MyOrders';
 import SingleOrder from '../screens/Orders/SingleOrder';
-import Delivered from '../components/Delivered';
-import {horizontalScale, scaleFontSize} from '../assets/scaling';
+import {scaleFontSize} from '../assets/scaling';
 import Categories from '../screens/Categories';
 import Home from '../screens/Home';
 import OrderSuccess from '../screens/Orders/Order-Success';
@@ -19,13 +18,10 @@ import SavedAddress from '../screens/Address/SavedAddress';
 import AddAddress from '../screens/Address/AddAddress';
 import Payment from '../screens/Payment';
 import Search from '../screens/Search';
-import {SvgXml} from 'react-native-svg';
-import {filter} from '../assets/images/icons/filter';
 import Cart from '../screens/Cart';
 import CategoryProducts from '../screens/Category Products/CategoryProducts';
 import ProductDetails from '../screens/ProductDetails';
 import GoBack from '../components/Navigation/GoBack';
-import {searchIcon} from '../assets/images/icons/searchIcon';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;

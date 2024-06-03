@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Image, TextInput, TouchableOpacity, View} from 'react-native';
+import {TextInput, TouchableOpacity} from 'react-native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {searchIcon} from '../../assets/images/icons/searchIcon';

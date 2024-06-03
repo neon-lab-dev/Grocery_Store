@@ -13,7 +13,7 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from '../screens/Splash';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 export type RootStackParamList = {
   Splash: undefined;
