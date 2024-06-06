@@ -200,7 +200,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                 </View>
               </View>
               {orderStatus === 'Out For Delivery' && (
-                <Pressable onPress={() => CallNumber(1234567890)}>
+                <Pressable onPress={() => CallNumber(7004262401)}>
                   <Center
                     borderWidth={4}
                     bg={'primary.500'}

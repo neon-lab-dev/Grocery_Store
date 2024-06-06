@@ -152,7 +152,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
           </View>
         </Pressable>
         <Text mr={horizontalScale(10)} style={styles.Title}>
-          {capitalizeFirstLetter(products.name)}
+          {capitalizeFirstLetter(products.name.substring(0, 12))}
         </Text>
         <Text style={styles.Quantity}>
           {products.varietyList[0].value} {products.varietyList[0].unit}

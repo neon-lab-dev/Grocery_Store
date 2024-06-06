@@ -227,7 +227,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-                onPress={() => openWhatsApp('Hi', '1234567890')}>
+                onPress={() => openWhatsApp('Hi', '7004262401')}>
                 <View style={{flexDirection: 'row'}}>
                   <Text
                     style={{

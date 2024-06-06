@@ -79,7 +79,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
     navigation.navigate('PersonalDetails');
   };
   const gotoHelp = () => {
-    CallNumber(1234567890);
+    CallNumber(7004262401);
   };
   const gotoOrders = () => {
     navigation.navigate('Orders');

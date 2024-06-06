@@ -156,7 +156,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             </View>
           </Pressable>
           <Text style={styles.Title}>
-            {capitalizeFirstLetter(products.name)}
+            {capitalizeFirstLetter(products.name.substring(0, 12))}
           </Text>
           <Text style={styles.Quantity}>
             {products.varietyList[0].value} {products.varietyList[0].unit}
@@ -321,7 +321,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               ) : null}
             </View>
           </Pressable>
-          <Text style={styles.Title}>{products.name}</Text>
+          <Text style={styles.Title}>{products.name.substring(0, 12)}</Text>
           <Text style={styles.Quantity}>
             {products.varietyList[0].value} {products.varietyList[0].unit}
           </Text>

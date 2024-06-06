@@ -11,7 +11,7 @@ const openWhatsApp = (msg: string, mobile: string) => {
           toast.showToast('WhatsApp Opened successfully ');
         })
         .catch(() => {
-          toast.showToast('Make sure WhatsApp installed on your device');
+          toast.showToast('Make sure WhatsApp is installed on your device');
         });
     } else {
       toast.showToast('Something went wrong, try again later');
