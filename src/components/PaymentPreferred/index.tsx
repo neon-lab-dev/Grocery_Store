@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {View} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import {Radio, Text,Image} from 'native-base';
 import {verticalScale} from '../../assets/scaling';
 import {styles} from './style';
@@ -13,10 +13,13 @@ interface PaymentPreferredProps {
 }
 
 const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
+  const {width} = Dimensions.get('window');
+
+ 
   return (
     <View style={styles.paymentPreferredCard}>
       <Text style={styles.paymentPreferredTitle}>Select Preferred Payment</Text>
-      <View style={{marginTop: verticalScale(5)}}>
+      <View style={{marginTop: verticalScale( width < 380 ? 0 : 5)}}>
         <Radio.Group
           aria-label="payment method"
           name="myRadioGroup"
@@ -29,8 +32,8 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
             style={[
               styles.totalCard,
               {
-                height: verticalScale(23),
-                marginVertical: verticalScale(10),
+                height: verticalScale(width < 380 ? 15 : 23),
+                marginVertical: verticalScale(width < 380 ? 6 : 10),
               },
             ]}>
             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
@@ -43,7 +46,10 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
           <View
             style={[
               styles.totalCard,
-              {height: verticalScale(23), marginVertical: verticalScale(15)},
+              {
+                height: verticalScale(width < 380 ? 15 : 23),
+                marginVertical: verticalScale(width < 380 ? 6 : 15),
+              },
             ]}>
             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
               <SvgXml xml={podIcon} height={20} width={20} />
@@ -55,7 +61,10 @@ const PaymentPreferred: FC<PaymentPreferredProps> = ({value, setValue}) => {
           <View
             style={[
               styles.totalCard,
-              {height: verticalScale(23), marginVertical: verticalScale(15)},
+              {
+                height: verticalScale(width < 380 ? 15 : 23),
+                marginVertical: verticalScale(width < 380 ? 6 : 15),
+              },
             ]}>
             <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
               <Image height={6} width={5} source={require('../../assets/images/box.png')}></Image>

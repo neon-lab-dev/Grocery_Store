@@ -1,10 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Pressable, View, } from 'react-native';
+import {Alert, Linking, Pressable, View} from 'react-native';
 import {Box, Text, useToast} from 'native-base';
-import {
-  horizontalScale,
-  scaleFontSize,
-} from '../../assets/scaling';
+import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Modal} from 'native-base';
 import {styles} from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -18,7 +15,7 @@ import {orangeDownArrow} from '../../assets/images/icons/orangeDownArrow';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
-import {CreateOrders} from '../../api/auth_routes';
+import {CreateOrders, ForcepaymentStatus, fetchpayment, paymentStatus} from '../../api/auth_routes';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
@@ -242,14 +239,15 @@ interface PaymentProps {
 
 const Payment: FC<PaymentProps> = ({navigation}) => {
   const [loaderVisible, setLoaderVisible] = useState(false);
-  const [value, setValue] = useState("");
+  const [paymentStatusID,setPaymentStatusID]=useState('')
+  const [value, setValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
   const toast = useToast();
   const id = 'test-toast';
-  const Navigation= useNavigation();
+  const Navigation = useNavigation();
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -273,17 +271,19 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
 
   var orderData = {
     paymentId: value,
-    boughtProductDetailsList: cartItems.items.map((item: { varietyList: any;id: any; quantity: any; }) => ({
-      varietyId: item.varietyList[0].id,
-      boughtQuantity: item.quantity,
-    })),
+    boughtProductDetailsList: cartItems.items.map(
+      (item: {varietyList: any; id: any; quantity: any}) => ({
+        varietyId: item.varietyList[0].id,
+        boughtQuantity: item.quantity,
+      }),
+    ),
     shippingInfo: {
       id: selectAddress.id,
     },
-    paymentMode:value
+    paymentMode: value,
   };
   const gotoOrderSuccess = async () => {
-    if(orderData.paymentId==''){
+    if (orderData.paymentId == '') {
       toast.show({
         id,
         duration: 3500,
@@ -304,20 +304,55 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           );
         },
       });
-    }
-    else{ 
-       setLoaderVisible(true);
-      try{
+    } else if (orderData.paymentMode == 'ONLINE_PAYMENT') {
+      const dis = cartItems.items[0].description;
+      try {
+        const paymentLinkResponse = await fetchpayment(TotalPrice, dis);
+        if (paymentLinkResponse.statusCode == 200) {
+          const shortUrl =
+            paymentLinkResponse.responseBody.additionalInfo.shortUrl;
+          const paymentid=paymentLinkResponse.responseBody.paymentId;
+          setPaymentStatusID(paymentid);
+          handlePayment(shortUrl,paymentid);
+        }
+      }  catch (error) {
+        console.log(error);
+      }
+    } else if (orderData.paymentMode != 'ONLINE_PAYMENT') {
+      setLoaderVisible(true);
+      try {
         const orderStatus = await CreateOrders(orderData);
-        if(orderStatus?.data.statusCode==200)
-          {
-            navigation.replace('OrderSuccess',{ item: orderStatus?.data,Method:value});
-            
-            setLoaderVisible(false);
-          }
-        
-      else{
-        setLoaderVisible(false);
+        if (orderStatus?.data.statusCode == 200) {
+          navigation.replace('OrderSuccess', {
+            item: orderStatus?.data,
+            Method: value,
+          });
+
+          setLoaderVisible(false);
+        } else {
+          setLoaderVisible(false);
+          toast.show({
+            id,
+            duration: 2500,
+            render: () => {
+              return (
+                <Box
+                  bg="primary.400"
+                  px="2"
+                  py="1"
+                  rounded="sm"
+                  mb={5}
+                  _text={{
+                    fontWeight: '500',
+                    color: 'white',
+                  }}>
+                  something went wrong
+                </Box>
+              );
+            },
+          });
+        }
+      } catch (error) {
         toast.show({
           id,
           duration: 2500,
@@ -339,33 +374,186 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           },
         });
       }
-      }
-     catch(error) {
-      toast.show({
-        id,
-        duration: 2500,
-        render: () => {
-          return (
-            <Box
-              bg="primary.400"
-              px="2"
-              py="1"
-              rounded="sm"
-              mb={5}
-              _text={{
-                fontWeight: '500',
-                color: 'white',
-              }}>
-              something went wrong
-            </Box>
-          );
-        },
-      });
-     }}
-  
-
+    }
   };
-  
+
+  const handlePayment = (shortUrl: string,paymentid:string) => {
+        if (shortUrl) {
+          Linking.openURL(shortUrl);
+          monitorPaymentStatus(paymentid);
+        } else {
+          Alert.alert('Error', 'Unable to open payment link');
+        }
+  };
+   
+  const monitorPaymentStatus = (paymentId:string) => {
+    setLoaderVisible(true);
+    let intervalCount = 0; 
+    const intervalId = setInterval(async () => {
+      const statusResponse = await paymentStatusCheck(paymentId);
+      intervalCount += 1; 
+      if (statusResponse) {
+        if (statusResponse == 'SUCCESS') {
+          setLoaderVisible(false);
+          clearInterval(intervalId);
+          console.log('Payment successful');
+          try {
+            const orderStatus = await CreateOrders(orderData);
+            if (orderStatus?.data.statusCode == 200) {
+              navigation.replace('OrderSuccess', {
+                item: orderStatus?.data,
+                Method: value,
+              });
+              setLoaderVisible(false);
+            } else {
+              setLoaderVisible(false);
+              toast.show({
+                id,
+                duration: 2500,
+                render: () => {
+                  return (
+                    <Box
+                      bg="primary.400"
+                      px="2"
+                      py="1"
+                      rounded="sm"
+                      mb={5}
+                      _text={{
+                        fontWeight: '500',
+                        color: 'white',
+                      }}>
+                      Payment is successful unable to create order
+                    </Box>
+                  );
+                },
+              });
+            }
+          } catch (error) {
+            toast.show({
+              id,
+              duration: 2500,
+              render: () => {
+                return (
+                  <Box
+                    bg="primary.400"
+                    px="2"
+                    py="1"
+                    rounded="sm"
+                    mb={5}
+                    _text={{
+                      fontWeight: '500',
+                      color: 'white',
+                    }}>
+                     Payment is successful unable to create order
+                  </Box>
+                );
+              },
+            });
+          } 
+        } else if (statusResponse !== 'SUCCESS') {
+          setLoaderVisible(true);
+        }
+      }
+      if (intervalCount >= 40) { 
+        clearInterval(intervalId);
+        setLoaderVisible(false);
+        Alert.alert(
+      '',
+      'Click on get status to know payment status',
+      [
+        { text: 'Get status', onPress: () => {
+          ForcepaymentStatusCheck(paymentId)
+        } }
+      ],
+    );
+      }
+    }, 3000); 
+  };
+  const paymentStatusCheck = async (paymentId:string)=>{
+    try {
+      setLoaderVisible(true);
+      const paymentResponse = await paymentStatus(paymentId);
+      return paymentResponse.responseBody.paymentStatus;
+    }  catch (error) {
+      console.log(error);
+    }
+  }
+  const ForcepaymentStatusCheck = async ( paymentId:string)=>{
+    try {
+      setLoaderVisible(true);
+      const paymentResponse = await ForcepaymentStatus(paymentId);
+      if (paymentResponse) {
+        if (paymentResponse === 'SUCCESS') {
+          try {
+            const orderStatus = await CreateOrders(orderData);
+            if (orderStatus?.data.statusCode == 200) {
+              navigation.replace('OrderSuccess', {
+                item: orderStatus?.data,
+                Method: value,
+              });
+              setLoaderVisible(false);
+            } else {
+              setLoaderVisible(false);
+              toast.show({
+                id,
+                duration: 2500,
+                render: () => {
+                  return (
+                    <Box
+                      bg="primary.400"
+                      px="2"
+                      py="1"
+                      rounded="sm"
+                      mb={5}
+                      _text={{
+                        fontWeight: '500',
+                        color: 'white',
+                      }}>
+                      Payment is successful unable to create order
+                    </Box>
+                  );
+                },
+              });
+            }
+          } catch (error) {
+            toast.show({
+              id,
+              duration: 2500,
+              render: () => {
+                return (
+                  <Box
+                    bg="primary.400"
+                    px="2"
+                    py="1"
+                    rounded="sm"
+                    mb={5}
+                    _text={{
+                      fontWeight: '500',
+                      color: 'white',
+                    }}>
+                     Payment is successful unable to create order
+                  </Box>
+                );
+              },
+            });
+          }          
+        } else if (paymentResponse!== 'SUCCESS') {
+          setLoaderVisible(false);
+          Alert.alert(
+            '',
+            'Something went wrong! Please try again',
+            [
+              { text: 'Try again', onPress: () => {
+                navigation.navigate('Cart')
+              } }
+            ],
+          );
+        }
+      }
+    }  catch (error) {
+      console.log(error);
+    }
+}
   const gotoAddAddress = () => {
     setModalVisible(false);
     navigation.navigate('AddAddress', {title: 'Add'});
