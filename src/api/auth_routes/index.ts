@@ -45,6 +45,7 @@ export const searchProduct = async (
     }
 
     const response = await AuthAPIClient.get(url);
+    console.log('response-rr', response);
     return response.data.responseBody;
   } catch (error) {
     console.log(error);
@@ -150,6 +151,43 @@ export const getOrders = async () => {
   try {
     const response = await AuthAPIClient.get('/order/list');
     return response.data.responseBody.content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const CreateOrders = async (orderData: { paymentId: string; }) => {
+  try {
+    const response = await AuthAPIClient.post('/order/create',
+      orderData,
+    );
+    return response
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchpayment = async (TotalPrice: any,dis: string) => {
+  try {
+    const response = await AuthAPIClient.get(`/payment/get/payment-link?amount=${TotalPrice}&description=${dis}`,
+    );
+    return response.data
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const paymentStatus = async (PaymentID:string) => {
+  try {
+    const response = await AuthAPIClient.get(`/payment/status?paymentId=${PaymentID}`,
+    );
+    return response.data
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const ForcepaymentStatus = async (PaymentID:string) => {
+  try {
+    const response = await AuthAPIClient.get(`/payment/status?paymentId=${PaymentID}&external=true`,
+    );
+    return response.data.responseBody.paymentStatus
   } catch (error) {
     console.log(error);
   }
