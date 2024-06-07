@@ -246,7 +246,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           <SearchInput
             onChangeText={SetsearchInp}
             value={searchInp}
-            placeholder="Search “Bread” "
+            placeholder="Search"
             onPress={() => {}}
             editable={true}
             width={100}

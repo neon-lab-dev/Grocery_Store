@@ -127,10 +127,11 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
         />
         <View justifyContent={'space-evenly'}>
           <Text
+            maxWidth={'90%'}
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'accent.800'}
-            numberOfLines={2}
+            // numberOfLines={3}
             lineHeight={16.8}
             letterSpacing={-0.03}>
             {item.name}
