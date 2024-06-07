@@ -292,7 +292,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                 <View style={{marginTop: verticalScale(10), gap: 2}}>
                   <Text style={styles.descriptionText}>Description</Text>
                   <Text
-                    numberOfLines={!viewMoreDetails ? 2 : 5}
+                    numberOfLines={!viewMoreDetails ? 2 : 100}
                     style={{
                       fontFamily: 'Inter_Regular',
                       fontSize: scaleFontSize(14),
@@ -367,88 +367,6 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   <SvgXml xml={arrowDropDown} width={8} height={8} />
                 )}
               </Pressable>
-
-              {isButton1Visible ? (
-                <Pressable
-                  onPress={handleButtonPress}
-                  style={{
-                    width: horizontalScale(120),
-                    height: verticalScale(50),
-                    backgroundColor: '#F97316',
-                    borderRadius: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: horizontalScale(25),
-                  }}>
-                  <Text
-                    color={'primary.50'}
-                    fontFamily={'Inter_Medium'}
-                    fontSize={scaleFontSize(16)}
-                    lineHeight={19.38}
-                    letterSpacing={-0.04}>
-                    Add To Cart
-                  </Text>
-                </Pressable>
-              ) : (
-                <View
-                  w={horizontalScale(120)}
-                  h={verticalScale(50)}
-                  bgColor={'primary.500'}
-                  flexDir={'row'}
-                  alignItems={'center'}
-                  justifyContent={'space-evenly'}
-                  ml={horizontalScale(25)}
-                  borderRadius={12}>
-                  <Pressable onPress={handleDecrease}>
-                    <Text
-                      style={{
-                        fontFamily: 'Inter_Medium',
-                        color: 'white',
-                        fontSize: scaleFontSize(18),
-                        marginHorizontal: horizontalScale(5),
-                      }}>
-                      -
-                    </Text>
-                  </Pressable>
-                  <Text
-                    style={{
-                      fontFamily: 'Inter_Medium',
-                      color: 'white',
-                      fontSize: scaleFontSize(18),
-                      marginHorizontal: horizontalScale(5),
-                    }}>
-                    {count}
-                  </Text>
-                  <Pressable onPress={handleIncrease}>
-                    <Text
-                      style={{
-                        fontFamily: 'Inter_Medium',
-                        color: 'white',
-                        fontSize: scaleFontSize(18),
-                        marginHorizontal: horizontalScale(5),
-                      }}>
-                      +
-                    </Text>
-                  </Pressable>
-                </View>
-              )}
-              {count !== 0 && (
-                <Pressable
-                  style={styles.floatingButton}
-                  onPress={navigateToCart}>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      gap: 3,
-                    }}>
-                    <Image
-                      source={require('../../assets/images/icons/cart-white.png')}
-                    />
-                    <Text style={styles.floatingButtonText}>{count} item</Text>
-                  </View>
-                </Pressable>
-              )}
               {/* products Listings */}
               <View
                 style={{
@@ -482,6 +400,117 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               </View>
             </View>
           </ScrollView>
+          <View shadow={5} style={styles.bottomLayoutContainer}>
+            {selectedProduct && (
+              <View style={{gap: 2, marginTop: verticalScale(8)}}>
+                <Text style={styles.bottomLayoutkgText}>
+                  {selectedProduct.varietyList[0].value}{' '}
+                  {selectedProduct.varietyList[0].unit}
+                </Text>
+                <View style={{flexDirection: 'row', gap: 8}}>
+                  <Text style={styles.bottomLayoutPrice}>
+                    ₹{selectedProduct.varietyList[0].discountPrice}
+                  </Text>
+                  {selectedProduct.varietyList[0].discountPercent !== 0 && (
+                    <View
+                      style={[
+                        styles.percentageOff,
+                        {
+                          flexDirection: 'row',
+                          gap: 3,
+                        },
+                      ]}>
+                      <Text style={styles.percentageOffText}>
+                        {selectedProduct.varietyList[0].discountPercent}%
+                      </Text>
+                      <Text style={styles.percentageOffText}>OFF</Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {/* Add To Cart Button */}
+            {isButton1Visible ? (
+              <Pressable
+                onPress={handleButtonPress}
+                style={{
+                  width: horizontalScale(120),
+                  height: verticalScale(50),
+                  backgroundColor: '#F97316',
+                  borderRadius: 12,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: horizontalScale(25),
+                }}>
+                <Text
+                  color={'primary.50'}
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(16)}
+                  lineHeight={19.38}
+                  letterSpacing={-0.04}>
+                  Add To Cart
+                </Text>
+              </Pressable>
+            ) : (
+              <View
+                w={horizontalScale(120)}
+                h={verticalScale(50)}
+                bgColor={'primary.500'}
+                flexDir={'row'}
+                alignItems={'center'}
+                justifyContent={'space-evenly'}
+                ml={horizontalScale(25)}
+                borderRadius={12}>
+                <Pressable onPress={handleDecrease}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
+                    -
+                  </Text>
+                </Pressable>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Medium',
+                    color: 'white',
+                    fontSize: scaleFontSize(18),
+                    marginHorizontal: horizontalScale(5),
+                  }}>
+                  {count}
+                </Text>
+                <Pressable onPress={handleIncrease}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
+                    +
+                  </Text>
+                </Pressable>
+              </View>
+            )}
+          </View>
+          {true && (
+            <Pressable style={styles.floatingButton} onPress={navigateToCart}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 3,
+                }}>
+                <Image
+                  source={require('../../assets/images/icons/cart-white.png')}
+                />
+                <Text style={styles.floatingButtonText}>{count} item</Text>
+              </View>
+            </Pressable>
+          )}
         </>
       )}
     </>

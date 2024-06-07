@@ -132,7 +132,8 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
             color={'accent.800'}
             numberOfLines={2}
             lineHeight={16.8}
-            letterSpacing={-0.03}>
+            letterSpacing={-0.03}
+            w={horizontalScale(120)}>
             {item.name}
           </Text>
           <Text

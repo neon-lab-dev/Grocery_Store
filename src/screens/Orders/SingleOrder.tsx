@@ -17,6 +17,7 @@ import {phone} from '../../assets/images/icons/phone';
 import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
 import {FlatList} from 'react-native';
+import {REACT_APP_PHONE_NO} from '@env';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
@@ -200,7 +201,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                 </View>
               </View>
               {orderStatus === 'Out For Delivery' && (
-                <Pressable onPress={() => CallNumber(7004262401)}>
+                <Pressable onPress={() => CallNumber(REACT_APP_PHONE_NO)}>
                   <Center
                     borderWidth={4}
                     bg={'primary.500'}

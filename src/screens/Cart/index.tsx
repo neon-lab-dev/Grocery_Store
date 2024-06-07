@@ -28,7 +28,7 @@ import {useSelector} from 'react-redux';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 import {getAddress} from '../../api/auth_routes';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
@@ -42,7 +42,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const [isAddressPresent, setisAddressPresent] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
-  
+
   const cartItemCount = cartItems.items.length;
 
   React.useEffect(() => {

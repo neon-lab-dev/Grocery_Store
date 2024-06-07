@@ -25,9 +25,12 @@ import {Categories} from '../../constants/categories';
 import {View, Text} from 'native-base';
 import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
+import {REACT_APP_PHONE_NO} from '@env';
+
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
+
 const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
@@ -227,7 +230,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-                onPress={() => openWhatsApp('Hi', '7004262401')}>
+                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
                 <View style={{flexDirection: 'row'}}>
                   <Text
                     style={{

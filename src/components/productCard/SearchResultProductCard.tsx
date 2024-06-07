@@ -154,7 +154,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           mt={1}
           letterSpacing={-0.04}
           numberOfLines={2}>
-          {capitalizeFirstLetter(products.name.substring(0, 12))}
+          {capitalizeFirstLetter(products.name)}
         </Text>
         <Text
           fontFamily={'Inter_Medium'}

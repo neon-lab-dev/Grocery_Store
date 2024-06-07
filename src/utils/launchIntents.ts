@@ -1,7 +1,7 @@
 import {Linking} from 'react-native';
 import {toast} from '../components/Toast/Toast';
 
-const CallNumber = (phone: number) => Linking.openURL(`tel:${phone}`);
+const CallNumber = (phone: string) => Linking.openURL(`tel:${phone}`);
 const openWhatsApp = (msg: string, mobile: string) => {
   if (mobile) {
     if (msg) {
