@@ -1,5 +1,5 @@
-import {Text, View, Image, Center, Button} from 'native-base';
-import React from 'react';
+import {Text, View, Image, Center, ChevronRightIcon, Button} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Colors} from '../../constants/colors';
 import {SvgXml} from 'react-native-svg';
@@ -12,25 +12,62 @@ import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {walletIcon} from '../../assets/images/icons/walletIcon';
 import {receiptIcon} from '../../assets/images/icons/receiptIcon';
 import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
+import {getSelectedAddress} from '../../api/localstorage';
+import Loader from '../../components/Loader/Loader';
 interface OrderSuccessProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'OrderSuccess'>;
 }
-const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
+
+const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
+  const {item, Method} = route.params;
+  const ItemCount = item.responseBody.boughtProductDetailsList.length;
+  var saving = 0;
+  var boughtPrice = 0;
+  item.responseBody.boughtProductDetailsList.forEach(
+    (item: {boughtPrice: number; savings: number}) => {
+      boughtPrice += item.boughtPrice;
+      saving += item.savings;
+    },
+  );
+  const [loaderVisible, setLoaderVisible] = useState(false);
+  const [selectAddress, setSelectAddress] = useState({});
   const gotoOrderDetails = () => {
-    navigation.navigate('SingleOrder');
+    navigation.navigate('SingleOrder', {order: item.responseBody});
   };
   const gotoHome = () => {
     navigation.navigate('Home');
   };
+  useEffect(() => {
+    selAddress();
+  }, []);
+
+  const selAddress = async () => {
+    setLoaderVisible(true);
+    const address = await getSelectedAddress();
+    if (address != null) {
+      setSelectAddress(address);
+      setLoaderVisible(false);
+    }
+  };
+  const getMarginLeft = () => {
+    if (Method === 'CASH_ON_DELIVERY') {
+      return width < 380 ? '12' : '20';
+    } else if (Method === 'PICKUP_AT_SHOP') {
+      return width < 380 ? '8' : '16';
+    } else {
+      return width < 380 ? '12' : '120';
+    }
+  };
+  const marginLeft = getMarginLeft();
   return (
     <View style={{flex: 1, backgroundColor: '#F9FAFB'}}>
       <View style={{alignSelf: 'center'}}>
         <Image
           alt="OrderAnimation"
           style={{
-            marginTop: width < 380 ? 28 : 45,
-            width: width < 380 ? 120 : 140,
-            height: width < 380 ? 120 : 140,
+            marginTop: width < 380 ? 28 : 2,
+            width: width < 380 ? 120 : 120,
+            height: width < 380 ? 120 : 120,
           }}
           source={require('../../assets/images/icons/orderSuccess.gif')}
         />
@@ -49,7 +86,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
         marginLeft={width < 380 ? 4 : 4}
         bg={'white'}
         flexDir={'row'}
-        mt={width < 380 ? 12 : 12}
+        mt={width < 380 ? 12 : 4}
         alignItems={'center'}
         px={2}>
         <Center
@@ -71,7 +108,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontSize={width < 380 ? 10 : 12}
             color={'accent.400'}
             fontFamily={'Inter_Medium'}>
-            No.46, 1st floor, near police
+            {`${selectAddress?.addressLine1},${selectAddress?.landmark},${selectAddress?.city},${selectAddress?.state}`}
           </Text>
         </View>
       </View>
@@ -94,6 +131,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
           >
+          >
             Payment Method
           </Text>
           <Text
@@ -101,8 +139,12 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             color={'primary.500'}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
-            ml={width < 380 ? 12 : 24}>
-            Cash on Delivery
+            ml={marginLeft}>
+            {Method == 'CASH_ON_DELIVERY'
+              ? 'Cash On Delivery'
+              : Method == 'PICKUP_AT_SHOP'
+              ? 'Pick Up From Store'
+              : 'Pay Online'}
           </Text>
         </View>
       </View>
@@ -126,7 +168,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
           >
-            2 items | ₹87.49
+            {ItemCount} items | ₹{boughtPrice+25}
           </Text>
           <Center
             rounded={6}
@@ -140,7 +182,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
               // fontFamily={'Inter_Medium'}
               fontSize={width < 380 ? 9 : 11}
               color={'white'}>
-              SAVED ₹9.51
+              SAVED ₹{saving}
             </Text>
           </Center>
           <Pressable onPress={gotoOrderDetails}>
@@ -177,6 +219,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({navigation}) => {
           </Button>
         </Center>
       </View>
+      <Loader isOpen={loaderVisible} />
     </View>
   );
 };

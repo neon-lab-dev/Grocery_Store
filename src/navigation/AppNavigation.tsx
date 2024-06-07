@@ -36,22 +36,22 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="Payment"
         component={Payment}
         options={({navigation}) => ({
-          headerTitle: () => (
-            <View>
-              <Text
-                fontFamily={'Inter_SemiBold'}
-                color={'#1F2937'}
-                fontSize={scaleFontSize(18)}>
-                Payment Methods
-              </Text>
-              <Text
-                fontFamily={'Inter_SemiBold'}
-                fontSize={scaleFontSize(12)}
-                color={'#6B7280'}>
-                1 Item | Total ₹42
-              </Text>
-            </View>
-          ),
+          // headerTitle: () => (
+          //   <View>
+          //     <Text
+          //       fontFamily={'Inter_SemiBold'}
+          //       color={'#1F2937'}
+          //       fontSize={scaleFontSize(18)}>
+          //       Payment Methods
+          //     </Text>
+          //     <Text
+          //       fontFamily={'Inter_SemiBold'}
+          //       fontSize={scaleFontSize(12)}
+          //       color={'#6B7280'}>
+          //       1 Item | Total ₹42
+          //     </Text>
+          //   </View>
+          // ),
           headerStyle: {height: 128},
           headerTitleAlign: 'left',
           headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
