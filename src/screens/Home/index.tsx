@@ -327,7 +327,7 @@ const Home: React.FC<Props> = ({navigation}) => {
             </View>
           </ScrollView>
 
-          <View style={style.floatingButton}>
+          <View style={style.floatingButton} shadow={5}>
             <Pressable
               onPress={() => {
                 navigation.navigate('Categories');

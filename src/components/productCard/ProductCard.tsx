@@ -213,7 +213,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   style={{
                     paddingVertical: verticalScale(4),
                     paddingHorizontal: horizontalScale(4),
-                    marginHorizontal: horizontalScale(30),
+                    marginHorizontal: horizontalScale(20),
                     backgroundColor: Colors.primary[500],
                     flexDirection: 'row',
                     justifyContent: 'center',
