@@ -54,32 +54,37 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
       unsubscribe();
     };
   }, [dispatch]);
+
   const handleContinue = async () => {
-    if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
-      setIsClicked(true);
-    } else {
-      setIsLoading(true);
-      try {
-        const response = await signUp(
-          name,
-          email,
-          route.params.phoneNo,
-          mobileNo,
-        );
-        if (response.statusCode === 200) {
-          toast.showToast(response.message);
-          dispatch(login(response.responseBody.token));
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'App'}],
-          });
-        } else {
-          toast.showToast(response.errorMessage);
+    if (isInternetReachable) {
+      if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
+        setIsClicked(true);
+      } else {
+        setIsLoading(true);
+        try {
+          const response = await signUp(
+            name,
+            email,
+            route.params.phoneNo,
+            mobileNo,
+          );
+          if (response.statusCode === 200) {
+            toast.showToast(response.message);
+            dispatch(login(response.responseBody.token));
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'App'}],
+            });
+          } else {
+            toast.showToast(response.errorMessage);
+          }
+        } catch (error: any) {
+          toast.showToast(error.message);
         }
-      } catch (error: any) {
-        toast.showToast(error.message);
+        setIsLoading(false);
       }
-      setIsLoading(false);
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
     }
   };
 

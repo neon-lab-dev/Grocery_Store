@@ -28,7 +28,7 @@ import {useSelector} from 'react-redux';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 import {getAddress} from '../../api/auth_routes';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
@@ -42,7 +42,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const [isAddressPresent, setisAddressPresent] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
-  
+
   const cartItemCount = cartItems.items.length;
 
   React.useEffect(() => {
@@ -226,9 +226,9 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           {isAddressPresent && (
             <View
               flexDir={'row'}
-              px={5}
+              px={10}
               pt={5}
-              justifyContent={'space-between'}
+              justifyContent={'space-around'}
               alignItems={'center'}>
               <View>
                 <Text
@@ -241,7 +241,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                 </Text>
                 <Text
                   // numberOfLines={1}
-                  style={{width: '90%'}}
+                  style={{width: '80%'}}
                   // width={100}
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(12)}
@@ -254,12 +254,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                 </Text>
               </View>
               <Pressable onPress={() => setModalVisible(true)}>
-                <View flexDir={'row'} alignItems={'center'}>
+                <View flexDir={'row'} alignItems={'center'} style={{gap: 2}}>
                   <SvgXml xml={orangeLocation} width={16} height={16} />
                   <Text
                     fontFamily={'Inter_Regular'}
                     color={'primary.500'}
-                    ml={1}
                     fontSize={scaleFontSize(18)}
                     lineHeight={21.78}
                     letterSpacing={-0.04}>

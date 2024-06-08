@@ -71,10 +71,11 @@ const Home: React.FC<Props> = ({navigation}) => {
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       dispatch(setConnectionStatus(state.isInternetReachable));
-      if (isInternetReachable) {
-        fetchUser();
-      } else {
+      if (!state.isInternetReachable) {
+        // console.log(state.isInternetReachable);
         toast.showToast('Please Check Your Internet connection');
+      } else {
+        fetchUser();
       }
     });
 
