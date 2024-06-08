@@ -137,7 +137,7 @@ const Home: React.FC<Props> = ({navigation}) => {
           <SearchInput
             onChangeText={SetsearchInp}
             value={searchInp}
-            placeholder="Search"
+            placeholder='Search "Bread" '
             onPress={gotoSearch}
             editable={false}
             width={90}
