@@ -214,7 +214,12 @@ const Home: React.FC<Props> = ({navigation}) => {
                 </View>
               ))}
 
-            <View style={{alignSelf: 'center', margin: 5}}>
+            <View
+              style={{
+                alignSelf: 'center',
+                marginTop: verticalScale(15),
+                marginHorizontal: horizontalScale(10),
+              }}>
               <Image
                 source={require('../../assets/images/icons/SendList.png')}
               />

@@ -12,7 +12,7 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-// import Splash from '../screens/Splash';
+import Splash from '../screens/Splash';
 // import {useSelector} from 'react-redux';
 
 export type RootStackParamList = {
@@ -61,11 +61,11 @@ const RootNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Splash"
           component={Splash}
           options={{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
           name="Auth"
           component={AuthNavigation}
