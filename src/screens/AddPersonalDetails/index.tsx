@@ -9,7 +9,7 @@ import {
   width,
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
-import TextInput from '../../components/input';
+import TextInput from '../../components/Input';
 import {useDispatch} from 'react-redux';
 import {login} from '../../redux/slices/auth.slice';
 import {signUp} from '../../api/auth';
