@@ -207,7 +207,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               lineHeight={21.78}
               letterSpacing={-0.04}
               textAlign={'center'}>
-              Showing Results for
+              Showing Results
             </Text>
             <Text
               fontFamily={'Inter_Medium'}
@@ -216,7 +216,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               lineHeight={21.78}
               letterSpacing={-0.04}
               textAlign={'center'}>
-              {searchInp ? ` ${searchInp}` : ' Product Name'}
+              {searchInp && ` for ${searchInp}`}
             </Text>
           </View>
           <Text
@@ -246,7 +246,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           <SearchInput
             onChangeText={SetsearchInp}
             value={searchInp}
-            placeholder="Search “Bread” "
+            placeholder='Search "Bread"'
             onPress={() => {}}
             editable={true}
             width={100}

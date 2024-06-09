@@ -190,9 +190,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
                   <Text style={[styles.SuggestText]}>Suggest Products</Text>
                 </View>
                 <View alignItems={'center'} mb={verticalScale(15)}>
-                  <Text style={styles.Text}>
-                    Lorem ipsum dolor sit amet consectetur. Quam diam lacus.
-                  </Text>
+                  <Text style={styles.Text}>Please suggest a product</Text>
                 </View>
                 <TextInput
                   value={suggestion}
@@ -316,7 +314,7 @@ export const styles = StyleSheet.create({
   },
   Text: {
     fontFamily: 'Inter_Regular',
-    fontSize: scaleFontSize(12),
+    fontSize: scaleFontSize(13),
     color: '#1F2937',
     lineHeight: 16.8,
     letterSpacing: -0.03,

@@ -68,6 +68,10 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
     }
   };
 
+  const price = discountPrice;
+  const discountPriceRound = price.toFixed(2);
+  // console.log(rounded); // Outputs: "236.34"
+
   const handleIncrease = () => {
     if (count < item.varietyList[0].quantity) {
       dispatch(incrementItem(item.id));
@@ -127,10 +131,11 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
         />
         <View justifyContent={'space-evenly'}>
           <Text
+            maxWidth={'90%'}
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(14)}
             color={'accent.800'}
-            numberOfLines={2}
+            // numberOfLines={3}
             lineHeight={16.8}
             letterSpacing={-0.03}>
             {item.name}
@@ -149,14 +154,15 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
         flex={1}
         flexDir={'row'}
         alignItems={'center'}
-        justifyContent={'flex-end'}>
+        justifyContent={'space-between'}>
         <View
+          marginLeft={horizontalScale(25)}
           w={horizontalScale(60)}
           bg={'primary.500'}
           flexDir={'row'}
           rounded={8}
           h={'auto'}
-          justifyContent={'space-between'}
+          justifyContent={'flex-end'}
           alignItems={'center'}
           px={horizontalScale(5)}
           py={verticalScale(5)}>
@@ -219,7 +225,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
             color={'primary.500'}
             lineHeight={19.36}
             letterSpacing={-0.04}>
-            ₹{discountPrice}
+            ₹{discountPriceRound}
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
