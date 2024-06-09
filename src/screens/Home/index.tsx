@@ -8,14 +8,6 @@ import {
   Pressable,
   Dimensions,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  selectConnectionStatus,
-  setConnectionStatus,
-} from '../../redux/slices/networkSlice.ts';
-import NetInfo from '@react-native-community/netinfo';
-import {RootState} from '../../redux/store.ts';
-
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
 import {Colors} from '../../constants/colors';
@@ -33,7 +25,6 @@ import {Categories} from '../../constants/categories';
 import {View, Text} from 'native-base';
 import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
-import {toast} from '../../components/Toast/Toast.ts';
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
@@ -46,11 +37,6 @@ const Home: React.FC<Props> = ({navigation}) => {
   // const openDrawer = () => {
   //   navigation.openDrawer();
   // };
-
-  const isInternetReachable = useSelector((state: RootState) =>
-    selectConnectionStatus(state),
-  );
-  const dispatch = useDispatch();
 
   const fetchUser = async () => {
     try {
@@ -69,19 +55,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   };
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      dispatch(setConnectionStatus(state.isInternetReachable));
-      if (!state.isInternetReachable) {
-        // console.log(state.isInternetReachable);
-        toast.showToast('Please Check Your Internet connection');
-      } else {
-        fetchUser();
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
+    fetchUser();
   }, []);
   const openSettings = () => {
     navigation.navigate('Settings', {userDetails: userDetails});
@@ -138,7 +112,7 @@ const Home: React.FC<Props> = ({navigation}) => {
           <SearchInput
             onChangeText={SetsearchInp}
             value={searchInp}
-            placeholder='Search "Bread" '
+            placeholder="Search “Bread” "
             onPress={gotoSearch}
             editable={false}
             width={90}

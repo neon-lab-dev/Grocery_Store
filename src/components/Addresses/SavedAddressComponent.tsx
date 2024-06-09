@@ -28,7 +28,8 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
     navigation.navigate('AddAddress', {title: 'Edit', location: address});
   };
   return (
-    <View
+    <Pressable
+      onPress={editPressed}
       w={'100%'}
       bg={'white'}
       flexDir={'row'}
@@ -71,7 +72,7 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
           <SvgXml xml={deleteIcon} height={24} width={24} />
         </Pressable>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
