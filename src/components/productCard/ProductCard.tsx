@@ -155,7 +155,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               ) : null}
             </View>
           </Pressable>
-          <Text style={styles.Title}>
+          <Text style={styles.Title} numberOfLines={2}>
             {capitalizeFirstLetter(products.name)}
           </Text>
           <Text style={styles.Quantity}>
@@ -213,7 +213,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   style={{
                     paddingVertical: verticalScale(4),
                     paddingHorizontal: horizontalScale(4),
-                    marginHorizontal: horizontalScale(30),
+                    marginHorizontal: horizontalScale(20),
                     backgroundColor: Colors.primary[500],
                     flexDirection: 'row',
                     justifyContent: 'center',
@@ -321,7 +321,9 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               ) : null}
             </View>
           </Pressable>
-          <Text style={styles.Title}>{products.name}</Text>
+          <Text style={styles.Title} numberOfLines={2}>
+            {products.name}
+          </Text>
           <Text style={styles.Quantity}>
             {products.varietyList[0].value} {products.varietyList[0].unit}
           </Text>

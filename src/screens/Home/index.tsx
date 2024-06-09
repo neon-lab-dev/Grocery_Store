@@ -25,9 +25,12 @@ import {Categories} from '../../constants/categories';
 import {View, Text} from 'native-base';
 import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
+import {REACT_APP_PHONE_NO} from '@env';
+
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
+
 const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
@@ -211,7 +214,12 @@ const Home: React.FC<Props> = ({navigation}) => {
                 </View>
               ))}
 
-            <View style={{alignSelf: 'center', margin: 5}}>
+            <View
+              style={{
+                alignSelf: 'center',
+                marginTop: verticalScale(15),
+                marginHorizontal: horizontalScale(10),
+              }}>
               <Image
                 source={require('../../assets/images/icons/SendList.png')}
               />
@@ -227,7 +235,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-                onPress={() => openWhatsApp('Hi', '1234567890')}>
+                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
                 <View style={{flexDirection: 'row'}}>
                   <Text
                     style={{
@@ -319,7 +327,7 @@ const Home: React.FC<Props> = ({navigation}) => {
             </View>
           </ScrollView>
 
-          <View style={style.floatingButton}>
+          <View style={style.floatingButton} shadow={5}>
             <Pressable
               onPress={() => {
                 navigation.navigate('Categories');

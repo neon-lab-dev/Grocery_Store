@@ -292,7 +292,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                 <View style={{marginTop: verticalScale(10), gap: 2}}>
                   <Text style={styles.descriptionText}>Description</Text>
                   <Text
-                    numberOfLines={!viewMoreDetails ? 2 : 5}
+                    numberOfLines={!viewMoreDetails ? 2 : 100}
                     style={{
                       fontFamily: 'Inter_Regular',
                       fontSize: scaleFontSize(14),
@@ -367,7 +367,6 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   <SvgXml xml={arrowDropDown} width={8} height={8} />
                 )}
               </Pressable>
-
               {isButton1Visible ? (
                 <Pressable
                   onPress={handleButtonPress}
@@ -432,23 +431,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   </Pressable>
                 </View>
               )}
-              {count !== 0 && (
-                <Pressable
-                  style={styles.floatingButton}
-                  onPress={navigateToCart}>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      gap: 3,
-                    }}>
-                    <Image
-                      source={require('../../assets/images/icons/cart-white.png')}
-                    />
-                    <Text style={styles.floatingButtonText}>{count} item</Text>
-                  </View>
-                </Pressable>
-              )}
+
               {/* products Listings */}
               <View
                 style={{
@@ -482,6 +465,21 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               </View>
             </View>
           </ScrollView>
+          {count !== 0 && (
+            <Pressable style={styles.floatingButton} onPress={navigateToCart}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 3,
+                }}>
+                <Image
+                  source={require('../../assets/images/icons/cart-white.png')}
+                />
+                <Text style={styles.floatingButtonText}>{count} item</Text>
+              </View>
+            </Pressable>
+          )}
         </>
       )}
     </>

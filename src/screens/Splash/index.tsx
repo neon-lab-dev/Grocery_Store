@@ -4,6 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/MainNavigation';
 
 import {getItem} from '../../api/localstorage';
+import {Image, View} from 'native-base';
 
 export interface SplashProps {
   navigation: StackNavigationProp<RootStackParamList, 'Splash'>;
@@ -12,7 +13,7 @@ export interface SplashProps {
 const Splash: React.FC<SplashProps> = ({navigation}) => {
   useEffect(() => {
     const isLoggedIn = async () => {
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       const token = await getItem('token');
       if (token) {
         navigation.replace('App', {screen: 'Home'});
@@ -26,10 +27,23 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
   return (
     <>
       <StatusBar translucent backgroundColor="transparent" />
-      <ImageBackground
+      {/* <ImageBackground
         source={require('../../assets/images/Onboarding.png')}
         style={{flex: 1}}
-      />
+      /> */}
+      <View
+        flex={1}
+        bgColor={'white'}
+        alignItems={'center'}
+        justifyContent={'center'}>
+        <Image
+          alt="logo"
+          source={require('../../assets/images/icons/logo.png')}
+          height={200}
+          width={200}
+          resizeMode="contain"
+        />
+      </View>
     </>
   );
 };

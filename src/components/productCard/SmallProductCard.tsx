@@ -151,7 +151,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             ) : null}
           </View>
         </Pressable>
-        <Text mr={horizontalScale(10)} style={styles.Title}>
+        <Text mr={horizontalScale(10)} style={styles.Title} numberOfLines={2}>
           {capitalizeFirstLetter(products.name)}
         </Text>
         <Text style={styles.Quantity}>
@@ -252,7 +252,7 @@ export const styles = StyleSheet.create({
   },
   Price: {
     fontFamily: 'Inter_Medium',
-    fontSize: scaleFontSize(15),
+    fontSize: scaleFontSize(13),
     color: '#1F2937',
   },
   adjPrice: {
@@ -262,7 +262,7 @@ export const styles = StyleSheet.create({
   },
   DisPrice: {
     fontFamily: 'Inter_Regular',
-    fontSize: scaleFontSize(12),
+    fontSize: scaleFontSize(11),
     color: Colors.accent[400],
     marginBottom: verticalScale(10),
     marginTop: verticalScale(-6),
@@ -273,7 +273,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(12),
     borderWidth: 1,
     borderColor: Colors.primary[400],
-    marginHorizontal: horizontalScale(20),
+    marginHorizontal: horizontalScale(5),
   },
   ButtonText: {
     fontFamily: 'Inter_Medium',

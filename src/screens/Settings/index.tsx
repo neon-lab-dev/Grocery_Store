@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Button, Center, Image, Modal, Text, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
 
@@ -26,10 +27,12 @@ import {logout} from '../../redux/slices/auth.slice';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
 import {createSuggestion, getOrders} from '../../api/auth_routes';
+import {REACT_APP_PHONE_NO} from '@env';
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
   route: any;
 }
+
 export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
   const [showError, setShowError] = useState(false);
   const [loaderVisible, setLoaderVisible] = useState(false);
@@ -42,6 +45,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [suggestion, setSuggestion] = useState('');
   const userDetails = route.params.userDetails;
+
   useEffect(() => {
     getOrders();
     function onKeyboardDidShow(e: KeyboardEvent) {
@@ -79,7 +83,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
     navigation.navigate('PersonalDetails');
   };
   const gotoHelp = () => {
-    CallNumber(1234567890);
+    CallNumber(REACT_APP_PHONE_NO);
   };
   const gotoOrders = () => {
     navigation.navigate('Orders');

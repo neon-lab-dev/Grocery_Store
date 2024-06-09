@@ -280,7 +280,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                 <View style={{marginTop: verticalScale(10), gap: 2}}>
                   <Text style={styles.descriptionText}>Description</Text>
                   <Text
-                    numberOfLines={!viewMoreDetails ? 2 : 5}
+                    numberOfLines={!viewMoreDetails ? 2 : 100}
                     style={{
                       fontFamily: 'Inter_Regular',
                       fontSize: scaleFontSize(14),

@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(16),
     borderWidth: 1,
     borderColor: Colors.primary[400],
-    marginHorizontal: horizontalScale(30),
+    marginHorizontal: horizontalScale(20),
     alignItems: 'center',
   },
   ButtonText: {

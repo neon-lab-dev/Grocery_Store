@@ -8,7 +8,7 @@ export const sendOtp = async (phoneNo: string) => {
     const response = await APIClient.post('/send-otp', {phone: phoneNo});
     return response.data;
   } catch (e: any) {
-    console.log(e.message);
+    console.log(e);
   }
 };
 
