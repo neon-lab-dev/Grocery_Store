@@ -1,12 +1,5 @@
 import {Button, Center, Text, View} from 'native-base';
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  selectConnectionStatus,
-  setConnectionStatus,
-} from '../../redux/slices/networkSlice.ts';
-import NetInfo from '@react-native-community/netinfo';
-import {RootState} from './store';
+import React, {useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
 import {
@@ -17,6 +10,7 @@ import {
 } from '../../assets/scaling';
 import validators from '../../utils/validators';
 import TextInput from '../../components/Input';
+import {useDispatch} from 'react-redux';
 import {login} from '../../redux/slices/auth.slice';
 import {signUp} from '../../api/auth';
 import {toast} from '../../components/Toast/Toast';
@@ -41,50 +35,32 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
   const mobileNoErrorShown =
     mobileNo.length !== 0 && !validators.isPhoneNumber(mobileNo);
   const dispatch = useDispatch();
-  const isInternetReachable = useSelector((state: RootState) =>
-    selectConnectionStatus(state),
-  );
-
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      dispatch(setConnectionStatus(state.isInternetReachable));
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [dispatch]);
-
   const handleContinue = async () => {
-    if (isInternetReachable) {
-      if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
-        setIsClicked(true);
-      } else {
-        setIsLoading(true);
-        try {
-          const response = await signUp(
-            name,
-            email,
-            route.params.phoneNo,
-            mobileNo,
-          );
-          if (response.statusCode === 200) {
-            toast.showToast(response.message);
-            dispatch(login(response.responseBody.token));
-            navigation.reset({
-              index: 0,
-              routes: [{name: 'App'}],
-            });
-          } else {
-            toast.showToast(response.errorMessage);
-          }
-        } catch (error: any) {
-          toast.showToast(error.message);
-        }
-        setIsLoading(false);
-      }
+    if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
+      setIsClicked(true);
     } else {
-      toast.showToast('Please Check Your Internet Connection');
+      setIsLoading(true);
+      try {
+        const response = await signUp(
+          name,
+          email,
+          route.params.phoneNo,
+          mobileNo,
+        );
+        if (response.statusCode === 200) {
+          toast.showToast(response.message);
+          dispatch(login(response.responseBody.token));
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'App'}],
+          });
+        } else {
+          toast.showToast(response.errorMessage);
+        }
+      } catch (error: any) {
+        toast.showToast(error.message);
+      }
+      setIsLoading(false);
     }
   };
 
