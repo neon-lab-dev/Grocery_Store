@@ -148,7 +148,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 24,
-    paddingVertical: verticalScale(28),
+    paddingVertical: verticalScale(18),
     backgroundColor: '#ffffff',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
