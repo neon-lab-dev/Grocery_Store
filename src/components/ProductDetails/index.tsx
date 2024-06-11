@@ -37,6 +37,8 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   Close,
   productName,
 }) => {
+  // console.log('product', productName);
+  const [selProduct, setSelProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
@@ -54,8 +56,22 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        setIsLoading(true);
-        if (productName) {
+        setProductDetails(null);
+
+        if (selProduct) {
+          const response = await searchProduct(selProduct);
+          if (response.content) {
+            const initialSelectedProduct = {...response.content[0]};
+            initialSelectedProduct.varietyList = [
+              response.content[0].varietyList[0],
+            ];
+            setProductDetails(response.content[0]);
+            setSelectedProduct(initialSelectedProduct);
+            setSelectedImageUrl(
+              response.content[0].varietyList[0].documentUrls[0],
+            );
+          }
+        } else if (productName) {
           const response = await searchProduct(productName);
           if (response.content) {
             const initialSelectedProduct = {...response.content[0]};
@@ -72,11 +88,11 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(false);
+        setSelectedUnit(0);
       }
     };
     fetchProductDetails();
-  }, [productName]);
+  }, [productName, selProduct]);
 
   const handleDecrease = () => {
     if (count === 1) {
@@ -123,6 +139,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     dispatch(addToCart(selectedProduct));
     setIsButton1Visible(false);
     setShowCartButton(true);
+  };
+
+  const onPress = name => {
+    setSelProduct(name);
   };
 
   const handleUnitSelection = (unitIndex: number) => {
@@ -196,10 +216,12 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
         <View style={{justifyContent: 'space-between', flex: 1}}>
           <ScrollView>
             <View style={styles.imageContainer}>
-              {productDetails.varietyList[0].discountPercent !== 0 && (
+              {productDetails?.varietyList[0].discountPercent !== 0 && (
                 <View style={styles.offPerContainer}>
                   <Text style={styles.percentageText}>
-                    {productDetails.varietyList[0].discountPercent}%
+                    {selectedProduct?.varietyList[0].discountPercent ||
+                      productDetails?.varietyList[0].discountPercent}
+                    %
                   </Text>
                   <Text
                     style={[
@@ -254,7 +276,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   borderBottomColor: '#F3F4F6',
                   paddingBottom: verticalScale(12),
                 }}>
-                <Text style={styles.productName}>{productName}</Text>
+                {/* {selProduct ? <Text style={styles.productName}>{productName}</Text>} */}
+                <Text style={styles.productName}>
+                  {selProduct ? selProduct : productName}
+                </Text>
               </View>
               {/* Product units */}
               <View
@@ -326,7 +351,11 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={() => {}} />
+                <ProductHorizontalScroll
+                  onPress={name => {
+                    onPress(name);
+                  }}
+                />
               </View>
               <View
                 style={{
@@ -342,7 +371,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={() => {}} />
+                <ProductHorizontalScroll onPress={name => onPress(name)} />
               </View>
             </View>
           </ScrollView>

@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
     color: '#1F2937',
     // fontFamily: 'Inter',
     fontFamily: 'Inter_Regular',
-    fontSize: scaleFontSize(16),
+    fontSize: scaleFontSize(14),
     lineHeight: 20,
     letterSpacing: -0.03,
   },
