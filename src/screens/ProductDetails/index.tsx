@@ -34,30 +34,51 @@ interface UnitCardProps {
 
 const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const productName = route.params.productName;
+  const [selProduct, setSelProduct] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        setIsLoading(true);
-        const response = await searchProduct(productName);
-        if (response.content) {
-          const initialSelectedProduct = {...response.content[0]};
-          initialSelectedProduct.varietyList = [
-            response.content[0].varietyList[0],
-          ];
-          setProductDetails(response.content[0]);
-          setSelectedProduct(initialSelectedProduct);
+        setProductDetails(null);
+
+        if (selProduct) {
+          const response = await searchProduct(selProduct);
+          if (response.content) {
+            const initialSelectedProduct = {...response.content[0]};
+            initialSelectedProduct.varietyList = [
+              response.content[0].varietyList[0],
+            ];
+            setProductDetails(response.content[0]);
+            setSelectedProduct(initialSelectedProduct);
+            // setSelectedImageUrl(
+            //   response.content[0].varietyList[0].documentUrls[0],
+            // );
+          }
+        } else if (productName) {
+          const response = await searchProduct(productName);
+          if (response.content) {
+            const initialSelectedProduct = {...response.content[0]};
+            initialSelectedProduct.varietyList = [
+              response.content[0].varietyList[0],
+            ];
+            setProductDetails(response.content[0]);
+            setSelectedProduct(initialSelectedProduct);
+            // setSelectedImageUrl(
+            //   response.content[0].varietyList[0].documentUrls[0],
+            // );
+          }
         }
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(false);
+        setSelectedUnit(0);
       }
     };
     fetchProductDetails();
-  }, [productName]);
+  }, [productName, selProduct]);
 
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
@@ -108,6 +129,11 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
       }
     }
   };
+
+  const onPress = name => {
+    setSelProduct(name);
+  };
+
   const handleButtonPress = () => {
     setCount(1);
     selectedProduct.quantity = 1;
@@ -149,7 +175,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             ? styles.selectUnitCardContainer
             : styles.unitCardContainer
         }>
-        <Text style={styles.unitCardKgText}>{item.value} kg</Text>
+        <Text style={styles.unitCardKgText}>
+          {item.value} {item.unit}
+        </Text>
         <View style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
           <Text style={styles.unitCardPriceText}>₹{item.discountPrice}</Text>
           <Text style={styles.unitCardCutOffprice}>₹{item.price}</Text>
@@ -203,7 +231,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               {productDetails.varietyList[0].discountPercent !== 0 && (
                 <View style={styles.offPerContainer}>
                   <Text style={styles.percentageText}>
-                    {[productDetails.varietyList[0].value]}%
+                    {/* {[productDetails.varietyList[0].value]} */}
+                    {selectedProduct?.varietyList[0].discountPercent ||
+                      productDetails.varietyList[0].discountPercent}
+                    %
                   </Text>
                   <Text
                     style={{
@@ -266,7 +297,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   borderBottomColor: '#F3F4F6',
                   paddingBottom: verticalScale(12),
                 }}>
-                <Text style={styles.productName}>{productName}</Text>
+                <Text style={styles.productName}>
+                  {selProduct ? selProduct : productName}
+                </Text>
               </View>
               {/* Product units */}
               <View
@@ -367,7 +400,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   <SvgXml xml={arrowDropDown} width={8} height={8} />
                 )}
               </Pressable>
-              {isButton1Visible ? (
+              {/* {isButton1Visible ? (
                 <Pressable
                   onPress={handleButtonPress}
                   style={{
@@ -430,7 +463,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                     </Text>
                   </Pressable>
                 </View>
-              )}
+              )} */}
 
               {/* products Listings */}
               <View
@@ -445,7 +478,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={() => {}} />
+                <ProductHorizontalScroll onPress={name => onPress(name)} />
               </View>
               <View
                 style={{
@@ -461,11 +494,11 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={() => {}} />
+                <ProductHorizontalScroll onPress={name => onPress(name)} />
               </View>
             </View>
           </ScrollView>
-          {count !== 0 && (
+          {/* {count !== 0 && (
             <Pressable style={styles.floatingButton} onPress={navigateToCart}>
               <View
                 style={{
@@ -479,7 +512,103 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                 <Text style={styles.floatingButtonText}>{count} item</Text>
               </View>
             </Pressable>
-          )}
+          )} */}
+          <View shadow={5} style={styles.bottomLayoutContainer}>
+            {selectedProduct && (
+              <View style={{gap: 2, marginTop: verticalScale(8)}}>
+                <Text style={styles.bottomLayoutkgText}>
+                  {selectedProduct.varietyList[0].value}{' '}
+                  {selectedProduct.varietyList[0].unit}
+                </Text>
+                <View style={{flexDirection: 'row', gap: 8}}>
+                  <Text style={styles.bottomLayoutPrice}>
+                    ₹{selectedProduct.varietyList[0].discountPrice}
+                  </Text>
+                  {selectedProduct.varietyList[0].discountPercent !== 0 && (
+                    <View
+                      style={[
+                        styles.percentageOff,
+                        {
+                          flexDirection: 'row',
+                          gap: 3,
+                        },
+                      ]}>
+                      <Text style={styles.percentageOffText}>
+                        {selectedProduct.varietyList[0].discountPercent}%
+                      </Text>
+                      <Text style={styles.percentageOffText}>OFF</Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            )}
+
+            {/* Add To Cart Button */}
+            {isButton1Visible ? (
+              <Pressable
+                onPress={handleButtonPress}
+                style={{
+                  width: horizontalScale(120),
+                  height: verticalScale(50),
+                  backgroundColor: '#F97316',
+                  borderRadius: 12,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: horizontalScale(25),
+                }}>
+                <Text
+                  color={'primary.50'}
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(16)}
+                  lineHeight={19.38}
+                  letterSpacing={-0.04}>
+                  Add To Cart
+                </Text>
+              </Pressable>
+            ) : (
+              <View
+                w={horizontalScale(120)}
+                h={verticalScale(50)}
+                bgColor={'primary.500'}
+                flexDir={'row'}
+                alignItems={'center'}
+                justifyContent={'space-evenly'}
+                ml={horizontalScale(25)}
+                borderRadius={12}>
+                <Pressable onPress={handleDecrease}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
+                    -
+                  </Text>
+                </Pressable>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Medium',
+                    color: 'white',
+                    fontSize: scaleFontSize(18),
+                    marginHorizontal: horizontalScale(5),
+                  }}>
+                  {count}
+                </Text>
+                <Pressable onPress={handleIncrease}>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
+                    +
+                  </Text>
+                </Pressable>
+              </View>
+            )}
+          </View>
         </>
       )}
     </>
