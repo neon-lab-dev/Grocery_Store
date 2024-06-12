@@ -192,3 +192,16 @@ export const ForcepaymentStatus = async (PaymentID:string) => {
     console.log(error);
   }
 };
+
+export const fetchAllCategory = async () => {
+  try {
+    const response = await AuthAPIClient.get('/category/all');
+    if (response.data && response.data.responseBody) {
+        // console.log(response.data.responseBody);
+         return response.data.responseBody;
+    }
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};

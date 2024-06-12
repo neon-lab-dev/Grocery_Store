@@ -4,31 +4,31 @@ export const Categories = [
     subCategory: [
       {
         name: 'Vegetable & Fruits',
-        image: require('../assets/images/Categories/fruits_veg.png'),
+        image: require('../assets/images/Categories/Grocery/vegandfruits.jpg'),
       },
       {
         name: 'Atta, Rice & Dal',
-        image: require('../assets/images/Categories/Atta_rice.png'),
+        image: require('../assets/images/Categories/Grocery/AttaRiceanddal.jpg'),
       },
       {
         name: 'Oil, Ghee & Masala',
-        image: require('../assets/images/Categories/oil_ghee.png'),
+        image: require('../assets/images/Categories/Grocery/oilghee.jpg'),
       },
       {
         name: 'Daily Bread',
-        image: require('../assets/images/Categories/daily_bread.png'),
+        image: require('../assets/images/Categories/Grocery/dailybread.jpg'),
       },
       {
         name: 'Bakery & Biscuit',
-        image: require('../assets/images/Categories/bakery.png'),
+        image: require('../assets/images/Categories/Grocery/bakery&Biscuit.jpg'),
       },
       {
         name: 'Dry Fruits & Cereals',
-        image: require('../assets/images/Categories/dry_fruits.png'),
+        image: require('../assets/images/Categories/Grocery/dryfruit.jpg'),
       },
       {
         name: 'Kitchenware & Appliances',
-        image: require('../assets/images/Categories/kitchen.png'),
+        image: require('../assets/images/Categories/Grocery/kitchenware.png'),
       },
     ],
   },
@@ -37,35 +37,31 @@ export const Categories = [
     subCategory: [
       {
         name: 'Chips & Namkeens',
-        image: require('../assets/images/Categories/chips.png'),
+        image: require('../assets/images/Categories/snacks/Chips&Namkeen.png'),
       },
       {
         name: 'Sweets & Chocolates',
-        image: require('../assets/images/Categories/sweet_chocolate.png'),
+        image: require('../assets/images/Categories/snacks/Sweets&Chocolates.png'),
       },
       {
         name: 'Drinks & Juices',
-        image: require('../assets/images/Categories/drinks.png'),
+        image: require('../assets/images/Categories/snacks/Drinks&Juices.webp'),
       },
       {
         name: 'Tea, Coffee & Milk drinks',
-        image: require('../assets/images/Categories/Tea.png'),
+        image: require('../assets/images/Categories/snacks/TeaCoffee&Mik.webp'),
       },
       {
         name: 'Instant Food',
-        image: require('../assets/images/Categories/instant_food.png'),
+        image: require('../assets/images/Categories/snacks/Instantfood.jpg'),
       },
       {
         name: 'Sauces & Spreads',
-        image: require('../assets/images/Categories/sauces.png'),
+        image: require('../assets/images/Categories/snacks/sauces&spreads.webp'),
       },
       {
         name: 'Paan Corner',
-        image: require('../assets/images/Categories/paan_corner.png'),
-      },
-      {
-        name: 'Ice Cream & More',
-        image: require('../assets/images/Categories/icecream.png'),
+        image: require('../assets/images/Categories/snacks/paancorner.jpg'),
       },
     ],
   },
@@ -74,35 +70,31 @@ export const Categories = [
     subCategory: [
       {
         name: 'Bath & Body',
-        image: require('../assets/images/Categories/bath_body.png'),
+        image: require('../assets/images/Categories/bath&body/bathandBody.jpg'),
       },
       {
         name: 'Hair',
-        image: require('../assets/images/Categories/hair.png'),
+        image: require('../assets/images/Categories/bath&body/hairoil&cream.webp'),
       },
       {
         name: 'Skin & face',
-        image: require('../assets/images/Categories/skin_face.png'),
+        image: require('../assets/images/Categories/bath&body/Skin&Face.png'),
       },
       {
         name: 'Beauty & Cosmetics',
-        image: require('../assets/images/Categories/beauty_cosmetics.png'),
+        image: require('../assets/images/Categories/bath&body/Beauty&Cosmetics.webp'),
       },
       {
         name: 'Feminine Hygiene',
-        image: require('../assets/images/Categories/female_hygiene.png'),
+        image: require('../assets/images/Categories/bath&body/FemaleHygine.jpg'),
       },
       {
         name: 'Baby Care',
-        image: require('../assets/images/Categories/baby_care.png'),
+        image: require('../assets/images/Categories/bath&body/Babycare.jpg'),
       },
       {
         name: 'Health & Pharma',
-        image: require('../assets/images/Categories/Health_pharma.png'),
-      },
-      {
-        name: 'Sexual Wellness',
-        image: require('../assets/images/Categories/sexual_wellness.png'),
+        image: require('../assets/images/Categories/bath&body/Health&Pharma.webp'),
       },
     ],
   },
@@ -110,20 +102,12 @@ export const Categories = [
     name: 'Household Essentials',
     subCategory: [
       {
-        name: 'Home & Lifestyle',
-        image: require('../assets/images/Categories/home_lifestyle.png'),
-      },
-      {
         name: 'Cleaners & Repellents',
-        image: require('../assets/images/Categories/cleaner_repellents.png'),
-      },
-      {
-        name: 'Electronics',
-        image: require('../assets/images/Categories/electronics.png'),
+        image: require('../assets/images/Categories/household/Cleaners&Repellents.webp'),
       },
       {
         name: 'Stationary & Games',
-        image: require('../assets/images/Categories/stationary.png'),
+        image: require('../assets/images/Categories/household/PencilPen&Markers.jpg'),
       },
     ],
   },

@@ -11,8 +11,9 @@ import {
 } from '../../assets/scaling';
 import {Dimensions} from 'react-native';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
+import { useFocusEffect } from '@react-navigation/native';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -41,12 +42,21 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
-  // console.log(products)
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
   const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
+  const cartItems = useSelector((state: any) => state.cart);
+
+useFocusEffect(() => {
+  const cartItemCount = cartItems.items.length;
+  if(cartItemCount==0){
+    setIsButton1Visible(true);
+    setCount(0)
+  }
+});
+  
   const handleDecrease = () => {
     if (count === 1) {
       dispatch(removeItem(products.id));
