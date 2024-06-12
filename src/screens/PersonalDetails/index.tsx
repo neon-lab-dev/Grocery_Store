@@ -20,6 +20,7 @@ import validators from '../../utils/validators';
 import {Platform} from 'react-native';
 import {fetchUserData, updateUserData} from '../../api/auth_routes';
 import {toast} from '../../components/Toast/Toast';
+import Loader from '../../components/Loader/Loader';
 
 interface PersonalDetailsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'PersonalDetails'>;
@@ -117,12 +118,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
           bgColor={'accent.300'}
           alignItems={'center'}
           justifyContent={'center'}>
-          <Image
-            alt="loading"
-            source={require('../../assets/images/icons/loading.gif')}
-            h={250}
-            w={250}
-          />
+          <Loader isOpen={isLoading} />
         </View>
       ) : (
         <KeyboardAvoidingView

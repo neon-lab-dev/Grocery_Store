@@ -11,7 +11,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
-
+import Loader from '../../components/Loader/Loader';
 interface Category {
   id: number;
   name: string;
@@ -145,18 +145,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
         </View>
         <View style={styles.rightCard}>
           {isLoading ? (
-            <View
-              flex={1}
-              bgColor={'accent.300'}
-              justifyContent={'center'}
-              alignItems={'center'}>
-              <Image
-                alt="loading"
-                source={require('../../assets/images/icons/loading.gif')}
-                h={200}
-                w={200}
-              />
-            </View>
+            <Loader isOpen={isLoading} />
           ) : CategoryData.length === 0 ? (
             <View flex={1} alignItems={'center'} justifyContent={'center'}>
               <Text

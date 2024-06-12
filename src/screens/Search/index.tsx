@@ -280,12 +280,21 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           flex={1}
           alignItems={'center'}
           justifyContent={'center'}>
-          <Image
-            alt="loading"
-            source={require('../../assets/images/icons/loading.gif')}
-            h={250}
-            w={250}
-          />
+          <View
+            alignItems={'center'}
+            justifyContent={'center'}
+            bg={'#404040'}
+            borderRadius={20}
+            borderWidth={1}
+            borderColor={'white'}
+            w={200}>
+            <Image
+              alt="Loader"
+              source={require('../../assets/images/icons/loading.gif')}
+              height={150}
+              width={150}
+            />
+          </View>
         </View>
       ) : (
         <View flex={1} bg={'white'}>

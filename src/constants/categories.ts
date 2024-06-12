@@ -74,7 +74,7 @@ export const Categories = [
       },
       {
         name: 'Hair',
-        image: require('../assets/images/Categories/bath&body/hairoil&cream.webp'),
+        image: require('../assets/images/Categories/bath&body/hairoilcream.webp'),
       },
       {
         name: 'Skin & face',
