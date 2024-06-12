@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {FlatList} from 'react-native';
 import {styles} from './style';
 import SmallProductCard from '../../components/productCard/SmallProductCard';
 import {AuthAPIClient} from '../../api/axios.config';
@@ -36,34 +36,15 @@ const CategoryProducts: FC = ({navigation, route}) => {
   const [CategoryData, setCategoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const extractSubCategory2 = categories => {
-    return categories.flatMap(category =>
-      category.subCategoryDtoList.flatMap(subCategory =>
-        subCategory.subCategory2DtoList.map(subCategory2 => ({
-          ...subCategory2,
-          parentCategory: category.name,
-          parentSubCategory: subCategory.name,
-        })),
-      ),
-    );
-  };
-
   const fetchCategory = async () => {
     try {
       setIsLoading(true);
       const response = await AuthAPIClient.get('/category/all');
       if (response.data && response.data.responseBody) {
-        // const fetchedSubCategory2List =
-        //   response.data.responseBody[categoryIndex].subCategoryDtoList[
-        //     subCategoryIndex
-        //   ].subCategory2DtoList;
-        // setSubCategory2List(fetchedSubCategory2List);
-        // if (fetchedSubCategory2List.length > 0) {
-        //   setSubCategory2(fetchedSubCategory2List[0].name);
-        // }
-        const fetchedSubCategory2List = extractSubCategory2(
-          response.data.responseBody,
-        );
+        const fetchedSubCategory2List =
+          response.data.responseBody[categoryIndex].subCategoryDtoList[
+            subCategoryIndex
+          ].subCategory2DtoList;
         setSubCategory2List(fetchedSubCategory2List);
         if (fetchedSubCategory2List.length > 0) {
           setSubCategory2(fetchedSubCategory2List[0].name);
