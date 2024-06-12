@@ -205,7 +205,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                           }}>
                           <View alignItems={'center'} style={{gap: 9}}>
                             <Image
-                              source={{ uri: subCategory.image }}
+                              source={subCategory.image}
                               borderRadius={16}
                               style={{
                                 width: isDoubleWidth
