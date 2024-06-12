@@ -189,8 +189,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
               fontSize={width < 380 ? 12 : 14}
               color={'primary.500'}
               fontWeight={500}
-              // fontFamily={'Inter_Medium'}
-              ml={width < 380 ? 3 : 16}>
+              ml={width < 380 ? 10 : 12}>
               View Details
             </Text>
           </Pressable>

@@ -60,6 +60,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   const openSettings = () => {
     navigation.navigate('Settings', {userDetails: userDetails});
   };
@@ -174,42 +175,61 @@ const Home: React.FC<Props> = ({navigation}) => {
                       flexWrap: 'wrap',
                       gap: horizontalScale(13),
                     }}>
-                    {category.subCategory.map((subCategory, subIndex) => (
-                      <Pressable
-                        key={subIndex}
-                        onPress={() => {
-                          navigation.navigate('CategoryProducts', {
-                            SubCategory: subCategory.name,
-                            categoryIndex: catIndex,
-                            subCategoryIndex: subIndex,
-                          });
-                        }}
-                        style={{
-                          width:
-                            (width - 2 * horizontalScale(20)) / 4 -
-                            horizontalScale(10),
-                        }}>
-                        <View alignItems={'center'} style={{gap: 9}}>
-                          <Image
-                            source={subCategory.image}
-                            borderRadius={16}
-                            style={{
-                              width: horizontalScale(70),
-                              height: verticalScale(65),
-                            }}
-                          />
-                          <Text
-                            fontFamily={'Inter_Medium'}
-                            fontSize={scaleFontSize(12)}
-                            lineHeight={14.52}
-                            letterSpacing={-0.04}
-                            color={'accent.600'}
-                            textAlign={'center'}>
-                            {subCategory.name}
-                          </Text>
-                        </View>
-                      </Pressable>
-                    ))}
+                    {category.subCategory.map((subCategory, subIndex) => {
+                      const doubleWidthCategories = [
+                        'Kitchenware & Appliances',
+                        'Paan Corner',
+                        'Health & Pharma',
+                        'Cleaners & Repellents',
+                        'Stationary & Games'
+                      ];
+                      const isDoubleWidth = doubleWidthCategories.includes(
+                        subCategory.name,
+                      );
+
+                      return (
+                        <Pressable
+                          key={subIndex}
+                          onPress={() => {
+                            navigation.navigate('CategoryProducts', {
+                              SubCategory: subCategory.name,
+                              categoryIndex: catIndex,
+                              subCategoryIndex: subIndex,
+                            });
+                          }}
+                          style={{
+                            width:isDoubleWidth?
+                              ((width - 2 * horizontalScale(20)) / 2 -
+                              horizontalScale(10)):((width - 2 * horizontalScale(20)) / 4 -
+                              horizontalScale(10)),
+                          }}>
+                          <View alignItems={'center'} style={{gap: 9}}>
+                            <Image
+                              source={{ uri: subCategory.image }}
+                              borderRadius={16}
+                              style={{
+                                width: isDoubleWidth
+                                  ? horizontalScale(140)
+                                  : horizontalScale(70),
+                                height: isDoubleWidth
+                                  ? verticalScale(65)
+                                  : verticalScale(65),
+                              }}
+                            />
+                            <Text
+                            alignSelf={'center'}
+                              fontFamily={'Inter_Medium'}
+                              fontSize={scaleFontSize(12)}
+                              lineHeight={14.52}
+                              letterSpacing={-0.04}
+                              color={'accent.600'}
+                              textAlign={'center'}>
+                              {subCategory.name}
+                            </Text>
+                          </View>
+                        </Pressable>
+                      );
+                    })}
                   </View>
                 </View>
               ))}
@@ -234,6 +254,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  marginBottom: horizontalScale(20),
                 }}
                 onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
                 <View style={{flexDirection: 'row'}}>
@@ -278,7 +299,7 @@ const Home: React.FC<Props> = ({navigation}) => {
           </Pressable>
         </View>
         <ProductHorizontalScroll onPress={listToDetails} /> */}
-            <View style={{marginHorizontal: horizontalScale(18)}}>
+            {/* <View style={{marginHorizontal: horizontalScale(18)}}>
               <Text style={[style.CategoryText]}>Explore New Categories</Text>
               <View style={{flexDirection: 'row', marginTop: 20}}>
                 <View style={style.ExploreCatgories}>
@@ -324,7 +345,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   <Text style={style.ExploreCatgoriesText}>Kitchen needs</Text>
                 </View>
               </View>
-            </View>
+            </View> */}
           </ScrollView>
 
           <View style={style.floatingButton} shadow={5}>

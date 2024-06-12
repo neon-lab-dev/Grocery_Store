@@ -1,34 +1,35 @@
+
 export const Categories = [
   {
     name: 'Grocery & Kitchen',
     subCategory: [
       {
         name: 'Vegetable & Fruits',
-        image: require('../assets/images/Categories/fruits_veg.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/veg_and_fruits_UHvmbX482.jpg',
       },
       {
         name: 'Atta, Rice & Dal',
-        image: require('../assets/images/Categories/Atta_rice.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/Atta_Rice_and_dal_oh1A8I0zb.jpg',
       },
       {
         name: 'Oil, Ghee & Masala',
-        image: require('../assets/images/Categories/oil_ghee.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/oil_ghee_XHnB1wpBBm.jpg',
       },
       {
         name: 'Daily Bread',
-        image: require('../assets/images/Categories/daily_bread.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/daily_bread_EBZHmzVr9.jpg',
       },
       {
         name: 'Bakery & Biscuit',
-        image: require('../assets/images/Categories/bakery.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/bakery___Biscuit_rU-mBOF2u.jpg',
       },
       {
         name: 'Dry Fruits & Cereals',
-        image: require('../assets/images/Categories/dry_fruits.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/dry_fruit_XN-58-_U5.jpg',
       },
       {
         name: 'Kitchenware & Appliances',
-        image: require('../assets/images/Categories/kitchen.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/kitchenware_FgnQffOD-.png',
       },
     ],
   },
@@ -37,35 +38,31 @@ export const Categories = [
     subCategory: [
       {
         name: 'Chips & Namkeens',
-        image: require('../assets/images/Categories/chips.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/Chips___Namkeen_f1bA2pMII.png',
       },
       {
         name: 'Sweets & Chocolates',
-        image: require('../assets/images/Categories/sweet_chocolate.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/Sweets___Chocolates_Wizqh9Z2v.png',
       },
       {
         name: 'Drinks & Juices',
-        image: require('../assets/images/Categories/drinks.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/Drinks___Juices_GqUYQJm1Q.webp',
       },
       {
         name: 'Tea, Coffee & Milk drinks',
-        image: require('../assets/images/Categories/Tea.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/Tea__Coffee___Mik_NEKeg9yUp.webp',
       },
       {
         name: 'Instant Food',
-        image: require('../assets/images/Categories/instant_food.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/Instant_food_aCvSshhbK.jpg',
       },
       {
         name: 'Sauces & Spreads',
-        image: require('../assets/images/Categories/sauces.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/sauces___spreads_L35RYiU0Mi.webp',
       },
       {
         name: 'Paan Corner',
-        image: require('../assets/images/Categories/paan_corner.png'),
-      },
-      {
-        name: 'Ice Cream & More',
-        image: require('../assets/images/Categories/icecream.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/paan_corner_3_sOdZ2rv6.jpg',
       },
     ],
   },
@@ -74,35 +71,31 @@ export const Categories = [
     subCategory: [
       {
         name: 'Bath & Body',
-        image: require('../assets/images/Categories/bath_body.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/bath_and_Body_VakLOIWEP.jpg',
       },
       {
         name: 'Hair',
-        image: require('../assets/images/Categories/hair.png'),
+        image: 'https://ik.imagekit.io/vnpzydnah/kasera-Store/hair_accessories_xcJm9zvxsE.jpg',
       },
       {
         name: 'Skin & face',
-        image: require('../assets/images/Categories/skin_face.png'),
+        image: "https://ik.imagekit.io/vnpzydnah/kasera-Store/Skin___Face_QeoEVpcAv6.png",
       },
       {
         name: 'Beauty & Cosmetics',
-        image: require('../assets/images/Categories/beauty_cosmetics.png'),
+        image: "https://ik.imagekit.io/vnpzydnah/kasera-Store/Beauty___Cosmetics_7J4rk3fHe.webp",
       },
       {
         name: 'Feminine Hygiene',
-        image: require('../assets/images/Categories/female_hygiene.png'),
+        image: "https://ik.imagekit.io/vnpzydnah/kasera-Store/Female_Hygine_FUf9AGc7O.jpg",
       },
       {
         name: 'Baby Care',
-        image: require('../assets/images/Categories/baby_care.png'),
+        image: "https://ik.imagekit.io/vnpzydnah/kasera-Store/Female_Hygine_FUf9AGc7O.jpg",
       },
       {
         name: 'Health & Pharma',
-        image: require('../assets/images/Categories/Health_pharma.png'),
-      },
-      {
-        name: 'Sexual Wellness',
-        image: require('../assets/images/Categories/sexual_wellness.png'),
+        image: "https://ik.imagekit.io/vnpzydnah/kasera-Store/Health___Pharma_pY3INJJd8.webp",
       },
     ],
   },
@@ -110,20 +103,12 @@ export const Categories = [
     name: 'Household Essentials',
     subCategory: [
       {
-        name: 'Home & Lifestyle',
-        image: require('../assets/images/Categories/home_lifestyle.png'),
-      },
-      {
         name: 'Cleaners & Repellents',
-        image: require('../assets/images/Categories/cleaner_repellents.png'),
-      },
-      {
-        name: 'Electronics',
-        image: require('../assets/images/Categories/electronics.png'),
+        image: "https://ik.imagekit.io/vnpzydnah/kasera-Store/Health___Pharma_pY3INJJd8.webp",
       },
       {
         name: 'Stationary & Games',
-        image: require('../assets/images/Categories/stationary.png'),
+        image: "https://ik.imagekit.io/vnpzydnah/kasera-Store/Health___Pharma_pY3INJJd8.webp",
       },
     ],
   },

@@ -10,6 +10,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
+import { useFocusEffect } from '@react-navigation/native';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -43,6 +44,14 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   const id = 'test-toast';
   const [count, setCount] = useState(0);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
+
+  useFocusEffect(() => {
+    const cartItemCount = cartItems.items.length;
+    if(cartItemCount==0){
+      setIsButton1Visible(true);
+      setCount(0)
+    }
+  });
   const handleDecrease = () => {
     if (count == 1) {
       dispatch(removeItem(products.id));
@@ -188,7 +197,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                 style={{
                   paddingVertical: verticalScale(3),
                   paddingHorizontal: horizontalScale(1),
-                  marginHorizontal: horizontalScale(20),
+                  marginHorizontal: horizontalScale(5),
                   backgroundColor: Colors.primary[500],
                   flexDirection: 'row',
                   justifyContent: 'center',

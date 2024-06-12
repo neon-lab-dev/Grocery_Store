@@ -24,16 +24,16 @@ const Header: FC<HeaderProps> = ({onCartPress, onSettingsPress, name}) => {
 
         <Text style={styles.profileName}>Hi, {name}</Text>
       </View>
+      <Pressable onPress={onCartPress}>
       <View style={styles.cartFlex}>
         {cartItemCount !== 0 && (
           <View style={styles.cartContainer}>
             <Text style={styles.cartQuantity}>{cartItemCount}</Text>
           </View>
         )}
-        <Pressable onPress={onCartPress}>
           <SvgXml xml={cartIcon} height={27} width={27} />
-        </Pressable>
       </View>
+      </Pressable>
     </View>
   );
 };
