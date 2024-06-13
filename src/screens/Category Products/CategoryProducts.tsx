@@ -145,7 +145,18 @@ const CategoryProducts: FC = ({navigation, route}) => {
         </View>
         <View style={styles.rightCard}>
           {isLoading ? (
-            <Loader isOpen={isLoading} />
+            <View
+              flex={1}
+              bgColor={'accent.300'}
+              justifyContent={'center'}
+              alignItems={'center'}>
+              <Image
+                alt="loading"
+                source={require('../../assets/images/icons/loading.gif')}
+                h={200}
+                w={200}
+              />
+            </View>
           ) : CategoryData.length === 0 ? (
             <View flex={1} alignItems={'center'} justifyContent={'center'}>
               <Text

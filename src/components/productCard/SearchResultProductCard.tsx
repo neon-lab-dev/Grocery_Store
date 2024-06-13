@@ -9,7 +9,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -51,9 +51,9 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
 
   useFocusEffect(() => {
     const cartItemCount = cartItems.items.length;
-    if(cartItemCount==0){
+    if (cartItemCount == 0) {
       setIsButton1Visible(true);
-      setCount(0)
+      setCount(0);
     }
   });
   const handleDecrease = () => {
@@ -105,7 +105,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
     setIsButton1Visible(false);
   };
   return (
-    <View h={260} w={width / 2 - 25}>
+    <View h={verticalScale(260)} w={width / 2 - 25}>
       <Pressable position={'relative'} onPress={() => onPress(products.name)}>
         <View
           bgColor={'accent.50'}

@@ -17,6 +17,7 @@ import GoBack from '../../components/Navigation/GoBack';
 import {searchProduct} from '../../api/auth_routes';
 import {useDispatch} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
 
 interface AlternativeImageProps {
   img: any;
@@ -195,12 +196,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   return (
     <>
       {!productDetails ? (
-        <View flex={1} alignItems={'center'} justifyContent={'center'}>
-          <Image
-            source={require('../../assets/images/icons/loading.gif')}
-            style={{height: 250, width: 250}}
-          />
-        </View>
+        <SkeletonProductDetails />
       ) : (
         <>
           <View

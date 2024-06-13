@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, ScrollView} from 'native-base';
 import {horizontalScale} from '../../assets/scaling';
 import ProductCard from './ProductCard';
 import {getProducts} from '../../api/auth_routes';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface ProductCardProps {
   onPress: (name: string) => void;
@@ -20,9 +21,11 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
     }
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchProducts();
+    }, []),
+  );
 
   return (
     <View style={{width: '100%'}}>

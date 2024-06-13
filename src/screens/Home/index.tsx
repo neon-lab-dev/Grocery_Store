@@ -26,7 +26,7 @@ import {View, Text} from 'native-base';
 import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
 import {REACT_APP_PHONE_NO} from '@env';
-import Loader from '../../components/Loader/Loader';
+import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
 
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
@@ -99,7 +99,7 @@ const Home: React.FC<Props> = ({navigation}) => {
     <>
       {isLoading ? (
         <View flex={1} alignItems={'center'} justifyContent={'center'}>
-          <Loader isOpen={isLoading} />
+          <SkeletonHome />
         </View>
       ) : (
         <View style={style.container}>

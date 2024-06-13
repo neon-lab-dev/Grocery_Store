@@ -6,7 +6,7 @@ import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Image} from 'native-base';
 import {AuthAPIClient} from '../../api/axios.config';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
-import Loader from '../../components/Loader/Loader';
+// import Loader from '../../components/Loader/Loader';
 
 interface Category {
   id: number;
@@ -79,7 +79,7 @@ const Categories: FC = ({navigation}) => {
   };
   return (
     <View style={styles.mainContainer}>
-      <Loader isOpen={isLoading} />
+      {/* <Loader isOpen={isLoading} /> */}
       <View style={styles.leftCard}>
         <View>
           <FlatList
