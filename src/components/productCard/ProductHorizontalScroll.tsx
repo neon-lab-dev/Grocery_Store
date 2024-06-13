@@ -13,8 +13,9 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
     try {
-      const response = await getProducts();
-      const slicedProducts = response.content.slice(0, 4);
+      const NumberOfProducts=10;
+      const response = await getProducts(NumberOfProducts);
+      const slicedProducts = response.content.slice(0, 10);
       setProducts(slicedProducts);
     } catch (error) {
       console.log(error);

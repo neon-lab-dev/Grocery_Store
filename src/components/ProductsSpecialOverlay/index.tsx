@@ -23,8 +23,9 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
 
   const fetchProducts = async () => {
     try {
+      const NumberOfProducts=30;
       setIsLoading(true);
-      const response = await searchProduct(text);
+      const response = await searchProduct(text,NumberOfProducts);
       setProducts(response.content);
     } catch (error) {
       console.log(error);

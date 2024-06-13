@@ -1,8 +1,8 @@
 import {AuthAPIClient, AuthAPIClient2} from '../axios.config';
 
-export const getProducts = async () => {
+export const getProducts = async (NumberOfProducts:Number) => {
   try {
-    const response = await AuthAPIClient.get('/product/list');
+    const response = await AuthAPIClient.get(`/product/list?perPage=${NumberOfProducts}`);
     return response.data.responseBody;
   } catch (error) {
     console.log(error);
@@ -11,6 +11,7 @@ export const getProducts = async () => {
 
 export const searchProduct = async (
   searchInp: string,
+  NumberOfProducts:Number,
   sortBy?: string,
   minValue?: number,
   maxValue?: number,
@@ -19,7 +20,9 @@ export const searchProduct = async (
   try {
     let url = '/product/list';
     let queryParams = [];
-
+    if(NumberOfProducts){
+      queryParams.push(`perPage=${NumberOfProducts}`);
+    }
     if (searchInp) {
       queryParams.push(`name=${searchInp}`);
     }

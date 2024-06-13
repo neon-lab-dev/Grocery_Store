@@ -51,11 +51,11 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
   };
   const getMarginLeft = () => {
     if (Method === 'CASH_ON_DELIVERY') {
-      return width < 380 ? '12' : '20';
-    } else if (Method === 'PICKUP_AT_SHOP') {
       return width < 380 ? '8' : '16';
+    } else if (Method === 'PICKUP_AT_SHOP') {
+      return width < 380 ? '4' : '12';
     } else {
-      return width < 380 ? '12' : '120';
+      return width < 380 ? '20' : '24';
     }
   };
   const marginLeft = getMarginLeft();
@@ -128,6 +128,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
             fontSize={width < 380 ? 14 : 15}
             color={'accent.500'}
             ml={1}
+            mr={2}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
           >
