@@ -13,7 +13,7 @@ import {Dimensions} from 'react-native';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -42,6 +42,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
+  const [perIndex, setPerIndex] = useState(0);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
@@ -49,14 +50,14 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   const [isButton1Visible, setIsButton1Visible] = useState(true);
   const cartItems = useSelector((state: any) => state.cart);
 
-useFocusEffect(() => {
-  const cartItemCount = cartItems.items.length;
-  if(cartItemCount==0){
-    setIsButton1Visible(true);
-    setCount(0)
-  }
-});
-  
+  useFocusEffect(() => {
+    const cartItemCount = cartItems.items.length;
+    if (cartItemCount == 0) {
+      setIsButton1Visible(true);
+      setCount(0);
+    }
+  });
+
   const handleDecrease = () => {
     if (count === 1) {
       dispatch(removeItem(products.id));
@@ -102,6 +103,11 @@ useFocusEffect(() => {
     dispatch(addToCart(products));
     setIsButton1Visible(false);
   };
+
+  const offerPerIndex = products.varietyList.findIndex(
+    item => item.discountPercent > 0,
+  );
+
   const {width} = Dimensions.get('window');
   // console.log(width, height)
   if (products.varietyList[0].quantity !== 0) {
@@ -122,7 +128,8 @@ useFocusEffect(() => {
               width: horizontalScale(130),
               overflow: 'hidden',
             }}>
-            {products.varietyList[0].discountPercent !== 0 && (
+            {/* offer per container */}
+            {offerPerIndex >= 0 && (
               <View
                 style={{
                   backgroundColor: Colors.primary[500],
@@ -139,7 +146,7 @@ useFocusEffect(() => {
                     color: 'white',
                     fontSize: scaleFontSize(14),
                   }}>
-                  {products.varietyList[0].discountPercent}%
+                  {products.varietyList[offerPerIndex].discountPercent}%
                 </Text>
                 <Text
                   style={{
@@ -154,6 +161,7 @@ useFocusEffect(() => {
                 </Text>
               </View>
             )}
+
             <View flex={1} alignItems={'center'} justifyContent={'center'}>
               {products?.varietyList[0]?.documentUrls[0] ? (
                 <Image

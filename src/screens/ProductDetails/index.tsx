@@ -38,12 +38,14 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const [productDetails, setProductDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState('');
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         setProductDetails(null);
-
+        setIsButton1Visible(true);
+        setCount(0);
         if (selProduct) {
           const response = await searchProduct(selProduct);
           if (response.content) {
@@ -53,9 +55,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             ];
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
-            // setSelectedImageUrl(
-            //   response.content[0].varietyList[0].documentUrls[0],
-            // );
+            setSelectedImageUrl(
+              response.content[0].varietyList[0].documentUrls[0],
+            );
           }
         } else if (productName) {
           const response = await searchProduct(productName);
@@ -66,9 +68,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             ];
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
-            // setSelectedImageUrl(
-            //   response.content[0].varietyList[0].documentUrls[0],
-            // );
+            setSelectedImageUrl(
+              response.content[0].varietyList[0].documentUrls[0],
+            );
           }
         }
       } catch (error) {
@@ -147,15 +149,20 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
     const updatedProduct = {...productDetails};
     updatedProduct.varietyList = [productDetails.varietyList[unitIndex]];
     setSelectedProduct(updatedProduct);
+    setIsButton1Visible(true);
+    setCount(0);
   };
 
   const AlternativeImage: FC<AlternativeImageProps> = ({img, id}) => {
     return (
       <Pressable
-        onPress={() => setSelectedImage(id)}
+        onPress={() => {
+          setSelectedImage(id);
+          setSelectedImageUrl(img.uri);
+        }}
         style={[
           styles.smImage,
-          {borderColor: id === selectedImage ? '#F97316' : '#E5E7EB'},
+          {borderColor: img.uri === selectedImageUrl ? '#F97316' : '#E5E7EB'},
         ]}>
         <Image
           source={img}
@@ -185,6 +192,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
       </Pressable>
     );
   };
+
+  const aggregatedImageUrls = selectedProduct?.varietyList
+    ?.map(variety => variety.documentUrls)
+    .flat();
 
   const navigation = useNavigation();
 
@@ -228,12 +239,12 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
           </View>
           <ScrollView style={{flex: 1}}>
             <View style={styles.imageContainer}>
-              {productDetails.varietyList[0].discountPercent !== 0 && (
+              {selectedProduct?.varietyList[0].discountPercent !== 0 && (
                 <View style={styles.offPerContainer}>
                   <Text style={styles.percentageText}>
                     {/* {[productDetails.varietyList[0].value]} */}
                     {selectedProduct?.varietyList[0].discountPercent ||
-                      productDetails.varietyList[0].discountPercent}
+                      productDetails?.varietyList[0].discountPercent}
                     %
                   </Text>
                   <Text
@@ -252,11 +263,13 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               )}
 
               <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
-                <Image
-                  source={{uri: productDetails.varietyList[0].documentUrls[0]}}
-                  style={{height: 200, width: 200}}
-                  resizeMode="contain"
-                />
+                {selectedImageUrl && (
+                  <Image
+                    source={{uri: selectedImageUrl}}
+                    style={{height: 200, width: 200}}
+                    resizeMode="contain"
+                  />
+                )}
               </View>
               <View
                 style={{
@@ -271,7 +284,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   ItemSeparatorComponent={() => (
                     <View style={{marginLeft: horizontalScale(6)}} />
                   )}
-                  data={productDetails.varietyList[0].documentUrls.map(
+                  data={aggregatedImageUrls?.map(
                     (url: string, index: number) => ({id: index, image: url}),
                   )}
                   renderItem={({item}) => (
