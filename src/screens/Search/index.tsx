@@ -96,9 +96,11 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   const searchProducts = async () => {
     try {
+      const NumberOfProducts=10;
       setIsLoading(true);
       const response = await searchProduct(
         searchInp,
+        NumberOfProducts,
         sortBy,
         minValue,
         maxValue,
