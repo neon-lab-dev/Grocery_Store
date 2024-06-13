@@ -56,6 +56,11 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
       setCount(0);
     }
   });
+
+  const offerPerIndex = products.varietyList.findIndex(
+    item => item.discountPercent > 0,
+  );
+
   const handleDecrease = () => {
     if (count === 1) {
       dispatch(removeItem(products.id));
@@ -112,7 +117,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           borderRadius={16}
           px={horizontalScale(20)}
           py={verticalScale(20)}>
-          {products.varietyList[0].discountPercent !== 0 && (
+          {offerPerIndex >= 0 && (
             <View
               bgColor={'primary.500'}
               position={'absolute'}
@@ -128,7 +133,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
                 color={'white'}
                 fontSize={scaleFontSize(11)}
                 alignSelf={'center'}>
-                {products.varietyList[0].discountPercent}%
+                {products.varietyList[offerPerIndex].discountPercent}%
               </Text>
               <Text
                 fontFamily={'Inter_Bold'}

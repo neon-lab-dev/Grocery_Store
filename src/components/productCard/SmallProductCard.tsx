@@ -10,7 +10,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -47,11 +47,18 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
 
   useFocusEffect(() => {
     const cartItemCount = cartItems.items.length;
-    if(cartItemCount==0){
+    if (cartItemCount == 0) {
       setIsButton1Visible(true);
-      setCount(0)
+      setCount(0);
     }
   });
+
+  const offerPerIndex = products.varietyList.findIndex(
+    item => item.discountPercent > 0,
+  );
+
+  console.log(offerPerIndex);
+
   const handleDecrease = () => {
     if (count == 1) {
       dispatch(removeItem(products.id));
@@ -117,7 +124,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             width: horizontalScale(100),
             overflow: 'hidden',
           }}>
-          {products.varietyList[0].discountPercent !== 0 && (
+          {offerPerIndex >= 0 && (
             <View
               style={{
                 backgroundColor: Colors.primary[500],
@@ -134,7 +141,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                   alignSelf: 'center',
                   color: 'white',
                 }}>
-                {products.varietyList[0].discountPercent}%
+                {products.varietyList[offerPerIndex].discountPercent}%
               </Text>
               <Text
                 style={{

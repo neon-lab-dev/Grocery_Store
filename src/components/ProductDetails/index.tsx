@@ -58,7 +58,8 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     const fetchProductDetails = async () => {
       try {
         setProductDetails(null);
-
+        setIsButton1Visible(true);
+        setCount(0);
         if (selProduct) {
           const response = await searchProduct(selProduct);
           if (response.content) {
@@ -151,6 +152,8 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     const updatedProduct = {...productDetails};
     updatedProduct.varietyList = [productDetails.varietyList[unitIndex]];
     setSelectedProduct(updatedProduct);
+    setIsButton1Visible(true);
+    setCount(0);
   };
 
   const AlternativeImage: FC<AlternativeImageProps> = ({img, id}) => {
@@ -162,7 +165,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
         }}
         style={[
           styles.smImage,
-          {borderColor: id === selectedImage ? '#F97316' : '#E5E7EB'},
+          {borderColor: img.uri === selectedImageUrl ? '#F97316' : '#E5E7EB'},
         ]}>
         <Image
           source={img}
@@ -200,8 +203,8 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     navigation.navigate('Cart');
   };
 
-  const aggregatedImageUrls = productDetails?.varietyList
-    .map(variety => variety.documentUrls)
+  const aggregatedImageUrls = selectedProduct?.varietyList
+    ?.map(variety => variety.documentUrls)
     .flat();
 
   return (
@@ -212,7 +215,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
         <View style={{justifyContent: 'space-between', flex: 1}}>
           <ScrollView>
             <View style={styles.imageContainer}>
-              {productDetails?.varietyList[0].discountPercent !== 0 && (
+              {selectedProduct?.varietyList[0].discountPercent !== 0 && (
                 <View style={styles.offPerContainer}>
                   <Text style={styles.percentageText}>
                     {selectedProduct?.varietyList[0].discountPercent ||
@@ -250,7 +253,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   ItemSeparatorComponent={() => (
                     <View style={{marginLeft: horizontalScale(6)}} />
                   )}
-                  data={aggregatedImageUrls.map(
+                  data={aggregatedImageUrls?.map(
                     (url: string, index: number) => ({id: index, image: url}),
                   )}
                   renderItem={({item}) => (
