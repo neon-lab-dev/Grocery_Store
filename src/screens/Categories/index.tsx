@@ -6,6 +6,7 @@ import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Image} from 'native-base';
 import {AuthAPIClient} from '../../api/axios.config';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
+// import Loader from '../../components/Loader/Loader';
 
 interface Category {
   id: number;
@@ -24,12 +25,15 @@ const Categories: FC = ({navigation}) => {
   const [selectedCategoryName, setSelectedCategoryName] = useState('');
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const fetchCategory = async () => {
+    setIsLoading(true);
     try {
       const response = await AuthAPIClient.get('/category/all');
       if (response.data && response.data.responseBody) {
         setCategories(response.data.responseBody);
       }
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +79,7 @@ const Categories: FC = ({navigation}) => {
   };
   return (
     <View style={styles.mainContainer}>
+      {/* <Loader isOpen={isLoading} /> */}
       <View style={styles.leftCard}>
         <View>
           <FlatList

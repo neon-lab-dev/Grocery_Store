@@ -26,6 +26,7 @@ import {View, Text} from 'native-base';
 import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
 import {REACT_APP_PHONE_NO} from '@env';
+import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
 
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
@@ -98,10 +99,7 @@ const Home: React.FC<Props> = ({navigation}) => {
     <>
       {isLoading ? (
         <View flex={1} alignItems={'center'} justifyContent={'center'}>
-          <Image
-            source={require('../../assets/images/icons/loading.gif')}
-            style={{height: 200, width: 200}}
-          />
+          <SkeletonHome />
         </View>
       ) : (
         <View style={style.container}>
@@ -181,7 +179,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                         'Paan Corner',
                         'Health & Pharma',
                         'Cleaners & Repellents',
-                        'Stationary & Games'
+                        'Stationary & Games',
                       ];
                       const isDoubleWidth = doubleWidthCategories.includes(
                         subCategory.name,
@@ -198,10 +196,11 @@ const Home: React.FC<Props> = ({navigation}) => {
                             });
                           }}
                           style={{
-                            width:isDoubleWidth?
-                              ((width - 2 * horizontalScale(20)) / 2 -
-                              horizontalScale(10)):((width - 2 * horizontalScale(20)) / 4 -
-                              horizontalScale(10)),
+                            width: isDoubleWidth
+                              ? (width - 2 * horizontalScale(20)) / 2 -
+                                horizontalScale(10)
+                              : (width - 2 * horizontalScale(20)) / 4 -
+                                horizontalScale(10),
                           }}>
                           <View alignItems={'center'} style={{gap: 9}}>
                             <Image
@@ -217,7 +216,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                               }}
                             />
                             <Text
-                            alignSelf={'center'}
+                              alignSelf={'center'}
                               fontFamily={'Inter_Medium'}
                               fontSize={scaleFontSize(12)}
                               lineHeight={14.52}

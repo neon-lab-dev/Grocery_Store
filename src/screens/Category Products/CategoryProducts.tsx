@@ -11,7 +11,7 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
-
+import Loader from '../../components/Loader/Loader';
 interface Category {
   id: number;
   name: string;

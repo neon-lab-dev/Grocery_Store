@@ -6,6 +6,7 @@ import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {getOrders} from '../../api/auth_routes';
 import {FlatList, Text} from 'react-native';
 import {verticalScale, scaleFontSize} from '../../assets/scaling';
+import Loader from '../../components/Loader/Loader';
 
 interface OrdersProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Orders'>;
@@ -38,12 +39,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
           bgColor={'white'}
           alignItems={'center'}
           justifyContent={'center'}>
-          <Image
-            alt="loading"
-            source={require('../../assets/images/icons/loading.gif')}
-            h={250}
-            w={250}
-          />
+          <Loader isOpen={loaderVisible} />
         </View>
       ) : (
         <View flex={1} bgColor={'accent.50'} pt={5}>

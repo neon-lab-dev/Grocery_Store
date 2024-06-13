@@ -18,6 +18,7 @@ import {searchProduct} from '../../api/auth_routes';
 import {useDispatch} from 'react-redux';
 import {Box, useToast} from 'native-base';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {SkeletonProductDetails} from '../Skeleton/SkeletonProductDetails';
 
 interface AlternativeImageProps {
   img: any;
@@ -206,12 +207,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   return (
     <>
       {!productDetails ? (
-        <View flex={1} alignItems={'center'} justifyContent={'center'}>
-          <Image
-            source={require('../../assets/images/icons/loading.gif')}
-            style={{height: 250, width: 250}}
-          />
-        </View>
+        <SkeletonProductDetails />
       ) : (
         <View style={{justifyContent: 'space-between', flex: 1}}>
           <ScrollView>
