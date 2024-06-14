@@ -385,7 +385,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
           {/* Bottom Layout Container */}
           <View shadow={5} style={styles.bottomLayoutContainer}>
             {selectedProduct && (
-              <View style={{gap: 2, marginTop: verticalScale(8)}}>
+              <View style={{gap: 2, marginBottom: verticalScale(5)}}>
                 <Text style={styles.bottomLayoutkgText}>
                   {selectedProduct.varietyList[0].value}{' '}
                   {selectedProduct.varietyList[0].unit}

@@ -48,9 +48,9 @@ const BottomSheet: FC<BottomSheetProps> = ({
           <Pressable
             style={{alignItems: 'center', marginVertical: verticalScale(10)}}
             onPress={onClose}>
-            <View style={styles.closeButton}>
-              <SvgXml xml={overlayCloseIcon} />
-            </View>
+            {/* <View style={styles.closeButton}> */}
+            <SvgXml xml={overlayCloseIcon} width={50} height={50} />
+            {/* </View> */}
           </Pressable>
         )}
         <View style={[styles.bottomSheet]}>{getComponent(type)}</View>
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   closeButton: {
-    width: 64,
-    height: 64,
+    width: 20,
+    height: 20,
     backgroundColor: '#03071280',
     justifyContent: 'center',
     alignItems: 'center',
