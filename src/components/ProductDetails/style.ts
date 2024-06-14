@@ -147,8 +147,8 @@ export const styles = StyleSheet.create({
   bottomLayoutContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 24,
-    paddingVertical: verticalScale(18),
+    padding: 20,
+    paddingVertical: verticalScale(14),
     backgroundColor: '#ffffff',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,

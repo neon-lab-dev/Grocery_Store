@@ -19,6 +19,7 @@ import {useDispatch} from 'react-redux';
 import {Box, useToast} from 'native-base';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../Skeleton/SkeletonProductDetails';
+import PeopleAlsoBought from '../productCard/PeopleAlsoBought';
 
 interface AlternativeImageProps {
   img: any;
@@ -53,6 +54,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   const toast = useToast();
   const id = 'test-toast';
   const [count, setCount] = useState(0);
+  const [subCat2, setSubCat2] = useState('');
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -67,6 +69,8 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             initialSelectedProduct.varietyList = [
               response.content[0].varietyList[0],
             ];
+            setSubCat2(response.content[0].subCategory2);
+
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
             setSelectedImageUrl(
@@ -80,6 +84,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             initialSelectedProduct.varietyList = [
               response.content[0].varietyList[0],
             ];
+            setSubCat2(response.content[0].subCategory2);
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
             setSelectedImageUrl(
@@ -370,7 +375,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={name => onPress(name)} />
+                <PeopleAlsoBought
+                  onPress={name => onPress(name)}
+                  subCategory={subCat2}
+                />
               </View>
             </View>
           </ScrollView>
@@ -410,8 +418,8 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
               <Pressable
                 onPress={handleButtonPress}
                 style={{
-                  width: horizontalScale(120),
-                  height: verticalScale(50),
+                  width: horizontalScale(115),
+                  height: verticalScale(45),
                   backgroundColor: '#F97316',
                   borderRadius: 12,
                   alignItems: 'center',

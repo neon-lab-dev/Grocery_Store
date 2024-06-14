@@ -128,7 +128,6 @@ export const styles = StyleSheet.create({
   viewDetailsText: {
     fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(14),
-    fontFamily: 'Inter_Medium',
     textAlign: 'left',
     color: '#F97316',
     lineHeight: 16.94,
@@ -169,8 +168,8 @@ export const styles = StyleSheet.create({
   bottomLayoutContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 24,
-    paddingVertical: verticalScale(28),
+    padding: 20,
+    paddingVertical: verticalScale(17),
     backgroundColor: '#ffffff',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
