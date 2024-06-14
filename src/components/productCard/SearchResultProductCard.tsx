@@ -110,7 +110,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
     setIsButton1Visible(false);
   };
   return (
-    <View h={verticalScale(260)} w={width / 2 - 25}>
+    <View h={verticalScale(240)} w={width / 2 - 25}>
       <Pressable position={'relative'} onPress={() => onPress(products.name)}>
         <View
           bgColor={'accent.50'}

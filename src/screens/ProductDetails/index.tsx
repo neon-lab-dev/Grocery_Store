@@ -18,6 +18,7 @@ import {searchProduct} from '../../api/auth_routes';
 import {useDispatch} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
+import SimilarProductHorizontalScroll from '../../components/productCard/SimilarProducts';
 
 interface AlternativeImageProps {
   img: any;
@@ -487,7 +488,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={name => onPress(name)} />
+                <SimilarProductHorizontalScroll
+                  onPress={name => onPress(name)}
+                  subCategory={productDetails.subCategory}
+                />
               </View>
               <View
                 style={{
