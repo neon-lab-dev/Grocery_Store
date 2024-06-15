@@ -295,6 +295,12 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               Log Out
             </Button>
           </Center>
+          {/* <View style={{flexDirection:'row',alignSelf:'center',marginBottom:10}}>
+            <Text style={{alignSelf:'center',marginRight:2}}>
+            Powered by
+            </Text>
+            <Image alt='logo' style={{height:30,width:80 }} source={require('../../assets/images/icons/logo.png')}></Image>
+          </View> */}
           <Loader isOpen={loaderVisible} />
         </View>
       )}
