@@ -18,6 +18,7 @@ import {searchProduct} from '../../api/auth_routes';
 import {useDispatch} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
+import PeopleAlsoBought from '../../components/productCard/PeopleAlsoBought';
 import SimilarProductHorizontalScroll from '../../components/productCard/SimilarProducts';
 
 interface AlternativeImageProps {
@@ -41,6 +42,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
+  const [subCat2, setSubCat2] = useState('');
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -55,6 +57,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             initialSelectedProduct.varietyList = [
               response.content[0].varietyList[0],
             ];
+            setSubCat2(response.content[0].subCategory2);
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
             setSelectedImageUrl(
@@ -68,6 +71,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             initialSelectedProduct.varietyList = [
               response.content[0].varietyList[0],
             ];
+            setSubCat2(response.content[0].subCategory2);
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
             setSelectedImageUrl(
@@ -261,12 +265,12 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
 
               <View style={{flex: 1, marginHorizontal: horizontalScale(40)}}>
                 {selectedImageUrl && (
-                  <View style={{height:200,width:200}} >
-                  <Image
-                    source={{uri: selectedImageUrl}}
-                    style={{height: 220, width: 300}}
-                    resizeMode="contain"
-                  />
+                  <View style={{height: 200, width: 200}}>
+                    <Image
+                      source={{uri: selectedImageUrl}}
+                      style={{height: 220, width: 300}}
+                      resizeMode="contain"
+                    />
                   </View>
                 )}
               </View>
@@ -509,7 +513,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={name => onPress(name)} />
+                <PeopleAlsoBought
+                  onPress={name => onPress(name)}
+                  subCategory={subCat2}
+                />
               </View>
             </View>
           </ScrollView>
@@ -530,7 +537,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
           )} */}
           <View shadow={5} style={styles.bottomLayoutContainer}>
             {selectedProduct && (
-              <View style={{gap: 2, marginTop: verticalScale(8)}}>
+              <View style={{gap: 2}}>
                 <Text style={styles.bottomLayoutkgText}>
                   {selectedProduct.varietyList[0].value}{' '}
                   {selectedProduct.varietyList[0].unit}
@@ -563,8 +570,8 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               <Pressable
                 onPress={handleButtonPress}
                 style={{
-                  width: horizontalScale(120),
-                  height: verticalScale(50),
+                  width: horizontalScale(115),
+                  height: verticalScale(45),
                   backgroundColor: '#F97316',
                   borderRadius: 12,
                   alignItems: 'center',
