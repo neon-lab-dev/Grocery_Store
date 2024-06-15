@@ -19,6 +19,7 @@ import {useDispatch} from 'react-redux';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../../components/productCard/PeopleAlsoBought';
+import SimilarProductHorizontalScroll from '../../components/productCard/SimilarProducts';
 
 interface AlternativeImageProps {
   img: any;
@@ -262,13 +263,15 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                 </View>
               )}
 
-              <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
+              <View style={{flex: 1, marginHorizontal: horizontalScale(40)}}>
                 {selectedImageUrl && (
-                  <Image
-                    source={{uri: selectedImageUrl}}
-                    style={{height: 200, width: 200}}
-                    resizeMode="contain"
-                  />
+                  <View style={{height: 200, width: 200}}>
+                    <Image
+                      source={{uri: selectedImageUrl}}
+                      style={{height: 220, width: 300}}
+                      resizeMode="contain"
+                    />
+                  </View>
                 )}
               </View>
               <View
@@ -491,7 +494,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll onPress={name => onPress(name)} />
+                <SimilarProductHorizontalScroll
+                  onPress={name => onPress(name)}
+                  subCategory={productDetails.subCategory}
+                />
               </View>
               <View
                 style={{

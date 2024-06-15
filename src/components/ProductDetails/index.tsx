@@ -20,6 +20,7 @@ import {Box, useToast} from 'native-base';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../productCard/PeopleAlsoBought';
+import SimilarProductHorizontalScroll from '../productCard/SimilarProducts';
 
 interface AlternativeImageProps {
   img: any;
@@ -236,13 +237,15 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   </Text>
                 </View>
               )}
-              <View style={{flex: 1, marginHorizontal: horizontalScale(80)}}>
+              <View style={{flex: 1, marginHorizontal: horizontalScale(30)}}>
                 {selectedImageUrl && (
-                  <Image
-                    source={{uri: selectedImageUrl}}
-                    style={{height: 200, width: 200}}
-                    resizeMode="contain"
-                  />
+                  <View style={{height: 200, width: 200}}>
+                    <Image
+                      source={{uri: selectedImageUrl}}
+                      style={{height: 250, width: 300}}
+                      resizeMode="contain"
+                    />
+                  </View>
                 )}
               </View>
               <View
@@ -355,10 +358,11 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll
+                <SimilarProductHorizontalScroll
                   onPress={name => {
                     onPress(name);
                   }}
+                  subCategory={productDetails.subCategory}
                 />
               </View>
               <View

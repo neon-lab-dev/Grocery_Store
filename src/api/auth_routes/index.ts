@@ -1,8 +1,10 @@
 import {AuthAPIClient, AuthAPIClient2} from '../axios.config';
 
-export const getProducts = async (NumberOfProducts:Number) => {
+export const getProducts = async (NumberOfProducts: Number) => {
   try {
-    const response = await AuthAPIClient.get(`/product/list?perPage=${NumberOfProducts}`);
+    const response = await AuthAPIClient.get(
+      `/product/list?perPage=${NumberOfProducts}`,
+    );
     return response.data.responseBody;
   } catch (error) {
     console.log(error);
@@ -11,7 +13,7 @@ export const getProducts = async (NumberOfProducts:Number) => {
 
 export const searchProduct = async (
   searchInp: string,
-  NumberOfProducts:Number,
+  NumberOfProducts?: Number,
   sortBy?: string,
   minValue?: number,
   maxValue?: number,
@@ -20,7 +22,7 @@ export const searchProduct = async (
   try {
     let url = '/product/list';
     let queryParams = [];
-    if(NumberOfProducts){
+    if (NumberOfProducts) {
       queryParams.push(`perPage=${NumberOfProducts}`);
     }
     if (searchInp) {
@@ -158,39 +160,40 @@ export const getOrders = async () => {
     console.log(error);
   }
 };
-export const CreateOrders = async (orderData: { paymentId: string; }) => {
+export const CreateOrders = async (orderData: {paymentId: string}) => {
   try {
-    const response = await AuthAPIClient.post('/order/create',
-      orderData,
-    );
-    return response
+    const response = await AuthAPIClient.post('/order/create', orderData);
+    return response;
   } catch (error) {
     console.log(error);
   }
 };
-export const fetchpayment = async (TotalPrice: any,dis: string) => {
+export const fetchpayment = async (TotalPrice: any, dis: string) => {
   try {
-    const response = await AuthAPIClient.get(`/payment/get/payment-link?amount=${TotalPrice}&description=${dis}`,
+    const response = await AuthAPIClient.get(
+      `/payment/get/payment-link?amount=${TotalPrice}&description=${dis}`,
     );
-    return response.data
+    return response.data;
   } catch (error) {
     console.log(error);
   }
 };
-export const paymentStatus = async (PaymentID:string) => {
+export const paymentStatus = async (PaymentID: string) => {
   try {
-    const response = await AuthAPIClient.get(`/payment/status?paymentId=${PaymentID}`,
+    const response = await AuthAPIClient.get(
+      `/payment/status?paymentId=${PaymentID}`,
     );
-    return response.data
+    return response.data;
   } catch (error) {
     console.log(error);
   }
 };
-export const ForcepaymentStatus = async (PaymentID:string) => {
+export const ForcepaymentStatus = async (PaymentID: string) => {
   try {
-    const response = await AuthAPIClient.get(`/payment/status?paymentId=${PaymentID}&external=true`,
+    const response = await AuthAPIClient.get(
+      `/payment/status?paymentId=${PaymentID}&external=true`,
     );
-    return response.data.responseBody.paymentStatus
+    return response.data.responseBody.paymentStatus;
   } catch (error) {
     console.log(error);
   }
@@ -200,8 +203,8 @@ export const fetchAllCategory = async () => {
   try {
     const response = await AuthAPIClient.get('/category/all');
     if (response.data && response.data.responseBody) {
-        // console.log(response.data.responseBody);
-         return response.data.responseBody;
+      // console.log(response.data.responseBody);
+      return response.data.responseBody;
     }
   } catch (error) {
     console.log(error);
