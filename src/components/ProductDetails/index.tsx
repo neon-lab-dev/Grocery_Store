@@ -19,6 +19,7 @@ import {useDispatch} from 'react-redux';
 import {Box, useToast} from 'native-base';
 import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../Skeleton/SkeletonProductDetails';
+import SimilarProductHorizontalScroll from '../productCard/SimilarProducts';
 
 interface AlternativeImageProps {
   img: any;
@@ -350,10 +351,11 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   marginVertical: verticalScale(12),
                   paddingHorizontal: horizontalScale(5),
                 }}>
-                <ProductHorizontalScroll
+                <SimilarProductHorizontalScroll
                   onPress={name => {
                     onPress(name);
                   }}
+                  subCategory={productDetails.subCategory}
                 />
               </View>
               <View
