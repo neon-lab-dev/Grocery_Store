@@ -13,12 +13,15 @@ import SavedAddressComponent from '../../components/Addresses/SavedAddressCompon
 import {deleteAddress, getAddress} from '../../api/auth_routes';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
 
 interface SavedAddressProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Addresses'>;
 }
 
 const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
+  const [isConnected, setConnected] = React.useState(true);
+
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [addressList, setAddressList] = React.useState([]);
 
@@ -29,6 +32,19 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
     setAddressList(getAddressList);
     setLoaderVisible(false);
   };
+
+  React.useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -45,22 +61,27 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress', {title: 'Add'});
   };
+
   const handleDelete = async deleteId => {
-    try {
-      setLoaderVisible(true);
-      const res = await deleteAddress(deleteId);
-      console.log(res);
-      if (res.statusCode === 400) {
-        fetchAddress();
-        setLoaderVisible(false);
-        toast.showToast('Please make another address as primary');
-      } else {
-        fetchAddress();
-        setLoaderVisible(false);
-        toast.showToast(res.message || res.errorMessage);
+    if (isConnected) {
+      try {
+        setLoaderVisible(true);
+        const res = await deleteAddress(deleteId);
+        console.log(res);
+        if (res.statusCode === 400) {
+          fetchAddress();
+          setLoaderVisible(false);
+          toast.showToast('Please make another address as primary');
+        } else {
+          fetchAddress();
+          setLoaderVisible(false);
+          toast.showToast(res.message || res.errorMessage);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
     }
   };
 

@@ -21,12 +21,15 @@ import {Platform} from 'react-native';
 import {fetchUserData, updateUserData} from '../../api/auth_routes';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
 
 interface PersonalDetailsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'PersonalDetails'>;
 }
 
 const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
+  const [isConnected, setConnected] = useState(true);
+
   const [originalName, setOriginalName] = useState('');
   const [originalEmail, setOriginalEmail] = useState('');
   const [originalMobileNo, setOriginalMobileNo] = useState('');
@@ -108,8 +111,20 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
   };
 
   useEffect(() => {
-    fetchUser();
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      } else {
+        fetchUser();
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
   return (
     <>
       {isLoading ? (

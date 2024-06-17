@@ -6,6 +6,9 @@ import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Image} from 'native-base';
 import {AuthAPIClient} from '../../api/axios.config';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
+import NetInfo from '@react-native-community/netinfo';
+import {toast} from '../../components/Toast/Toast';
+
 // import Loader from '../../components/Loader/Loader';
 
 interface Category {
@@ -21,11 +24,14 @@ interface SubCategory {
 }
 
 const Categories: FC = ({navigation}) => {
+  const [isConnected, setConnected] = useState(true);
+
   const [categoryId, setCategoryId] = useState(0);
   const [selectedCategoryName, setSelectedCategoryName] = useState('');
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const fetchCategory = async () => {
     setIsLoading(true);
     try {
@@ -40,7 +46,18 @@ const Categories: FC = ({navigation}) => {
   };
 
   useEffect(() => {
-    fetchCategory();
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      } else {
+        fetchCategory();
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   useEffect(() => {

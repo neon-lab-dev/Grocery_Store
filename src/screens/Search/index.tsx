@@ -27,11 +27,16 @@ import SearchProductCard from '../../components/productCard/SearchResultProductC
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {getItem, setItem} from '../../api/localstorage';
 import {searchProduct} from '../../api/auth_routes';
+import NetInfo from '@react-native-community/netinfo';
+import {toast} from 'src/components/Toast/Toast';
+
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
 }
 
 const Search: React.FC<SearchProps> = ({navigation}) => {
+  const [isConnected, setConnected] = useState(true);
+
   const [showModal, setShowModal] = useState<boolean>(false);
   const [searchInp, SetsearchInp] = useState('');
   const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
@@ -56,6 +61,19 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       }
     };
     fetchRecentSearch();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -96,7 +114,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   const searchProducts = async () => {
     try {
-      const NumberOfProducts=10;
+      const NumberOfProducts = 10;
       setIsLoading(true);
       const response = await searchProduct(
         searchInp,

@@ -1,5 +1,5 @@
 import {Button, Center, Text, View} from 'native-base';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
 import {
@@ -15,6 +15,7 @@ import {login} from '../../redux/slices/auth.slice';
 import {signUp} from '../../api/auth';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
 
 type AddPersonalDetailsProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'PersonalDetails'>;
@@ -25,6 +26,8 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
   route,
 }) => {
   const [name, setName] = useState('');
+  const [isConnected, setConnected] = useState(true);
+
   const [email, setEmail] = useState('');
   const [mobileNo, setMobileNo] = useState('');
   const [isClicked, setIsClicked] = useState(false);
@@ -32,35 +35,55 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
   const isContinueDisabled = name === '' || email === '';
   const nameErrorShown = !validators.stringWithSpace(name);
   const emailErrorShown = !validators.isEmail(email);
+
   const mobileNoErrorShown =
     mobileNo.length !== 0 && !validators.isPhoneNumber(mobileNo);
+
   const dispatch = useDispatch();
-  const handleContinue = async () => {
-    if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
-      setIsClicked(true);
-    } else {
-      setIsLoading(true);
-      try {
-        const response = await signUp(
-          name,
-          email,
-          route.params.phoneNo,
-          mobileNo,
-        );
-        if (response.statusCode === 200) {
-          toast.showToast(response.message);
-          dispatch(login(response.responseBody.token));
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'App'}],
-          });
-        } else {
-          toast.showToast(response.errorMessage);
-        }
-      } catch (error: any) {
-        toast.showToast(error.message);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
       }
-      setIsLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const handleContinue = async () => {
+    if (isConnected) {
+      if (nameErrorShown || emailErrorShown || mobileNoErrorShown) {
+        setIsClicked(true);
+      } else {
+        setIsLoading(true);
+        try {
+          const response = await signUp(
+            name,
+            email,
+            route.params.phoneNo,
+            mobileNo,
+          );
+          if (response.statusCode === 200) {
+            toast.showToast(response.message);
+            dispatch(login(response.responseBody.token));
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'App'}],
+            });
+          } else {
+            toast.showToast(response.errorMessage);
+          }
+        } catch (error: any) {
+          toast.showToast(error.message);
+        }
+        setIsLoading(false);
+      }
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
     }
   };
 

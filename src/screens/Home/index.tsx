@@ -27,6 +27,8 @@ import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
 import {REACT_APP_PHONE_NO} from '@env';
 import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
+import NetInfo from '@react-native-community/netinfo';
+import {toast} from '../../components/Toast/Toast';
 
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
@@ -34,6 +36,7 @@ type Props = {
 
 const Home: React.FC<Props> = ({navigation}) => {
   const [searchInp, SetsearchInp] = useState('');
+  const [isConnected, setConnected] = useState(true);
   const [overLay, setOverLay] = useState('Product-List');
   const [name, setName] = useState('');
   const [userDetails, setUserDetails] = useState({});
@@ -59,7 +62,18 @@ const Home: React.FC<Props> = ({navigation}) => {
   };
 
   useEffect(() => {
-    fetchUser();
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      } else {
+        fetchUser();
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const openSettings = () => {

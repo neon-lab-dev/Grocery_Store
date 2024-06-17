@@ -16,6 +16,7 @@ import {
   verticalScale,
   width,
 } from '../../assets/scaling';
+import NetInfo from '@react-native-community/netinfo';
 import {SvgXml} from 'react-native-svg';
 import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import SelectAddress from '../../components/SelectingAddress';
@@ -29,11 +30,14 @@ import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 import {getAddress} from '../../api/auth_routes';
 import {useFocusEffect} from '@react-navigation/native';
+import {toast} from '../../components/Toast/Toast';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
 const Cart: React.FC<CartProps> = ({navigation}) => {
+  const [isConnected, setConnected] = useState(true);
+
   const [modalVisible, setModalVisible] = React.useState(false);
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [selectAddress, setSelectAddress] = React.useState({});
@@ -107,6 +111,19 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const gotoHome = () => {
     navigation.popToTop();
   };
+
+  React.useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast;
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <View flex={1} bgColor={'accent.50'}>

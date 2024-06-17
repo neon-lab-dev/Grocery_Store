@@ -18,6 +18,8 @@ import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
 import {FlatList} from 'react-native';
 import {REACT_APP_PHONE_NO} from '@env';
+import NetInfo from '@react-native-community/netinfo';
+import {toast} from '../../components/Toast/Toast';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
@@ -27,6 +29,8 @@ interface SingleOrderProps {
 const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
   const {order} = route.params;
   const {shippingInfo} = order;
+  const [isConnected, setConnected] = useState(true);
+
   const [orderStatus, setOrderStatus] = React.useState(order.orderStatus);
   const [orderInfo, setOrderInfo] = React.useState({
     receivedStatus: 'Order Received',
@@ -34,6 +38,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
     color: '#EAB308',
     time: '10:20PM, 8 Mar, 2024',
   });
+
   React.useEffect(() => {
     switch (orderStatus) {
       case 'Processing':
@@ -107,6 +112,19 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
   const convertFormat = (string: String) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
+
+  React.useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   return (
     <View flex={1} bgColor={'accent.50'}>
       <View

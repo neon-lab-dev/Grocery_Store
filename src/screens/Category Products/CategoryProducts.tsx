@@ -11,7 +11,10 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
+import NetInfo from '@react-native-community/netinfo';
 import Loader from '../../components/Loader/Loader';
+import {toast} from '../../components/Toast/Toast';
+
 interface Category {
   id: number;
   name: string;
@@ -30,6 +33,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
   const SubCategory = route.params.SubCategory;
   const categoryIndex = route.params.categoryIndex;
   const subCategoryIndex = route.params.subCategoryIndex;
+  const [isConnected, setConnected] = useState(true);
   const [subCategory2List, setSubCategory2List] = useState([]);
   const [subCategory2, setSubCategory2] = useState('');
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -55,6 +59,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
     }
     setIsLoading(false);
   };
+
   const fetchCategoryProducts = async () => {
     if (!subCategory2) {
       return;
@@ -80,8 +85,20 @@ const CategoryProducts: FC = ({navigation, route}) => {
   };
 
   useEffect(() => {
-    fetchCategory();
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      } else {
+        fetchCategory();
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
   useEffect(() => {
     fetchCategoryProducts();
   }, [categoryId, subCategory2]);

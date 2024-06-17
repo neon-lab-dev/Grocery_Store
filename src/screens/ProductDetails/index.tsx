@@ -20,6 +20,7 @@ import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../../components/productCard/PeopleAlsoBought';
 import SimilarProductHorizontalScroll from '../../components/productCard/SimilarProducts';
+import NetInfo from '@react-native-community/netinfo';
 
 interface AlternativeImageProps {
   img: any;
@@ -38,6 +39,8 @@ interface UnitCardProps {
 const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const productName = route.params.productName;
   const [selProduct, setSelProduct] = useState(null);
+  const [isConnected, setConnected] = useState(true);
+
   const [productDetails, setProductDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -87,6 +90,19 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
     };
     fetchProductDetails();
   }, [productName, selProduct]);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.show('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedUnit, setSelectedUnit] = useState<number>(0);

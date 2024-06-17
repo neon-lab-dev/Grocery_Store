@@ -7,6 +7,8 @@ import {getOrders} from '../../api/auth_routes';
 import {FlatList, Text} from 'react-native';
 import {verticalScale, scaleFontSize} from '../../assets/scaling';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
+import {toast} from '../../components/Toast/Toast';
 
 interface OrdersProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Orders'>;
@@ -14,13 +16,26 @@ interface OrdersProps {
 
 const Orders: React.FC<OrdersProps> = ({navigation}) => {
   const [productsList, setProductList] = React.useState<any[]>([]);
+  const [isConnected, setConnected] = React.useState(true);
   const [loaderVisible, setLoaderVisible] = React.useState(true);
+
   const handlePress = (data: object) => {
     navigation.navigate('SingleOrder', {order: data});
   };
 
   React.useEffect(() => {
-    fetchOrders();
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      } else {
+        fetchOrders();
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const fetchOrders = async () => {
@@ -31,6 +46,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
       setLoaderVisible(false);
     } catch (error) {}
   };
+
   return (
     <>
       {loaderVisible ? (

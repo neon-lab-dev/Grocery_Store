@@ -1,5 +1,5 @@
 import {Button, Center, Pressable, ScrollView, Text, View} from 'native-base';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   horizontalScale,
   scaleFontSize,
@@ -10,9 +10,13 @@ import TextInput from '../../components/Input';
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';
 import {addAddress, updateAddress} from '../../api/auth_routes';
+import NetInfo from '@react-native-community/netinfo';
 
 const AddAddress = ({route, navigation}) => {
   const {location, title} = route.params;
+
+  const [isConnected, setConnected] = useState(true);
+
   const [landmark, setLandmark] = useState(
     title === 'Edit' ? location.landmark : '',
   );
@@ -45,44 +49,65 @@ const AddAddress = ({route, navigation}) => {
 
   const ScrollViewRef = useRef<ScrollView>(null);
 
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const saveAddress = async () => {
-    setLoaderVisible(true);
-    try {
-      const response = await addAddress({
-        addressLine1: address,
-        landmark: landmark,
-        city: city,
-        state: state,
-        pincode: pincode,
-        addressName: selectedLabel,
-        primaryAddress: false,
-      });
-      // console.log(response);
-      setLoaderVisible(false);
-      navigation.goBack();
-      toast.showToast(response.message || response.errorMessage);
-    } catch (error) {}
+    if (isConnected) {
+      setLoaderVisible(true);
+      try {
+        const response = await addAddress({
+          addressLine1: address,
+          landmark: landmark,
+          city: city,
+          state: state,
+          pincode: pincode,
+          addressName: selectedLabel,
+          primaryAddress: false,
+        });
+        // console.log(response);
+        setLoaderVisible(false);
+        navigation.goBack();
+        toast.showToast(response.message || response.errorMessage);
+      } catch (error) {}
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
+    }
   };
 
   const editAddress = async () => {
-    setLoaderVisible(true);
-    try {
-      const getResponse = await updateAddress({
-        addressLine1: address,
-        addressLine2: null,
-        addressName: selectedLabel,
-        city: city,
-        id: location.id,
-        landmark: landmark,
-        pincode: pincode,
-        primaryAddress: true,
-        state: state,
-      });
-      // console.log(getResponse);
-      setLoaderVisible(false);
-      navigation.goBack();
-      toast.showToast(getResponse.message || getResponse.errorMessage);
-    } catch (error) {}
+    if (isConnected) {
+      setLoaderVisible(true);
+      try {
+        const getResponse = await updateAddress({
+          addressLine1: address,
+          addressLine2: null,
+          addressName: selectedLabel,
+          city: city,
+          id: location.id,
+          landmark: landmark,
+          pincode: pincode,
+          primaryAddress: true,
+          state: state,
+        });
+        // console.log(getResponse);
+        setLoaderVisible(false);
+        navigation.goBack();
+        toast.showToast(getResponse.message || getResponse.errorMessage);
+      } catch (error) {}
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
+    }
   };
 
   return (

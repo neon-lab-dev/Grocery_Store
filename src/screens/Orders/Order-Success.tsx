@@ -14,6 +14,9 @@ import {receiptIcon} from '../../assets/images/icons/receiptIcon';
 import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
+import {toast} from '../../components/Toast/Toast';
+
 interface OrderSuccessProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'OrderSuccess'>;
 }
@@ -29,6 +32,8 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
       saving += item.savings;
     },
   );
+  const [isConnected, setConnected] = useState(true);
+
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const gotoOrderDetails = () => {
@@ -37,6 +42,20 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
   const gotoHome = () => {
     navigation.navigate('Home');
   };
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setConnected(state.isInternetReachable);
+      if (!state.isInternetReachable) {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   useEffect(() => {
     selAddress();
   }, []);
@@ -168,7 +187,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
           >
-            {ItemCount} items | ₹{boughtPrice+25}
+            {ItemCount} items | ₹{boughtPrice + 25}
           </Text>
           <Center
             rounded={6}
