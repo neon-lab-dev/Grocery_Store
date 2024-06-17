@@ -28,7 +28,7 @@ import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {getItem, setItem} from '../../api/localstorage';
 import {searchProduct} from '../../api/auth_routes';
 import NetInfo from '@react-native-community/netinfo';
-import {toast} from 'src/components/Toast/Toast';
+import {toast} from '../../components/Toast/Toast';
 
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;

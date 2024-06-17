@@ -29,7 +29,7 @@ interface SingleOrderProps {
 const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
   const {order} = route.params;
   const {shippingInfo} = order;
-  const [isConnected, setConnected] = useState(true);
+  const [isConnected, setConnected] = React.useState(true);
 
   const [orderStatus, setOrderStatus] = React.useState(order.orderStatus);
   const [orderInfo, setOrderInfo] = React.useState({
