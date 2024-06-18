@@ -52,7 +52,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
           time: '01:15 AM, 9 Mar, 2024',
         });
         break;
-      case 'Out For Delivery':
+      case 'OUT_FOR_DELIVERY':
         setOrderInfo({
           receivedStatus: 'On the Way',
           deliveredStatus: 'Delivering to',
@@ -60,7 +60,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
           time: '09:15 AM, 9 Mar, 2024',
         });
         break;
-      case 'Delivered':
+      case 'DELIVERED':
         setOrderInfo({
           receivedStatus: 'Order Arrived at',
           deliveredStatus: 'Delivered to',
@@ -159,8 +159,8 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
       </View>
       <ScrollView style={{paddingBottom: 300}} flex={1} bgColor={'accent.50'}>
         <View>
-          {(orderStatus === 'Out For Delivery' ||
-            orderStatus === 'Delivered') && (
+          {(orderStatus === 'OUT_FOR_DELIVERY' ||
+            orderStatus === 'DELIVERED') && (
             <View
               bg={'white'}
               borderRadius={100}
@@ -188,7 +188,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                     color={'accent.900'}
                     lineHeight={19.36}
                     letterSpacing={-0.04}>
-                    John Doe
+                    {order.driverDetailsDto.name}
                   </Text>
                   <Text
                     fontFamily={'Inter_Medium'}
@@ -196,12 +196,13 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                     color={'accent.600'}
                     lineHeight={16.94}
                     letterSpacing={-0.04}>
-                    TN 23 AC 2942
+                    {order.driverDetailsDto.vehicleNo}
                   </Text>
                 </View>
               </View>
-              {orderStatus === 'Out For Delivery' && (
-                <Pressable onPress={() => CallNumber(REACT_APP_PHONE_NO)}>
+              {orderStatus === 'OUT_FOR_DELIVERY' && (
+                <Pressable
+                  onPress={() => CallNumber(order.driverDetailsDto.contactNo)}>
                   <Center
                     borderWidth={4}
                     bg={'primary.500'}

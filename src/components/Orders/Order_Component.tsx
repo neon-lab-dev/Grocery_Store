@@ -23,6 +23,47 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
 }) => {
   // console.log('data', data.boughtProductDetailsList);
 
+  const [orderStatus, setOrderStatus] = React.useState(data.orderStatus);
+  const [orderInfo, setOrderInfo] = React.useState({
+    status: 'Processing',
+    color: '#EAB308',
+  });
+  React.useEffect(() => {
+    switch (orderStatus) {
+      case 'Processing':
+        setOrderInfo({
+          status: 'Processing',
+          color: '#EAB308',
+        });
+        break;
+      case 'PACKAGING':
+        setOrderInfo({
+          status: 'Packaging',
+          color: '#4455EF',
+        });
+        break;
+      case 'OUT_FOR_DELIVERY':
+        setOrderInfo({
+          status: 'Out for Delivery',
+          color: '#F97316',
+        });
+        break;
+      case 'DELIVERED':
+        setOrderInfo({
+          status: 'Delivery',
+          color: '#22C55E',
+        });
+        break;
+      default:
+        setOrderStatus('Processing');
+        setOrderInfo({
+          status: 'Processing',
+          color: '#EAB308',
+        });
+        break;
+    }
+  }, [orderStatus]);
+
   let time = new Date(data.createdAt);
 
   let formattedDate =
@@ -88,9 +129,11 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
         mb={verticalScale(5)}
       />
       <View
-        flexDir={'row'}
-        justifyContent={'space-around'}
-        alignItems={'center'}>
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+        }}>
         <View>
           <Text
             marginLeft={horizontalScale(5)}
@@ -135,7 +178,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
             {formattedDate}
           </Text>
         </View> */}
-        <Delivered status={data.orderStatus} />
+        <Delivered status={orderInfo.status} statusColor={orderInfo.color} />
       </View>
     </Pressable>
   );

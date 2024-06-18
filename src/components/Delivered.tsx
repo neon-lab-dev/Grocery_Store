@@ -9,10 +9,10 @@ const Delivered: React.FC<IViewProps> = props => {
   };
   return (
     <View
-      mr={horizontalScale(5)}
+      mr={horizontalScale(4)}
       rounded={4}
       py={verticalScale(5)}
-      bg={'success.400'}
+      bg={props.statusColor}
       px={horizontalScale(7)}>
       <Text
         fontFamily={'Inter_Medium'}

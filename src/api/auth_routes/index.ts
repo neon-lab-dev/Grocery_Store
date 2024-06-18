@@ -211,3 +211,27 @@ export const fetchAllCategory = async () => {
     return [];
   }
 };
+
+const body = {
+  boughtProductDetailsList: [
+    {
+      varietyId: '0546e515-ebd3-4443-a42a-fc381e3d4aeb',
+      boughtQuantity: 2,
+    },
+    {
+      varietyId: 'd48f766f-347a-4aa0-a483-bf2267fabb1d',
+      boughtQuantity: 1,
+    },
+  ],
+};
+
+export const evaluateOrder = async orderData => {
+  try {
+    const response = await AuthAPIClient.post('/order/evaluate', {
+      boughtProductDetailsList: orderData,
+    });
+    return response.data.responseBody;
+  } catch (error) {
+    console.log(error);
+  }
+};
