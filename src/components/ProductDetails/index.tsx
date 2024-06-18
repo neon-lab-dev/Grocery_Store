@@ -494,6 +494,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                 }}>
                 <Image
                   source={require('../../assets/images/icons/cart-white.png')}
+                  style={{height: 26, width: 26}}
                 />
                 <Text style={styles.floatingButtonText}>{count} item</Text>
               </View>

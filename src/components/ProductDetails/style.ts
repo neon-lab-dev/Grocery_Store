@@ -174,11 +174,11 @@ export const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   floatingButton: {
-    paddingHorizontal: horizontalScale(28),
-    paddingVertical: verticalScale(19),
+    paddingHorizontal: 20,
+    paddingVertical: 14,
     backgroundColor: '#F97316',
     position: 'absolute',
-    left: horizontalScale(240),
+    left: horizontalScale(260),
     bottom: verticalScale(100),
     borderRadius: 80,
     justifyContent: 'center',
@@ -187,7 +187,7 @@ export const styles = StyleSheet.create({
   },
   floatingButtonText: {
     fontFamily: 'Inter_Bold',
-    fontSize: scaleFontSize(14),
+    fontSize: scaleFontSize(12),
     textAlign: 'center',
     color: '#F9FAFB',
   },
