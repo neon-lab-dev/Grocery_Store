@@ -211,3 +211,14 @@ export const fetchAllCategory = async () => {
     return [];
   }
 };
+
+export const evaluateOrder = async orderData => {
+  try {
+    const response = await AuthAPIClient.post('/order/evaluate', {
+      boughtProductDetailsList: orderData,
+    });
+    return response.data.responseBody;
+  } catch (error) {
+    console.log(error);
+  }
+};

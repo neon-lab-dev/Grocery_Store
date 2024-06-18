@@ -27,13 +27,14 @@ import GoBack from '../../components/Navigation/GoBack';
 import {useSelector} from 'react-redux';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
-import {getAddress} from '../../api/auth_routes';
+import {evaluateOrder, getAddress} from '../../api/auth_routes';
 import {useFocusEffect} from '@react-navigation/native';
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
 const Cart: React.FC<CartProps> = ({navigation}) => {
+  const [varetyIds, setVarietyIds] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [selectAddress, setSelectAddress] = React.useState({});
@@ -42,6 +43,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const [isAddressPresent, setisAddressPresent] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
+  const [deliveryCharge, setDeliveryCharge] = React.useState(0);
 
   const cartItemCount = cartItems.items.length;
 
@@ -79,7 +81,26 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
 
-  const TotalPrice = cartItems.totalPrice + 25;
+  React.useEffect(() => {
+    setVarietyIds([]);
+    cartItems.items.map((item, i) => {
+      setVarietyIds(prevState => [
+        ...prevState,
+        {varietyId: item.varietyList[0].id, boughtQuantity: item.quantity},
+      ]);
+    });
+
+    getDeliveryCharge();
+  }, [cartItems]);
+
+  const getDeliveryCharge = async () => {
+    try {
+      const delCharge = await evaluateOrder(varetyIds);
+      setDeliveryCharge(delCharge.deliveryCharges);
+    } catch (error) {}
+  };
+
+  const TotalPrice = cartItems.totalPrice + deliveryCharge;
 
   useFocusEffect(() => {
     fetchAddress();
@@ -107,6 +128,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const gotoHome = () => {
     navigation.popToTop();
   };
+
+  getDeliveryCharge();
+
+  // console.log(cartItems?.items[2]?.varietyList);
 
   return (
     <View flex={1} bgColor={'accent.50'}>
@@ -156,10 +181,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           </View>
           <BillSummaryCard
             cutOffPrice={totalDiscountedPrice}
-            deliveryCharge={25}
-            itemPrice={TotalPrice - 25}
-            price={TotalPrice}
-            savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
+            deliveryCharge={deliveryCharge}
+            itemPrice={TotalPrice}
+            price={TotalPrice + deliveryCharge}
+            savingPrice={totalDiscountedPrice - TotalPrice}
           />
         </ScrollView>
       )}
