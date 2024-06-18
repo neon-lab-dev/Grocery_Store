@@ -95,7 +95,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
 
   const getDeliveryCharge = async () => {
     try {
-      const delCharge = await evaluateOrder(varIds);
+      const delCharge = await evaluateOrder(varetyIds);
       setDeliveryCharge(delCharge.deliveryCharges);
     } catch (error) {}
   };
@@ -128,6 +128,8 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const gotoHome = () => {
     navigation.popToTop();
   };
+
+  getDeliveryCharge();
 
   // console.log(cartItems?.items[2]?.varietyList);
 
