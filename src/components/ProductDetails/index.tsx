@@ -237,12 +237,12 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   </Text>
                 </View>
               )}
-              <View style={{flex: 1, marginHorizontal: horizontalScale(30)}}>
+              <View style={{flex: 1, marginHorizontal: horizontalScale(40)}}>
                 {selectedImageUrl && (
                   <View style={{height: 200, width: 200}}>
                     <Image
                       source={{uri: selectedImageUrl}}
-                      style={{height: 250, width: 300}}
+                      style={{height: 240, width: 300}}
                       resizeMode="contain"
                     />
                   </View>
