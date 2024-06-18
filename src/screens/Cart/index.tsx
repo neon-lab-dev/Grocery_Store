@@ -100,7 +100,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     } catch (error) {}
   };
 
-  const TotalPrice = cartItems.totalPrice + 25;
+  const TotalPrice = cartItems.totalPrice + deliveryCharge;
 
   useFocusEffect(() => {
     fetchAddress();
@@ -180,9 +180,9 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           <BillSummaryCard
             cutOffPrice={totalDiscountedPrice}
             deliveryCharge={deliveryCharge}
-            itemPrice={TotalPrice - 25}
-            price={TotalPrice}
-            savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
+            itemPrice={TotalPrice}
+            price={TotalPrice + deliveryCharge}
+            savingPrice={totalDiscountedPrice - TotalPrice}
           />
         </ScrollView>
       )}
