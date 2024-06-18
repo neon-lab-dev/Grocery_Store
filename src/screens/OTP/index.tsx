@@ -42,7 +42,7 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
           });
         }
       } else {
-        toast.showToast('Something Went Wrong, Try Again');
+        toast.showToast(response.message);
       }
     } catch (error: any) {
       toast.showToast('Enter Valid Mobile Number');
