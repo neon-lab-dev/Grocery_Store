@@ -30,7 +30,7 @@ interface PaymentProps {
 
 const Payment: FC<PaymentProps> = ({navigation}) => {
   const [loaderVisible, setLoaderVisible] = useState(false);
-  const [paymentStatusID,setPaymentStatusID]=useState('')
+  const [paymentLinkID,setPaymentLinkID]=useState('');
   const [value, setValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
@@ -61,8 +61,17 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     });
   }, [Navigation]);
 
+  useEffect(() => {
+    if (value === 'CASH_ON_DELIVERY') {
+      setPaymentLinkID(value);
+    } else if (value === 'PICKUP_AT_SHOP') {
+      setPaymentLinkID(value);
+    }
+  }, [value]);
+  
+
   var orderData = {
-    paymentId: value,
+    paymentId: paymentLinkID,
     boughtProductDetailsList: cartItems.items.map(
       (item: {varietyList: any; id: any; quantity: any}) => ({
         varietyId: item.varietyList[0].id,
@@ -75,7 +84,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     paymentMode: value,
   };
   const gotoOrderSuccess = async () => {
-    if (orderData.paymentId == '') {
+    if (orderData.paymentMode == '') {
       toast.show({
         id,
         duration: 3500,
@@ -103,9 +112,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
         if (paymentLinkResponse.statusCode == 200) {
           const shortUrl =
             paymentLinkResponse.responseBody.additionalInfo.shortUrl;
-          const paymentid=paymentLinkResponse.responseBody.paymentId;
-          setPaymentStatusID(paymentid);
-          handlePayment(shortUrl,paymentid);
+            const paymentid=paymentLinkResponse.responseBody.paymentId;
+            const paymentlinkid=paymentLinkResponse.responseBody.additionalInfo.paymentLinkId;
+            setPaymentLinkID(paymentlinkid);
+            handlePayment(shortUrl,paymentid,paymentlinkid);
         }
       }  catch (error) {
         console.log(error);
@@ -168,17 +178,17 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       }
     }
   };
-
-  const handlePayment = (shortUrl: string,paymentid:string) => {
+ 
+  const handlePayment = (shortUrl: string,paymentid:string,paymentlinkid:string) => {
         if (shortUrl) {
           Linking.openURL(shortUrl);
-          monitorPaymentStatus(paymentid);
+          monitorPaymentStatus(paymentid,paymentlinkid);
         } else {
           Alert.alert('Error', 'Unable to open payment link');
         }
   };
    
-  const monitorPaymentStatus = (paymentId:string) => {
+  const monitorPaymentStatus = (paymentId:string,paymentlinkid:string) => {
     setLoaderVisible(true);
     let intervalCount = 0; 
     const intervalId = setInterval(async () => {
@@ -190,7 +200,20 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
           clearInterval(intervalId);
           console.log('Payment successful');
           try {
-            const orderStatus = await CreateOrders(orderData);
+            var orderData1= {
+              paymentId: paymentlinkid,
+              boughtProductDetailsList: cartItems.items.map(
+                (item: {varietyList: any; id: any; quantity: any}) => ({
+                  varietyId: item.varietyList[0].id,
+                  boughtQuantity: item.quantity,
+                }),
+              ),
+              shippingInfo: {
+                id: selectAddress.id,
+              },
+              paymentMode: value,
+            };
+            const orderStatus = await CreateOrders(orderData1);
             if (orderStatus?.data.statusCode == 200) {
               navigation.replace('OrderSuccess', {
                 item: orderStatus?.data,
@@ -255,13 +278,14 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       'Click on get status to know payment status',
       [
         { text: 'Get status', onPress: () => {
-          ForcepaymentStatusCheck(paymentId)
+          ForcepaymentStatusCheck(paymentId,paymentlinkid)
         } }
       ],
     );
       }
     }, 3000); 
   };
+
   const paymentStatusCheck = async (paymentId:string)=>{
     try {
       setLoaderVisible(true);
@@ -271,14 +295,28 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       console.log(error);
     }
   }
-  const ForcepaymentStatusCheck = async ( paymentId:string)=>{
+
+  const ForcepaymentStatusCheck = async ( paymentId:string,paymentlinkid:string)=>{
     try {
       setLoaderVisible(true);
       const paymentResponse = await ForcepaymentStatus(paymentId);
       if (paymentResponse) {
         if (paymentResponse === 'SUCCESS') {
           try {
-            const orderStatus = await CreateOrders(orderData);
+            var orderData2= {
+              paymentId: paymentlinkid,
+              boughtProductDetailsList: cartItems.items.map(
+                (item: {varietyList: any; id: any; quantity: any}) => ({
+                  varietyId: item.varietyList[0].id,
+                  boughtQuantity: item.quantity,
+                }),
+              ),
+              shippingInfo: {
+                id: selectAddress.id,
+              },
+              paymentMode: value,
+            };
+            const orderStatus = await CreateOrders(orderData2);
             if (orderStatus?.data.statusCode == 200) {
               navigation.replace('OrderSuccess', {
                 item: orderStatus?.data,
