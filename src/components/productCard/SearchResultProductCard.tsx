@@ -42,6 +42,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   onPress,
   products,
 }) => {
+  const product = {...products, id: products.varietyList[0].id};
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
@@ -73,7 +74,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   };
   const handleIncrease = () => {
     if (count < products.varietyList[0].quantity) {
-      dispatch(addToCart(products));
+      dispatch(addToCart(product));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -105,8 +106,8 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   };
   const handleButtonPress = () => {
     setCount(1);
-    products.quantity = 1;
-    dispatch(addToCart(products));
+    product.quantity = 1;
+    dispatch(addToCart(product));
     setIsButton1Visible(false);
   };
   return (
