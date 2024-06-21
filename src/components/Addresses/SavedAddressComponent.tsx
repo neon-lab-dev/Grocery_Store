@@ -10,7 +10,7 @@ import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {deleteIcon} from '../../assets/images/icons/delete';
 import {edit} from '../../assets/images/icons/edit';
 import {useNavigation} from '@react-navigation/native';
-
+import styles from './styles';
 interface Address {
   addressName: string;
   addressLine1: string;
@@ -25,7 +25,7 @@ interface SavedAddressComponentProps {
   deleteAddress: () => void;
   index: number;
   length: number;
-  address:Address;
+  address: Address;
 }
 
 const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
@@ -41,19 +41,10 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
   return (
     <Pressable
       onPress={editPressed}
-      w={'100%'}
-      bg={'white'}
-      flexDir={'row'}
-      px={horizontalScale(20)}
-      py={verticalScale(15)}
-      alignItems={'center'}
-      justifyContent={'space-between'}
-      borderBottomWidth={index === length ? 0 : 1}
-      borderBottomColor={'accent.100'}>
+      style={[styles.addressCard, ]}
+      >
       <View
-        flexDir={'row'}
-        alignItems={'center'}
-        style={{gap: horizontalScale(12)}}>
+        style={styles.addressContainer}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View width={horizontalScale(180)} style={{gap: horizontalScale(4)}}>
           <Text
@@ -75,7 +66,7 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
           </Text>
         </View>
       </View>
-      <View flexDir={'row'} style={{gap: horizontalScale(32)}}>
+      <View style={styles.editDeleteContainer}>
         <Pressable onPress={editPressed}>
           <SvgXml xml={edit} height={24} width={24} />
         </Pressable>
