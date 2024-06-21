@@ -29,19 +29,19 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
     setLoaderVisible(true);
     const getAddressList = await getAddress();
     setLoaderVisible(false);
-    console.log(getAddressList);
+    // console.log(getAddressList);
     setAddressList(getAddressList);
   };
   const navigation = useNavigation();
 
   const saveSelectAddress = (location: any) => {
-    console.log('address Pressed', location);
+    // console.log('address Pressed', location);
     setSelectedAddress(location);
     onClose();
   };
 
   const editPressed = (location: any) => {
-    console.log('location', location);
+    // console.log('location', location);
     onClose();
     navigation.navigate('AddAddress', {location: location, title: 'Edit'});
   };
