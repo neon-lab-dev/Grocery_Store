@@ -17,7 +17,12 @@ import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 import {searchProduct} from '../../api/auth_routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box, useToast} from 'native-base';
-import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../productCard/PeopleAlsoBought';
 import SimilarProductHorizontalScroll from '../productCard/SimilarProducts';
@@ -41,7 +46,6 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   productName,
 }) => {
   // console.log('product', productName);
-  const [varietyId, setVarietyId] = useState('');
   const cartItems = useSelector((state: any) => state.cart);
 
   const [selProduct, setSelProduct] = useState(null);
@@ -49,8 +53,6 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
-  const [showCartButton, setShowCartButton] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
@@ -91,7 +93,6 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             setSubCat2(response.content[0].subCategory2);
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
-            setVarietyId(selectedProduct?.varietyList[0]?.id);
             setSelectedImageUrl(
               response.content[0].varietyList[0]?.documentUrls[0],
             );
@@ -113,7 +114,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
 
   const updateCount = () => {
     const item = cartItems.items.filter(
-      obj => obj.varietyList[0]?.id === selectedProduct?.varietyList[0]?.id,
+      obj => obj?.id === selectedProduct?.varietyList[0]?.id,
     );
 
     if (item.length === 1) {
@@ -124,25 +125,25 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   };
 
   const handleDecrease = () => {
-    const product = {
-      ...selectedProduct,
-      id: selectedProduct.varietyList[0].id,
-    };
+    // const product = {
+    //   ...selectedProduct,
+    //   id: selectedProduct.varietyList[0].id,
+    // };
     if (count === 1) {
-      dispatch(removeItem(product));
-      setIsButton1Visible(true);
+      dispatch(removeItem(selectedProduct.varietyList[0].id));
+      // setIsButton1Visible(true);
       setCount(0);
     } else {
-      dispatch(decrementItem(product));
+      dispatch(decrementItem(selectedProduct.varietyList[0].id));
       setCount(count - 1);
     }
   };
 
   const handleIncrease = () => {
-    const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
+    // const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
     if (count < selectedProduct?.varietyList[0]?.quantity) {
-      dispatch(addToCart(product));
-      updateCount();
+      dispatch(incrementItem(selectedProduct.varietyList[0].id));
+      setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
         toast.show({
@@ -193,7 +194,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     const updatedProduct = {...productDetails};
     updatedProduct.varietyList = [productDetails.varietyList[unitIndex]];
     setSelectedProduct(updatedProduct);
-    updateCount();
+    // updateCount();
     // setVarietyId();
     // setIsButton1Visible(true);
     // setCount(0);

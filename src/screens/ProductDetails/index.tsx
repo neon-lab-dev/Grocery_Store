@@ -16,7 +16,12 @@ import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 import GoBack from '../../components/Navigation/GoBack';
 import {searchProduct} from '../../api/auth_routes';
 import {useDispatch, useSelector} from 'react-redux';
-import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../../components/productCard/PeopleAlsoBought';
 import SimilarProductHorizontalScroll from '../../components/productCard/SimilarProducts';
@@ -36,12 +41,10 @@ interface UnitCardProps {
 }
 
 const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
-  const [varietyId, setVarietyId] = useState('');
   const navigation = useNavigation();
   const productName = route.params.productName;
   const [selProduct, setSelProduct] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [subCat2, setSubCat2] = useState('');
@@ -49,7 +52,6 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
-  const [showCartButton, setShowCartButton] = useState<boolean>(false);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
@@ -60,7 +62,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
     const fetchProductDetails = async () => {
       try {
         setProductDetails(null);
-        // setIsButton1Visible(true);
+        setIsButton1Visible(true);
         setCount(0);
         if (selProduct) {
           const response = await searchProduct(selProduct);
@@ -70,13 +72,12 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               response.content[0].varietyList[0],
             ];
             setSubCat2(response.content[0].subCategory2);
+
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
-            setVarietyId(selectedProduct?.varietyList[0]?.id);
             setSelectedImageUrl(
               response.content[0].varietyList[0].documentUrls[0],
             );
-            updateCount();
           }
         } else if (productName) {
           const response = await searchProduct(productName);
@@ -88,9 +89,8 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             setSubCat2(response.content[0].subCategory2);
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
-            setVarietyId(selectedProduct?.varietyList[0]?.id);
             setSelectedImageUrl(
-              response.content[0].varietyList[0].documentUrls[0],
+              response.content[0].varietyList[0]?.documentUrls[0],
             );
             updateCount();
           }
@@ -106,11 +106,11 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
 
   useEffect(() => {
     updateCount();
-  }, [varietyId, selectedProduct]);
+  }, [selectedProduct]);
 
   const updateCount = () => {
     const item = cartItems.items.filter(
-      obj => obj.varietyList[0]?.id === varietyId,
+      obj => obj?.id === selectedProduct?.varietyList[0]?.id,
     );
 
     if (item.length === 1) {
@@ -121,18 +121,23 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   };
 
   const handleDecrease = () => {
+    // const product = {
+    //   ...selectedProduct,
+    //   id: selectedProduct.varietyList[0].id,
+    // };
     if (count === 1) {
-      dispatch(removeItem(selectedProduct.id));
+      dispatch(removeItem(selectedProduct.varietyList[0].id));
       setCount(0);
     } else {
-      dispatch(decrementItem(selectedProduct.id));
+      dispatch(decrementItem(selectedProduct.varietyList[0].id));
       setCount(count - 1);
     }
   };
+
   const handleIncrease = () => {
-    const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
+    // const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
     if (count < selectedProduct.varietyList[0].quantity) {
-      dispatch(addToCart(product));
+      dispatch(incrementItem(selectedProduct.varietyList[0].id));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -165,8 +170,8 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   };
 
   const handleButtonPress = () => {
-    const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
     setCount(1);
+    const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
     product.quantity = 1;
     dispatch(addToCart(product));
     // setIsButton1Visible(false);
@@ -178,7 +183,6 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
     const updatedProduct = {...productDetails};
     updatedProduct.varietyList = [productDetails.varietyList[unitIndex]];
     setSelectedProduct(updatedProduct);
-    setVarietyId(updatedProduct.varietyList[0].id);
     // setIsButton1Visible(true);
     // setCount(0);
   };

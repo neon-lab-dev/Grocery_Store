@@ -22,7 +22,6 @@ export const cartReducer = createReducer(initialState, builder => {
   builder
     .addCase(ADD_TO_CART, (state, action) => {
       const newItem = action.payload as CartItem;
-      console.log(newItem.id);
       const existingItem = state.items.find(
         item =>
           item.id === newItem.id &&

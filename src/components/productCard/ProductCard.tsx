@@ -10,7 +10,12 @@ import {
   verticalScale,
 } from '../../assets/scaling';
 import {Dimensions} from 'react-native';
-import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 import {useFocusEffect} from '@react-navigation/native';
@@ -61,17 +66,17 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
 
   const handleDecrease = () => {
     if (count === 1) {
-      dispatch(removeItem(products.id));
+      dispatch(removeItem(products.varietyList[0].id));
       setIsButton1Visible(true);
       setCount(0);
     } else {
-      dispatch(decrementItem(products.id));
+      dispatch(decrementItem(products.varietyList[0].id));
       setCount(count - 1);
     }
   };
   const handleIncrease = () => {
     if (count < products.varietyList[0].quantity) {
-      dispatch(addToCart(product));
+      dispatch(incrementItem(products.varietyList[0].id));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
