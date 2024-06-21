@@ -67,7 +67,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
 
   const handleDecrease = () => {
     if (count ===1) {
-      dispatch(removeItem(products.id));
+      dispatch(removeItem(product.id));
       setIsButton1Visible(true);
       setCount(0);
     } else {
