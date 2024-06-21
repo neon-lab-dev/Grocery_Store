@@ -78,7 +78,7 @@ export const Categories = [
       },
       {
         name: 'Skin & face',
-        image: require('../assets/images/Categories/bath&body/Skin&Face.png'),
+        image: require('../assets/images/Categories/bath&body/Skin&Face.jpg'),
       },
       {
         name: 'Beauty & Cosmetics',
