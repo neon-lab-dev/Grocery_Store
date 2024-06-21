@@ -10,11 +10,22 @@ import {orangeLocation} from '../../assets/images/icons/orangeLocation';
 import {deleteIcon} from '../../assets/images/icons/delete';
 import {edit} from '../../assets/images/icons/edit';
 import {useNavigation} from '@react-navigation/native';
+
+interface Address {
+  addressName: string;
+  addressLine1: string;
+  landmark: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
 interface SavedAddressComponentProps {
   gotoAddAddress: () => void;
   deleteAddress: () => void;
   index: number;
   length: number;
+  address:Address;
 }
 
 const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
