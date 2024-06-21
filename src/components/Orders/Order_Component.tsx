@@ -50,7 +50,7 @@ export const OrderComponent: React.FC<OrderComponentProps> = ({
         break;
       case 'DELIVERED':
         setOrderInfo({
-          status: 'Delivery',
+          status: 'Delivered',
           color: '#22C55E',
         });
         break;
