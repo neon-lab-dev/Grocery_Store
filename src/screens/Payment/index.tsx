@@ -91,7 +91,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
     paymentMode: value,
   };
   const gotoOrderSuccess = async () => {
-    if (orderData.paymentMode == '') {
+    if (orderData.paymentMode === '') {
       toast.show({
         id,
         duration: 3500,
@@ -112,11 +112,11 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
           );
         },
       });
-    } else if (orderData.paymentMode == 'ONLINE_PAYMENT') {
+    } else if (orderData.paymentMode === 'ONLINE_PAYMENT') {
       const dis = cartItems.items[0].description;
       try {
         const paymentLinkResponse = await fetchpayment(TotalPrice, dis);
-        if (paymentLinkResponse.statusCode == 200) {
+        if (paymentLinkResponse.statusCode === 200) {
           const shortUrl =
             paymentLinkResponse.responseBody.additionalInfo.shortUrl;
             const paymentid=paymentLinkResponse.responseBody.paymentId;
@@ -131,7 +131,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
       setLoaderVisible(true);
       try {
         const orderStatus = await CreateOrders(orderData);
-        if (orderStatus?.data.statusCode == 200) {
+        if (orderStatus?.data.statusCode === 200) {
           navigation.replace('OrderSuccess', {
             item: orderStatus?.data,
             Method: value,
@@ -202,7 +202,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
       const statusResponse = await paymentStatusCheck(paymentId);
       intervalCount += 1;
       if (statusResponse) {
-        if (statusResponse == 'SUCCESS') {
+        if (statusResponse === 'SUCCESS') {
           setLoaderVisible(false);
           clearInterval(intervalId);
           console.log('Payment successful');
@@ -221,7 +221,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
               paymentMode: value,
             };
             const orderStatus = await CreateOrders(orderData1);
-            if (orderStatus?.data.statusCode == 200) {
+            if (orderStatus?.data.statusCode === 200) {
               navigation.replace('OrderSuccess', {
                 item: orderStatus?.data,
                 Method: value,
@@ -324,7 +324,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
               paymentMode: value,
             };
             const orderStatus = await CreateOrders(orderData2);
-            if (orderStatus?.data.statusCode == 200) {
+            if (orderStatus?.data.statusCode === 200) {
               navigation.replace('OrderSuccess', {
                 item: orderStatus?.data,
                 Method: value,
