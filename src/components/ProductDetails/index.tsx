@@ -9,15 +9,20 @@ import {
   scaleFontSize,
 } from '../../assets/scaling';
 import ProductHorizontalScroll from '../productCard/ProductHorizontalScroll';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
 import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 import {searchProduct} from '../../api/auth_routes';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Box, useToast} from 'native-base';
-import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../productCard/PeopleAlsoBought';
 import SimilarProductHorizontalScroll from '../productCard/SimilarProducts';
@@ -41,13 +46,13 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   productName,
 }) => {
   // console.log('product', productName);
+  const cartItems = useSelector((state: any) => state.cart);
+
   const [selProduct, setSelProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
-  const [showCartButton, setShowCartButton] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
   const [isButton1Visible, setIsButton1Visible] = useState(true);
@@ -89,8 +94,9 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
             setSelectedImageUrl(
-              response.content[0].varietyList[0].documentUrls[0],
+              response.content[0].varietyList[0]?.documentUrls[0],
             );
+            updateCount();
           }
         }
       } catch (error) {
@@ -102,19 +108,41 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     fetchProductDetails();
   }, [productName, selProduct]);
 
+  useEffect(() => {
+    updateCount();
+  }, [selectedProduct]);
+
+  const updateCount = () => {
+    const item = cartItems.items.filter(
+      obj => obj?.id === selectedProduct?.varietyList[0]?.id,
+    );
+
+    if (item.length === 1) {
+      setCount(item[0].quantity);
+    } else {
+      setCount(0);
+    }
+  };
+
   const handleDecrease = () => {
+    // const product = {
+    //   ...selectedProduct,
+    //   id: selectedProduct.varietyList[0].id,
+    // };
     if (count === 1) {
-      dispatch(removeItem(selectedProduct.id));
-      setIsButton1Visible(true);
+      dispatch(removeItem(selectedProduct.varietyList[0].id));
+      // setIsButton1Visible(true);
       setCount(0);
     } else {
-      dispatch(decrementItem(selectedProduct.id));
+      dispatch(decrementItem(selectedProduct.varietyList[0].id));
       setCount(count - 1);
     }
   };
+
   const handleIncrease = () => {
-    if (count < selectedProduct.varietyList[0].quantity) {
-      dispatch(addToCart(selectedProduct));
+    // const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
+    if (count < selectedProduct?.varietyList[0]?.quantity) {
+      dispatch(incrementItem(selectedProduct.varietyList[0].id));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -141,12 +169,20 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
       }
     }
   };
+
   const handleButtonPress = () => {
     setCount(1);
-    selectedProduct.quantity = 1;
-    dispatch(addToCart(selectedProduct));
-    setIsButton1Visible(false);
-    setShowCartButton(true);
+    const product = {
+      ...selectedProduct,
+      id: selectedProduct.varietyList[0].id,
+    };
+
+    product.quantity = 1;
+    dispatch(addToCart(product));
+
+    // updateCount();
+    // setIsButton1Visible(false);
+    // setShowCartButton(true);
   };
 
   const onPress = name => {
@@ -158,8 +194,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     const updatedProduct = {...productDetails};
     updatedProduct.varietyList = [productDetails.varietyList[unitIndex]];
     setSelectedProduct(updatedProduct);
-    setIsButton1Visible(true);
-    setCount(0);
+    // updateCount();
+    // setVarietyId();
+    // setIsButton1Visible(true);
+    // setCount(0);
   };
 
   const AlternativeImage: FC<AlternativeImageProps> = ({img, id}) => {
@@ -212,6 +250,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   const aggregatedImageUrls = selectedProduct?.varietyList
     ?.map(variety => variety.documentUrls)
     .flat();
+
+  // console.log('sel', selectedProduct);
+  // // console.log('pr', productDetails);
+  // console.log('var', varietyId);
 
   return (
     <>
@@ -418,7 +460,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             )}
 
             {/* Add To Cart Button */}
-            {isButton1Visible ? (
+            {count <= 0 ? (
               <Pressable
                 onPress={handleButtonPress}
                 style={{

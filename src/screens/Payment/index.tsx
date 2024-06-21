@@ -15,10 +15,15 @@ import {orangeDownArrow} from '../../assets/images/icons/orangeDownArrow';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
-import {CreateOrders, ForcepaymentStatus, fetchpayment, paymentStatus} from '../../api/auth_routes';
+import {
+  CreateOrders,
+  ForcepaymentStatus,
+  fetchpayment,
+  paymentStatus,
+} from '../../api/auth_routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import { clearCart } from '../../redux/slices/actions';
+import {clearCart} from '../../redux/slices/actions';
 
 interface Address {
   id: number;
@@ -28,7 +33,9 @@ interface PaymentProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Payment'>;
 }
 
-const Payment: FC<PaymentProps> = ({navigation}) => {
+const Payment: FC<PaymentProps> = ({navigation, route}) => {
+  const {deliveryCharges} = route.params;
+  console.log(deliveryCharges);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [paymentLinkID,setPaymentLinkID]=useState('');
   const [value, setValue] = useState('');
@@ -117,7 +124,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
             setPaymentLinkID(paymentlinkid);
             handlePayment(shortUrl,paymentid,paymentlinkid);
         }
-      }  catch (error) {
+      } catch (error) {
         console.log(error);
       }
     } else if (orderData.paymentMode != 'ONLINE_PAYMENT') {
@@ -129,7 +136,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
             item: orderStatus?.data,
             Method: value,
           });
-          dispatch(clearCart())
+          dispatch(clearCart());
           setLoaderVisible(false);
         } else {
           setLoaderVisible(false);
@@ -190,10 +197,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
    
   const monitorPaymentStatus = (paymentId:string,paymentlinkid:string) => {
     setLoaderVisible(true);
-    let intervalCount = 0; 
+    let intervalCount = 0;
     const intervalId = setInterval(async () => {
       const statusResponse = await paymentStatusCheck(paymentId);
-      intervalCount += 1; 
+      intervalCount += 1;
       if (statusResponse) {
         if (statusResponse == 'SUCCESS') {
           setLoaderVisible(false);
@@ -219,7 +226,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                 item: orderStatus?.data,
                 Method: value,
               });
-              dispatch(clearCart())
+              dispatch(clearCart());
               setLoaderVisible(false);
             } else {
               setLoaderVisible(false);
@@ -260,17 +267,17 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                       fontWeight: '500',
                       color: 'white',
                     }}>
-                     Payment is successful unable to create order
+                    Payment is successful unable to create order
                   </Box>
                 );
               },
             });
-          } 
+          }
         } else if (statusResponse !== 'SUCCESS') {
           setLoaderVisible(true);
         }
       }
-      if (intervalCount >= 40) { 
+      if (intervalCount >= 40) {
         clearInterval(intervalId);
         setLoaderVisible(false);
         Alert.alert(
@@ -283,7 +290,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       ],
     );
       }
-    }, 3000); 
+    }, 3000);
   };
 
   const paymentStatusCheck = async (paymentId:string)=>{
@@ -291,7 +298,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       setLoaderVisible(true);
       const paymentResponse = await paymentStatus(paymentId);
       return paymentResponse.responseBody.paymentStatus;
-    }  catch (error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -363,29 +370,28 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                       fontWeight: '500',
                       color: 'white',
                     }}>
-                     Payment is successful unable to create order
+                    Payment is successful unable to create order
                   </Box>
                 );
               },
             });
-          }          
-        } else if (paymentResponse!== 'SUCCESS') {
+          }
+        } else if (paymentResponse !== 'SUCCESS') {
           setLoaderVisible(false);
-          Alert.alert(
-            '',
-            'Something went wrong! Please try again',
-            [
-              { text: 'Try again', onPress: () => {
-                navigation.navigate('Cart')
-              } }
-            ],
-          );
+          Alert.alert('', 'Something went wrong! Please try again', [
+            {
+              text: 'Try again',
+              onPress: () => {
+                navigation.navigate('Cart');
+              },
+            },
+          ]);
         }
       }
-    }  catch (error) {
+    } catch (error) {
       console.log(error);
     }
-}
+  };
   const gotoAddAddress = () => {
     setModalVisible(false);
     navigation.navigate('AddAddress', {title: 'Add'});
@@ -400,7 +406,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
-  const TotalPrice = cartItems.totalPrice + 25;
+  const TotalPrice = cartItems.totalPrice + deliveryCharges;
   useEffect(() => {
     selAddress();
   }, []);
@@ -448,10 +454,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       <View>
         <BillSummaryCard
           cutOffPrice={totalDiscountedPrice}
-          deliveryCharge={25}
-          itemPrice={TotalPrice - 25}
-          price={TotalPrice}
-          savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
+          deliveryCharge={deliveryCharges}
+          itemPrice={TotalPrice}
+          price={TotalPrice + deliveryCharges}
+          savingPrice={totalDiscountedPrice - TotalPrice}
         />
         <PaymentPreferred setValue={setValue} value={value} />
       </View>
