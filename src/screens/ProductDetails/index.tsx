@@ -15,8 +15,13 @@ import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
 import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 import GoBack from '../../components/Navigation/GoBack';
 import {searchProduct} from '../../api/auth_routes';
-import {useDispatch} from 'react-redux';
-import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../../components/productCard/PeopleAlsoBought';
 import SimilarProductHorizontalScroll from '../../components/productCard/SimilarProducts';
@@ -36,13 +41,22 @@ interface UnitCardProps {
 }
 
 const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
+  const navigation = useNavigation();
   const productName = route.params.productName;
   const [selProduct, setSelProduct] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [subCat2, setSubCat2] = useState('');
+  const cartItems = useSelector((state: any) => state.cart);
+  const [selectedImage, setSelectedImage] = useState<number>(0);
+  const [selectedUnit, setSelectedUnit] = useState<number>(0);
+  const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const id = 'test-toast';
+  const [count, setCount] = useState(0);
+  const [isButton1Visible, setIsButton1Visible] = useState(true);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -58,6 +72,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               response.content[0].varietyList[0],
             ];
             setSubCat2(response.content[0].subCategory2);
+
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
             setSelectedImageUrl(
@@ -75,8 +90,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             setProductDetails(response.content[0]);
             setSelectedProduct(initialSelectedProduct);
             setSelectedImageUrl(
-              response.content[0].varietyList[0].documentUrls[0],
+              response.content[0].varietyList[0]?.documentUrls[0],
             );
+            updateCount();
           }
         }
       } catch (error) {
@@ -88,29 +104,40 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
     fetchProductDetails();
   }, [productName, selProduct]);
 
-  const [selectedImage, setSelectedImage] = useState<number>(0);
-  const [selectedUnit, setSelectedUnit] = useState<number>(0);
-  const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
-  const [showCartButton, setShowCartButton] = useState<boolean>(false);
-  const dispatch = useDispatch();
-  const toast = useToast();
-  const id = 'test-toast';
-  const [count, setCount] = useState(0);
-  const [isButton1Visible, setIsButton1Visible] = useState(true);
+  useEffect(() => {
+    updateCount();
+  }, [selectedProduct]);
+
+  const updateCount = () => {
+    const item = cartItems.items.filter(
+      obj => obj?.id === selectedProduct?.varietyList[0]?.id,
+    );
+
+    if (item.length === 1) {
+      setCount(item[0].quantity);
+    } else {
+      setCount(0);
+    }
+  };
 
   const handleDecrease = () => {
+    // const product = {
+    //   ...selectedProduct,
+    //   id: selectedProduct.varietyList[0].id,
+    // };
     if (count === 1) {
-      dispatch(removeItem(selectedProduct.id));
-      setIsButton1Visible(true);
+      dispatch(removeItem(selectedProduct.varietyList[0].id));
       setCount(0);
     } else {
-      dispatch(decrementItem(selectedProduct.id));
+      dispatch(decrementItem(selectedProduct.varietyList[0].id));
       setCount(count - 1);
     }
   };
+
   const handleIncrease = () => {
+    // const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
     if (count < selectedProduct.varietyList[0].quantity) {
-      dispatch(addToCart(selectedProduct));
+      dispatch(incrementItem(selectedProduct.varietyList[0].id));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -144,10 +171,11 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
 
   const handleButtonPress = () => {
     setCount(1);
-    selectedProduct.quantity = 1;
-    dispatch(addToCart(selectedProduct));
-    setIsButton1Visible(false);
-    setShowCartButton(true);
+    const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
+    product.quantity = 1;
+    dispatch(addToCart(product));
+    // setIsButton1Visible(false);
+    // setShowCartButton(true);
   };
 
   const handleUnitSelection = (unitIndex: number) => {
@@ -155,8 +183,8 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
     const updatedProduct = {...productDetails};
     updatedProduct.varietyList = [productDetails.varietyList[unitIndex]];
     setSelectedProduct(updatedProduct);
-    setIsButton1Visible(true);
-    setCount(0);
+    // setIsButton1Visible(true);
+    // setCount(0);
   };
 
   const AlternativeImage: FC<AlternativeImageProps> = ({img, id}) => {
@@ -203,11 +231,9 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
     ?.map(variety => variety.documentUrls)
     .flat();
 
-  const navigation = useNavigation();
-
-  const navigateToCart = () => {
-    navigation.navigate('Cart');
-  };
+  // const navigateToCart = () => {
+  //   navigation.navigate('Cart');
+  // };
 
   return (
     <>
@@ -566,7 +592,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             )}
 
             {/* Add To Cart Button */}
-            {isButton1Visible ? (
+            {count <= 0 ? (
               <Pressable
                 onPress={handleButtonPress}
                 style={{

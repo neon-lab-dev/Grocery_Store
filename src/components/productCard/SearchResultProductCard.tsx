@@ -7,7 +7,12 @@ import {
   width,
 } from '../../assets/scaling';
 import {useDispatch, useSelector} from 'react-redux';
-import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 import {useFocusEffect} from '@react-navigation/native';
 interface ProductDataItem {
@@ -42,6 +47,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   onPress,
   products,
 }) => {
+  const product = {...products, id: products.varietyList[0].id};
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
@@ -63,17 +69,17 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
 
   const handleDecrease = () => {
     if (count === 1) {
-      dispatch(removeItem(products.id));
+      dispatch(removeItem(product.id));
       setIsButton1Visible(true);
       setCount(0);
     } else {
-      dispatch(decrementItem(products.id));
+      dispatch(decrementItem(product.id));
       setCount(count - 1);
     }
   };
   const handleIncrease = () => {
     if (count < products.varietyList[0].quantity) {
-      dispatch(addToCart(products));
+      dispatch(incrementItem(product.id));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -105,8 +111,8 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   };
   const handleButtonPress = () => {
     setCount(1);
-    products.quantity = 1;
-    dispatch(addToCart(products));
+    product.quantity = 1;
+    dispatch(addToCart(product));
     setIsButton1Visible(false);
   };
   return (

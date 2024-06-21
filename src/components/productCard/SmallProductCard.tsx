@@ -8,7 +8,12 @@ import {
   scaleFontSize,
 } from '../../assets/scaling';
 import {useDispatch, useSelector} from 'react-redux';
-import {addToCart, decrementItem, removeItem} from '../../redux/slices/actions';
+import {
+  addToCart,
+  decrementItem,
+  incrementItem,
+  removeItem,
+} from '../../redux/slices/actions';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
 import {useFocusEffect} from '@react-navigation/native';
 interface ProductDataItem {
@@ -38,6 +43,7 @@ interface ProductCardProps {
   products: ProductDataItem;
 }
 const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
+  const product = {...products, id: products.varietyList[0].id};
   const cartItems = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
   const toast = useToast();
@@ -57,7 +63,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     item => item.discountPercent > 0,
   );
 
-  console.log(offerPerIndex);
+  // console.log(offerPerIndex);
 
   const handleDecrease = () => {
     if (count ===1) {
@@ -65,13 +71,13 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
       setIsButton1Visible(true);
       setCount(0);
     } else {
-      dispatch(decrementItem(products.id));
+      dispatch(decrementItem(product.id));
       setCount(count - 1);
     }
   };
   const handleIncrease = () => {
     if (count < products.varietyList[0].quantity) {
-      dispatch(addToCart(products));
+      dispatch(incrementItem(product.id));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -100,8 +106,8 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   };
   const handleButtonPress = () => {
     setCount(1);
-    products.quantity = 1;
-    dispatch(addToCart(products));
+    product.quantity = 1;
+    dispatch(addToCart(product));
     setIsButton1Visible(false);
   };
   const {width} = Dimensions.get('window');

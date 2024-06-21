@@ -15,10 +15,15 @@ import {orangeDownArrow} from '../../assets/images/icons/orangeDownArrow';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
-import {CreateOrders, ForcepaymentStatus, fetchpayment, paymentStatus} from '../../api/auth_routes';
+import {
+  CreateOrders,
+  ForcepaymentStatus,
+  fetchpayment,
+  paymentStatus,
+} from '../../api/auth_routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import { clearCart } from '../../redux/slices/actions';
+import {clearCart} from '../../redux/slices/actions';
 
 interface Address {
   id: number;
@@ -28,9 +33,11 @@ interface PaymentProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Payment'>;
 }
 
-const Payment: FC<PaymentProps> = ({navigation}) => {
+const Payment: FC<PaymentProps> = ({navigation, route}) => {
+  const {deliveryCharges} = route.params;
+  console.log(deliveryCharges);
   const [loaderVisible, setLoaderVisible] = useState(false);
-  const [paymentStatusID,setPaymentStatusID]=useState('')
+  const [paymentLinkID,setPaymentLinkID]=useState('');
   const [value, setValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
@@ -61,8 +68,17 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     });
   }, [Navigation]);
 
+  useEffect(() => {
+    if (value === 'CASH_ON_DELIVERY') {
+      setPaymentLinkID(value);
+    } else if (value === 'PICKUP_AT_SHOP') {
+      setPaymentLinkID(value);
+    }
+  }, [value]);
+  
+
   var orderData = {
-    paymentId: value,
+    paymentId: paymentLinkID,
     boughtProductDetailsList: cartItems.items.map(
       (item: {varietyList: any; id: any; quantity: any}) => ({
         varietyId: item.varietyList[0].id,
@@ -75,7 +91,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     paymentMode: value,
   };
   const gotoOrderSuccess = async () => {
-    if (orderData.paymentId === '') {
+    if (orderData.paymentMode === '') {
       toast.show({
         id,
         duration: 3500,
@@ -103,11 +119,12 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
         if (paymentLinkResponse.statusCode === 200) {
           const shortUrl =
             paymentLinkResponse.responseBody.additionalInfo.shortUrl;
-          const paymentid=paymentLinkResponse.responseBody.paymentId;
-          setPaymentStatusID(paymentid);
-          handlePayment(shortUrl,paymentid);
+            const paymentid=paymentLinkResponse.responseBody.paymentId;
+            const paymentlinkid=paymentLinkResponse.responseBody.additionalInfo.paymentLinkId;
+            setPaymentLinkID(paymentlinkid);
+            handlePayment(shortUrl,paymentid,paymentlinkid);
         }
-      }  catch (error) {
+      } catch (error) {
         console.log(error);
       }
     } else if (orderData.paymentMode != 'ONLINE_PAYMENT') {
@@ -119,7 +136,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
             item: orderStatus?.data,
             Method: value,
           });
-          dispatch(clearCart())
+          dispatch(clearCart());
           setLoaderVisible(false);
         } else {
           setLoaderVisible(false);
@@ -168,117 +185,42 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       }
     }
   };
-
-  const handlePayment = (shortUrl: string,paymentid:string) => {
+ 
+  const handlePayment = (shortUrl: string,paymentid:string,paymentlinkid:string) => {
         if (shortUrl) {
           Linking.openURL(shortUrl);
-          monitorPaymentStatus(paymentid);
+          monitorPaymentStatus(paymentid,paymentlinkid);
         } else {
           Alert.alert('Error', 'Unable to open payment link');
         }
   };
    
-  const monitorPaymentStatus = (paymentId:string) => {
+  const monitorPaymentStatus = (paymentId:string,paymentlinkid:string) => {
     setLoaderVisible(true);
-    let intervalCount = 0; 
+    let intervalCount = 0;
     const intervalId = setInterval(async () => {
       const statusResponse = await paymentStatusCheck(paymentId);
-      intervalCount += 1; 
+      intervalCount += 1;
       if (statusResponse) {
         if (statusResponse === 'SUCCESS') {
           setLoaderVisible(false);
           clearInterval(intervalId);
           console.log('Payment successful');
           try {
-            const orderStatus = await CreateOrders(orderData);
-            if (orderStatus?.data.statusCode === 200) {
-              navigation.replace('OrderSuccess', {
-                item: orderStatus?.data,
-                Method: value,
-              });
-              dispatch(clearCart())
-              setLoaderVisible(false);
-            } else {
-              setLoaderVisible(false);
-              toast.show({
-                id,
-                duration: 2500,
-                render: () => {
-                  return (
-                    <Box
-                      bg="primary.400"
-                      px="2"
-                      py="1"
-                      rounded="sm"
-                      mb={5}
-                      _text={{
-                        fontWeight: '500',
-                        color: 'white',
-                      }}>
-                      Payment is successful unable to create order
-                    </Box>
-                  );
-                },
-              });
-            }
-          } catch (error) {
-            toast.show({
-              id,
-              duration: 2500,
-              render: () => {
-                return (
-                  <Box
-                    bg="primary.400"
-                    px="2"
-                    py="1"
-                    rounded="sm"
-                    mb={5}
-                    _text={{
-                      fontWeight: '500',
-                      color: 'white',
-                    }}>
-                     Payment is successful unable to create order
-                  </Box>
-                );
+            var orderData1= {
+              paymentId: paymentlinkid,
+              boughtProductDetailsList: cartItems.items.map(
+                (item: {varietyList: any; id: any; quantity: any}) => ({
+                  varietyId: item.varietyList[0].id,
+                  boughtQuantity: item.quantity,
+                }),
+              ),
+              shippingInfo: {
+                id: selectAddress.id,
               },
-            });
-          } 
-        } else if (statusResponse !== 'SUCCESS') {
-          setLoaderVisible(true);
-        }
-      }
-      if (intervalCount >= 40) { 
-        clearInterval(intervalId);
-        setLoaderVisible(false);
-        Alert.alert(
-      '',
-      'Click on get status to know payment status',
-      [
-        { text: 'Get status', onPress: () => {
-          ForcepaymentStatusCheck(paymentId)
-        } }
-      ],
-    );
-      }
-    }, 3000); 
-  };
-  const paymentStatusCheck = async (paymentId:string)=>{
-    try {
-      setLoaderVisible(true);
-      const paymentResponse = await paymentStatus(paymentId);
-      return paymentResponse.responseBody.paymentStatus;
-    }  catch (error) {
-      console.log(error);
-    }
-  }
-  const ForcepaymentStatusCheck = async ( paymentId:string)=>{
-    try {
-      setLoaderVisible(true);
-      const paymentResponse = await ForcepaymentStatus(paymentId);
-      if (paymentResponse) {
-        if (paymentResponse === 'SUCCESS') {
-          try {
-            const orderStatus = await CreateOrders(orderData);
+              paymentMode: value,
+            };
+            const orderStatus = await CreateOrders(orderData1);
             if (orderStatus?.data.statusCode === 200) {
               navigation.replace('OrderSuccess', {
                 item: orderStatus?.data,
@@ -325,29 +267,131 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
                       fontWeight: '500',
                       color: 'white',
                     }}>
-                     Payment is successful unable to create order
+                    Payment is successful unable to create order
                   </Box>
                 );
               },
             });
-          }          
-        } else if (paymentResponse!== 'SUCCESS') {
-          setLoaderVisible(false);
-          Alert.alert(
-            '',
-            'Something went wrong! Please try again',
-            [
-              { text: 'Try again', onPress: () => {
-                navigation.navigate('Cart')
-              } }
-            ],
-          );
+          }
+        } else if (statusResponse !== 'SUCCESS') {
+          setLoaderVisible(true);
         }
       }
-    }  catch (error) {
+      if (intervalCount >= 40) {
+        clearInterval(intervalId);
+        setLoaderVisible(false);
+        Alert.alert(
+      '',
+      'Click on get status to know payment status',
+      [
+        { text: 'Get status', onPress: () => {
+          ForcepaymentStatusCheck(paymentId,paymentlinkid)
+        } }
+      ],
+    );
+      }
+    }, 3000);
+  };
+
+  const paymentStatusCheck = async (paymentId:string)=>{
+    try {
+      setLoaderVisible(true);
+      const paymentResponse = await paymentStatus(paymentId);
+      return paymentResponse.responseBody.paymentStatus;
+    } catch (error) {
       console.log(error);
     }
-}
+  }
+
+  const ForcepaymentStatusCheck = async ( paymentId:string,paymentlinkid:string)=>{
+    try {
+      setLoaderVisible(true);
+      const paymentResponse = await ForcepaymentStatus(paymentId);
+      if (paymentResponse) {
+        if (paymentResponse === 'SUCCESS') {
+          try {
+            var orderData2= {
+              paymentId: paymentlinkid,
+              boughtProductDetailsList: cartItems.items.map(
+                (item: {varietyList: any; id: any; quantity: any}) => ({
+                  varietyId: item.varietyList[0].id,
+                  boughtQuantity: item.quantity,
+                }),
+              ),
+              shippingInfo: {
+                id: selectAddress.id,
+              },
+              paymentMode: value,
+            };
+            const orderStatus = await CreateOrders(orderData2);
+            if (orderStatus?.data.statusCode === 200) {
+              navigation.replace('OrderSuccess', {
+                item: orderStatus?.data,
+                Method: value,
+              });
+              dispatch(clearCart());
+              setLoaderVisible(false);
+            } else {
+              setLoaderVisible(false);
+              toast.show({
+                id,
+                duration: 2500,
+                render: () => {
+                  return (
+                    <Box
+                      bg="primary.400"
+                      px="2"
+                      py="1"
+                      rounded="sm"
+                      mb={5}
+                      _text={{
+                        fontWeight: '500',
+                        color: 'white',
+                      }}>
+                      Payment is successful unable to create order
+                    </Box>
+                  );
+                },
+              });
+            }
+          } catch (error) {
+            toast.show({
+              id,
+              duration: 2500,
+              render: () => {
+                return (
+                  <Box
+                    bg="primary.400"
+                    px="2"
+                    py="1"
+                    rounded="sm"
+                    mb={5}
+                    _text={{
+                      fontWeight: '500',
+                      color: 'white',
+                    }}>
+                    Payment is successful unable to create order
+                  </Box>
+                );
+              },
+            });
+          }
+        } else if (paymentResponse !== 'SUCCESS') {
+          setLoaderVisible(false);
+          Alert.alert('', 'Something went wrong! Please try again', [
+            {
+              text: 'Try again',
+              onPress: () => {
+                navigation.navigate('Cart');
+              },
+            },
+          ]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const gotoAddAddress = () => {
     setModalVisible(false);
     navigation.navigate('AddAddress', {title: 'Add'});
@@ -362,7 +406,7 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
     );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
-  const TotalPrice = cartItems.totalPrice + 25;
+  const TotalPrice = cartItems.totalPrice + deliveryCharges;
   useEffect(() => {
     selAddress();
   }, []);
@@ -410,10 +454,10 @@ const Payment: FC<PaymentProps> = ({navigation}) => {
       <View>
         <BillSummaryCard
           cutOffPrice={totalDiscountedPrice}
-          deliveryCharge={25}
-          itemPrice={TotalPrice - 25}
-          price={TotalPrice}
-          savingPrice={totalDiscountedPrice - (TotalPrice - 25)}
+          deliveryCharge={deliveryCharges}
+          itemPrice={TotalPrice}
+          price={TotalPrice + deliveryCharges}
+          savingPrice={totalDiscountedPrice - TotalPrice}
         />
         <PaymentPreferred setValue={setValue} value={value} />
       </View>
