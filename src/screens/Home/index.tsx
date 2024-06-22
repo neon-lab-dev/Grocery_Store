@@ -38,9 +38,8 @@ const Home: React.FC<Props> = ({navigation}) => {
   const [name, setName] = useState('');
   const [userDetails, setUserDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  // const openDrawer = () => {
-  //   navigation.openDrawer();
-  // };
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
   const fetchUser = async () => {
     try {
@@ -69,8 +68,6 @@ const Home: React.FC<Props> = ({navigation}) => {
     navigation.navigate('Cart');
   };
 
-  const [selectedProduct, setSelectedProduct] = useState('');
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const openBottomSheet = () => {
     setBottomSheetVisible(true);
   };
@@ -94,7 +91,6 @@ const Home: React.FC<Props> = ({navigation}) => {
   };
 
   const {width} = Dimensions.get('window');
-  // console.log(width,height)
   return (
     <>
       {isLoading ? (
@@ -103,9 +99,6 @@ const Home: React.FC<Props> = ({navigation}) => {
         </View>
       ) : (
         <View style={style.container}>
-          {/* <Pressable onPress={openDrawer}>
-        <Text>Open Settings</Text>
-      </Pressable> */}
           <Header
             name={name}
             onSettingsPress={openSettings}
@@ -274,77 +267,6 @@ const Home: React.FC<Props> = ({navigation}) => {
                 </View>
               </TouchableOpacity>
             </View>
-            {/* <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: verticalScale(15),
-          }}>
-          <View style={style.Category}>
-            <Text style={style.CategoryText}>Freshly Picked For You!</Text>
-            <Text>get your health on line :)</Text>
-          </View>
-          <Pressable onPress={seeAll}>
-            <Text
-              style={{
-                color: '#22C55E',
-                fontSize: scaleFontSize(16),
-                marginRight: horizontalScale(18),
-                marginTop: verticalScale(25),
-              }}>
-              See all
-            </Text>
-          </Pressable>
-        </View>
-        <ProductHorizontalScroll onPress={listToDetails} /> */}
-            {/* <View style={{marginHorizontal: horizontalScale(18)}}>
-              <Text style={[style.CategoryText]}>Explore New Categories</Text>
-              <View style={{flexDirection: 'row', marginTop: 20}}>
-                <View style={style.ExploreCatgories}>
-                  <Image
-                    style={{
-                      height: width < 380 ? 75 : 83,
-                      width: width < 380 ? 77 : 85,
-                    }}
-                    source={require('../../assets/images/Newcategories/ExploreCategories1.jpg')}
-                  />
-                  <Text style={style.ExploreCatgoriesText}>Baby Care</Text>
-                </View>
-                <View style={style.ExploreCatgories}>
-                  <Image
-                    style={{
-                      height: width < 380 ? 75 : 83,
-                      width: width < 380 ? 77 : 85,
-                    }}
-                    source={require('../../assets/images/Newcategories/ExploreCategories2.jpg')}
-                  />
-                  <Text style={style.ExploreCatgoriesText}>Gift Store</Text>
-                </View>
-                <View style={style.ExploreCatgories}>
-                  <Image
-                    style={{
-                      height: width < 380 ? 75 : 83,
-                      width: width < 380 ? 77 : 85,
-                    }}
-                    source={require('../../assets/images/Newcategories/ExploreCategories3.jpg')}
-                  />
-                  <Text style={style.ExploreCatgoriesText}>
-                    Party Essentials
-                  </Text>
-                </View>
-                <View style={style.ExploreCatgories}>
-                  <Image
-                    style={{
-                      height: width < 380 ? 75 : 83,
-                      width: width < 380 ? 77 : 85,
-                    }}
-                    source={require('../../assets/images/Newcategories/ExploreCategories4.jpg')}
-                  />
-                  <Text style={style.ExploreCatgoriesText}>Kitchen needs</Text>
-                </View>
-              </View>
-            </View> */}
           </ScrollView>
 
           <View style={style.floatingButton} shadow={5}>
