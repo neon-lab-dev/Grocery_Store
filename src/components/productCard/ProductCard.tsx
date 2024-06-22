@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, Pressable, Box} from 'native-base';
 import {useToast} from 'native-base';
 import {styles} from './style';
@@ -18,7 +18,6 @@ import {
 } from '../../redux/slices/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
-import {useFocusEffect} from '@react-navigation/native';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -52,17 +51,15 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
-  const [count, setCount] = useState(0);
-  const [isButton1Visible, setIsButton1Visible] = useState(true);
-  const cartItems = useSelector((state: any) => state.cart);
+  const cartItems = useSelector((state: any) => state.cart.items);
+  const cartItem = cartItems.find((item: any) => item.id === product.id);
+  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
 
-  useFocusEffect(() => {
-    const cartItemCount = cartItems.items.length;
-    if (cartItemCount == 0) {
-      setIsButton1Visible(true);
-      setCount(0);
-    }
-  });
+  useEffect(() => {
+    setCount(cartItem ? cartItem.quantity : 0);
+    setIsButton1Visible(!cartItem);
+  }, [cartItem]);
 
   const handleDecrease = () => {
     if (count === 1) {
