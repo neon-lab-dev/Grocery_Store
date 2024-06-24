@@ -13,6 +13,9 @@ import SavedAddressComponent from '../../components/Addresses/SavedAddressCompon
 import {deleteAddress, getAddress} from '../../api/auth_routes';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts'; // Import the action
 
 interface SavedAddressProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Addresses'>;
@@ -21,13 +24,28 @@ interface SavedAddressProps {
 const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [addressList, setAddressList] = React.useState([]);
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
+  React.useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
 
   const fetchAddress = async () => {
-    setLoaderVisible(true);
-    const getAddressList = await getAddress();
-    // console.log(getAddressList);
-    setAddressList(getAddressList);
-    setLoaderVisible(false);
+    if (isConnected) {
+      setLoaderVisible(true);
+      const getAddressList = await getAddress();
+      setAddressList(getAddressList);
+      setLoaderVisible(false);
+    } else {
+      toast.showToast('Please Check Your Internet connection');
+    }
   };
 
   useFocusEffect(
@@ -45,22 +63,27 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress', {title: 'Add'});
   };
+
   const handleDelete = async deleteId => {
-    try {
-      setLoaderVisible(true);
-      const res = await deleteAddress(deleteId);
-      console.log(res);
-      if (res.statusCode === 400) {
-        fetchAddress();
-        setLoaderVisible(false);
-        toast.showToast('Please make another address as primary');
-      } else {
-        fetchAddress();
-        setLoaderVisible(false);
-        toast.showToast(res.message || res.errorMessage);
+    if (isConnected) {
+      try {
+        setLoaderVisible(true);
+        const res = await deleteAddress(deleteId);
+        console.log(res);
+        if (res.statusCode === 400) {
+          fetchAddress();
+          setLoaderVisible(false);
+          toast.showToast('Please make another address as primary');
+        } else {
+          fetchAddress();
+          setLoaderVisible(false);
+          toast.showToast(res.message || res.errorMessage);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
     }
   };
 

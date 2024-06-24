@@ -21,6 +21,9 @@ import {Platform} from 'react-native';
 import {fetchUserData, updateUserData} from '../../api/auth_routes';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 
 interface PersonalDetailsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'PersonalDetails'>;
@@ -34,6 +37,8 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
     useState('');
 
   const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
   const [email, setEmail] = useState('');
   const [mobileNo, setMobileNo] = useState('');
   const [secondaryMobileNo, setSecondaryMobileNo] = useState('');
@@ -72,44 +77,60 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
   };
 
   const updateUser = async () => {
-    try {
-      setIsLoading(true);
-      setIsClicked(true);
-      const updatedFields: {[key: string]: any} = {};
-      if (name !== originalName) {
-        updatedFields.name = name;
-      }
-      if (email !== originalEmail) {
-        updatedFields.email = email;
-      }
-      if (mobileNo !== originalMobileNo) {
-        updatedFields.primaryPhoneNo = mobileNo;
-      }
-      if (secondaryMobileNo !== originalSecondaryMobileNo) {
-        updatedFields.secondaryPhoneNo = secondaryMobileNo;
-      }
-      if (Object.keys(updatedFields).length === 0) {
-        setIsLoading(false);
-        return;
-      }
+    if (isConnected) {
+      try {
+        setIsLoading(true);
+        setIsClicked(true);
+        const updatedFields: {[key: string]: any} = {};
+        if (name !== originalName) {
+          updatedFields.name = name;
+        }
+        if (email !== originalEmail) {
+          updatedFields.email = email;
+        }
+        if (mobileNo !== originalMobileNo) {
+          updatedFields.primaryPhoneNo = mobileNo;
+        }
+        if (secondaryMobileNo !== originalSecondaryMobileNo) {
+          updatedFields.secondaryPhoneNo = secondaryMobileNo;
+        }
+        if (Object.keys(updatedFields).length === 0) {
+          setIsLoading(false);
+          return;
+        }
 
-      const response = await updateUserData(updatedFields);
-      if (response.responseBody) {
-        toast.showToast(response.message);
-        navigation.goBack();
-      } else {
-        toast.showToast('Something went wrong, try again later');
+        const response = await updateUserData(updatedFields);
+        if (response.responseBody) {
+          toast.showToast(response.message);
+          navigation.goBack();
+        } else {
+          toast.showToast('Something went wrong, try again later');
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+      setIsClicked(false);
+      setIsLoading(false);
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
     }
-    setIsClicked(false);
-    setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (isConnected) {
+        fetchUser();
+      } else {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
+
   return (
     <>
       {isLoading ? (

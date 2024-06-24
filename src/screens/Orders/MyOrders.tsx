@@ -7,6 +7,10 @@ import {getOrders} from '../../api/auth_routes';
 import {FlatList, Text} from 'react-native';
 import {verticalScale, scaleFontSize} from '../../assets/scaling';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {toast} from '../../components/Toast/Toast';
 
 interface OrdersProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Orders'>;
@@ -15,13 +19,27 @@ interface OrdersProps {
 const Orders: React.FC<OrdersProps> = ({navigation}) => {
   const [productsList, setProductList] = React.useState<any[]>([]);
   const [loaderVisible, setLoaderVisible] = React.useState(true);
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
   const handlePress = (data: object) => {
     navigation.navigate('SingleOrder', {order: data});
   };
 
   React.useEffect(() => {
-    fetchOrders();
-  }, []);
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (isConnected) {
+        fetchOrders();
+      } else {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch, isConnected]);
 
   const fetchOrders = async () => {
     try {
