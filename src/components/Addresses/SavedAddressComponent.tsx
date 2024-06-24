@@ -46,22 +46,14 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
       <View
         style={styles.addressContainer}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
-        <View width={horizontalScale(180)} style={{gap: horizontalScale(4)}}>
+        <View style={styles.addressCardDiv}>
           <Text
-            fontFamily={'Inter_Medium'}
-            fontSize={scaleFontSize(16)}
-            color={'accent.900'}
-            lineHeight={19.36}
-            letterSpacing={-0.04}>
+            style={styles.addressName}>
             {address.addressName}
           </Text>
           <Text
-            color={'accent.400'}
-            numberOfLines={2}
-            fontFamily={'Inter_Regular'}
-            fontSize={scaleFontSize(14)}
-            lineHeight={16.8}
-            letterSpacing={-0.03}>
+          numberOfLines={2}
+            style={styles.addressDiscription}>
             {`${address.addressLine1},${address.landmark},${address.city},${address.state},${address.pincode}`}
           </Text>
         </View>

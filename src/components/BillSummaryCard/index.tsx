@@ -32,7 +32,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
       </View>
       <View style={styles.divider} />
       <View style={styles.rowContainer}>
-        <View style={{ justifyContent: 'center', gap: 2 }}>
+        <View style={styles.payDetails}>
           <Text style={styles.toPayText}>To Pay</Text>
           <Text style={styles.inclTaxesText}>Incl. all taxes and charges</Text>
         </View>

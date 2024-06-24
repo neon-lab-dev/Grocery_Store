@@ -117,6 +117,10 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(4),
     paddingHorizontal: horizontalScale(6),
   },
+  payDetails:{
+    justifyContent: 'center',
+     gap: 2 
+  }
 });
 
 export default styles;
