@@ -88,23 +88,6 @@ export const getAddress = async () => {
   }
 };
 
-// export const getAddress = async () => {
-//   const url = '/profile/address/fetch';
-
-//   try {
-//     const response = await AuthAPIClient2.get(url);
-//     return response;
-//   } catch (error) {
-//     console.log(error);
-//     // if (error.response) {
-//     //   // The request was made and the server responded with a status code
-//     //   // that falls out of the range of 2xx
-//     //   console.error('Error data:', error.response.data);
-//     //   console.error('Error status:', error.response.status);
-//     //   console.
-//   }
-// };
-
 export const addAddress = async address => {
   console.log('addAdress', address);
   try {
