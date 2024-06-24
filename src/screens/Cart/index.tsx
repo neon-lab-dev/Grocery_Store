@@ -71,7 +71,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       setSelectAddress(address);
       setisAddressPresent(true);
       setLoaderVisible(false);
-    } else if (address == null) {
+    } else if (address === null) {
       setisAddressPresent(false);
       setLoaderVisible(false);
     }
@@ -137,7 +137,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       navigation.navigate('Payment', {
         deliveryCharges: deliveryCharge,
       });
-    else if (addresscount == 0)
+    else if (addresscount === 0)
       navigation.navigate('AddAddress', {title: 'Add'});
     else if (addresscount > 0) {
       setModalVisible(true);

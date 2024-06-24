@@ -59,7 +59,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   );
 
   const handleDecrease = () => {
-    if (count == 1) {
+    if (count === 1) {
       dispatch(removeItem(item.id));
       setCount(0);
     } else {

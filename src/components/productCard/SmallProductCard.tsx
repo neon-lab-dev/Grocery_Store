@@ -53,7 +53,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
 
   useFocusEffect(() => {
     const cartItemCount = cartItems.items.length;
-    if (cartItemCount == 0) {
+    if (cartItemCount === 0) {
       setIsButton1Visible(true);
       setCount(0);
     }
@@ -66,7 +66,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   // console.log(offerPerIndex);
 
   const handleDecrease = () => {
-    if (count == 1) {
+    if (count ===1) {
       dispatch(removeItem(product.id));
       setIsButton1Visible(true);
       setCount(0);

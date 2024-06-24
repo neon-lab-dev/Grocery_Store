@@ -57,7 +57,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
 
   useFocusEffect(() => {
     const cartItemCount = cartItems.items.length;
-    if (cartItemCount == 0) {
+    if (cartItemCount === 0) {
       setIsButton1Visible(true);
       setCount(0);
     }

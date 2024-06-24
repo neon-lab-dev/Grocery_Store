@@ -140,9 +140,9 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
             ml={marginLeft}>
-            {Method == 'CASH_ON_DELIVERY'
+            {Method === 'CASH_ON_DELIVERY'
               ? 'Cash On Delivery'
-              : Method == 'PICKUP_AT_SHOP'
+              : Method === 'PICKUP_AT_SHOP'
               ? 'Pick Up From Store'
               : 'Pay Online'}
           </Text>

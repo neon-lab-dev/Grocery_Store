@@ -232,6 +232,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
                     fontSize: scaleFontSize(16),
                     lineHeight: 19.36,
                     letterSpacing: -0.04,
+                    // color:"black",
                   }}
                 />
                 {showError && (
