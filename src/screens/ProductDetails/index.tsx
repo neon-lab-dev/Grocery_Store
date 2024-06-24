@@ -48,15 +48,18 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [subCat2, setSubCat2] = useState('');
-  const cartItems = useSelector((state: any) => state.cart);
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
-  const [count, setCount] = useState(0);
-  const [isButton1Visible, setIsButton1Visible] = useState(true);
+  const cartItems = useSelector((state: any) => state.cart.items);
+  const cartItem = cartItems.find(
+    (item: any) => selectedProduct && item.id === selectedProduct.id,
+  );
+  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -92,7 +95,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             setSelectedImageUrl(
               response.content[0].varietyList[0]?.documentUrls[0],
             );
-            updateCount();
+            updateCount(initialSelectedProduct);
           }
         }
       } catch (error) {
@@ -105,18 +108,21 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   }, [productName, selProduct]);
 
   useEffect(() => {
-    updateCount();
-  }, [selectedProduct]);
+    if (selectedProduct) {
+      updateCount(selectedProduct);
+    }
+  }, [selectedProduct, cartItems]);
 
-  const updateCount = () => {
-    const item = cartItems.items.filter(
-      obj => obj?.id === selectedProduct?.varietyList[0]?.id,
+  const updateCount = (product: any) => {
+    const item = cartItems.find(
+      (obj: any) => obj?.id === product?.varietyList[0]?.id,
     );
-
-    if (item.length === 1) {
-      setCount(item[0].quantity);
+    if (item) {
+      setCount(item.quantity);
+      setIsButton1Visible(false);
     } else {
       setCount(0);
+      setIsButton1Visible(true);
     }
   };
 
@@ -592,7 +598,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
             )}
 
             {/* Add To Cart Button */}
-            {count <= 0 ? (
+            {isButton1Visible ? (
               <Pressable
                 onPress={handleButtonPress}
                 style={{
