@@ -53,7 +53,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
     return () => {
       unsubscribe();
     };
-  }, [dispatch, isConnected]);
+  }, [dispatch]);
 
   const handleContinue = async () => {
     if (isConnected) {
