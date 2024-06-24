@@ -12,6 +12,11 @@ import {
 } from '../../assets/scaling';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {toast} from '../../components/Toast/Toast';
+
 interface Category {
   id: number;
   name: string;
@@ -36,6 +41,9 @@ const CategoryProducts: FC = ({navigation, route}) => {
   const [CategoryData, setCategoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
   const fetchCategory = async () => {
     try {
       setIsLoading(true);
@@ -55,6 +63,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
     }
     setIsLoading(false);
   };
+
   const fetchCategoryProducts = async () => {
     if (!subCategory2) {
       return;
@@ -80,8 +89,20 @@ const CategoryProducts: FC = ({navigation, route}) => {
   };
 
   useEffect(() => {
-    fetchCategory();
-  }, []);
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (isConnected) {
+        fetchCategory();
+      } else {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
+
   useEffect(() => {
     fetchCategoryProducts();
   }, [categoryId, subCategory2]);

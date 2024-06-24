@@ -27,11 +27,19 @@ import SearchProductCard from '../../components/productCard/SearchResultProductC
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {getItem, setItem} from '../../api/localstorage';
 import {searchProduct} from '../../api/auth_routes';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {toast} from '../../components/Toast/Toast';
+
 interface SearchProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Search'>;
 }
 
 const Search: React.FC<SearchProps> = ({navigation}) => {
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
   const [showModal, setShowModal] = useState<boolean>(false);
   const [searchInp, SetsearchInp] = useState('');
   const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
@@ -47,6 +55,19 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [searchResults, setSearchResults] = useState([]);
   const [sortBy, setSortBy] = useState('default');
   const [selectedProduct, setSelectedProduct] = useState('');
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (!isConnected) {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchRecentSearch = async () => {
@@ -96,7 +117,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   const searchProducts = async () => {
     try {
-      const NumberOfProducts=10;
+      const NumberOfProducts = 10;
       setIsLoading(true);
       const response = await searchProduct(
         searchInp,
