@@ -10,8 +10,10 @@ import {scaleFontSize} from '../../assets/scaling';
 import {sendOtp, verifyOTP} from '../../api/auth';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
-import {useDispatch} from 'react-redux';
 import {login} from '../../redux/slices/auth.slice';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 
 interface OTPScreenProps {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'OTP'>;
@@ -24,30 +26,45 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
   const handleOtpComplete = (otp: string) => {
     setOTPValue(otp);
   };
+  const isConnected = useSelector(state => state.network.isConnected);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
 
   const handleOTP = async () => {
-    setIsLoading(true);
-    try {
-      const response = await verifyOTP(OTPValue, route.params.phoneNo);
-      if (response.statusCode === 200) {
-        if (!response.responseBody.existing) {
-          navigation.replace('PersonalDetails', {
-            phoneNo: route.params.phoneNo,
-          });
+    if (isConnected) {
+      setIsLoading(true);
+      try {
+        const response = await verifyOTP(OTPValue, route.params.phoneNo);
+        if (response.statusCode === 200) {
+          if (!response.responseBody.existing) {
+            navigation.replace('PersonalDetails', {
+              phoneNo: route.params.phoneNo,
+            });
+          } else {
+            dispatch(login(response.responseBody.token));
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'App'}],
+            });
+          }
         } else {
-          dispatch(login(response.responseBody.token));
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'App'}],
-          });
+          toast.showToast(response.message);
         }
-      } else {
-        toast.showToast(response.message);
+      } catch (error: any) {
+        toast.showToast('Enter Valid Mobile Number');
       }
-    } catch (error: any) {
-      toast.showToast('Enter Valid Mobile Number');
+      setIsLoading(false);
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -58,8 +75,12 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
   }, [OTPValue]);
 
   const resendOTP = async () => {
-    const response = await sendOtp(route.params.phoneNo);
-    toast.showToast(response.responseBody.message);
+    if (isConnected) {
+      const response = await sendOtp(route.params.phoneNo);
+      toast.showToast(response.responseBody.message);
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
+    }
   };
 
   return (

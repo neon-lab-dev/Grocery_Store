@@ -18,6 +18,10 @@ import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
 import {FlatList} from 'react-native';
 import {REACT_APP_PHONE_NO} from '@env';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {toast} from '../../components/Toast/Toast';
 
 interface SingleOrderProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'SingleOrder'>;
@@ -34,6 +38,22 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
     color: '#EAB308',
     time: '10:20PM, 8 Mar, 2024',
   });
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
+  React.useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (!isConnected) {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
+
   React.useEffect(() => {
     switch (orderStatus) {
       case 'Processing':

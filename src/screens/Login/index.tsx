@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Button,
@@ -21,6 +21,9 @@ import {Platform} from 'react-native';
 import {sendOtp} from '../../api/auth';
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 
 type Props = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'Login'>;
@@ -29,26 +32,43 @@ type Props = {
 const Login: React.FC<Props> = ({navigation}) => {
   const [phoneNo, setPhoneNo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
 
   const handleContinue = async () => {
-    if (validators.isPhoneNumber(phoneNo)) {
-      setIsLoading(true);
-      try {
-        const response = await sendOtp(phoneNo);
-        if (response.statusCode === 200 || response.statusCode === 400) {
-          toast.showToast(response.responseBody.message);
-          navigation.navigate('OTP', {phoneNo: phoneNo});
-        } else {
-          toast.showToast(response.message);
+    if (isConnected) {
+      if (validators.isPhoneNumber(phoneNo)) {
+        setIsLoading(true);
+        try {
+          const response = await sendOtp(phoneNo);
+          if (response.statusCode === 200 || response.statusCode === 400) {
+            toast.showToast(response.responseBody.message);
+            navigation.navigate('OTP', {phoneNo: phoneNo});
+          } else {
+            toast.showToast(response.message);
+          }
+        } catch (error: any) {
+          toast.showToast('Something Went Wrong, Try Again');
         }
-      } catch (error: any) {
-        toast.showToast('Something Went Wrong, Try Again');
+        setIsLoading(false);
+      } else {
+        toast.showToast('Enter Valid Mobile Number');
       }
-      setIsLoading(false);
     } else {
-      toast.showToast('Enter Valid Mobile Number');
+      toast.showToast('Please Check Your Internet Connection');
     }
   };
+
   return (
     <>
       <Loader isOpen={isLoading} />

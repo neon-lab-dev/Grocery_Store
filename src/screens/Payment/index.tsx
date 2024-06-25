@@ -24,6 +24,8 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {clearCart} from '../../redux/slices/actions';
+import NetInfo from '@react-native-community/netinfo';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 
 interface Address {
   id: number;
@@ -35,18 +37,33 @@ interface PaymentProps {
 
 const Payment: FC<PaymentProps> = ({navigation, route}) => {
   const {deliveryCharges} = route.params;
-  console.log(deliveryCharges);
+  // console.log(deliveryCharges);
   const [loaderVisible, setLoaderVisible] = useState(false);
-  const [paymentLinkID,setPaymentLinkID]=useState('');
+  const [paymentLinkID, setPaymentLinkID] = useState('');
   const [value, setValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
-  const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
   const Navigation = useNavigation();
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (!isConnected) {
+        toast.show('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -75,7 +92,6 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
       setPaymentLinkID(value);
     }
   }, [value]);
-  
 
   var orderData = {
     paymentId: paymentLinkID,
@@ -119,10 +135,11 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
         if (paymentLinkResponse.statusCode === 200) {
           const shortUrl =
             paymentLinkResponse.responseBody.additionalInfo.shortUrl;
-            const paymentid=paymentLinkResponse.responseBody.paymentId;
-            const paymentlinkid=paymentLinkResponse.responseBody.additionalInfo.paymentLinkId;
-            setPaymentLinkID(paymentlinkid);
-            handlePayment(shortUrl,paymentid,paymentlinkid);
+          const paymentid = paymentLinkResponse.responseBody.paymentId;
+          const paymentlinkid =
+            paymentLinkResponse.responseBody.additionalInfo.paymentLinkId;
+          setPaymentLinkID(paymentlinkid);
+          handlePayment(shortUrl, paymentid, paymentlinkid);
         }
       } catch (error) {
         console.log(error);
@@ -185,17 +202,21 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
       }
     }
   };
- 
-  const handlePayment = (shortUrl: string,paymentid:string,paymentlinkid:string) => {
-        if (shortUrl) {
-          Linking.openURL(shortUrl);
-          monitorPaymentStatus(paymentid,paymentlinkid);
-        } else {
-          Alert.alert('Error', 'Unable to open payment link');
-        }
+
+  const handlePayment = (
+    shortUrl: string,
+    paymentid: string,
+    paymentlinkid: string,
+  ) => {
+    if (shortUrl) {
+      Linking.openURL(shortUrl);
+      monitorPaymentStatus(paymentid, paymentlinkid);
+    } else {
+      Alert.alert('Error', 'Unable to open payment link');
+    }
   };
-   
-  const monitorPaymentStatus = (paymentId:string,paymentlinkid:string) => {
+
+  const monitorPaymentStatus = (paymentId: string, paymentlinkid: string) => {
     setLoaderVisible(true);
     let intervalCount = 0;
     const intervalId = setInterval(async () => {
@@ -207,7 +228,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
           clearInterval(intervalId);
           console.log('Payment successful');
           try {
-            var orderData1= {
+            var orderData1 = {
               paymentId: paymentlinkid,
               boughtProductDetailsList: cartItems.items.map(
                 (item: {varietyList: any; id: any; quantity: any}) => ({
@@ -280,20 +301,19 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
       if (intervalCount >= 40) {
         clearInterval(intervalId);
         setLoaderVisible(false);
-        Alert.alert(
-      '',
-      'Click on get status to know payment status',
-      [
-        { text: 'Get status', onPress: () => {
-          ForcepaymentStatusCheck(paymentId,paymentlinkid)
-        } }
-      ],
-    );
+        Alert.alert('', 'Click on get status to know payment status', [
+          {
+            text: 'Get status',
+            onPress: () => {
+              ForcepaymentStatusCheck(paymentId, paymentlinkid);
+            },
+          },
+        ]);
       }
     }, 3000);
   };
 
-  const paymentStatusCheck = async (paymentId:string)=>{
+  const paymentStatusCheck = async (paymentId: string) => {
     try {
       setLoaderVisible(true);
       const paymentResponse = await paymentStatus(paymentId);
@@ -301,16 +321,19 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  const ForcepaymentStatusCheck = async ( paymentId:string,paymentlinkid:string)=>{
+  const ForcepaymentStatusCheck = async (
+    paymentId: string,
+    paymentlinkid: string,
+  ) => {
     try {
       setLoaderVisible(true);
       const paymentResponse = await ForcepaymentStatus(paymentId);
       if (paymentResponse) {
         if (paymentResponse === 'SUCCESS') {
           try {
-            var orderData2= {
+            var orderData2 = {
               paymentId: paymentlinkid,
               boughtProductDetailsList: cartItems.items.map(
                 (item: {varietyList: any; id: any; quantity: any}) => ({

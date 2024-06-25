@@ -15,7 +15,6 @@ import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
 import {arrowUp} from '../../assets/images/icons/arrow_drop_up';
 import GoBack from '../../components/Navigation/GoBack';
 import {searchProduct} from '../../api/auth_routes';
-import {useDispatch, useSelector} from 'react-redux';
 import {
   addToCart,
   decrementItem,
@@ -25,6 +24,9 @@ import {
 import {SkeletonProductDetails} from '../../components/Skeleton/SkeletonProductDetails';
 import PeopleAlsoBought from '../../components/productCard/PeopleAlsoBought';
 import SimilarProductHorizontalScroll from '../../components/productCard/SimilarProducts';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 
 interface AlternativeImageProps {
   img: any;
@@ -51,7 +53,6 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
   const cartItems = useSelector((state: any) => state.cart.items);
@@ -60,6 +61,8 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   );
   const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
   const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -112,6 +115,19 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
       updateCount(selectedProduct);
     }
   }, [selectedProduct, cartItems]);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (!isConnected) {
+        toast.show('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
 
   const updateCount = (product: any) => {
     const item = cartItems.find(

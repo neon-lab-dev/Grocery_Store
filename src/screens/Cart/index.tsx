@@ -24,11 +24,15 @@ import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import BillSummaryCard from '../../components/BillSummaryCard';
 import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import GoBack from '../../components/Navigation/GoBack';
-import {useSelector} from 'react-redux';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
 import {evaluateOrder, getAddress} from '../../api/auth_routes';
 import {useFocusEffect} from '@react-navigation/native';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {toast} from '../../components/Toast/Toast';
+
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
@@ -44,12 +48,21 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
   const cartItems = useSelector((state: any) => state.cart);
   const [deliveryCharge, setDeliveryCharge] = React.useState(0);
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
 
   const cartItemCount = cartItems.items.length;
 
   React.useEffect(() => {
     selAddress();
-  }, []);
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
 
   const selAddress = async () => {
     setLoaderVisible(true);
@@ -58,7 +71,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       setSelectAddress(address);
       setisAddressPresent(true);
       setLoaderVisible(false);
-    } else if (address == null) {
+    } else if (address === null) {
       setisAddressPresent(false);
       setLoaderVisible(false);
     }
@@ -66,9 +79,13 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   };
 
   const fetchAddress = async () => {
-    const getAddressList = await getAddress();
-    const addresscount = getAddressList.length;
-    setaddresscount(addresscount);
+    if (isConnected) {
+      const getAddressList = await getAddress();
+      const addresscount = getAddressList.length;
+      setaddresscount(addresscount);
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
+    }
   };
 
   React.useEffect(() => {
@@ -94,10 +111,14 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   }, [cartItems]);
 
   const getDeliveryCharge = async () => {
-    try {
-      const delCharge = await evaluateOrder(varetyIds);
-      setDeliveryCharge(delCharge.deliveryCharges);
-    } catch (error) {}
+    if (isConnected) {
+      try {
+        const delCharge = await evaluateOrder(varetyIds);
+        setDeliveryCharge(delCharge.deliveryCharges);
+      } catch (error) {}
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
+    }
   };
 
   const TotalPrice = cartItems.totalPrice + deliveryCharge;
@@ -116,7 +137,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       navigation.navigate('Payment', {
         deliveryCharges: deliveryCharge,
       });
-    else if (addresscount == 0)
+    else if (addresscount === 0)
       navigation.navigate('AddAddress', {title: 'Add'});
     else if (addresscount > 0) {
       setModalVisible(true);

@@ -27,6 +27,10 @@ import {fetchUserData} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
 import {REACT_APP_PHONE_NO} from '@env';
 import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts'; // Import the action
+import {toast} from '../../components/Toast/Toast';
 
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
@@ -38,6 +42,9 @@ const Home: React.FC<Props> = ({navigation}) => {
   const [name, setName] = useState('');
   const [userDetails, setUserDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
   const [selectedProduct, setSelectedProduct] = useState('');
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
 
@@ -58,8 +65,19 @@ const Home: React.FC<Props> = ({navigation}) => {
   };
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+
+      if (isConnected) {
+        fetchUser();
+      } else {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch, isConnected]);
 
   const openSettings = () => {
     navigation.navigate('Settings', {userDetails: userDetails});

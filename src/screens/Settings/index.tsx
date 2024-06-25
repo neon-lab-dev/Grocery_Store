@@ -22,18 +22,23 @@ import {CallNumber} from '../../utils/launchIntents';
 import {SvgXml} from 'react-native-svg';
 import {accountIcon} from '../../assets/images/icons/account_circle';
 import {close} from '../../assets/images/icons/close';
-import {useDispatch} from 'react-redux';
 import {logout} from '../../redux/slices/auth.slice';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 import {createSuggestion, getOrders} from '../../api/auth_routes';
 import {REACT_APP_PHONE_NO} from '@env';
+
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
   route: any;
 }
 
 export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
   const [showError, setShowError] = useState(false);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [resMsg, setResMsg] = useState('');
@@ -45,6 +50,19 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [suggestion, setSuggestion] = useState('');
   const userDetails = route.params.userDetails;
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+      if (!isConnected) {
+        toast.showToast('Please Check Your Internet Connection');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     getOrders();
@@ -78,7 +96,6 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
       setPhoneNo(userDetails.primaryPhoneNo);
     }
   }, [userDetails]);
-  const dispatch = useDispatch();
   const gotoPersonalDetails = () => {
     navigation.navigate('PersonalDetails');
   };
@@ -215,6 +232,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
                     fontSize: scaleFontSize(16),
                     lineHeight: 19.36,
                     letterSpacing: -0.04,
+                    // color:"black",
                   }}
                 />
                 {showError && (
@@ -295,11 +313,19 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               Log Out
             </Button>
           </Center>
-          <View style={{flexDirection:'row',alignSelf:'center',marginBottom:verticalScale(10)}}>
-            <Text style={{alignSelf:'center',marginRight:2}}>
-            Powered by
+          <View
+            style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginBottom: verticalScale(10),
+            }}>
+            <Text style={{alignSelf: 'center', marginRight: 2}}>
+              Powered by
             </Text>
-            <Image alt='logo' style={{height:30,width:80 }} source={require('../../assets/images/icons/logo.png')}></Image>
+            <Image
+              alt="logo"
+              style={{height: 30, width: 80}}
+              source={require('../../assets/images/icons/logo.png')}></Image>
           </View>
           <Loader isOpen={loaderVisible} />
         </View>

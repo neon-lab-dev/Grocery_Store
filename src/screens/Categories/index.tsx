@@ -6,6 +6,11 @@ import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Image} from 'native-base';
 import {AuthAPIClient} from '../../api/axios.config';
 import {CategoryCard} from '../../components/Categories/CategoryCard';
+import NetInfo from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {toast} from '../../components/Toast/Toast';
+
 // import Loader from '../../components/Loader/Loader';
 
 interface Category {
@@ -26,6 +31,9 @@ const Categories: FC = ({navigation}) => {
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const isConnected = useSelector(state => state.network.isConnected);
+
   const fetchCategory = async () => {
     setIsLoading(true);
     try {
@@ -40,8 +48,19 @@ const Categories: FC = ({navigation}) => {
   };
 
   useEffect(() => {
-    fetchCategory();
-  }, []);
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(setNetworkStatus(state.isConnected));
+    });
+    if (isConnected) {
+      fetchCategory();
+    } else {
+      toast.showToast('Please Check Your Internet Connection');
+    }
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch, isConnected]);
 
   useEffect(() => {
     if (categories.length > 0) {

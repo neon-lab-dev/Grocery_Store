@@ -1,28 +1,19 @@
-// networkSlice.ts
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from '../store';
+import {createSlice} from '@reduxjs/toolkit';
 
-interface NetworkState {
-  isInternetReachable: boolean;
-}
-
-const initialState: NetworkState = {
-  isInternetReachable: false,
+const initialState = {
+  isConnected: true,
 };
 
-export const networkSlice = createSlice({
+const networkSlice = createSlice({
   name: 'network',
   initialState,
   reducers: {
-    setConnectionStatus: (state, action: PayloadAction<boolean>) => {
-      state.isInternetReachable = action.payload;
+    setNetworkStatus(state, action) {
+      state.isConnected = action.payload;
     },
   },
 });
 
-export const {setConnectionStatus} = networkSlice.actions;
-
-export const selectConnectionStatus = (state: RootState) =>
-  state.network.isInternetReachable;
+export const {setNetworkStatus} = networkSlice.actions;
 
 export default networkSlice.reducer;
