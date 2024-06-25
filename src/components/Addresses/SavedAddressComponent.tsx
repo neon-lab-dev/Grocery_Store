@@ -39,12 +39,8 @@ const SavedAddressComponent: React.FC<SavedAddressComponentProps> = ({
     navigation.navigate('AddAddress', {title: 'Edit', location: address});
   };
   return (
-    <Pressable
-      onPress={editPressed}
-      style={[styles.addressCard, ]}
-      >
-      <View
-        style={styles.addressContainer}>
+    <Pressable onPress={editPressed} style={[styles.addressCard]}>
+      <View style={styles.addressContainer}>
         <SvgXml xml={orangeLocation} height={24} width={24} />
         <View width={horizontalScale(180)} style={{gap: horizontalScale(4)}}>
           <Text

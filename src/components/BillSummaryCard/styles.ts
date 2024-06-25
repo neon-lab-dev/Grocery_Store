@@ -1,6 +1,6 @@
 // styles.ts
 
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   scaleFontSize,
   verticalScale,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     color: 'accent.800',
     lineHeight: 16.94,
     letterSpacing: -0.04,
-    marginBottom:4
+    marginBottom: 4,
   },
   savingContainer: {
     flexDirection: 'row',

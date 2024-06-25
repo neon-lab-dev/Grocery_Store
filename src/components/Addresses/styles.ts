@@ -1,5 +1,9 @@
-import { StyleSheet } from 'react-native';
-import { horizontalScale, verticalScale, scaleFontSize } from '../../assets/scaling';
+import {StyleSheet} from 'react-native';
+import {
+  horizontalScale,
+  verticalScale,
+  scaleFontSize,
+} from '../../assets/scaling';
 
 const styles = StyleSheet.create({
   addressCard: {
@@ -10,8 +14,7 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(15),
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom:1
-   
+    marginBottom: 1,
   },
   addressContainer: {
     flexDirection: 'row',
