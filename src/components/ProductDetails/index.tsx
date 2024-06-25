@@ -46,7 +46,6 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   productName,
 }) => {
   // console.log('product', productName);
-  const cartItems = useSelector((state: any) => state.cart);
 
   const [selProduct, setSelProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState<number>(0);
@@ -55,11 +54,16 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   const [viewMoreDetails, setViewMoreDetails] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
-  const [isButton1Visible, setIsButton1Visible] = useState(true);
+  const cartItems = useSelector((state: any) => state.cart.items);
+  const cartItem = cartItems.find(
+    (item: any) => selectedProduct && item.id === selectedProduct.id,
+  );
+  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
-  const [count, setCount] = useState(0);
+
   const [subCat2, setSubCat2] = useState('');
 
   useEffect(() => {
@@ -96,7 +100,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             setSelectedImageUrl(
               response.content[0].varietyList[0]?.documentUrls[0],
             );
-            updateCount();
+            updateCount(initialSelectedProduct);
           }
         }
       } catch (error) {
@@ -109,18 +113,21 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   }, [productName, selProduct]);
 
   useEffect(() => {
-    updateCount();
-  }, [selectedProduct]);
+    if (selectedProduct) {
+      updateCount(selectedProduct);
+    }
+  }, [selectedProduct, cartItems]);
 
-  const updateCount = () => {
-    const item = cartItems.items.filter(
-      obj => obj?.id === selectedProduct?.varietyList[0]?.id,
+  const updateCount = (product: any) => {
+    const item = cartItems.find(
+      (obj: any) => obj?.id === product?.varietyList[0]?.id,
     );
-
-    if (item.length === 1) {
-      setCount(item[0].quantity);
+    if (item) {
+      setCount(item.quantity);
+      setIsButton1Visible(false);
     } else {
       setCount(0);
+      setIsButton1Visible(true);
     }
   };
 
@@ -460,7 +467,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             )}
 
             {/* Add To Cart Button */}
-            {count <= 0 ? (
+            {isButton1Visible ? (
               <Pressable
                 onPress={handleButtonPress}
                 style={{
@@ -526,7 +533,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
             )}
           </View>
           {/* <Pressable > */}
-          {count !== 0 && (
+          {!isButton1Visible && (
             <Pressable style={styles.floatingButton} onPress={navigateToCart}>
               <View
                 style={{

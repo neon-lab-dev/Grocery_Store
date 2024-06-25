@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, Pressable, useToast, Box} from 'native-base';
 import {
   horizontalScale,
@@ -14,7 +14,6 @@ import {
   removeItem,
 } from '../../redux/slices/actions';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
-import {useFocusEffect} from '@react-navigation/native';
 interface ProductDataItem {
   id: string;
   name: string;
@@ -51,17 +50,15 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
-  const [count, setCount] = useState(0);
-  const [isButton1Visible, setIsButton1Visible] = useState(true);
-  const cartItems = useSelector((state: any) => state.cart);
+  const cartItems = useSelector((state: any) => state.cart.items);
+  const cartItem = cartItems.find((item: any) => item.id === product.id);
+  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
 
-  useFocusEffect(() => {
-    const cartItemCount = cartItems.items.length;
-    if (cartItemCount === 0) {
-      setIsButton1Visible(true);
-      setCount(0);
-    }
-  });
+  useEffect(() => {
+    setCount(cartItem ? cartItem.quantity : 0);
+    setIsButton1Visible(!cartItem);
+  }, [cartItem]);
 
   const offerPerIndex = products.varietyList.findIndex(
     item => item.discountPercent > 0,

@@ -13,7 +13,7 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
     try {
-      const NumberOfProducts=10;
+      const NumberOfProducts = 10;
       const response = await getProducts(NumberOfProducts);
       const slicedProducts = response.content.slice(0, 10);
       setProducts(slicedProducts);
@@ -44,15 +44,5 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
       </ScrollView>
     </View>
   );
-};
-const getImage = (imageName: string) => {
-  switch (imageName) {
-    case 'item1':
-      return require('../../assets/images/Product-Image/Tomato.png');
-    case 'item2':
-      return require('../../assets/images/Product-Image/Ginger.png');
-    default:
-      return null;
-  }
 };
 export default ProductHorizontalScroll;
