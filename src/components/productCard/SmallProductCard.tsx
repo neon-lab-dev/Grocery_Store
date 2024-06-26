@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 import {Colors} from '../../constants/colors';
 import {View, Text, Image, Pressable, useToast, Box} from 'native-base';
@@ -44,20 +44,18 @@ interface ProductCardProps {
 }
 const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   const product = {...products, id: products.varietyList[0].id};
-  const cartItems = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
-  const [count, setCount] = useState(0);
-  const [isButton1Visible, setIsButton1Visible] = useState(true);
+  const cartItems = useSelector((state: any) => state.cart.items);
+  const cartItem = cartItems.find((item: any) => item.id === product.id);
+  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
 
-  useFocusEffect(() => {
-    const cartItemCount = cartItems.items.length;
-    if (cartItemCount === 0) {
-      setIsButton1Visible(true);
-      setCount(0);
-    }
-  });
+  useEffect(() => {
+    setCount(cartItem ? cartItem.quantity : 0);
+    setIsButton1Visible(!cartItem);
+  }, [cartItem]);
 
   const offerPerIndex = products.varietyList.findIndex(
     item => item.discountPercent > 0,
