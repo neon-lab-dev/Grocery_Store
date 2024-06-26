@@ -11,6 +11,7 @@ import {
   incrementItem,
   removeItem,
 } from '../../redux/slices/actions';
+import {styles} from './style';
 
 // interface CartItem {
 //   id: number;
@@ -120,10 +121,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
       borderBottomColor={'accent.100'}>
       <View flex={1} flexDir={'row'}>
         <Image
-          style={{
-            height: 45,
-            width: 50,
-          }}
+          style={styles.image}
           alt="Image"
           source={{uri: item.varietyList[0].documentUrls[0]}}
           resizeMode="contain"
