@@ -3,7 +3,7 @@ import {
   horizontalScale,
   scaleFontSize,
   verticalScale,
-} from 'src/assets/scaling';
+} from '../../assets/scaling.ts';
 
 export const styles = StyleSheet.create({
   mainCategoryCard: {
