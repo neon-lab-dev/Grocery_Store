@@ -55,6 +55,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
 
   React.useEffect(() => {
     selAddress();
+    getDeliveryCharge();
     const unsubscribe = NetInfo.addEventListener(state => {
       dispatch(setNetworkStatus(state.isConnected));
     });
@@ -70,12 +71,12 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     if (address != null) {
       setSelectAddress(address);
       setisAddressPresent(true);
-      setLoaderVisible(false);
+      // setLoaderVisible(false);
     } else if (address === null) {
       setisAddressPresent(false);
-      setLoaderVisible(false);
+      // setLoaderVisible(false);
     }
-    setLoaderVisible(false);
+    // setLoaderVisible(false);
   };
 
   const fetchAddress = async () => {
@@ -106,22 +107,53 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
         {varietyId: item.varietyList[0].id, boughtQuantity: item.quantity},
       ]);
     });
-
-    getDeliveryCharge();
   }, [cartItems]);
 
-  const getDeliveryCharge = async () => {
+  // const getDeliveryCharge = async () => {
+  //   if (isConnected) {
+  //     try {
+  //       const delCharge = await evaluateOrder(varetyIds);
+  //       setDeliveryCharge(delCharge.deliveryCharges);
+  //     } catch (error) {}
+  //   } else {
+  //     toast.showToast('Please Check Your Internet Connection');
+  //   }
+  // };
+
+  const getDeliveryCharge = React.useCallback(async () => {
     if (isConnected) {
       try {
         const delCharge = await evaluateOrder(varetyIds);
         setDeliveryCharge(delCharge.deliveryCharges);
-      } catch (error) {}
+        setLoaderVisible(false);
+      } catch (error) {
+        console.error('Error evaluating order:', error);
+        setLoaderVisible(false);
+      }
     } else {
+      setLoaderVisible(false);
       toast.showToast('Please Check Your Internet Connection');
     }
-  };
+  }, [isConnected, varetyIds]);
 
-  const TotalPrice = cartItems.totalPrice + deliveryCharge;
+  // const getDeliveryCharge = React.useMemo(() => {
+  //   return async () => {
+  //     if (isConnected) {
+  //       try {
+  //         const delCharge = await evaluateOrder(varetyIds);
+  //         setDeliveryCharge(delCharge.deliveryCharges);
+  //         return delCharge.deliveryCharges;
+  //       } catch (error) {
+  //         console.error('Error evaluating order:', error);
+  //         return null;
+  //       }
+  //     } else {
+  //       toast.showToast('Please Check Your Internet Connection');
+  //       return null;
+  //     }
+  //   };
+  // }, [isConnected, varetyIds, setDeliveryCharge, evaluateOrder, toast]);
+  const TotalPrice = cartItems.totalPrice;
 
   useFocusEffect(() => {
     fetchAddress();
@@ -153,7 +185,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     navigation.popToTop();
   };
 
-  getDeliveryCharge();
+  // getDeliveryCharge();
 
   // console.log(cartItems?.items[2]?.varietyList);
 
@@ -204,7 +236,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             ))}
           </View>
           <BillSummaryCard
-            cutOffPrice={totalDiscountedPrice}
+            cutOffPrice={totalDiscountedPrice + deliveryCharge}
             deliveryCharge={deliveryCharge}
             itemPrice={TotalPrice}
             price={TotalPrice + deliveryCharge}
@@ -347,7 +379,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                     color={'primary.50'}
                     lineHeight={24.2}
                     letterSpacing={-0.04}>
-                    ₹{TotalPrice.toFixed(2)}
+                    ₹{(TotalPrice + deliveryCharge).toFixed(2)}
                   </Text>
                 </View>
                 <View flexDir={'row'} alignItems={'center'}>
