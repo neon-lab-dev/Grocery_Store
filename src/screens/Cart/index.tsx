@@ -275,11 +275,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           {isAddressPresent && (
             <View
               flexDir={'row'}
-              px={10}
+              px={5}
               pt={5}
               justifyContent={'space-around'}
               alignItems={'center'}>
-              <View>
+              <View flex={1}>
                 <Text
                   color={'#000000'}
                   fontFamily={'Inter_Medium'}
@@ -289,14 +289,14 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                   Deliver to
                 </Text>
                 <Text
-                  // numberOfLines={1}
-                  style={{width: '80%'}}
-                  // width={100}
+                maxWidth={"90%"}
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(12)}
                   color={'accent.600'}
                   lineHeight={14}
-                  letterSpacing={-0.04}>
+                  letterSpacing={-0.04}
+                  noOfLines={2}
+                  isTruncated>
                   {selectAddress !== null
                     ? `${selectAddress?.addressLine1},${selectAddress?.landmark},${selectAddress?.city},${selectAddress?.state}`
                     : `Select the Address`}

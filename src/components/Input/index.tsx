@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {IInputProps, Input, Text} from 'native-base';
+import {IInputProps, Input, Text,} from 'native-base';
+import { KeyboardTypeOptions } from 'react-native';
 import {
   verticalScale,
   scaleFontSize,
@@ -13,6 +14,7 @@ interface TextInputProps extends IInputProps {
   leftElement?: JSX.Element;
   isErrorShown: boolean;
   maxLength?: number;
+  keyboardType?: KeyboardTypeOptions; 
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -22,6 +24,7 @@ const TextInput: React.FC<TextInputProps> = ({
   leftElement,
   isErrorShown,
   maxLength,
+  keyboardType,
 }) => {
   return (
     <>
@@ -48,6 +51,7 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholder={placeholder}
         InputLeftElement={leftElement}
         maxLength={maxLength}
+        keyboardType={keyboardType}
       />
     </>
   );

@@ -235,6 +235,7 @@ const AddAddress = ({route, navigation}) => {
           Pincode*
         </Text>
         <TextInput
+          keyboardType='numeric'
           value={pincode}
           setValue={setPincode}
           placeholder="Enter Here"
