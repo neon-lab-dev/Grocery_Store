@@ -14,7 +14,7 @@ export const APIClient = axios.create({
 // FOR AUTHENTICATED ROUTES
 // TOKEN TO BE EXTRACTED FROM STORE
 const AuthAPIClient = axios.create({
-  baseURL: 'http://ec2-3-7-26-46.ap-south-1.compute.amazonaws.com/v1',
+  baseURL: 'http://35.154.133.112:8802/v1',
   headers: {
     'Content-Type': 'application/json',
     'Accept-Encoding': 'gzip',
