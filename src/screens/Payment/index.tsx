@@ -429,7 +429,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
     );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
-  const TotalPrice = cartItems.totalPrice + deliveryCharges;
+  const TotalPrice = cartItems.totalPrice;
   useEffect(() => {
     selAddress();
   }, []);
@@ -476,7 +476,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
       </Pressable>
       <View>
         <BillSummaryCard
-          cutOffPrice={totalDiscountedPrice}
+          cutOffPrice={totalDiscountedPrice + deliveryCharges}
           deliveryCharge={deliveryCharges}
           itemPrice={TotalPrice}
           price={TotalPrice + deliveryCharges}
@@ -497,7 +497,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
               <Text style={styles.bottomCardText}>{cartItemCount} Item |</Text>
               {/* <View style={styles.straightLine} /> */}
               <Text style={[styles.bottomCardText, {fontFamily: 'Inter_Bold'}]}>
-                ₹{TotalPrice.toFixed(2)}
+                ₹{(TotalPrice + deliveryCharges).toFixed(2)}
               </Text>
             </View>
             <View
