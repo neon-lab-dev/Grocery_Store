@@ -109,17 +109,6 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     });
   }, [cartItems]);
 
-  // const getDeliveryCharge = async () => {
-  //   if (isConnected) {
-  //     try {
-  //       const delCharge = await evaluateOrder(varetyIds);
-  //       setDeliveryCharge(delCharge.deliveryCharges);
-  //     } catch (error) {}
-  //   } else {
-  //     toast.showToast('Please Check Your Internet Connection');
-  //   }
-  // };
-
   const getDeliveryCharge = React.useCallback(async () => {
     if (isConnected) {
       try {
@@ -136,23 +125,6 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     }
   }, [isConnected, varetyIds]);
 
-  // const getDeliveryCharge = React.useMemo(() => {
-  //   return async () => {
-  //     if (isConnected) {
-  //       try {
-  //         const delCharge = await evaluateOrder(varetyIds);
-  //         setDeliveryCharge(delCharge.deliveryCharges);
-  //         return delCharge.deliveryCharges;
-  //       } catch (error) {
-  //         console.error('Error evaluating order:', error);
-  //         return null;
-  //       }
-  //     } else {
-  //       toast.showToast('Please Check Your Internet Connection');
-  //       return null;
-  //     }
-  //   };
-  // }, [isConnected, varetyIds, setDeliveryCharge, evaluateOrder, toast]);
   const TotalPrice = cartItems.totalPrice;
 
   useFocusEffect(() => {
@@ -184,10 +156,6 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const gotoHome = () => {
     navigation.popToTop();
   };
-
-  // getDeliveryCharge();
-
-  // console.log(cartItems?.items[2]?.varietyList);
 
   return (
     <View flex={1} bgColor={'accent.50'}>
