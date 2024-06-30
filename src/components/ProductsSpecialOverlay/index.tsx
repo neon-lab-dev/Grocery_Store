@@ -20,22 +20,44 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   const [text, setText] = useState<string>('');
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const [count, setCount] = useState(0);
+  const [perPage, setPerPage] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const fetchProducts = async () => {
     try {
-      const NumberOfProducts=30;
       setIsLoading(true);
-      const response = await searchProduct(text,NumberOfProducts);
-      setProducts(response.content);
+      const response = await searchProduct(
+        text,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        pageNo,
+      );
+      setProducts(prevResults =>
+        pageNo === 1 ? response.content : [...prevResults, ...response.content],
+      );
+      setCount(response.count);
+      setPerPage(response.perPage);
     } catch (error) {
       console.log(error);
     }
     setIsLoading(false);
+    setIsLoadingMore(false);
+  };
+
+  const loadMoreResults = () => {
+    if (perPage < count) {
+      setIsLoadingMore(true);
+      setPageNo(prevPage => prevPage + 1);
+    }
   };
 
   useEffect(() => {
     fetchProducts();
-  }, [text]);
+  }, [text, pageNo]);
 
   return (
     <View style={{flex: 1}}>
@@ -82,6 +104,19 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
               onPress={() => onPress(item.name)}
             />
           )}
+          onEndReached={loadMoreResults}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={
+            isLoadingMore && (
+              <View style={{padding: verticalScale(10)}}>
+                <Image
+                  alt="loading"
+                  source={require('../../assets/images/icons/loading.gif')}
+                  style={{height: 250, width: 250}}
+                />
+              </View>
+            )
+          }
         />
       )}
     </View>

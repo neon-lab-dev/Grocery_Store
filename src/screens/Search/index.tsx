@@ -55,6 +55,10 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [searchResults, setSearchResults] = useState([]);
   const [sortBy, setSortBy] = useState('default');
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [pageNo, setPageNo] = useState(1);
+  const [count, setCount] = useState(0);
+  const [perPage, setPerPage] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -80,10 +84,10 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    const addRecentSearch = async () => {
+    const storeRecentSearch = async () => {
       await setItem('recentSearch', recentSearch);
     };
-    addRecentSearch();
+    storeRecentSearch();
   }, [recentSearch]);
 
   const addRecentSearch = (searchTerm: string) => {
@@ -117,30 +121,44 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   const searchProducts = async () => {
     try {
-      const NumberOfProducts = 10;
       setIsLoading(true);
       const response = await searchProduct(
         searchInp,
-        NumberOfProducts,
         sortBy,
         minValue,
         maxValue,
         selectedBrand,
+        pageNo,
       );
       if (response && response.content) {
-        setSearchResults(response.content);
+        setSearchResults(prevResults =>
+          pageNo === 1
+            ? response.content
+            : [...prevResults, ...response.content],
+        );
+        setCount(response.count);
+        setPerPage(response.perPage);
       } else {
         setErrorFetching(true);
       }
       setIsLoading(false);
+      setIsLoadingMore(false);
     } catch (error) {
       setErrorFetching(true);
+      setIsLoadingMore(false);
+    }
+  };
+
+  const loadMoreResults = () => {
+    if (perPage < count) {
+      setIsLoadingMore(true);
+      setPageNo(prevPage => prevPage + 1);
     }
   };
 
   useEffect(() => {
     searchProducts();
-  }, [searchInp, sortBy, minValue, maxValue, selectedBrand]);
+  }, [searchInp, sortBy, minValue, maxValue, selectedBrand, pageNo]);
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
@@ -332,6 +350,20 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               marginBottom: verticalScale(15),
               gap: horizontalScale(15),
             }}
+            onEndReached={loadMoreResults}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={
+              isLoadingMore && (
+                <View p={verticalScale(10)}>
+                  <Image
+                    alt="loading"
+                    source={require('../../assets/images/icons/loading.gif')}
+                    h={250}
+                    w={250}
+                  />
+                </View>
+              )
+            }
           />
         </View>
       )}

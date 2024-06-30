@@ -13,17 +13,21 @@ export const getProducts = async (NumberOfProducts: Number) => {
 
 export const searchProduct = async (
   searchInp: string,
-  NumberOfProducts?: Number,
   sortBy?: string,
   minValue?: number,
   maxValue?: number,
   selectedBrand?: string,
+  pageNo?: number,
+  NumberOfProducts?: Number,
 ) => {
   try {
     let url = '/product/list';
     let queryParams = [];
     if (NumberOfProducts) {
       queryParams.push(`perPage=${NumberOfProducts}`);
+    }
+    if (pageNo) {
+      queryParams.push(`pageNo=${pageNo}`);
     }
     if (searchInp) {
       queryParams.push(`name=${searchInp}`);
@@ -50,7 +54,7 @@ export const searchProduct = async (
     }
 
     const response = await AuthAPIClient.get(url);
-    // console.log('response-rr', response);
+    // console.log('response-rr', response.data);
     return response.data.responseBody;
   } catch (error) {
     console.log(error);
