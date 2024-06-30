@@ -40,6 +40,10 @@ const CategoryProducts: FC = ({navigation, route}) => {
   const [categoryId, setCategoryId] = useState<number>(0);
   const [CategoryData, setCategoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const [count, setCount] = useState(0);
+  const [perPage, setPerPage] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
@@ -74,17 +78,32 @@ const CategoryProducts: FC = ({navigation, route}) => {
       let queryParams = [];
       // queryParams.push(`subCategory=${SubCategory}`);
       queryParams.push(`subCategory2=${subCategory2}`);
+      queryParams.push(`pageNo=${pageNo}`);
 
       if (queryParams.length > 0) {
         url += `?${queryParams.join('&')}`;
       }
       const response = await AuthAPIClient.get(url);
       if (response.data.responseBody && response.data.responseBody.content) {
-        setCategoryData(response.data.responseBody.content);
+        setCategoryData(prevResults =>
+          pageNo === 1
+            ? response.data.responseBody.content
+            : [...prevResults, ...response.data.responseBody.content],
+        );
+        setCount(response.count);
+        setPerPage(response.perPage);
       }
       setIsLoading(false);
+      setIsLoadingMore(false);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const loadMoreResults = () => {
+    if (perPage < count) {
+      setIsLoadingMore(true);
+      setPageNo(prevPage => prevPage + 1);
     }
   };
 
@@ -105,7 +124,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
 
   useEffect(() => {
     fetchCategoryProducts();
-  }, [categoryId, subCategory2]);
+  }, [categoryId, subCategory2, pageNo]);
 
   return (
     <>
@@ -201,6 +220,20 @@ const CategoryProducts: FC = ({navigation, route}) => {
                   products={item}
                 />
               )}
+              onEndReached={loadMoreResults}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={
+                isLoadingMore && (
+                  <View p={verticalScale(10)}>
+                    <Image
+                      alt="loading"
+                      source={require('../../assets/images/icons/loading.gif')}
+                      h={250}
+                      w={250}
+                    />
+                  </View>
+                )
+              }
             />
           )}
         </View>
