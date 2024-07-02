@@ -159,7 +159,6 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               SetsearchInp('');
               setSelectedRecentSearch('');
               setRecentSearch([]);
-              SetsearchInp('');
               setSortBy('default');
               setMinValue(0);
               setMaxValue(1000);

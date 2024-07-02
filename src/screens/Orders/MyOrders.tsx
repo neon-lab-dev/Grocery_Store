@@ -76,7 +76,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
                     fontSize: scaleFontSize(30),
                     marginTop: verticalScale(20),
                   }}>
-                  No Orders!
+                  No Orders Found!
                 </Text>
               </View>
             }
