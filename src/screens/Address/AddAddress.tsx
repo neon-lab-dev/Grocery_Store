@@ -13,8 +13,11 @@ import {addAddress, updateAddress} from '../../api/auth_routes';
 import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
 import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {RefreshControl} from 'react-native';
 
 const AddAddress = ({route, navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const {location, title} = route.params;
   const [landmark, setLandmark] = useState(
     title === 'Edit' ? location.landmark : '',
@@ -59,6 +62,13 @@ const AddAddress = ({route, navigation}) => {
       unsubscribe();
     };
   }, [dispatch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const saveAddress = async () => {
     if (isConnected) {
@@ -115,6 +125,9 @@ const AddAddress = ({route, navigation}) => {
       justifyContent={'space-between'}
       flexShrink={1}>
       <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         flex={1}
         contentContainerStyle={{paddingBottom: verticalScale(30)}}
         px={horizontalScale(20)}
@@ -235,7 +248,7 @@ const AddAddress = ({route, navigation}) => {
           Pincode*
         </Text>
         <TextInput
-          keyboardType='numeric'
+          keyboardType="numeric"
           value={pincode}
           setValue={setPincode}
           placeholder="Enter Here"

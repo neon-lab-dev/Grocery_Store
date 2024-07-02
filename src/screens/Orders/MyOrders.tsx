@@ -4,7 +4,7 @@ import {OrderComponent} from '../../components/Orders/Order_Component';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 import {getOrders} from '../../api/auth_routes';
-import {FlatList, Text} from 'react-native';
+import {FlatList, RefreshControl, Text} from 'react-native';
 import {verticalScale, scaleFontSize} from '../../assets/scaling';
 import Loader from '../../components/Loader/Loader';
 import NetInfo from '@react-native-community/netinfo';
@@ -17,6 +17,7 @@ interface OrdersProps {
 }
 
 const Orders: React.FC<OrdersProps> = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [productsList, setProductList] = React.useState<any[]>([]);
   const [loaderVisible, setLoaderVisible] = React.useState(true);
   const dispatch = useDispatch();
@@ -41,6 +42,14 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
     };
   }, [dispatch, isConnected]);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchOrders();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   const fetchOrders = async () => {
     try {
       setLoaderVisible(true);
@@ -62,6 +71,13 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
       ) : (
         <View flex={1} bgColor={'accent.50'} pt={5}>
           <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['red']}
+              />
+            }
             ListEmptyComponent={
               <Text
                 style={{

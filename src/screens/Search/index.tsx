@@ -22,7 +22,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import FilterOverlay from '../../components/Search/SearchFilterOverlay';
 import SearchInput from '../../components/SearchInput';
 import GoBack from '../../components/Navigation/GoBack';
-import {Dimensions} from 'react-native';
+import {Dimensions, RefreshControl} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {getItem, setItem} from '../../api/localstorage';
@@ -37,6 +37,7 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
 
@@ -89,6 +90,14 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     };
     storeRecentSearch();
   }, [recentSearch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    searchProducts();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const addRecentSearch = (searchTerm: string) => {
     if (searchTerm !== '') {
@@ -331,6 +340,13 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       ) : (
         <View flex={1} bg={'white'}>
           <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['orange']}
+              />
+            }
             flex={1}
             ListHeaderComponent={ListHeaderComponent}
             data={searchResults}

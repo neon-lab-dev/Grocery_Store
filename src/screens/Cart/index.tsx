@@ -1,13 +1,4 @@
-import {
-  Button,
-  Center,
-  Image,
-  Modal,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from 'native-base';
+import {Button, Center, Image, Modal, Pressable, Text, View} from 'native-base';
 import * as React from 'react';
 import {CartItemCard} from '../../components/Cart/CartItemCard';
 import {
@@ -32,12 +23,15 @@ import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
 import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 import {toast} from '../../components/Toast/Toast';
+import {RefreshControl, ScrollView} from 'react-native';
 
 interface CartProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Cart'>;
 }
 
 const Cart: React.FC<CartProps> = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const [varetyIds, setVarietyIds] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [loaderVisible, setLoaderVisible] = React.useState(false);
@@ -64,6 +58,15 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       unsubscribe();
     };
   }, [dispatch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getDeliveryCharge();
+    getAddress();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const selAddress = async () => {
     setLoaderVisible(true);
@@ -179,8 +182,15 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           {isCartEmpty ? 'Cart' : `Cart(${cartItemCount})`}
         </Text>
       </View>
+
       {isCartEmpty ? (
-        <View flex={1} alignItems={'center'} justifyContent={'center'}>
+        <ScrollView
+          flex={1}
+          alignItems={'center'}
+          justifyContent={'center'}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
           <Image
             alt="empty cart"
             source={require('../../assets/images/icons/empty-cart.png')}
@@ -195,9 +205,13 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             letterSpacing={-0.04}>
             Cart is Empty
           </Text>
-        </View>
+        </ScrollView>
       ) : (
-        <ScrollView flex={0.8}>
+        <ScrollView
+          flex={0.8}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
           <View bg={'white'} mt={verticalScale(15)}>
             {cartItems.items.map((data: {id: React.Key | null | undefined}) => (
               <CartItemCard key={data.id} item={data} />
@@ -289,7 +303,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                   Deliver to
                 </Text>
                 <Text
-                maxWidth={"90%"}
+                  maxWidth={'90%'}
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(12)}
                   color={'accent.600'}
@@ -368,6 +382,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           </Center>
         </View>
       )}
+
       <Loader isOpen={loaderVisible} />
     </View>
   );

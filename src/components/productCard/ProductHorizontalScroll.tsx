@@ -11,6 +11,7 @@ interface ProductCardProps {
 
 const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
   const [products, setProducts] = useState([]);
+
   const fetchProducts = async () => {
     try {
       const NumberOfProducts = 10;

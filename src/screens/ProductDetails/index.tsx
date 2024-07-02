@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {FC, useEffect, useState} from 'react';
-import {FlatList, Image, Pressable} from 'react-native';
+import {FlatList, Image, Pressable, RefreshControl} from 'react-native';
 import {View, Text, ScrollView, useToast, Box} from 'native-base';
 import {
   horizontalScale,
@@ -43,6 +43,7 @@ interface UnitCardProps {
 }
 
 const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const navigation = useNavigation();
   const productName = route.params.productName;
   const [selProduct, setSelProduct] = useState(null);
@@ -65,56 +66,65 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const isConnected = useSelector(state => state.network.isConnected);
 
   useEffect(() => {
-    const fetchProductDetails = async () => {
-      try {
-        setProductDetails(null);
-        setIsButton1Visible(true);
-        setCount(0);
-        if (selProduct) {
-          const response = await searchProduct(selProduct);
-          if (response.content) {
-            const initialSelectedProduct = {...response.content[0]};
-            initialSelectedProduct.varietyList = [
-              response.content[0].varietyList[0],
-            ];
-            setSubCat2(response.content[0].subCategory2);
-
-            setProductDetails(response.content[0]);
-            setSelectedProduct(initialSelectedProduct);
-            setSelectedImageUrl(
-              response.content[0].varietyList[0].documentUrls[0],
-            );
-          }
-        } else if (productName) {
-          const response = await searchProduct(productName);
-          if (response.content) {
-            const initialSelectedProduct = {...response.content[0]};
-            initialSelectedProduct.varietyList = [
-              response.content[0].varietyList[0],
-            ];
-            setSubCat2(response.content[0].subCategory2);
-            setProductDetails(response.content[0]);
-            setSelectedProduct(initialSelectedProduct);
-            setSelectedImageUrl(
-              response.content[0].varietyList[0]?.documentUrls[0],
-            );
-            updateCount(initialSelectedProduct);
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setSelectedUnit(0);
-      }
-    };
     fetchProductDetails();
   }, [productName, selProduct]);
+
+  const fetchProductDetails = async () => {
+    try {
+      setProductDetails(null);
+      setIsButton1Visible(true);
+      setCount(0);
+      if (selProduct) {
+        const response = await searchProduct(selProduct);
+        if (response.content) {
+          const initialSelectedProduct = {...response.content[0]};
+          initialSelectedProduct.varietyList = [
+            response.content[0].varietyList[0],
+          ];
+          setSubCat2(response.content[0].subCategory2);
+
+          setProductDetails(response.content[0]);
+          setSelectedProduct(initialSelectedProduct);
+          setSelectedImageUrl(
+            response.content[0].varietyList[0].documentUrls[0],
+          );
+        }
+      } else if (productName) {
+        const response = await searchProduct(productName);
+        if (response.content) {
+          const initialSelectedProduct = {...response.content[0]};
+          initialSelectedProduct.varietyList = [
+            response.content[0].varietyList[0],
+          ];
+          setSubCat2(response.content[0].subCategory2);
+          setProductDetails(response.content[0]);
+          setSelectedProduct(initialSelectedProduct);
+          setSelectedImageUrl(
+            response.content[0].varietyList[0]?.documentUrls[0],
+          );
+          updateCount(initialSelectedProduct);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSelectedUnit(0);
+    }
+  };
 
   useEffect(() => {
     if (selectedProduct) {
       updateCount(selectedProduct);
     }
   }, [selectedProduct, cartItems]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchProductDetails();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -286,7 +296,15 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               </Text>
             </View>
           </View>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView
+            style={{flex: 1}}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['red']}
+              />
+            }>
             <View style={styles.imageContainer}>
               {selectedProduct?.varietyList[0].discountPercent !== 0 && (
                 <View style={styles.offPerContainer}>
