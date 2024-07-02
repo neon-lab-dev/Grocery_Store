@@ -16,19 +16,19 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
   const [showSecondImage, setShowSecondImage] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowSecondImage(true), 1380);
+    const timer = setTimeout(() => setShowSecondImage(true), 800);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     const isLoggedIn = async () => {
-      await new Promise(resolve => setTimeout(resolve, 3500));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       const token = await getItem('token');
-      if (token) {
-        navigation.replace('App', {screen: 'Home'});
-      } else {
-        navigation.replace('Auth', {screen: 'Login'});
-      }
+      // if (token) {
+      //   navigation.replace('App', {screen: 'Home'});
+      // } else {
+      //   navigation.replace('Auth', {screen: 'Login'});
+      // }
     };
     isLoggedIn();
   }, [navigation]);
@@ -38,19 +38,30 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
       {showSecondImage && (
         <Animatable.Image
           source={require('../../assets/images/SplashScreen/Kasera.png')}
-          animation="zoomIn"
-          duration={2500}
+          animation={unfoldAnimation}
+          duration={400}
           style={styles.newImage}
         />
       )}
       <Animatable.Image
         source={require('../../assets/images/SplashScreen/G.png')}
         animation={bottomToTopBounceThenRightAndShrink}
-        duration={3700}
+        duration={1500}
         style={[styles.image]}
       />
     </View>
   );
+};
+
+const unfoldAnimation = {
+  0: {
+    translateY: 0,
+    scaleX: 0,
+  },
+  1: {
+    translateY: 0,
+    scaleX: 1,
+  },
 };
 
 const bottomToTopBounceThenRightAndShrink = {
@@ -64,12 +75,12 @@ const bottomToTopBounceThenRightAndShrink = {
     translateX: 0,
     scale: 1,
   },
-  0.7: {
+  0.6: {
     translateY: 50,
     translateX: 0,
     scale: 0.9,
   },
-  0.8: {
+  0.9: {
     translateY: 0,
     translateX: 0,
     scale: 0.9,
@@ -104,7 +115,6 @@ const styles = StyleSheet.create({
   },
   newImage: {
     left: horizontalScale(64),
-    // width: horizontalScale(180),
     width: horizontalScale(180),
     height: verticalScale(38),
     position: 'absolute',
