@@ -11,6 +11,7 @@ import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
 import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 import {toast} from '../../components/Toast/Toast';
+import {height} from '../../assets/scaling.ts';
 
 interface OrdersProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Orders'>;
@@ -63,15 +64,21 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
         <View flex={1} bgColor={'accent.50'} pt={5}>
           <FlatList
             ListEmptyComponent={
-              <Text
-                style={{
-                  color: '#F97316',
-                  textAlign: 'center',
-                  fontSize: scaleFontSize(30),
-                  marginTop: verticalScale(20),
-                }}>
-                No Orders!
-              </Text>
+              <View
+                height={verticalScale(450)}
+                flex={1}
+                justifyContent={'center'}
+                alignItems={'center'}>
+                <Text
+                  style={{
+                    color: '#F97316',
+                    textAlign: 'center',
+                    fontSize: scaleFontSize(30),
+                    marginTop: verticalScale(20),
+                  }}>
+                  No Orders Found!
+                </Text>
+              </View>
             }
             data={productsList}
             renderItem={({item, index}) => (
