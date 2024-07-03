@@ -302,7 +302,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                colors={['red']}
+                colors={['#F97316']}
               />
             }>
             <View style={styles.imageContainer}>

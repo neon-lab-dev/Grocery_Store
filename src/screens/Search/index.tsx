@@ -344,7 +344,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                colors={['orange']}
+                colors={['#F97316']}
               />
             }
             flex={1}

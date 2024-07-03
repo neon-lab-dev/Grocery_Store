@@ -75,7 +75,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                colors={['red']}
+                colors={['#F97316']}
               />
             }
             ListEmptyComponent={

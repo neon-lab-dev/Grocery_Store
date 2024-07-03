@@ -1,16 +1,31 @@
-import React, {useCallback, useState} from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import {View, ScrollView} from 'native-base';
 import {horizontalScale} from '../../assets/scaling';
 import ProductCard from './ProductCard';
 import {getProducts} from '../../api/auth_routes';
 import {useFocusEffect} from '@react-navigation/native';
+import {Alert} from 'react-native';
 
 interface ProductCardProps {
   onPress: (name: string) => void;
 }
 
-const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
+const ProductHorizontalScroll = forwardRef<
+  {childFunction: () => void},
+  ProductCardProps
+>(({onPress}, ref) => {
   const [products, setProducts] = useState([]);
+
+  useImperativeHandle(ref, () => ({
+    childFunction() {
+      fetchProducts();
+    },
+  }));
 
   const fetchProducts = async () => {
     try {
@@ -35,15 +50,14 @@ const ProductHorizontalScroll: React.FC<ProductCardProps> = ({onPress}) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{paddingRight: horizontalScale(30)}}>
-        {products.map(data => {
-          return (
-            <View key={data.id}>
-              <ProductCard onPress={() => onPress(data.name)} products={data} />
-            </View>
-          );
-        })}
+        {products.map((data: any) => (
+          <View key={data.id}>
+            <ProductCard onPress={() => onPress(data.name)} products={data} />
+          </View>
+        ))}
       </ScrollView>
     </View>
   );
-};
+});
+
 export default ProductHorizontalScroll;

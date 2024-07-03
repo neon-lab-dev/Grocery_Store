@@ -1,7 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React, {FC, useEffect, useState} from 'react';
-import {FlatList, Image, Pressable, ScrollView} from 'react-native';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+} from 'react-native';
 import {View, Text} from 'native-base';
 import {
   horizontalScale,
@@ -48,6 +54,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   // console.log('product', productName);
 
   const [selProduct, setSelProduct] = useState(null);
+  const [refreshing, setRefreshing] = React.useState(false);
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [selectedImageUrl, setSelectedImageUrl] = useState('');
   const [selectedUnit, setSelectedUnit] = useState<number>(0);
@@ -66,51 +73,60 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
 
   const [subCat2, setSubCat2] = useState('');
 
-  useEffect(() => {
-    const fetchProductDetails = async () => {
-      try {
-        setProductDetails(null);
-        setIsButton1Visible(true);
-        setCount(0);
-        if (selProduct) {
-          const response = await searchProduct(selProduct);
-          if (response.content) {
-            const initialSelectedProduct = {...response.content[0]};
-            initialSelectedProduct.varietyList = [
-              response.content[0].varietyList[0],
-            ];
-            setSubCat2(response.content[0].subCategory2);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchProductDetails();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
-            setProductDetails(response.content[0]);
-            setSelectedProduct(initialSelectedProduct);
-            setSelectedImageUrl(
-              response.content[0].varietyList[0].documentUrls[0],
-            );
-          }
-        } else if (productName) {
-          const response = await searchProduct(productName);
-          if (response.content) {
-            const initialSelectedProduct = {...response.content[0]};
-            initialSelectedProduct.varietyList = [
-              response.content[0].varietyList[0],
-            ];
-            setSubCat2(response.content[0].subCategory2);
-            setProductDetails(response.content[0]);
-            setSelectedProduct(initialSelectedProduct);
-            setSelectedImageUrl(
-              response.content[0].varietyList[0]?.documentUrls[0],
-            );
-            updateCount(initialSelectedProduct);
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setSelectedUnit(0);
-      }
-    };
+  useEffect(() => {
     fetchProductDetails();
   }, [productName, selProduct]);
+
+  const fetchProductDetails = async () => {
+    try {
+      setProductDetails(null);
+      setIsButton1Visible(true);
+      setCount(0);
+      if (selProduct) {
+        const response = await searchProduct(selProduct);
+        if (response.content) {
+          const initialSelectedProduct = {...response.content[0]};
+          initialSelectedProduct.varietyList = [
+            response.content[0].varietyList[0],
+          ];
+          setSubCat2(response.content[0].subCategory2);
+
+          setProductDetails(response.content[0]);
+          setSelectedProduct(initialSelectedProduct);
+          setSelectedImageUrl(
+            response.content[0].varietyList[0].documentUrls[0],
+          );
+        }
+      } else if (productName) {
+        const response = await searchProduct(productName);
+        if (response.content) {
+          const initialSelectedProduct = {...response.content[0]};
+          initialSelectedProduct.varietyList = [
+            response.content[0].varietyList[0],
+          ];
+          setSubCat2(response.content[0].subCategory2);
+          setProductDetails(response.content[0]);
+          setSelectedProduct(initialSelectedProduct);
+          setSelectedImageUrl(
+            response.content[0].varietyList[0]?.documentUrls[0],
+          );
+          updateCount(initialSelectedProduct);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSelectedUnit(0);
+    }
+  };
 
   useEffect(() => {
     if (selectedProduct) {
@@ -268,7 +284,14 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
         <SkeletonProductDetails />
       ) : (
         <View style={{justifyContent: 'space-between', flex: 1}}>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['#F97316']}
+              />
+            }>
             <View style={styles.imageContainer}>
               {selectedProduct?.varietyList[0].discountPercent !== 0 && (
                 <View style={styles.offPerContainer}>

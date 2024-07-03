@@ -81,7 +81,7 @@ const Login: React.FC<Props> = ({navigation}) => {
     <ScrollView
       scrollEnabled={false}
       refreshControl={
-        <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
       <Loader isOpen={isLoading} />
       <KeyboardAvoidingView

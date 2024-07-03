@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Pressable, Text, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import SearchInput from '../SearchInput';
 import {styles} from './style';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
@@ -17,6 +25,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   Close,
   onPress,
 }) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [text, setText] = useState<string>('');
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +33,14 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   const [count, setCount] = useState(0);
   const [perPage, setPerPage] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchProducts();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const fetchProducts = async () => {
     try {
@@ -86,6 +103,13 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
         </View>
       ) : (
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={['#F97316']}
+            />
+          }
           contentContainerStyle={{paddingBottom: verticalScale(30)}}
           columnWrapperStyle={{
             paddingHorizontal: horizontalScale(15),

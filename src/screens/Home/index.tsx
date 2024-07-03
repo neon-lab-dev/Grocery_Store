@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import style from './style';
 import {
   TouchableOpacity,
@@ -38,6 +38,7 @@ type Props = {
 };
 
 const Home: React.FC<Props> = ({navigation}) => {
+  const childRef = useRef();
   const [refreshing, setRefreshing] = React.useState(false);
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
@@ -69,6 +70,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchUser();
+    childRef.current.childFunction();
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -179,7 +181,10 @@ const Home: React.FC<Props> = ({navigation}) => {
                 </Text>
               </Pressable>
             </View>
-            <ProductHorizontalScroll onPress={item => listToDetails(item)} />
+            <ProductHorizontalScroll
+              onPress={item => listToDetails(item)}
+              ref={childRef}
+            />
             {Categories.length > 0 &&
               Categories.map((category, catIndex) => (
                 <View
