@@ -4,7 +4,11 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/MainNavigation';
 import * as Animatable from 'react-native-animatable';
 import {getItem} from '../../api/localstorage';
-import {horizontalScale, verticalScale} from '../../assets/scaling.ts';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling.ts';
 
 export interface SplashProps {
   navigation: StackNavigationProp<RootStackParamList, 'Splash'>;
@@ -36,12 +40,12 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
       {showSecondImage && (
-        <Animatable.Image
-          source={require('../../assets/images/SplashScreen/Kasera.png')}
+        <Animatable.Text
           animation={unfoldAnimation}
           duration={400}
-          style={styles.newImage}
-        />
+          style={styles.newImage}>
+          Kasera
+        </Animatable.Text>
       )}
       <Animatable.Image
         source={require('../../assets/images/SplashScreen/G.png')}
@@ -75,7 +79,7 @@ const bottomToTopBounceThenRightAndShrink = {
     translateX: 0,
     scale: 1,
   },
-  0.6: {
+  0.7: {
     translateY: 50,
     translateX: 0,
     scale: 0.9,
@@ -87,7 +91,7 @@ const bottomToTopBounceThenRightAndShrink = {
   },
   1: {
     translateY: 0,
-    translateX: 177 - 70,
+    translateX: horizontalScale(155 - 70),
     scale: 0.8,
   },
 };
@@ -103,22 +107,27 @@ const styles = StyleSheet.create({
     display: 'none',
   },
   image: {
-    width: horizontalScale(65),
-    height: verticalScale(100),
+    width: horizontalScale(71),
+    height: verticalScale(97),
     position: 'absolute',
     zIndex: 1,
-    top: '52%',
+    top: '52.4%',
     left: '50%',
     marginLeft: horizontalScale(-35),
     marginTop: verticalScale(-60),
     transform: [{translateX: -50}, {translateY: -30}],
   },
   newImage: {
-    left: horizontalScale(64),
-    width: horizontalScale(180),
-    height: verticalScale(38),
+    textAlign: 'center',
+    left: horizontalScale(68),
+    // width: 200,
+    // // backgroundColor: 'red',
+    // height: 44,
     position: 'absolute',
     zIndex: 0,
+    fontSize: scaleFontSize(55),
+    fontFamily: 'Montserrat-Black',
+    color: '#22C55E',
   },
 });
 
