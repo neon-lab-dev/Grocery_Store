@@ -1,5 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Alert, Linking, Pressable, View} from 'react-native';
+import {
+  Alert,
+  Linking,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  View,
+} from 'react-native';
 import {Box, Text, useToast} from 'native-base';
 import {horizontalScale, scaleFontSize} from '../../assets/scaling';
 import {Modal} from 'native-base';
@@ -24,7 +31,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {clearCart} from '../../redux/slices/actions';
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, {refresh} from '@react-native-community/netinfo';
 import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 
 interface Address {
@@ -39,6 +46,8 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
   const {deliveryCharges} = route.params;
   // console.log(deliveryCharges);
   const [loaderVisible, setLoaderVisible] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const [paymentLinkID, setPaymentLinkID] = useState('');
   const [value, setValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -63,6 +72,14 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
       unsubscribe();
     };
   }, [dispatch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setValue('');
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     navigation.setOptions({
@@ -443,7 +460,16 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
     }
   };
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView
+      style={styles.mainContainer}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={['red']}
+        />
+      }
+      scrollEnabled={false}>
       {/* Drop Down List  */}
       {/* Drop Down List  */}
       <Pressable
@@ -545,7 +571,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
         </Modal.Content>
       </Modal>
       <Loader isOpen={loaderVisible} />
-    </View>
+    </ScrollView>
   );
 };
 

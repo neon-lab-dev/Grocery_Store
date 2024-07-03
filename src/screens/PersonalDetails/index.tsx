@@ -17,7 +17,7 @@ import {
 } from '../../assets/scaling';
 import TextInput from '../../components/Input';
 import validators from '../../utils/validators';
-import {Platform} from 'react-native';
+import {Platform, RefreshControl} from 'react-native';
 import {fetchUserData, updateUserData} from '../../api/auth_routes';
 import {toast} from '../../components/Toast/Toast';
 import Loader from '../../components/Loader/Loader';
@@ -30,6 +30,7 @@ interface PersonalDetailsProps {
 }
 
 const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [originalName, setOriginalName] = useState('');
   const [originalEmail, setOriginalEmail] = useState('');
   const [originalMobileNo, setOriginalMobileNo] = useState('');
@@ -75,6 +76,13 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
       console.log(error);
     }
   };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const updateUser = async () => {
     if (isConnected) {
@@ -147,6 +155,13 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
           bgColor={'accent.50'}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['#F97316']}
+              />
+            }
             flex={1}
             flexGrow={1}
             ref={scrollViewRef}

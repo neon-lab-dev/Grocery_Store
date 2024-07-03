@@ -1,4 +1,4 @@
-import {Button, Center, Text, View} from 'native-base';
+import {Button, Center, ScrollView, Text, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
@@ -17,6 +17,7 @@ import Loader from '../../components/Loader/Loader';
 import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
 import {setNetworkStatus} from '../../redux/slices/networkSlice.ts'; // Import the action
+import {RefreshControl} from 'react-native';
 
 type AddPersonalDetailsProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'PersonalDetails'>;
@@ -26,6 +27,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
   navigation,
   route,
 }) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -54,6 +56,13 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
       unsubscribe();
     };
   }, [dispatch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const handleContinue = async () => {
     if (isConnected) {
@@ -89,7 +98,13 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
   };
 
   return (
-    <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
+    <ScrollView
+      flex={1}
+      bgColor={'accent.50'}
+      justifyContent={'space-between'}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <Loader isOpen={isLoading} />
       <View px={horizontalScale(20)} py={verticalScale(20)}>
         <Text
@@ -214,6 +229,6 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
           </Button>
         </Center>
       </View>
-    </View>
+    </ScrollView>
   );
 };

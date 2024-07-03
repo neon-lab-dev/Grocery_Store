@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import style from './style';
 import {
   TouchableOpacity,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
@@ -37,6 +38,8 @@ type Props = {
 };
 
 const Home: React.FC<Props> = ({navigation}) => {
+  const childRef = useRef();
+  const [refreshing, setRefreshing] = React.useState(false);
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
   const [name, setName] = useState('');
@@ -63,6 +66,15 @@ const Home: React.FC<Props> = ({navigation}) => {
       console.log(error);
     }
   };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchUser();
+    childRef.current.childFunction();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -130,7 +142,14 @@ const Home: React.FC<Props> = ({navigation}) => {
             editable={false}
             width={90}
           />
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['red']}
+              />
+            }>
             <ImageCarousel />
             {/* <Makelist /> */}
             <View
@@ -162,7 +181,10 @@ const Home: React.FC<Props> = ({navigation}) => {
                 </Text>
               </Pressable>
             </View>
-            <ProductHorizontalScroll onPress={item => listToDetails(item)} />
+            <ProductHorizontalScroll
+              onPress={item => listToDetails(item)}
+              ref={childRef}
+            />
             {Categories.length > 0 &&
               Categories.map((category, catIndex) => (
                 <View

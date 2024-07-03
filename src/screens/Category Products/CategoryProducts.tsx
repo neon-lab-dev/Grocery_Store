@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, RefreshControl, ScrollView} from 'react-native';
 import {styles} from './style';
 import SmallProductCard from '../../components/productCard/SmallProductCard';
 import {AuthAPIClient} from '../../api/axios.config';
@@ -47,6 +47,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
 
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const fetchCategory = async () => {
     try {
@@ -67,6 +68,15 @@ const CategoryProducts: FC = ({navigation, route}) => {
     }
     setIsLoading(false);
   };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchCategory();
+    fetchCategoryProducts();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 3000);
+  }, []);
 
   const fetchCategoryProducts = async () => {
     if (!subCategory2) {
@@ -210,6 +220,13 @@ const CategoryProducts: FC = ({navigation, route}) => {
             </View>
           ) : (
             <FlatList
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                  colors={['orange']}
+                />
+              }
               numColumns={2}
               data={CategoryData}
               showsVerticalScrollIndicator={false}

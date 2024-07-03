@@ -17,7 +17,7 @@ import {
 } from '../../assets/scaling';
 import LinearGradient from 'react-native-linear-gradient';
 import validators from '../../utils/validators';
-import {Platform} from 'react-native';
+import {Platform, RefreshControl, ScrollView} from 'react-native';
 import {sendOtp} from '../../api/auth';
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';
@@ -30,6 +30,7 @@ type Props = {
 };
 
 const Login: React.FC<Props> = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [phoneNo, setPhoneNo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -44,6 +45,13 @@ const Login: React.FC<Props> = ({navigation}) => {
       unsubscribe();
     };
   }, [dispatch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const handleContinue = async () => {
     if (isConnected) {
@@ -70,7 +78,11 @@ const Login: React.FC<Props> = ({navigation}) => {
   };
 
   return (
-    <>
+    <ScrollView
+      scrollEnabled={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <Loader isOpen={isLoading} />
       <KeyboardAvoidingView
         flex={1}
@@ -182,7 +194,7 @@ const Login: React.FC<Props> = ({navigation}) => {
           </View>
         </View>
       </KeyboardAvoidingView>
-    </>
+    </ScrollView>
   );
 };
 

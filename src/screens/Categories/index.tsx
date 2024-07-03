@@ -1,6 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, {FC, useEffect, useState} from 'react';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {styles} from './style';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
 import {Image} from 'native-base';
@@ -26,6 +33,7 @@ interface SubCategory {
 }
 
 const Categories: FC = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [categoryId, setCategoryId] = useState(0);
   const [selectedCategoryName, setSelectedCategoryName] = useState('');
   const [subCategories, setSubCategories] = useState([]);
@@ -46,6 +54,13 @@ const Categories: FC = ({navigation}) => {
       console.log(error);
     }
   };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -125,6 +140,14 @@ const Categories: FC = ({navigation}) => {
           <Text style={styles.categoriesTitle}>{selectedCategoryName}</Text>
         </View>
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={['orange']}
+              progressViewOffset={50}
+            />
+          }
           contentContainerStyle={{
             gap: 20,
             paddingBottom: 10,

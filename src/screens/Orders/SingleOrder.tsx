@@ -16,7 +16,7 @@ import {deliveryMan} from '../../assets/images/icons/deliveryMan';
 import {phone} from '../../assets/images/icons/phone';
 import {CallNumber} from '../../utils/launchIntents';
 import GoBack from '../../components/Navigation/GoBack';
-import {FlatList} from 'react-native';
+import {FlatList, RefreshControl} from 'react-native';
 import {REACT_APP_PHONE_NO} from '@env';
 import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
@@ -29,6 +29,7 @@ interface SingleOrderProps {
 }
 
 const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const {order} = route.params;
   const {shippingInfo} = order;
   const [orderStatus, setOrderStatus] = React.useState(order.orderStatus);
@@ -53,6 +54,13 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
       unsubscribe();
     };
   }, [dispatch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   React.useEffect(() => {
     switch (orderStatus) {
@@ -177,7 +185,13 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
           </Text>
         </Center>
       </View>
-      <ScrollView style={{paddingBottom: 300}} flex={1} bgColor={'accent.50'}>
+      <ScrollView
+        style={{paddingBottom: 300}}
+        flex={1}
+        bgColor={'accent.50'}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View>
           {(orderStatus === 'OUT_FOR_DELIVERY' ||
             orderStatus === 'DELIVERED') && (

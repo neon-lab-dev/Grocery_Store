@@ -1,4 +1,4 @@
-import {Button, View} from 'native-base';
+import {Button, ScrollView, View} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import * as React from 'react';
 import {
@@ -16,12 +16,15 @@ import Loader from '../../components/Loader/Loader';
 import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
 import {setNetworkStatus} from '../../redux/slices/networkSlice.ts'; // Import the action
+import {RefreshControl} from 'react-native';
 
 interface SavedAddressProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Addresses'>;
 }
 
 const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const [loaderVisible, setLoaderVisible] = React.useState(false);
   const [addressList, setAddressList] = React.useState([]);
   const dispatch = useDispatch();
@@ -36,6 +39,14 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
       unsubscribe();
     };
   }, [dispatch]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchAddress();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const fetchAddress = async () => {
     if (isConnected) {
@@ -88,7 +99,13 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
   };
 
   return (
-    <View flex={1} py={verticalScale(10)} bgColor={'accent.50'}>
+    <ScrollView
+      flex={1}
+      py={verticalScale(10)}
+      bgColor={'accent.50'}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       {addressList?.length !== 0
         ? addressList?.map((i, index) => (
             <SavedAddressComponent
@@ -122,7 +139,7 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
         </Button>
       </View>
       <Loader isOpen={loaderVisible} />
-    </View>
+    </ScrollView>
   );
 };
 
