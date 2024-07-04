@@ -17,18 +17,20 @@ export const SkeletonProductCard = () => {
               width: horizontalScale(135),
               height: verticalScale(220),
               marginHorizontal: horizontalScale(10),
-              backgroundColor: '#F9FAFB',
+              // backgroundColor: '#F9FAFB',
               borderRadius: 20,
               padding: verticalScale(10),
-              alignItems: 'center'
+              // alignItems: 'center'
             }}
           >
             <Skeleton
+            opacity={0.5}
               w={horizontalScale(120)}
               h={verticalScale(120)}
               borderRadius={20}
             />
             <Skeleton
+            opacity={0.3}
               mt={verticalScale(10)}
               w={horizontalScale(90)}
               h={verticalScale(20)}
@@ -41,6 +43,7 @@ export const SkeletonProductCard = () => {
               borderRadius={4}
             />
             <Skeleton
+             opacity={0.3}
               mt={verticalScale(5)}
               w={horizontalScale(70)}
               h={verticalScale(30)}

@@ -1,10 +1,10 @@
-import React, {useCallback, useState, useEffect, forwardRef, useImperativeHandle} from 'react';
+import React, {useCallback, useState, useEffect, forwardRef, useImperativeHandle, useMemo} from 'react';
 import {View, FlatList} from 'native-base';
 import {horizontalScale} from '../../assets/scaling';
 import ProductCard from './ProductCard';
 import {getProducts} from '../../api/auth_routes';
 import {useFocusEffect} from '@react-navigation/native';
-import {SkeletonProductCard}  from '../../components/Skeleton/SkeletonProducts'
+import {SkeletonProductCard} from '../../components/Skeleton/SkeletonProducts';
 
 interface ProductCardProps {
   onPress: (name: string) => void;
@@ -72,11 +72,13 @@ const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({onPress}, re
     [onPress, isLoading]
   );
 
+  const memoizedRenderItem = useMemo(() => renderItem, [renderItem]);
+
   return (
     <View style={{width: '100%'}}>
       {isLoading ? (
         <View flex={1} alignItems={'center'} justifyContent={'center'}>
-          <SkeletonProductCard/>
+          <SkeletonProductCard />
         </View>
       ) : (
         <FlatList
@@ -84,7 +86,7 @@ const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({onPress}, re
           horizontal
           data={products}
           keyExtractor={item => item.id.toString()}
-          renderItem={renderItem}
+          renderItem={memoizedRenderItem}
           onEndReached={handleEndReached}
           onEndReachedThreshold={1}
           showsHorizontalScrollIndicator={false}
