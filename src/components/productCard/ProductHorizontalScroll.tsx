@@ -1,15 +1,16 @@
-import React, { useCallback, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { View, FlatList } from 'native-base';
-import { horizontalScale } from '../../assets/scaling';
+import React, {useCallback, useState, useEffect, forwardRef, useImperativeHandle} from 'react';
+import {View, FlatList} from 'native-base';
+import {horizontalScale} from '../../assets/scaling';
 import ProductCard from './ProductCard';
-import { getProducts } from '../../api/auth_routes';
-import { useFocusEffect } from '@react-navigation/native';
+import {getProducts} from '../../api/auth_routes';
+import {useFocusEffect} from '@react-navigation/native';
+import {SkeletonProductCard}  from '../../components/Skeleton/SkeletonProducts'
 
 interface ProductCardProps {
   onPress: (name: string) => void;
 }
 
-const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({ onPress }, ref) => {
+const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({onPress}, ref) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pageNo, setPageNo] = useState(1);
@@ -62,23 +63,35 @@ const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({ onPress }, 
     }
   };
 
+  const renderItem = useCallback(
+    ({item}) => (
+      <View key={item.id}>
+        <ProductCard onPress={() => onPress(item.name)} products={item} isLoading={isLoading} />
+      </View>
+    ),
+    [onPress, isLoading]
+  );
+
   return (
-    <View style={{ width: '100%' }}>
-      <FlatList
-        horizontal
-        data={products}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View key={item.id}>
-            <ProductCard onPress={() => onPress(item.name)} products={item} />
-          </View>
-        )}
-        onEndReached={handleEndReached}
-        onEndReachedThreshold={1}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingRight: horizontalScale(30) }}
-        ref={ref}
-      />
+    <View style={{width: '100%'}}>
+      {isLoading ? (
+        <View flex={1} alignItems={'center'} justifyContent={'center'}>
+          <SkeletonProductCard/>
+        </View>
+      ) : (
+        <FlatList
+          removeClippedSubviews
+          horizontal
+          data={products}
+          keyExtractor={item => item.id.toString()}
+          renderItem={renderItem}
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={1}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{paddingRight: horizontalScale(30)}}
+          ref={ref}
+        />
+      )}
     </View>
   );
 });

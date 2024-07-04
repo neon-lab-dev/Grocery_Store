@@ -18,6 +18,7 @@ import {
 } from '../../redux/slices/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
+import {SkeletonProductCard}  from '../../components/Skeleton/SkeletonProducts'
 interface ProductDataItem {
   id: string;
   name: string;
@@ -43,9 +44,10 @@ interface ProductVariety {
 interface ProductCardProps {
   onPress: () => void;
   products: ProductDataItem;
+  isLoading: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
+const ProductCard: React.FC<ProductCardProps> = ({onPress, products,isLoading}) => {
   const product = {...products, id: products.varietyList[0].id};
   const [perIndex, setPerIndex] = useState(0);
   const dispatch = useDispatch();
@@ -112,6 +114,10 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   );
 
   const {width} = Dimensions.get('window');
+
+  if (isLoading) {
+    return <SkeletonProductCard />;
+  }
   // console.log(width, height)
   if (products.varietyList[0].quantity !== 0) {
     return (
