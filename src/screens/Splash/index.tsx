@@ -28,11 +28,11 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
     const isLoggedIn = async () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       const token = await getItem('token');
-      // if (token) {
-      //   navigation.replace('App', {screen: 'Home'});
-      // } else {
-      //   navigation.replace('Auth', {screen: 'Login'});
-      // }
+      if (token) {
+        navigation.replace('App', {screen: 'Home'});
+      } else {
+        navigation.replace('Auth', {screen: 'Login'});
+      }
     };
     isLoggedIn();
   }, [navigation]);
@@ -107,8 +107,8 @@ const styles = StyleSheet.create({
     display: 'none',
   },
   image: {
-    width: horizontalScale(71),
-    height: verticalScale(97),
+    width: horizontalScale(73),
+    height: verticalScale(98),
     position: 'absolute',
     zIndex: 1,
     top: '52.4%',
@@ -120,9 +120,6 @@ const styles = StyleSheet.create({
   newImage: {
     textAlign: 'center',
     left: horizontalScale(68),
-    // width: 200,
-    // // backgroundColor: 'red',
-    // height: 44,
     position: 'absolute',
     zIndex: 0,
     fontSize: scaleFontSize(55),

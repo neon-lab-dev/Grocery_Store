@@ -8,8 +8,7 @@ import {
   verticalScale,
   scaleFontSize,
 } from '../../assets/scaling';
-import ProductHorizontalScroll from '../productCard/ProductHorizontalScroll';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
 import {arrowDropDown} from '../../assets/images/icons/arrow_drop_down';
