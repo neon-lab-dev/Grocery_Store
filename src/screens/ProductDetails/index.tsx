@@ -7,7 +7,6 @@ import {
   verticalScale,
   scaleFontSize,
 } from '../../assets/scaling';
-import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from './style';
 import {SvgXml} from 'react-native-svg';
