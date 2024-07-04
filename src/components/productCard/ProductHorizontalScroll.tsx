@@ -1,15 +1,15 @@
-import React, {useCallback, useState, useEffect, forwardRef} from 'react';
-import {View, FlatList} from 'native-base';
-import {horizontalScale} from '../../assets/scaling';
+import React, { useCallback, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { View, FlatList } from 'native-base';
+import { horizontalScale } from '../../assets/scaling';
 import ProductCard from './ProductCard';
-import {getProducts} from '../../api/auth_routes';
-import {useFocusEffect} from '@react-navigation/native';
+import { getProducts } from '../../api/auth_routes';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface ProductCardProps {
   onPress: (name: string) => void;
 }
 
-const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({onPress}, ref) => {
+const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({ onPress }, ref) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pageNo, setPageNo] = useState(1);
@@ -50,6 +50,12 @@ const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({onPress}, re
     }, [])
   );
 
+  useImperativeHandle(ref, () => ({
+    childFunction() {
+      fetchProducts();
+    },
+  }));
+
   const handleEndReached = () => {
     if (!isLoadingMore) {
       loadMoreResults();
@@ -57,12 +63,12 @@ const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({onPress}, re
   };
 
   return (
-    <View style={{width: '100%'}}>
+    <View style={{ width: '100%' }}>
       <FlatList
         horizontal
         data={products}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View key={item.id}>
             <ProductCard onPress={() => onPress(item.name)} products={item} />
           </View>
@@ -70,7 +76,7 @@ const ProductHorizontalScroll = forwardRef<ProductCardProps, any>(({onPress}, re
         onEndReached={handleEndReached}
         onEndReachedThreshold={1}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingRight: horizontalScale(30)}}
+        contentContainerStyle={{ paddingRight: horizontalScale(30) }}
         ref={ref}
       />
     </View>
