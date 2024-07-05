@@ -35,6 +35,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
   const SubCategory = route.params.SubCategory;
   const categoryIndex = route.params.categoryIndex;
   const subCategoryIndex = route.params.subCategoryIndex;
+  const categoryName = route.params.categoryName;
   const [subCategory2List, setSubCategory2List] = useState([]);
   const [subCategory2, setSubCategory2] = useState('');
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -71,8 +72,6 @@ const CategoryProducts: FC = ({navigation, route}) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    fetchCategory();
-    fetchCategoryProducts();
     setTimeout(() => {
       setRefreshing(false);
     }, 3000);
@@ -87,13 +86,16 @@ const CategoryProducts: FC = ({navigation, route}) => {
       let url = '/product/list';
       let queryParams = [];
       // queryParams.push(`subCategory=${SubCategory}`);
-      queryParams.push(`subCategory2=${subCategory2}`);
+      queryParams.push(
+        `category=${categoryName}&subCategory=${SubCategory}&subCategory2=${subCategory2}`,
+      );
       queryParams.push(`pageNo=${pageNo}`);
 
       if (queryParams.length > 0) {
         url += `?${queryParams.join('&')}`;
       }
       const response = await AuthAPIClient.get(url);
+      console.log('url', url);
       if (response.data.responseBody && response.data.responseBody.content) {
         setCategoryData(prevResults =>
           pageNo === 1
@@ -134,7 +136,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
 
   useEffect(() => {
     fetchCategoryProducts();
-  }, [categoryId, subCategory2, pageNo]);
+  }, [categoryId, subCategory2, pageNo, refreshing]);
 
   return (
     <>

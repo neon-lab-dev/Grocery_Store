@@ -90,6 +90,7 @@ const Categories: FC = ({navigation}) => {
         style={styles.subCategoryCard}
         onPress={() =>
           navigation.navigate('CategoryProducts', {
+            categoryName: selectedCategoryName,
             SubCategory: subCategory,
             categoryIndex: categoryId,
             subCategoryIndex: id,
