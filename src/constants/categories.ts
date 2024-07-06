@@ -7,11 +7,11 @@ export const Categories = [
         image: require('../assets/images/Categories/Grocery/vegandfruits.jpg'),
       },
       {
-        name: 'Atta, Rice & Dal',
+        name: 'Atta,Rice & Dal',
         image: require('../assets/images/Categories/Grocery/AttaRiceanddal.jpg'),
       },
       {
-        name: 'Oil, Ghee & Masala',
+        name: 'Oil,Ghee & Masala',
         image: require('../assets/images/Categories/Grocery/oilghee.jpg'),
       },
       {
@@ -127,7 +127,7 @@ export const SubCategories = {
     'Certified Organic',
     'Hydrophonic',
   ],
-  'Atta, Rice & Dal': [
+  'Atta,Rice & Dal': [
     'Fresh Vegetables',
     'Fresh Fruits',
     'Coriander & Other',

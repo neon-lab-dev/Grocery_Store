@@ -95,7 +95,6 @@ const CategoryProducts: FC = ({navigation, route}) => {
         url += `?${queryParams.join('&')}`;
       }
       const response = await AuthAPIClient.get(url);
-      console.log('url', url);
       if (response.data.responseBody && response.data.responseBody.content) {
         setCategoryData(prevResults =>
           pageNo === 1
