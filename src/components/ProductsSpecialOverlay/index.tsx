@@ -31,7 +31,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const [count, setCount] = useState(0);
-  const [perPage, setPerPage] = useState(0);
+  const [perPage, setPerPage] = useState(20);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -52,6 +52,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
         undefined,
         undefined,
         pageNo,
+        perPage
       );
       setProducts(prevResults =>
         pageNo === 1 ? response.content : [...prevResults, ...response.content],
@@ -66,7 +67,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   };
 
   const loadMoreResults = () => {
-    if (perPage < count) {
+    if (perPage== count) {
       setIsLoadingMore(true);
       setPageNo(prevPage => prevPage + 1);
     }
@@ -129,10 +130,10 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
             />
           )}
           onEndReached={loadMoreResults}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={5}
           ListFooterComponent={
             isLoadingMore && (
-              <View style={{padding: verticalScale(10)}}>
+              <View style={{padding: verticalScale(10) }}>
                 <Image
                   alt="loading"
                   source={require('../../assets/images/icons/loading.gif')}

@@ -58,7 +58,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [selectedProduct, setSelectedProduct] = useState('');
   const [pageNo, setPageNo] = useState(1);
   const [count, setCount] = useState(0);
-  const [perPage, setPerPage] = useState(0);
+  const [perPage, setPerPage] = useState(20);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
@@ -138,6 +138,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
         maxValue,
         selectedBrand,
         pageNo,
+        perPage
       );
       if (response && response.content) {
         setSearchResults(prevResults =>
@@ -159,7 +160,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   };
 
   const loadMoreResults = () => {
-    if (perPage < count) {
+    if (perPage >= count) {
       setIsLoadingMore(true);
       setPageNo(prevPage => prevPage + 1);
     }
