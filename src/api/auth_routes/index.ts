@@ -21,7 +21,7 @@ export const searchProduct = async (
   NumberOfProducts?: Number,
 ) => {
   try {
-    let url = '/product/list?';
+    let url = '/product/list';
     let queryParams = [];
     if (NumberOfProducts) {
       queryParams.push(`perPage=${NumberOfProducts}`);
@@ -50,7 +50,7 @@ export const searchProduct = async (
     }
 
     if (queryParams.length > 0) {
-      url += `&${queryParams.join('&')}`;
+      url += `?${queryParams.join('&')}`;
     }
 
     const response = await AuthAPIClient.get(url);
