@@ -54,7 +54,6 @@ export const searchProduct = async (
     }
 
     const response = await AuthAPIClient.get(url);
-    console.log('response-rr', url);
     return response.data.responseBody;
   } catch (error) {
     console.log(error);
