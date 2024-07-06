@@ -223,6 +223,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                           key={subIndex}
                           onPress={() => {
                             navigation.navigate('CategoryProducts', {
+                              categoryName: category.name,
                               SubCategory: subCategory.name,
                               categoryIndex: catIndex,
                               subCategoryIndex: subIndex,
