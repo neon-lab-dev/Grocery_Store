@@ -1,22 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../navigation/MainNavigation';
+import React, { useState, useEffect } from 'react';
+import { Dimensions, StyleSheet, ImageBackground } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/MainNavigation';
 import * as Animatable from 'react-native-animatable';
-import {getItem} from '../../api/localstorage';
-import {
-  horizontalScale,
-  scaleFontSize,
-  verticalScale,
-} from '../../assets/scaling.ts';
-
+import { getItem } from '../../api/localstorage';
+import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/scaling.ts';
 export interface SplashProps {
   navigation: StackNavigationProp<RootStackParamList, 'Splash'>;
 }
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
-const Splash: React.FC<SplashProps> = ({navigation}) => {
+const Splash: React.FC<SplashProps> = ({ navigation }) => {
   const [showSecondImage, setShowSecondImage] = useState(false);
 
   useEffect(() => {
@@ -29,21 +24,25 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       const token = await getItem('token');
       if (token) {
-        navigation.replace('App', {screen: 'Home'});
+        navigation.replace('App', { screen: 'Home' });
       } else {
-        navigation.replace('Auth', {screen: 'Login'});
+        navigation.replace('Auth', { screen: 'Login' });
       }
     };
     isLoggedIn();
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require('../../assets/images/SplashScreen/splashbg.png')}
+      style={styles.container}
+    >
       {showSecondImage && (
         <Animatable.Text
           animation={unfoldAnimation}
           duration={400}
-          style={styles.newImage}>
+          style={styles.newImage}
+        >
           Kasera
         </Animatable.Text>
       )}
@@ -53,7 +52,7 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
         duration={1500}
         style={[styles.image]}
       />
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     left: '50%',
     marginLeft: horizontalScale(-35),
     marginTop: verticalScale(-60),
-    transform: [{translateX: -50}, {translateY: -30}],
+    transform: [{ translateX: -50 }, { translateY: -30 }],
   },
   newImage: {
     textAlign: 'center',
