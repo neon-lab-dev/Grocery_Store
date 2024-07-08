@@ -5,9 +5,6 @@ import { RootStackParamList } from '../../navigation/MainNavigation';
 import * as Animatable from 'react-native-animatable';
 import { getItem } from '../../api/localstorage';
 import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/scaling.ts';
-import SvgUri from 'react-native-svg';
-import Background from '../../assets/images/SplashScreen/splashbg.png';
-
 export interface SplashProps {
   navigation: StackNavigationProp<RootStackParamList, 'Splash'>;
 }
