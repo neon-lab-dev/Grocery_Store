@@ -45,7 +45,7 @@ const SimilarProductHorizontalScroll: React.FC<SimilarProductCardProps> = ({
         {products.map(data => {
           return (
             <View key={data.id}>
-              <ProductCard onPress={() => onPress(data.name)} products={data} />
+              <ProductCard onPress={() => onPress(data.code)} products={data} />
             </View>
           );
         })}

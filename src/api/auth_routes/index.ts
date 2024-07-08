@@ -30,7 +30,7 @@ export const searchProduct = async (
       queryParams.push(`pageNo=${pageNo}`);
     }
     if (searchInp) {
-      queryParams.push(`name=${searchInp}`);
+      queryParams.push(`codes=${searchInp}`);
     }
     if (sortBy) {
       if (sortBy === 'lowtohigh') {

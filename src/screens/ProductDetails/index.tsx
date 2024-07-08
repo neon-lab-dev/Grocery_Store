@@ -45,6 +45,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const navigation = useNavigation();
   const productName = route.params.productName;
+  const [prodName, setProdName] = useState('');
   const [selProduct, setSelProduct] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -76,6 +77,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
       if (selProduct) {
         const response = await searchProduct(selProduct);
         if (response.content) {
+          setProdName(response.content[0].name);
           const initialSelectedProduct = {...response.content[0]};
           initialSelectedProduct.varietyList = [
             response.content[0].varietyList[0],
@@ -91,6 +93,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
       } else if (productName) {
         const response = await searchProduct(productName);
         if (response.content) {
+          setProdName(response.content[0].name);
           const initialSelectedProduct = {...response.content[0]};
           initialSelectedProduct.varietyList = [
             response.content[0].varietyList[0],
@@ -291,7 +294,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                 lineHeight={19.36}
                 letterSpacing={-0.04}
                 color={'accent.800'}>
-                {productName}
+                {prodName}
               </Text>
             </View>
           </View>
@@ -378,9 +381,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                   borderBottomColor: '#F3F4F6',
                   paddingBottom: verticalScale(12),
                 }}>
-                <Text style={styles.productName}>
-                  {selProduct ? selProduct : productName}
-                </Text>
+                <Text style={styles.productName}>{prodName}</Text>
               </View>
               {/* Product units */}
               <View

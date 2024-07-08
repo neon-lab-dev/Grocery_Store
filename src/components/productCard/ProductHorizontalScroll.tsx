@@ -52,7 +52,7 @@ const ProductHorizontalScroll = forwardRef<
         contentContainerStyle={{paddingRight: horizontalScale(30)}}>
         {products.map((data: any) => (
           <View key={data.id}>
-            <ProductCard onPress={() => onPress(data.name)} products={data} />
+            <ProductCard onPress={() => onPress(data.code)} products={data} />
           </View>
         ))}
       </ScrollView>
