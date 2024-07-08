@@ -50,8 +50,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   Close,
   productName,
 }) => {
-  // console.log('product', productName);
-
+  const [prodName, setProdName] = useState('');
   const [selProduct, setSelProduct] = useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
   const [selectedImage, setSelectedImage] = useState<number>(0);
@@ -92,6 +91,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
       if (selProduct) {
         const response = await searchProduct(selProduct);
         if (response.content) {
+          setProdName(response.content[0].name);
           const initialSelectedProduct = {...response.content[0]};
           initialSelectedProduct.varietyList = [
             response.content[0].varietyList[0],
@@ -107,6 +107,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
       } else if (productName) {
         const response = await searchProduct(productName);
         if (response.content) {
+          setProdName(response.content[0].name);
           const initialSelectedProduct = {...response.content[0]};
           initialSelectedProduct.varietyList = [
             response.content[0].varietyList[0],
@@ -355,9 +356,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                   paddingBottom: verticalScale(12),
                 }}>
                 {/* {selProduct ? <Text style={styles.productName}>{productName}</Text>} */}
-                <Text style={styles.productName}>
-                  {selProduct ? selProduct : productName}
-                </Text>
+                <Text style={styles.productName}>{prodName}</Text>
               </View>
               {/* Product units */}
               <View

@@ -114,7 +114,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   };
   return (
     <View h={'auto'} w={width / 2 - 25}>
-      <Pressable position={'relative'} onPress={() => onPress(products.name)}>
+      <Pressable position={'relative'} onPress={() => onPress(product.code)}>
         <View
           bgColor={'accent.50'}
           borderRadius={16}

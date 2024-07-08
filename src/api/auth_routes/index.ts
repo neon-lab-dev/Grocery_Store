@@ -12,6 +12,7 @@ export const getProducts = async (NumberOfProducts: Number) => {
 };
 
 export const searchProduct = async (
+  code?: string,
   searchInp: string,
   sortBy?: string,
   minValue?: number,
@@ -31,6 +32,9 @@ export const searchProduct = async (
     }
     if (searchInp) {
       queryParams.push(`name=${searchInp}`);
+    }
+    if (code) {
+      queryParams.push(`codes=${code}`);
     }
     if (sortBy) {
       if (sortBy === 'lowtohigh') {

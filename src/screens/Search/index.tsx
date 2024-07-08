@@ -40,7 +40,6 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
-
   const [showModal, setShowModal] = useState<boolean>(false);
   const [searchInp, SetsearchInp] = useState('');
   const [selectedRecentSearch, setSelectedRecentSearch] = useState('');
@@ -132,6 +131,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     try {
       setIsLoading(true);
       const response = await searchProduct(
+        undefined,
         searchInp,
         sortBy,
         minValue,
@@ -357,7 +357,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             renderItem={({item, index}) => (
               <SearchProductCard
                 key={index}
-                onPress={() => listToDetails(item.name)}
+                onPress={() => listToDetails(item.code)}
                 products={item}
               />
             )}
