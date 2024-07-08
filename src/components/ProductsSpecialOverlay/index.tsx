@@ -46,6 +46,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
     try {
       setIsLoading(true);
       const response = await searchProduct(
+        undefined,
         text,
         undefined,
         undefined,
@@ -125,7 +126,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
             <SearchProductCard
               products={item}
               key={item.id}
-              onPress={() => onPress(item.name)}
+              onPress={() => onPress(item.code)}
             />
           )}
           onEndReached={loadMoreResults}
