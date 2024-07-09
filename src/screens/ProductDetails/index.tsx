@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {FC, useEffect, useState} from 'react';
-import {FlatList, Image, Pressable, RefreshControl} from 'react-native';
+import {FlatList, Image, Pressable, RefreshControl, Modal} from 'react-native';
 import {View, Text, ScrollView, useToast, Box} from 'native-base';
 import {
   horizontalScale,
@@ -63,6 +63,8 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     fetchProductDetails();
@@ -331,11 +333,36 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               <View style={{flex: 1, marginHorizontal: horizontalScale(40)}}>
                 {selectedImageUrl && (
                   <View style={{height: 200, width: 200}}>
-                    <Image
-                      source={{uri: selectedImageUrl}}
-                      style={{height: 220, width: 300}}
-                      resizeMode="contain"
-                    />
+                    <Pressable onPress={() => setModalVisible(true)}>
+                      <Image
+                        source={{uri: selectedImageUrl}}
+                        style={{height: 220, width: 300}}
+                        resizeMode="contain"
+                      />
+                    </Pressable>
+                    <Modal
+                      visible={modalVisible}
+                      transparent={true}
+                      onRequestClose={() => setModalVisible(false)}>
+                      <View style={styles.modalBackground}>
+                        <Pressable
+                          onPress={() => setModalVisible(false)}
+                          style={styles.modalCloseButton}>
+                          <Text
+                            fontFamily={'Inter_Medium'}
+                            fontSize={scaleFontSize(14)}
+                            lineHeight={19.38}
+                            letterSpacing={-0.04}>
+                            Close
+                          </Text>
+                        </Pressable>
+                        <Image
+                          source={{uri: selectedImageUrl}}
+                          style={styles.modalImage}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    </Modal>
                   </View>
                 )}
               </View>
