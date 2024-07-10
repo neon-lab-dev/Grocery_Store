@@ -348,11 +348,11 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                         <Pressable
                           onPress={() => setModalVisible(false)}
                           style={styles.modalCloseButton}>
-                          <Text
-                            fontFamily={'Inter_Medium'}
-                            fontSize={scaleFontSize(14)}
-                            lineHeight={19.38}
-                            letterSpacing={-0.04}>
+                        <Text  color={'primary.50'}
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(14)}
+                  lineHeight={19.38}
+                  letterSpacing={-0.04}>
                             Close
                           </Text>
                         </Pressable>
