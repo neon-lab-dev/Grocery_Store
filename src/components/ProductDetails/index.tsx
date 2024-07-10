@@ -7,8 +7,9 @@ import {
   Pressable,
   RefreshControl,
   ScrollView,
+  Modal
 } from 'react-native';
-import {View, Text} from 'native-base';
+import {View, Text,} from 'native-base';
 import {
   horizontalScale,
   verticalScale,
@@ -65,6 +66,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   );
   const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
   const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
@@ -312,11 +314,14 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
               <View style={{flex: 1, marginHorizontal: horizontalScale(40)}}>
                 {selectedImageUrl && (
                   <View style={{height: 200, width: 200}}>
+                    <Pressable
+          onPress={() => setModalVisible(true)}>
                     <Image
                       source={{uri: selectedImageUrl}}
                       style={{height: 240, width: 300}}
                       resizeMode="contain"
                     />
+                    </Pressable>
                   </View>
                 )}
               </View>
@@ -570,7 +575,27 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
               </View>
             </Pressable>
           )}
-
+          <Modal
+            visible={modalVisible}
+            transparent={true}
+            onRequestClose={() => setModalVisible(false)}>
+            <View style={styles.modalBackground}>
+              <Pressable
+                onPress={() => setModalVisible(false)}
+                style={styles.modalCloseButton}>
+                <Text  color={'primary.50'}
+                  fontFamily={'Inter_Medium'}
+                  fontSize={scaleFontSize(14)}
+                  lineHeight={19.38}
+                  letterSpacing={-0.04}>Close</Text>
+              </Pressable>
+              <Image
+                source={{uri: selectedImageUrl}}
+                style={styles.modalImage}
+                resizeMode="contain"
+              />
+            </View>
+          </Modal>
           {/* </Pressable> */}
         </View>
       )}

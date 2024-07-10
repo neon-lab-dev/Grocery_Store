@@ -35,17 +35,17 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: -6,
     right: -12,
-    paddingHorizontal: horizontalScale(7),
-    paddingVertical: verticalScale(1),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
     flex: 1,
     borderWidth: 0.1,
+    width:horizontalScale(20),
+    height:horizontalScale(20)
   },
   cartQuantity: {
     fontFamily: 'Inter_Medium',
     color: Colors.primary[500],
-    fontSize: scaleFontSize(16),
+    fontSize: scaleFontSize(14),
   },
 });

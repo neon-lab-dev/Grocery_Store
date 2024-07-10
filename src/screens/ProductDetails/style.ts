@@ -219,4 +219,26 @@ export const styles = StyleSheet.create({
     marginVertical: verticalScale(12),
     gap: 5,
   },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalImage: {
+    width: '90%',
+    height: '80%',
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    padding: 10,
+    backgroundColor: '#F97316',
+    borderRadius: 5,
+  },
+  modalCloseButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
