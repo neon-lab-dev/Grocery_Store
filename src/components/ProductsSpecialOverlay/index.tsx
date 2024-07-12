@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -31,7 +32,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const [count, setCount] = useState(0);
-  const [perPage, setPerPage] = useState(0);
+  const [perPage, setPerPage] = useState(20);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -42,9 +43,11 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
     }, 2000);
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
-      setIsLoading(true);
+      if (pageNo === 1) {
+        setIsLoading(true);
+      }
       const response = await searchProduct(
         undefined,
         text,
@@ -53,6 +56,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
         undefined,
         undefined,
         pageNo,
+        perPage,
       );
       setProducts(prevResults =>
         pageNo === 1 ? response.content : [...prevResults, ...response.content],
@@ -61,13 +65,14 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
       setPerPage(response.perPage);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
+      setIsLoadingMore(false);
     }
-    setIsLoading(false);
-    setIsLoadingMore(false);
-  };
+  }, [pageNo, perPage, text]);
 
   const loadMoreResults = () => {
-    if (perPage < count) {
+    if (perPage <= count) {
       setIsLoadingMore(true);
       setPageNo(prevPage => prevPage + 1);
     }
@@ -75,7 +80,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
 
   useEffect(() => {
     fetchProducts();
-  }, [text, pageNo]);
+  }, [fetchProducts]);
 
   return (
     <View style={{flex: 1}}>
@@ -133,12 +138,17 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
           onEndReachedThreshold={0.5}
           ListFooterComponent={
             isLoadingMore && (
-              <View style={{padding: verticalScale(10)}}>
-                <Image
+              <View
+                style={{
+                  marginVertical: verticalScale(10),
+                  alignItems: 'center',
+                }}>
+                {/* <Image
                   alt="loading"
                   source={require('../../assets/images/icons/loading.gif')}
                   style={{height: 250, width: 250}}
-                />
+                /> */}
+                <ActivityIndicator size="large" color="#F97316" />
               </View>
             )
           }

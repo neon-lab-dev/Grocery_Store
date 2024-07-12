@@ -13,7 +13,7 @@ export const getProducts = async (NumberOfProducts: Number) => {
 
 export const searchProduct = async (
   code?: string,
-  searchInp: string,
+  searchInp?: string,
   sortBy?: string,
   minValue?: number,
   maxValue?: number,

@@ -232,24 +232,26 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             </Text>
           </Pressable>
         </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          flexDir={'row'}
-          mt={verticalScale(5)}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            marginTop: verticalScale(5),
+          }}>
           {recentSearch.length !== 0 &&
             recentSearch.map((item, index) => (
               <Pressable
                 key={index}
                 borderRadius={100}
                 borderWidth={1}
-                mr={horizontalScale(10)}
-                py={verticalScale(10)}
-                px={horizontalScale(15)}
+                marginRight={horizontalScale(10)}
+                marginBottom={verticalScale(10)}
+                paddingVertical={verticalScale(10)}
+                paddingHorizontal={horizontalScale(15)}
                 borderColor={
                   selectedRecentSearch === item ? 'accent.400' : 'accent.200'
                 }
-                bgColor={
+                backgroundColor={
                   selectedRecentSearch === item ? 'accent.200' : 'accent.100'
                 }
                 alignItems={'center'}
@@ -276,7 +278,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
                 </Text>
               </Pressable>
             ))}
-        </ScrollView>
+        </View>
       </View>
       <View flex={1} bg={'white'} mt={verticalScale(15)}>
         <View
