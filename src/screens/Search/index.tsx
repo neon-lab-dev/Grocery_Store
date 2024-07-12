@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   Center,
   FlatList,
@@ -127,7 +127,38 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     openBottomSheet();
   };
 
-  const searchProducts = async () => {
+  // const searchProducts = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await searchProduct(
+  //       undefined,
+  //       searchInp,
+  //       sortBy,
+  //       minValue,
+  //       maxValue,
+  //       selectedBrand,
+  //       pageNo,
+  //     );
+  //     if (response && response.content) {
+  //       setSearchResults(prevResults =>
+  //         pageNo === 1
+  //           ? response.content
+  //           : [...prevResults, ...response.content],
+  //       );
+  //       setCount(response.count);
+  //       setPerPage(response.perPage);
+  //     } else {
+  //       setErrorFetching(true);
+  //     }
+  //     setIsLoading(false);
+  //     setIsLoadingMore(false);
+  //   } catch (error) {
+  //     setErrorFetching(true);
+  //     setIsLoadingMore(false);
+  //   }
+  // };
+
+  const searchProducts = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await searchProduct(
@@ -156,7 +187,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       setErrorFetching(true);
       setIsLoadingMore(false);
     }
-  };
+  }, [searchInp, sortBy, minValue, maxValue, selectedBrand, pageNo]);
 
   const loadMoreResults = () => {
     if (perPage < count) {
@@ -167,7 +198,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   useEffect(() => {
     searchProducts();
-  }, [searchInp, sortBy, minValue, maxValue, selectedBrand, pageNo]);
+  }, [searchProducts]);
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
