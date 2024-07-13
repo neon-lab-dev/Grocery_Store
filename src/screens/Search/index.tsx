@@ -22,7 +22,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import FilterOverlay from '../../components/Search/SearchFilterOverlay';
 import SearchInput from '../../components/SearchInput';
 import GoBack from '../../components/Navigation/GoBack';
-import {Dimensions, RefreshControl} from 'react-native';
+import {ActivityIndicator, Dimensions, RefreshControl} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {getItem, setItem} from '../../api/localstorage';
@@ -57,7 +57,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   const [selectedProduct, setSelectedProduct] = useState('');
   const [pageNo, setPageNo] = useState(1);
   const [count, setCount] = useState(0);
-  const [perPage, setPerPage] = useState(0);
+  const [perPage, setPerPage] = useState(20);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
@@ -127,40 +127,11 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     openBottomSheet();
   };
 
-  // const searchProducts = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await searchProduct(
-  //       undefined,
-  //       searchInp,
-  //       sortBy,
-  //       minValue,
-  //       maxValue,
-  //       selectedBrand,
-  //       pageNo,
-  //     );
-  //     if (response && response.content) {
-  //       setSearchResults(prevResults =>
-  //         pageNo === 1
-  //           ? response.content
-  //           : [...prevResults, ...response.content],
-  //       );
-  //       setCount(response.count);
-  //       setPerPage(response.perPage);
-  //     } else {
-  //       setErrorFetching(true);
-  //     }
-  //     setIsLoading(false);
-  //     setIsLoadingMore(false);
-  //   } catch (error) {
-  //     setErrorFetching(true);
-  //     setIsLoadingMore(false);
-  //   }
-  // };
-
   const searchProducts = useCallback(async () => {
     try {
-      setIsLoading(true);
+      if (pageNo === 1) {
+        setIsLoading(true);
+      }
       const response = await searchProduct(
         undefined,
         searchInp,
@@ -169,6 +140,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
         maxValue,
         selectedBrand,
         pageNo,
+        perPage,
       );
       if (response && response.content) {
         setSearchResults(prevResults =>
@@ -181,16 +153,17 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       } else {
         setErrorFetching(true);
       }
-      setIsLoading(false);
-      setIsLoadingMore(false);
     } catch (error) {
       setErrorFetching(true);
       setIsLoadingMore(false);
+    } finally {
+      setIsLoading(false);
+      setIsLoadingMore(false);
     }
-  }, [searchInp, sortBy, minValue, maxValue, selectedBrand, pageNo]);
+  }, [searchInp, sortBy, minValue, maxValue, selectedBrand, pageNo, perPage]);
 
   const loadMoreResults = () => {
-    if (perPage < count) {
+    if (perPage <= count) {
       setIsLoadingMore(true);
       setPageNo(prevPage => prevPage + 1);
     }
@@ -407,13 +380,17 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             onEndReachedThreshold={0.5}
             ListFooterComponent={
               isLoadingMore && (
-                <View p={verticalScale(10)}>
-                  <Image
-                    alt="loading"
-                    source={require('../../assets/images/icons/loading.gif')}
-                    h={250}
-                    w={250}
-                  />
+                <View
+                  style={{
+                    marginVertical: verticalScale(10),
+                    alignItems: 'center',
+                  }}>
+                  {/* <Image
+                  alt="loading"
+                  source={require('../../assets/images/icons/loading.gif')}
+                  style={{height: 250, width: 250}}
+                /> */}
+                  <ActivityIndicator size="large" color="#F97316" />
                 </View>
               )
             }
