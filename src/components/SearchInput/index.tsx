@@ -36,6 +36,7 @@ const SearchInput: FC<SearchInputProps> = ({
         placeholderTextColor={'#6B7280'}
         editable={editable}
         onSubmitEditing={() => onSubmit && onSubmit(value)}
+        returnKeyLabel="search"
       />
       {/* <View style={styles.line} /> */}
       {/* <Image source={require('../../assets/images/icons/mic.png')} /> */}
