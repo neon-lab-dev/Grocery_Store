@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
   img: {
     width: width < 380 ? 285 : 330,
     marginLeft: horizontalScale(18),
-    height: width < 380 ? 152 : 175,
+    height: width < 380 ? 195 : 225,
     borderRadius: 25,
   },
   container: {

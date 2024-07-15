@@ -273,9 +273,19 @@ const Home: React.FC<Props> = ({navigation}) => {
                 marginTop: verticalScale(15),
                 marginHorizontal: horizontalScale(10),
               }}>
-              <Image
-                source={require('../../assets/images/icons/SendList.png')}
+                <TouchableOpacity
+                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
+               <Image
+              style={{
+                alignSelf:"center",
+                height:horizontalScale(205),
+                width:verticalScale(290)
+              }}
+              
+                
+                source={require('../../assets/images/icons/SendListWhatapp.png')}
               />
+              </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   width: horizontalScale(300),

@@ -25,9 +25,9 @@ const ImageCarousel: React.FC = () => {
 const getImage = (imageName: string) => {
   switch (imageName) {
     case 'item1':
-      return require('../../assets/images/Carousel/ImageCarousel1.png');
+      return require('../../assets/images/Carousel/CarouselImage1.png');
     case 'item2':
-      return require('../../assets/images/Carousel/ImageCarousel2.png');
+      return require('../../assets/images/Carousel/CarouselImage2.png');
     default:
       return null;
   }
