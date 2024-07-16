@@ -12,7 +12,7 @@ import {styles} from './style';
 import MultiSlider, {LabelProps} from '@ptomasroos/react-native-multi-slider';
 import Radio from './RadioButton';
 import Checkbox from './Checkbox';
-import { brand } from 'src/constants/brandList';
+import { brand } from '../../constants/brandList';
 
 interface FilterOverlayProps extends IModalProps {
   showModal: boolean;
