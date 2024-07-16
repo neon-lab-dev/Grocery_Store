@@ -28,6 +28,8 @@ const getImage = (imageName: string) => {
       return require('../../assets/images/Carousel/CarouselImage1.png');
     case 'item2':
       return require('../../assets/images/Carousel/CarouselImage2.png');
+      case 'item3':
+      return require('../../assets/images/icons/SendListWhatapp.png');
     default:
       return null;
   }

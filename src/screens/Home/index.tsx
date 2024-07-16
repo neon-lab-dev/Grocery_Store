@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from './style';
 import {
   TouchableOpacity,
@@ -11,7 +10,7 @@ import {
 } from 'react-native';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
-import {Colors} from '../../constants/colors';
+import { Colors } from '../../constants/colors';
 import {
   horizontalScale,
   scaleFontSize,
@@ -19,34 +18,36 @@ import {
 } from '../../assets/scaling';
 import SearchInput from '../../components/SearchInput';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {AppNavigatorParamList} from '../../navigation/MainNavigation';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppNavigatorParamList } from '../../navigation/MainNavigation';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
-import {Categories} from '../../constants/categories';
-import {View, Text} from 'native-base';
-import {fetchUserData} from '../../api/auth_routes';
-import {openWhatsApp} from '../../utils/launchIntents';
-import {REACT_APP_PHONE_NO} from '@env';
-import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
+import { Categories } from '../../constants/categories';
+import { View, Text } from 'native-base';
+import { fetchUserData } from '../../api/auth_routes';
+import { openWhatsApp } from '../../utils/launchIntents';
+import { REACT_APP_PHONE_NO } from '@env';
+import { SkeletonHome } from '../../components/Skeleton/SkeletonHome';
 import NetInfo from '@react-native-community/netinfo';
-import {useDispatch, useSelector} from 'react-redux';
-import {setNetworkStatus} from '../../redux/slices/networkSlice.ts'; // Import the action
-import {toast} from '../../components/Toast/Toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNetworkStatus } from '../../redux/slices/networkSlice.ts'; // Import the action
+import { toast } from '../../components/Toast/Toast';
 
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
 
-const Home: React.FC<Props> = ({navigation}) => {
+const Home: React.FC<Props> = ({ navigation }) => {
   const childRef = useRef();
-  const [refreshing, setRefreshing] = React.useState(false);
+  const scrollViewRef = useRef(null); // Define the scrollViewRef here
+  const whatsAppImageRef = useRef(null); // Define the ref here
+  const [refreshing, setRefreshing] = useState(false);
   const [searchInp, SetsearchInp] = useState('');
   const [overLay, setOverLay] = useState('Product-List');
   const [name, setName] = useState('');
   const [userDetails, setUserDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const isConnected = useSelector(state => state.network.isConnected);
+  const isConnected = useSelector((state) => state.network.isConnected);
 
   const [selectedProduct, setSelectedProduct] = useState('');
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
@@ -77,10 +78,10 @@ const Home: React.FC<Props> = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
       dispatch(setNetworkStatus(state.isConnected));
 
-      if (isConnected) {
+      if (state.isConnected) {
         fetchUser();
       } else {
         toast.showToast('Please Check Your Internet Connection');
@@ -89,11 +90,12 @@ const Home: React.FC<Props> = ({navigation}) => {
     return () => {
       unsubscribe();
     };
-  }, [dispatch, isConnected]);
+  }, [dispatch]);
 
   const openSettings = () => {
-    navigation.navigate('Settings', {userDetails: userDetails});
+    navigation.navigate('Settings', { userDetails: userDetails });
   };
+  
   const gotoCart = () => {
     navigation.navigate('Cart');
   };
@@ -101,6 +103,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   const openBottomSheet = () => {
     setBottomSheetVisible(true);
   };
+
   const closeBottomSheet = () => {
     setBottomSheetVisible(false);
   };
@@ -116,11 +119,29 @@ const Home: React.FC<Props> = ({navigation}) => {
     openBottomSheet();
   };
 
+  const onPressCarousel = (id: number) => {
+    if (id === 2) {
+      seeAll();
+    }
+    if (id === 3) {
+      scrollToWhatsAppImage();
+    }
+  };
+
+  const scrollToWhatsAppImage = () => {
+    if (whatsAppImageRef.current) {
+      whatsAppImageRef.current.measure((fx, fy, width, height, px, py) => {
+        scrollViewRef.current.scrollTo({ y: py, animated: true });
+      });
+    }
+  };
+
   const gotoSearch = () => {
     navigation.navigate('Search');
   };
 
-  const {width} = Dimensions.get('window');
+  const { width } = Dimensions.get('window');
+
   return (
     <>
       {isLoading ? (
@@ -143,6 +164,7 @@ const Home: React.FC<Props> = ({navigation}) => {
             width={90}
           />
           <ScrollView
+            ref={scrollViewRef} // Assign the ref here
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
@@ -150,8 +172,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 colors={['red']}
               />
             }>
-            <ImageCarousel />
-            {/* <Makelist /> */}
+            <ImageCarousel onImagePress={onPressCarousel} />
             <View
               style={{
                 flexDirection: 'row',
@@ -182,7 +203,7 @@ const Home: React.FC<Props> = ({navigation}) => {
               </Pressable>
             </View>
             <ProductHorizontalScroll
-              onPress={item => listToDetails(item)}
+              onPress={(item) => listToDetails(item)}
               ref={childRef}
             />
             {Categories.length > 0 &&
@@ -191,7 +212,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   key={catIndex}
                   px={horizontalScale(20)}
                   mt={verticalScale(20)}
-                  style={{gap: verticalScale(20)}}>
+                  style={{ gap: verticalScale(20) }}>
                   <Text
                     fontFamily={'Inter_SemiBold'}
                     fontSize={scaleFontSize(20)}
@@ -215,7 +236,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                         'Stationary & Games',
                       ];
                       const isDoubleWidth = doubleWidthCategories.includes(
-                        subCategory.name,
+                        subCategory.name
                       );
 
                       return (
@@ -236,7 +257,9 @@ const Home: React.FC<Props> = ({navigation}) => {
                               : (width - 2 * horizontalScale(20)) / 4 -
                                 horizontalScale(10),
                           }}>
-                          <View alignItems={'center'} style={{gap: 9}}>
+                          <View
+                            alignItems={'center'}
+                            style={{ gap: 9 }}>
                             <Image
                               source={subCategory.image}
                               borderRadius={16}
@@ -272,74 +295,51 @@ const Home: React.FC<Props> = ({navigation}) => {
                 alignSelf: 'center',
                 marginTop: verticalScale(15),
                 marginHorizontal: horizontalScale(10),
-              }}>
-                <TouchableOpacity
-                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
-               <Image
-              style={{
-                alignSelf:"center",
-                height:horizontalScale(205),
-                width:verticalScale(290)
               }}
-              
-                
-                source={require('../../assets/images/icons/SendListWhatapp.png')}
-              />
+              ref={whatsAppImageRef}>
+              <TouchableOpacity
+                onPress={() =>
+                  openWhatsApp('Hi', REACT_APP_PHONE_NO)
+                }>
+                <Image
+                  style={{
+                    alignSelf: 'center',
+                    height: verticalScale(190),
+                    width: horizontalScale(290),
+                  }}
+                  source={require('../../assets/images/icons/SendListWhatapp.png')}
+                />
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   width: horizontalScale(300),
                   height: 50,
-                  margin: 5,
-                  borderRadius: 20,
-                  alignSelf: 'center',
-                  backgroundColor: Colors.primary[500],
-                  display: 'flex',
+                  marginTop: verticalScale(10),
+                  backgroundColor: Colors.primary,
+                  borderRadius: 8,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: horizontalScale(20),
                 }}
                 onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      marginHorizontal: horizontalScale(5),
-                      fontFamily: 'Inter_Medium',
-                      fontSize: scaleFontSize(14),
-                      lineHeight: 16.94,
-                      letterSpacing: -0.04,
-                    }}>
-                    Upload Your Shopping List
-                  </Text>
-                  <Image
-                    source={require('../../assets/images/icons/CameraIcon.png')}
-                  />
-                </View>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: scaleFontSize(16),
+                    fontFamily: 'Inter_Medium',
+                  }}>
+                  Chat on WhatsApp
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-
-          <View style={style.floatingButton} shadow={5}>
-            <Pressable
-              onPress={() => {
-                navigation.navigate('Categories');
-              }}>
-              <Image
-                source={require('../../assets/images/icons/Categories.png')}
-                style={style.buttonImage}
-              />
-            </Pressable>
-          </View>
-          <BottomSheet
-            visible={bottomSheetVisible}
-            onClose={closeBottomSheet}
-            type={overLay}
-            productName={selectedProduct}
-            onPress={product => listToDetails(product)}
-          />
         </View>
       )}
+      <BottomSheet
+        visible={bottomSheetVisible}
+        onClose={closeBottomSheet}
+        overLay={overLay}
+        selectedProduct={selectedProduct}
+      />
     </>
   );
 };

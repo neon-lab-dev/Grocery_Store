@@ -14,11 +14,11 @@ interface ImageCarouselItem {
       "image":
       "item2",
     },
-  //   {
-  //     id: "3",
-  //     image:
-  //       "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-03/babycare-WEB.jpg",
-  //   },
+    {
+      id: "3",
+      "image":
+        "item3",
+    },
   //   {
   //     id: "4",
   //     image:
