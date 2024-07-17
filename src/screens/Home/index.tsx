@@ -231,7 +231,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                           }}
                           style={{
                             width: isDoubleWidth
-                              ? (width - 2 * horizontalScale(20)) / 2 -
+                              ? (width - 2 * horizontalScale(20)) / 4 -
                                 horizontalScale(10)
                               : (width - 2 * horizontalScale(20)) / 4 -
                                 horizontalScale(10),
@@ -242,7 +242,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                               borderRadius={16}
                               style={{
                                 width: isDoubleWidth
-                                  ? horizontalScale(140)
+                                  ? horizontalScale(70)
                                   : horizontalScale(70),
                                 height: isDoubleWidth
                                   ? verticalScale(65)
