@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {SvgXml} from 'react-native-svg';
 import {close} from '../../assets/images/icons/close';
-import {Modal, Pressable, Text, View, IModalProps} from 'native-base';
+import {Modal, Pressable, Text, View, IModalProps,ScrollView} from 'native-base';
 import {TouchableOpacity} from 'react-native';
 import {
   horizontalScale,
@@ -12,6 +12,7 @@ import {styles} from './style';
 import MultiSlider, {LabelProps} from '@ptomasroos/react-native-multi-slider';
 import Radio from './RadioButton';
 import Checkbox from './Checkbox';
+import { brand } from '../../constants/brandList';
 
 interface FilterOverlayProps extends IModalProps {
   showModal: boolean;
@@ -44,7 +45,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
     {id: '3', label: 'Popularity', value: 'popularity'},
     {id: '4', label: 'Discount (high to low)', value: 'discount'},
   ];
-  const brands = ['Garnier', 'Ponds', 'Mama Earth', 'MCaffeine', 'Dove'];
+  const brands = brand;
 
   const customLabel = (sliderPosition: LabelProps) => {
     return (
@@ -171,7 +172,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
         );
       case 'Brands':
         return (
-          <View px={horizontalScale(15)} py={verticalScale(15)}>
+          <ScrollView px={horizontalScale(15)} py={verticalScale(15)}>
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(18)}
@@ -189,7 +190,7 @@ const FilterOverlay: React.FC<FilterOverlayProps> = ({
                 onBrandValueChange(option);
               }}
             />
-          </View>
+          </ScrollView>
         );
     }
   };
