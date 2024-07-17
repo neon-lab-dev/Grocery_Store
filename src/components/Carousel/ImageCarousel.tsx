@@ -1,19 +1,35 @@
 import React from 'react';
-import {View, Image, ScrollView} from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import imageCarouselData from '../../assets/data/imageCarouselData';
-import {styles} from './style';
+import { styles } from './style';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const ImageCarousel: React.FC = () => {
+interface Props {
+  onImagePress2: () => void;
+  onImagePress3: () => void;
+}
+
+const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3 }) => {
+  const handleCarouselFunction = (id: number) => {
+    if (id == 2) {
+      onImagePress2();
+    } else if (id == 3) {
+      onImagePress3();
+    }
+  };
+
   return (
     <View style={styles.carouselItem}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {imageCarouselData.map(imageCarousel => {
+        {imageCarouselData.map((imageCarousel) => {
           return (
             <View key={imageCarousel.id}>
-              <Image
-                source={getImage(imageCarousel.image)}
-                style={styles.img}
-              />
+              <TouchableOpacity onPress={() => handleCarouselFunction(imageCarousel.id)}>
+                <Image
+                  source={getImage(imageCarousel.image)}
+                  style={styles.img}
+                />
+              </TouchableOpacity>
             </View>
           );
         })}
@@ -25,9 +41,11 @@ const ImageCarousel: React.FC = () => {
 const getImage = (imageName: string) => {
   switch (imageName) {
     case 'item1':
-      return require('../../assets/images/Carousel/ImageCarousel1.png');
+      return require('../../assets/images/Carousel/CarouselImage1.png');
     case 'item2':
-      return require('../../assets/images/Carousel/ImageCarousel2.png');
+      return require('../../assets/images/Carousel/CarouselImage2.png');
+    case 'item3':
+      return require('../../assets/images/icons/SendListWhatsapp.png');
     default:
       return null;
   }
