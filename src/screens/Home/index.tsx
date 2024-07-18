@@ -126,11 +126,8 @@ const Home: React.FC<Props> = ({ navigation }) => {
   };
 
 const handleClick = () => {
-  console.log("scroll fun called")
   if (scrollViewRef.current) {
-    console.log("scroll if fun called")
     scrollViewRef.current.scrollToEnd({ animated: true });
-    console.log("scroll if  fun finished")
   }
 };
 
