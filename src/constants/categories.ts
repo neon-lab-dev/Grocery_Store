@@ -4,64 +4,72 @@ export const Categories = [
     subCategory: [
       {
         name: 'Vegetable & Fruits',
-        image: require('../assets/images/Categories/Grocery/vegandfruits.jpg'),
+        image: require('../assets/images/Categories/Grocery/NewFolder/vegandfruits.png'),
       },
       {
-        name: 'Atta,Rice & Dal',
-        image: require('../assets/images/Categories/Grocery/AttaRiceanddal.jpg'),
+        name: 'Atta, Rice & Dal',
+        image: require('../assets/images/Categories/Grocery/NewFolder/attaricedal.png'),
       },
       {
-        name: 'Oil,Ghee & Masala',
-        image: require('../assets/images/Categories/Grocery/oilghee.jpg'),
+        name: 'Oil, Ghee & Masala',
+        image: require('../assets/images/Categories/Grocery/NewFolder/oilGheeMasala.png'),
       },
       {
-        name: 'Daily Bread',
-        image: require('../assets/images/Categories/Grocery/dailybread.jpg'),
+        name: 'Dairy, Bread & Eggs',
+        image: require('../assets/images/Categories/Grocery/NewFolder/dairyEggsBread.png'),
       },
       {
-        name: 'Bakery & Biscuit',
-        image: require('../assets/images/Categories/Grocery/bakery&Biscuit.jpg'),
+        name: 'Bakery & Biscuits',
+        image: require('../assets/images/Categories/Grocery/NewFolder/biscuits.png'),
       },
       {
         name: 'Dry Fruits & Cereals',
-        image: require('../assets/images/Categories/Grocery/dryfruit.jpg'),
+        image: require('../assets/images/Categories/Grocery/NewFolder/dryFruitsCerals.png'),
+      },
+      {
+        name: 'Chicken, Meat & Fish',
+        image: require('../assets/images/Categories/Grocery/NewFolder/chickenFish.png'),
       },
       {
         name: 'Kitchenware & Appliances',
-        image: require('../assets/images/Categories/Grocery/kitchenware.png'),
+        image: require('../assets/images/Categories/Grocery/NewFolder/kitchenwareApliances.png'),
       },
     ],
   },
   {
-    name: 'Snacks & Kitchen',
+    name: 'Snacks & Drinks',
     subCategory: [
       {
-        name: 'Chips & Namkeens',
-        image: require('../assets/images/Categories/snacks/Chips&Namkeen.png'),
+        name: 'Chips & Namkeen',
+        image: require('../assets/images/Categories/snacks/Newfolder/namkeen.png'),
       },
       {
         name: 'Sweets & Chocolates',
-        image: require('../assets/images/Categories/snacks/Sweets&Chocolates.png'),
+        image: require('../assets/images/Categories/snacks/Newfolder/sweetsChocolates.png'),
       },
       {
         name: 'Drinks & Juices',
-        image: require('../assets/images/Categories/snacks/Drinks&Juices.webp'),
+        image: require('../assets/images/Categories/snacks/Newfolder/drinksJuices.png'),
       },
       {
-        name: 'Tea, Coffee & Milk drinks',
-        image: require('../assets/images/Categories/snacks/TeaCoffee&Mik.webp'),
+        name: 'Tea, Coffee & Health Drinks',
+        image: require('../assets/images/Categories/snacks/Newfolder/teaDrinks.png'),
       },
       {
         name: 'Instant Food',
-        image: require('../assets/images/Categories/snacks/Instantfood.jpg'),
+        image: require('../assets/images/Categories/snacks/Newfolder/instantFoods.png'),
       },
       {
         name: 'Sauces & Spreads',
-        image: require('../assets/images/Categories/snacks/sauces&spreads.webp'),
+        image: require('../assets/images/Categories/snacks/Newfolder/sauces.png'),
       },
       {
         name: 'Paan Corner',
-        image: require('../assets/images/Categories/snacks/paancorner.jpg'),
+        image: require('../assets/images/Categories/snacks/Newfolder/paanCorner.png'),
+      },
+      {
+        name: 'Ice Creams & More',
+        image: require('../assets/images/Categories/snacks/Newfolder/icecreams.png'),
       },
     ],
   },
@@ -70,31 +78,35 @@ export const Categories = [
     subCategory: [
       {
         name: 'Bath & Body',
-        image: require('../assets/images/Categories/bath&body/bathandBody.jpg'),
+        image: require('../assets/images/Categories/bath&body/Newfolder/bathBody.png'),
       },
       {
         name: 'Hair',
-        image: require('../assets/images/Categories/bath&body/hairoilcream.webp'),
+        image: require('../assets/images/Categories/bath&body/Newfolder/hair.png'),
       },
       {
-        name: 'Skin & face',
-        image: require('../assets/images/Categories/bath&body/Skin&Face.jpg'),
+        name: 'Skin & Face',
+        image: require('../assets/images/Categories/bath&body/Newfolder/skincare.png'),
       },
       {
         name: 'Beauty & Cosmetics',
-        image: require('../assets/images/Categories/bath&body/Beauty&Cosmetics.webp'),
+        image: require('../assets/images/Categories/bath&body/Newfolder/beautyCosmetics.png'),
       },
       {
         name: 'Feminine Hygiene',
-        image: require('../assets/images/Categories/bath&body/FemaleHygine.jpg'),
+        image: require('../assets/images/Categories/bath&body/Newfolder/feminine.png'),
       },
       {
         name: 'Baby Care',
-        image: require('../assets/images/Categories/bath&body/Babycare.jpg'),
+        image: require('../assets/images/Categories/bath&body/Newfolder/babycare.png'),
       },
       {
         name: 'Health & Pharma',
-        image: require('../assets/images/Categories/bath&body/Health&Pharma.webp'),
+        image: require('../assets/images/Categories/bath&body/Newfolder/healthPharma.png'),
+      },
+      {
+        name: 'Sexual Wellness',
+        image: require('../assets/images/Categories/bath&body/Newfolder/sexualWellness.png'),
       },
     ],
   },
@@ -102,19 +114,27 @@ export const Categories = [
     name: 'Household Essentials',
     subCategory: [
       {
-        name: 'Cleaners & Repellents',
-        image: require('../assets/images/Categories/household/Cleaners&Repellents.webp'),
+        name: 'Home & Lifestyle',
+        image: require('../assets/images/Categories/household/Newfolder/home.png'),
       },
       {
-        name: 'Stationary & Games',
-        image: require('../assets/images/Categories/household/PencilPen&Markers.jpg'),
+        name: 'Cleaning & Repellents',
+        image: require('../assets/images/Categories/household/Newfolder/cleaning.png'),
+      },
+      {
+        name: 'Electronics',
+        image: require('../assets/images/Categories/household/Newfolder/electronics.png'),
+      },
+      {
+        name: 'Stationery & Games',
+        image: require('../assets/images/Categories/household/Newfolder/stationaryGames.png'),
       },
     ],
   },
 ];
 
 export const SubCategories = {
-  'Vegetable & Fruits': [
+  'Vegetables & Fruits': [
     'Fresh Vegetables',
     'Fresh Fruits',
     'Coriander & Other',
@@ -127,7 +147,7 @@ export const SubCategories = {
     'Certified Organic',
     'Hydrophonic',
   ],
-  'Atta,Rice & Dal': [
+  'Atta, Rice & Dal': [
     'Fresh Vegetables',
     'Fresh Fruits',
     'Coriander & Other',
@@ -149,7 +169,7 @@ export const SubCategories = {
     'Herbs & Seasoning',
     'Organic',
   ],
-  'Daily Bread': [
+  'Dairy, Bread & Eggs': [
     'Milk',
     'Bread & Pav',
     'Curd & Youghurt',
@@ -158,7 +178,7 @@ export const SubCategories = {
     'Lassi & Milkshake',
     'Cream & Whitener',
   ],
-  'Bakery & Biscuit': [
+  'Bakery & Biscuits': [
     'Cookies',
     'Cream Biscuit',
     'Healthy & Digestive',

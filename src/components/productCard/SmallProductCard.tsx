@@ -202,6 +202,26 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             {isButton1Visible ? (
               <Pressable style={styles.Button} onPress={handleButtonPress}>
                 <Text style={styles.ButtonText}>ADD</Text>
+                {products.varietyList.length > 1 && (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      backgroundColor: 'white',
+                      top: verticalScale(17),
+                      position: 'absolute',
+                      width: horizontalScale(34),
+                      height: verticalScale(14),
+                      left: horizontalScale(9),
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: scaleFontSize(8),
+                      }}>
+                      {' '}
+                      {products.varietyList.length} Options
+                    </Text>
+                  </View>
+                )}
               </Pressable>
             ) : (
               <View
