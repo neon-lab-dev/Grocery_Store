@@ -72,7 +72,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   }, [pageNo, perPage, text]);
 
   const loadMoreResults = () => {
-    if (perPage <= count) {
+    if (perPage === count) {
       setIsLoadingMore(true);
       setPageNo(prevPage => prevPage + 1);
     }
@@ -81,6 +81,10 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  const onSubmitSearch = () => {
+    fetchProducts();
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -98,6 +102,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
           editable
           width={90}
           onPress={() => {}}
+          onSubmit={onSubmitSearch}
         />
       </View>
       {isLoading ? (

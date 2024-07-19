@@ -149,8 +149,8 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             ? response.content
             : [...prevResults, ...response.content],
         );
-        // setCount(response.count);
-        // setPerPage(response.perPage);
+        setCount(response.count);
+        setPerPage(response.perPage);
       } else {
         setErrorFetching(true);
       }
@@ -163,7 +163,9 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   };
 
   const loadMoreResults = () => {
-    setPageNo(prevPage => prevPage + 1);
+    if (perPage === count) {
+      setPageNo(prevPage => prevPage + 1);
+    }
   };
 
   useEffect(() => {

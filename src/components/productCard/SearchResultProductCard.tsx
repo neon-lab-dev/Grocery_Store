@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, Pressable, useToast, Box} from 'native-base';
+import {View, Text, Pressable, useToast, Box, Image} from 'native-base';
 import FastImage from 'react-native-fast-image';
 import {
   horizontalScale,
@@ -153,10 +153,13 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             </View>
           )}
           {products.varietyList[0].documentUrls[0] ? (
-            <FastImage
+            <Image
               source={{uri: products.varietyList[0].documentUrls[0]}}
-              style={{height: 113, width: 118, borderRadius: 12}}
-              resizeMode={FastImage.resizeMode.contain}
+              alt="Product Image"
+              height={113}
+              width={118}
+              borderRadius={12}
+              resizeMode="contain"
             />
           ) : (
             <View h={113} w={118} />

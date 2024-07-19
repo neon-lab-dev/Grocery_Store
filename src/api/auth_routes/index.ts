@@ -56,7 +56,6 @@ export const searchProduct = async (
     if (queryParams.length > 0) {
       url += `?${queryParams.join('&')}`;
     }
-    console.log('url', url);
     const response = await AuthAPIClient.get(url);
     return response.data.responseBody;
   } catch (error) {
