@@ -82,10 +82,6 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
     fetchProducts();
   }, [fetchProducts]);
 
-  const onSubmitSearch = () => {
-    fetchProducts();
-  };
-
   return (
     <View style={{flex: 1}}>
       <View style={styles.selectAddressBox}>
@@ -102,7 +98,6 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
           editable
           width={90}
           onPress={() => {}}
-          onSubmit={onSubmitSearch}
         />
       </View>
       {isLoading ? (
