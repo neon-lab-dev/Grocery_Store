@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {
   TouchableOpacity,
   Image,
@@ -7,15 +7,15 @@ import {
   Dimensions,
   RefreshControl,
 } from 'react-native';
-import { View, Text } from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import {View, Text} from 'native-base';
+import {useDispatch, useSelector} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import style from './style.ts';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
-import { Colors } from '../../constants/colors';
+import {Colors} from '../../constants/colors';
 import {
   horizontalScale,
   scaleFontSize,
@@ -24,20 +24,20 @@ import {
 import SearchInput from '../../components/SearchInput';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
-import { Categories } from '../../constants/categories';
-import { fetchUserData } from '../../api/auth_routes';
-import { openWhatsApp } from '../../utils/launchIntents';
-import { REACT_APP_PHONE_NO } from '@env';
-import { SkeletonHome } from '../../components/Skeleton/SkeletonHome';
-import { setNetworkStatus } from '../../redux/slices/networkSlice.ts';
-import { toast } from '../../components/Toast/Toast';
-import { AppNavigatorParamList } from '../../navigation/MainNavigation';
+import {Categories} from '../../constants/categories';
+import {fetchUserData} from '../../api/auth_routes';
+import {openWhatsApp} from '../../utils/launchIntents';
+import {REACT_APP_PHONE_NO} from '@env';
+import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
+import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {toast} from '../../components/Toast/Toast';
+import {AppNavigatorParamList} from '../../navigation/MainNavigation';
 
 type Props = {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Home'>;
 };
 
-const Home: React.FC<Props> = ({ navigation }) => {
+const Home: React.FC<Props> = ({navigation}) => {
   const childRef = useRef();
   const scrollViewRef = useRef<ScrollView>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -95,9 +95,9 @@ const Home: React.FC<Props> = ({ navigation }) => {
   }, [dispatch, isConnected]);
 
   const openSettings = () => {
-    navigation.navigate('Settings', { userDetails });
+    navigation.navigate('Settings', {userDetails});
   };
-  
+
   const gotoCart = () => {
     navigation.navigate('Cart');
   };
@@ -125,16 +125,13 @@ const Home: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('Search');
   };
 
-const handleClick = () => {
-  console.log("scroll fun called")
-  if (scrollViewRef.current) {
-    console.log("scroll if fun called")
-    scrollViewRef.current.scrollToEnd({ animated: true });
-    console.log("scroll if  fun finished")
-  }
-};
+  const handleClick = () => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd({animated: true});
+    }
+  };
 
-  const { width } = Dimensions.get('window');
+  const {width} = Dimensions.get('window');
 
   return (
     <>
@@ -165,8 +162,7 @@ const handleClick = () => {
                 onRefresh={onRefresh}
                 colors={['red']}
               />
-            }
-          >
+            }>
             <ImageCarousel onImagePress2={seeAll} onImagePress3={handleClick} />
             <View
               style={{
@@ -174,8 +170,7 @@ const handleClick = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginBottom: verticalScale(15),
-              }}
-            >
+              }}>
               <View style={style.Category}>
                 <Text style={style.CategoryText}>
                   Freshly Picked up for you!
@@ -193,8 +188,7 @@ const handleClick = () => {
                     fontSize: scaleFontSize(16),
                     marginRight: horizontalScale(18),
                     marginTop: verticalScale(25),
-                  }}
-                >
+                  }}>
                   See all
                 </Text>
               </Pressable>
@@ -209,15 +203,13 @@ const handleClick = () => {
                   key={catIndex}
                   px={horizontalScale(20)}
                   mt={verticalScale(20)}
-                  style={{ gap: verticalScale(20) }}
-                >
+                  style={{gap: verticalScale(20)}}>
                   <Text
                     fontFamily={'Inter_SemiBold'}
                     fontSize={scaleFontSize(20)}
                     lineHeight={24.2}
                     letterSpacing={-0.05}
-                    color={'accent.700'}
-                  >
+                    color={'accent.700'}>
                     {category.name}
                   </Text>
                   <View
@@ -225,8 +217,7 @@ const handleClick = () => {
                       flexDirection: 'row',
                       flexWrap: 'wrap',
                       gap: horizontalScale(13),
-                    }}
-                  >
+                    }}>
                     {category.subCategory.map((subCategory, subIndex) => {
                       const doubleWidthCategories = [
                         'Kitchenware & Appliances',
@@ -236,7 +227,7 @@ const handleClick = () => {
                         'Stationary & Games',
                       ];
                       const isDoubleWidth = doubleWidthCategories.includes(
-                        subCategory.name
+                        subCategory.name,
                       );
 
                       return (
@@ -252,19 +243,18 @@ const handleClick = () => {
                           }}
                           style={{
                             width: isDoubleWidth
-                              ? (width - 2 * horizontalScale(20)) / 4 -
+                              ? (width - 2 * horizontalScale(20)) / 2 -
                                 horizontalScale(10)
                               : (width - 2 * horizontalScale(20)) / 4 -
                                 horizontalScale(10),
-                          }}
-                        >
-                          <View alignItems={'center'} style={{ gap: 9 }}>
+                          }}>
+                          <View alignItems={'center'} style={{gap: 9}}>
                             <Image
                               source={subCategory.image}
                               borderRadius={16}
                               style={{
                                 width: isDoubleWidth
-                                  ? horizontalScale(70)
+                                  ? horizontalScale(140)
                                   : horizontalScale(70),
                                 height: isDoubleWidth
                                   ? verticalScale(65)
@@ -278,8 +268,7 @@ const handleClick = () => {
                               lineHeight={14.52}
                               letterSpacing={-0.04}
                               color={'accent.600'}
-                              textAlign={'center'}
-                            >
+                              textAlign={'center'}>
                               {subCategory.name}
                             </Text>
                           </View>
@@ -295,11 +284,9 @@ const handleClick = () => {
                 alignSelf: 'center',
                 marginTop: verticalScale(15),
                 marginHorizontal: horizontalScale(10),
-              }}
-            >
+              }}>
               <TouchableOpacity
-                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}
-              >
+                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
                 <Image
                   style={{
                     alignSelf: 'center',
@@ -322,9 +309,8 @@ const handleClick = () => {
                   justifyContent: 'center',
                   marginBottom: horizontalScale(20),
                 }}
-                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}
-              >
-                <View style={{ flexDirection: 'row' }}>
+                onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
+                <View style={{flexDirection: 'row'}}>
                   <Text
                     style={{
                       color: 'white',
@@ -333,8 +319,7 @@ const handleClick = () => {
                       fontSize: scaleFontSize(14),
                       lineHeight: 16.94,
                       letterSpacing: -0.04,
-                    }}
-                  >
+                    }}>
                     Upload Your Shopping List
                   </Text>
                   <Image
@@ -349,8 +334,7 @@ const handleClick = () => {
             <Pressable
               onPress={() => {
                 navigation.navigate('Categories');
-              }}
-            >
+              }}>
               <Image
                 source={require('../../assets/images/icons/Categories.png')}
                 style={style.buttonImage}

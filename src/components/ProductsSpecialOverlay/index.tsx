@@ -72,7 +72,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   }, [pageNo, perPage, text]);
 
   const loadMoreResults = () => {
-    if (perPage <= count) {
+    if (perPage === count) {
       setIsLoadingMore(true);
       setPageNo(prevPage => prevPage + 1);
     }

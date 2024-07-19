@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, Image, Pressable, useToast, Box} from 'native-base';
+import React, {useEffect, useState, useCallback} from 'react';
+import {View, Text, Pressable, useToast, Box, Image} from 'native-base';
+import FastImage from 'react-native-fast-image';
 import {
   horizontalScale,
   scaleFontSize,
@@ -14,6 +15,7 @@ import {
   removeItem,
 } from '../../redux/slices/actions';
 import {capitalizeFirstLetter} from '../../utils/capitalizeWord';
+
 interface ProductDataItem {
   id: string;
   name: string;
@@ -23,6 +25,7 @@ interface ProductDataItem {
   description: string;
   varietyList: ProductVariety[];
 }
+
 interface ProductVariety {
   id: string;
   type: string;
@@ -60,58 +63,59 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
     setIsButton1Visible(!cartItem);
   }, [cartItem]);
 
-  const offerPerIndex = products.varietyList.findIndex(
-    item => item.discountPercent > 0,
-  );
+  const offerPerIndex = useCallback(() => {
+    return products.varietyList.findIndex(item => item.discountPercent > 0);
+  }, [products.varietyList]);
 
-  const handleDecrease = () => {
+  const handleDecrease = useCallback(() => {
     if (count === 1) {
       dispatch(removeItem(product.id));
       setIsButton1Visible(true);
       setCount(0);
     } else {
       dispatch(decrementItem(product.id));
-      setCount(count - 1);
+      setCount(prevCount => prevCount - 1);
     }
-  };
-  const handleIncrease = () => {
+  }, [count, dispatch, product.id]);
+
+  const handleIncrease = useCallback(() => {
     if (count < products.varietyList[0].quantity) {
       dispatch(incrementItem(product.id));
-      setCount(count + 1);
+      setCount(prevCount => prevCount + 1);
     } else {
       if (!toast.isActive(id)) {
         toast.show({
           id,
           placement: 'top',
           duration: 2500,
-          render: () => {
-            return (
-              <View style={{zIndex: 1000}}>
-                <Box
-                  zIndex={1000}
-                  bg="primary.400"
-                  px="2"
-                  py="1"
-                  rounded="sm"
-                  _text={{
-                    fontWeight: '500',
-                    color: 'white',
-                  }}>
-                  Sorry, you can't add more of this item
-                </Box>
-              </View>
-            );
-          },
+          render: () => (
+            <View style={{zIndex: 1000}}>
+              <Box
+                zIndex={1000}
+                bg="primary.400"
+                px="2"
+                py="1"
+                rounded="sm"
+                _text={{
+                  fontWeight: '500',
+                  color: 'white',
+                }}>
+                Sorry, you can't add more of this item
+              </Box>
+            </View>
+          ),
         });
       }
     }
-  };
-  const handleButtonPress = () => {
+  }, [count, dispatch, id, products.varietyList, toast]);
+
+  const handleButtonPress = useCallback(() => {
     setCount(1);
     product.quantity = 1;
     dispatch(addToCart(product));
     setIsButton1Visible(false);
-  };
+  }, [dispatch, product]);
+
   return (
     <View h={'auto'} w={width / 2 - 25}>
       <Pressable position={'relative'} onPress={() => onPress(product.code)}>
@@ -120,7 +124,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
           borderRadius={16}
           px={horizontalScale(20)}
           py={verticalScale(20)}>
-          {offerPerIndex >= 0 && (
+          {offerPerIndex() >= 0 && (
             <View
               bgColor={'primary.500'}
               position={'absolute'}
@@ -136,7 +140,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
                 color={'white'}
                 fontSize={scaleFontSize(11)}
                 alignSelf={'center'}>
-                {products.varietyList[offerPerIndex].discountPercent}%
+                {products.varietyList[offerPerIndex()].discountPercent}%
               </Text>
               <Text
                 fontFamily={'Inter_Bold'}
@@ -308,4 +312,5 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
     </View>
   );
 };
+
 export default SearchProductCard;

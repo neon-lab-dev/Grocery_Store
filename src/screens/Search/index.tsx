@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Center,
   FlatList,
@@ -22,7 +22,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import FilterOverlay from '../../components/Search/SearchFilterOverlay';
 import SearchInput from '../../components/SearchInput';
 import GoBack from '../../components/Navigation/GoBack';
-import {ActivityIndicator, Dimensions, RefreshControl} from 'react-native';
+import {ActivityIndicator, Dimensions} from 'react-native';
 import SearchProductCard from '../../components/productCard/SearchResultProductCard';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {getItem, setItem} from '../../api/localstorage';
@@ -37,7 +37,6 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({navigation}) => {
-  const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -90,15 +89,8 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     storeRecentSearch();
   }, [recentSearch]);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    searchProducts();
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   const addRecentSearch = (searchTerm: string) => {
+    searchProducts();
     if (searchTerm !== '') {
       setRecentSearch(prevSearches => {
         const updatedSearches = prevSearches.filter(
@@ -127,11 +119,20 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     openBottomSheet();
   };
 
-  const searchProducts = useCallback(async () => {
-    try {
-      if (pageNo === 1) {
-        setIsLoading(true);
+  const searchProducts = async () => {
+    if (isLoadingMore) {
+      if (searchInp === '') {
+        return;
       }
+    }
+    if (searchInp !== '') {
+      setPageNo(1);
+    }
+    if (pageNo === 1) {
+      setIsLoading(true);
+    }
+    try {
+      setIsLoadingMore(true);
       const response = await searchProduct(
         undefined,
         searchInp,
@@ -140,7 +141,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
         maxValue,
         selectedBrand,
         pageNo,
-        perPage,
+        searchInp === '' ? perPage : undefined,
       );
       if (response && response.content) {
         setSearchResults(prevResults =>
@@ -153,25 +154,23 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       } else {
         setErrorFetching(true);
       }
+      setIsLoading(false);
+      setIsLoadingMore(false);
     } catch (error) {
       setErrorFetching(true);
       setIsLoadingMore(false);
-    } finally {
-      setIsLoading(false);
-      setIsLoadingMore(false);
     }
-  }, [searchInp, sortBy, minValue, maxValue, selectedBrand, pageNo, perPage]);
+  };
 
   const loadMoreResults = () => {
-    if (perPage <= count) {
-      setIsLoadingMore(true);
+    if (perPage === count) {
       setPageNo(prevPage => prevPage + 1);
     }
   };
 
   useEffect(() => {
     searchProducts();
-  }, [searchProducts]);
+  }, [sortBy, minValue, maxValue, selectedBrand, pageNo]);
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>
@@ -190,10 +189,6 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               SetsearchInp('');
               setSelectedRecentSearch('');
               setRecentSearch([]);
-              setSortBy('default');
-              setMinValue(0);
-              setMaxValue(1000);
-              setSelectedBrand('');
             }}>
             <Text
               fontFamily={'Inter_Medium'}
@@ -350,20 +345,13 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       ) : (
         <View flex={1} bg={'white'}>
           <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                colors={['#F97316']}
-              />
-            }
             flex={1}
             ListHeaderComponent={ListHeaderComponent}
             data={searchResults}
             renderItem={({item, index}) => (
               <SearchProductCard
                 key={index}
-                onPress={() => listToDetails(item.code)}
+                onPress={() => listToDetails(item.name)}
                 products={item}
               />
             )}
@@ -376,7 +364,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
               marginBottom: verticalScale(15),
               gap: horizontalScale(15),
             }}
-            onEndReached={loadMoreResults}
+            onEndReached={searchInp === '' && loadMoreResults}
             onEndReachedThreshold={0.5}
             ListFooterComponent={
               isLoadingMore && (
