@@ -7,7 +7,13 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "setLocal": "cross-env ENVFILE=.env.local",
+    "setProduction": "cross-env ENVFILE=.env.production",
+    "ios-local": "npm run setLocal && npx react-native run-ios --mode=Debug --scheme \"tutorialLocal\" --simulator='iPhone 11'",
+    "ios-production": "npm run setProduction && npx react-native run-ios --mode=Debug --scheme \"tutorialProduction\" --simulator='iPhone 11'",
+    "android-local": "npm run setLocal && npx react-native run-android",
+    "android-production": "npm run setProduction && npx react-native run-android"
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
@@ -24,6 +30,7 @@
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-animatable": "^1.4.0",
+    "react-native-config": "^1.5.2",
     "react-native-device-info": "^10.13.1",
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "^2.16.0",
@@ -46,6 +53,7 @@
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
+    "cross-env": "^7.0.3",
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
