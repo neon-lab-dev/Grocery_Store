@@ -7,9 +7,11 @@ export const sendOtp = async (phoneNo: string) => {
   try {
     const response = await APIClient.post('/send-otp', {phone: phoneNo});
     console.log("login api calles sucrssfully");
+    console.log(APIClient.post('/send-otp', {phone: phoneNo}))
     return response.data;
 
   } catch (e: any) {
+    console.log(APIClient)
     console.log("login api calles not  sucrssfull");
     console.log(e);
   }

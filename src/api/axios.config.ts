@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {getToken} from './localstorage';
+import Config from 'react-native-config';
 
 const BASE_URL =
   process.env.NODE_ENV === 'prod'
@@ -7,14 +8,22 @@ const BASE_URL =
     : process.env.REACT_APP_LOCAL_BASE_URl;
 
 export const APIClient = axios.create({
-  baseURL: 'http://3.7.26.46:8801/login/v1/send-otp',
+  baseURL: "https://api.kaserag.com/login/",
   headers: {'Content-Type': 'application/json', 'Accept-Encoding': 'gzip'},
+});
+
+APIClient.interceptors.response.use(response => {
+  console.log('Response:', response);
+  return response;
+}, error => {
+  console.log('Error Response:', error.response);
+  return Promise.reject(error);
 });
 
 // FOR AUTHENTICATED ROUTES
 // TOKEN TO BE EXTRACTED FROM STORE
 const AuthAPIClient = axios.create({
-  baseURL: 'http://ec2-3-7-26-46.ap-south-1.compute.amazonaws.com/v1/product/list',
+  baseURL:"https://api.kaserag.com/",
   headers: {
     'Content-Type': 'application/json',
     'Accept-Encoding': 'gzip',
@@ -37,7 +46,7 @@ AuthAPIClient.interceptors.request.use(
 );
 
 const AuthAPIClient2 = axios.create({
-  baseURL: 'http://3.7.26.46:8801/login/v1/send-otp',
+  baseURL: "https://api.kaserag.com/login/",
   headers: {
     'Content-Type': 'application/json',
     'Accept-Encoding': 'gzip',

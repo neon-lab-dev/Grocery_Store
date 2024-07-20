@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Config from 'react-native-config';
 import {
   View,
   Button,
@@ -46,6 +47,7 @@ const Login: React.FC<Props> = ({navigation}) => {
   }, [dispatch]);
 
   const handleContinue = async () => {
+    console.log(Config.REACT_APP_Environment+"hgvkhg")
     if (isConnected) {
       if (validators.isPhoneNumber(phoneNo)) {
         setIsLoading(true);
@@ -93,6 +95,14 @@ const Login: React.FC<Props> = ({navigation}) => {
             lineHeight={33.89}
             letterSpacing={-0.05}>
             Fresh Picks Just a Tap Away!
+          </Text>
+          <Text
+            fontFamily={'Inter_SemiBold'}
+            fontSize={scaleFontSize(26)}
+            color={'accent.800'}
+            lineHeight={33.89}
+            letterSpacing={-0.05}>
+            {Config.REACT_APP_Environment}
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
