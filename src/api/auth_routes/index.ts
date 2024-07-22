@@ -1,9 +1,10 @@
 import {AuthAPIClient, AuthAPIClient2} from '../axios.config';
+import { API } from '..';
 
 export const getProducts = async (NumberOfProducts: Number) => {
   try {
     const response = await AuthAPIClient.get(
-      `/product/list?perPage=${NumberOfProducts}`,
+      `${API.GET_PRODUCTS}?perPage=${NumberOfProducts}`,
     );
     return response.data.responseBody;
   } catch (error) {
@@ -22,7 +23,7 @@ export const searchProduct = async (
   NumberOfProducts?: Number,
 ) => {
   try {
-    let url = '/product/list';
+    let url = API.GET_PRODUCTS;
     let queryParams = [];
     if (NumberOfProducts) {
       queryParams.push(`perPage=${NumberOfProducts}`);
@@ -65,7 +66,7 @@ export const searchProduct = async (
 
 export const fetchUserData = async () => {
   try {
-    const response = await AuthAPIClient2.get('/profile/user/fetch');
+    const response = await AuthAPIClient2.get(API.FETCH_USER_DATA);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -75,7 +76,7 @@ export const fetchUserData = async () => {
 export const updateUserData = async (updatedFields: {}) => {
   try {
     const response = await AuthAPIClient2.put(
-      '/profile/user/update',
+      API.UPDATE_USER_DATA,
       updatedFields,
     );
     return response.data;
@@ -86,7 +87,7 @@ export const updateUserData = async (updatedFields: {}) => {
 
 export const getAddress = async () => {
   try {
-    const response = await AuthAPIClient2.get('/profile/address/fetch');
+    const response = await AuthAPIClient2.get(API.GET_ADDRESS);
     // console.log('getaddress', response);
     return response.data.responseBody.content;
   } catch (error) {
@@ -97,7 +98,7 @@ export const getAddress = async () => {
 export const addAddress = async address => {
   console.log('addAdress', address);
   try {
-    const response = await AuthAPIClient2.post('/profile/address/add', address);
+    const response = await AuthAPIClient2.post(API.ADD_ADDRESS, address);
     // console.log('Addaddress', response);
     return response.data;
   } catch (error) {
@@ -108,7 +109,7 @@ export const addAddress = async address => {
 export const updateAddress = async address => {
   try {
     const response = await AuthAPIClient2.post(
-      '/profile/address/update',
+      API.UPDATE_ADDRESS,
       address,
     );
     // console.log('updateddress', response);
@@ -120,7 +121,7 @@ export const updateAddress = async address => {
 
 export const deleteAddress = async id => {
   try {
-    const response = await AuthAPIClient2.delete('/profile/address/delete', {
+    const response = await AuthAPIClient2.delete(API.DELETE_ADDRESS, {
       data: [id],
     });
     return response.data;
@@ -132,7 +133,7 @@ export const deleteAddress = async id => {
 export const createSuggestion = async comment => {
   // console.log(comment);
   try {
-    const response = await AuthAPIClient.post('/suggestion/create', {
+    const response = await AuthAPIClient.post(API.CREATE_SUGGESTION, {
       comment: comment,
     });
     return response.data;
@@ -143,7 +144,7 @@ export const createSuggestion = async comment => {
 
 export const getOrders = async () => {
   try {
-    const response = await AuthAPIClient.get('/order/list');
+    const response = await AuthAPIClient.get(API.GET_ORDER);
     return response.data.responseBody.content;
   } catch (error) {
     console.log(error);
@@ -151,7 +152,7 @@ export const getOrders = async () => {
 };
 export const CreateOrders = async (orderData: {paymentId: string}) => {
   try {
-    const response = await AuthAPIClient.post('/order/create', orderData);
+    const response = await AuthAPIClient.post(API.CREATE_ORDER, orderData);
     return response;
   } catch (error) {
     console.log(error);
@@ -160,7 +161,7 @@ export const CreateOrders = async (orderData: {paymentId: string}) => {
 export const fetchpayment = async (TotalPrice: any, dis: string) => {
   try {
     const response = await AuthAPIClient.get(
-      `/payment/get/payment-link?amount=${TotalPrice}&description=${dis}`,
+      `${API.FETCH_PAYMENT}=${TotalPrice}&description=${dis}`,
     );
     return response.data;
   } catch (error) {
@@ -170,7 +171,7 @@ export const fetchpayment = async (TotalPrice: any, dis: string) => {
 export const paymentStatus = async (PaymentID: string) => {
   try {
     const response = await AuthAPIClient.get(
-      `/payment/status?paymentId=${PaymentID}`,
+      `${API.PAYMENT_STATUS}=${PaymentID}`,
     );
     return response.data;
   } catch (error) {
@@ -180,7 +181,7 @@ export const paymentStatus = async (PaymentID: string) => {
 export const ForcepaymentStatus = async (PaymentID: string) => {
   try {
     const response = await AuthAPIClient.get(
-      `/payment/status?paymentId=${PaymentID}&external=true`,
+      `${API.PAYMENT_STATUS}=${PaymentID}&external=true`,
     );
     return response.data.responseBody.paymentStatus;
   } catch (error) {
@@ -190,7 +191,7 @@ export const ForcepaymentStatus = async (PaymentID: string) => {
 
 export const fetchAllCategory = async () => {
   try {
-    const response = await AuthAPIClient.get('/category/all');
+    const response = await AuthAPIClient.get(API.FETCH_ALL_CATEGORY);
     if (response.data && response.data.responseBody) {
       // console.log(response.data.responseBody);
       return response.data.responseBody;
@@ -203,7 +204,7 @@ export const fetchAllCategory = async () => {
 
 export const evaluateOrder = async orderData => {
   try {
-    const response = await AuthAPIClient.post('/order/evaluate', {
+    const response = await AuthAPIClient.post(API.EVALUATE_ORDERS, {
       boughtProductDetailsList: orderData,
     });
     return response.data.responseBody;
