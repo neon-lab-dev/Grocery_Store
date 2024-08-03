@@ -283,5 +283,29 @@ export const SubCategories = {
   'Stationary & Games': [],
 };
 
-export const hideCategories=["mangos & melons","hydrophonic","coriander & other","certified organic","freshly cut sprouts","flower & leaves","seasonal","organic","organic species","Curd & youghurt","biscuit gift pack","gourmet bakery","oats & daliya","gift pack","energy bars","soda & mixture","coconut water","Hot chocolate","organic & premium","smoking cessation","honey & chwanparash","vitamins & supplements","health care equipment","Machine and car care",];
-
+export const hideCategories = [
+  'mangos & melons',
+  'hydrophonic',
+  'coriander & other',
+  'certified organic',
+  'freshly cut sprouts',
+  'flower & leaves',
+  'seasonal',
+  'organic',
+  'organic species',
+  'Curd & youghurt',
+  'biscuit gift pack',
+  'gourmet bakery',
+  'oats & daliya',
+  'gift pack',
+  'energy bars',
+  'soda & mixture',
+  'coconut water',
+  'Hot chocolate',
+  'organic & premium',
+  'smoking cessation',
+  'honey & chwanparash',
+  'vitamins & supplements',
+  'health care equipment',
+  'Machine and car care',
+];

@@ -19,7 +19,7 @@ import AddAddress from '../screens/Address/AddAddress';
 import Payment from '../screens/Payment';
 import Search from '../screens/Search';
 import Cart from '../screens/Cart';
-import CategoryProducts from '../screens/Category Products/CategoryProducts';
+import CategoryProducts from '../screens/CategoryProducts/CategoryProducts';
 import ProductDetails from '../screens/ProductDetails';
 import GoBack from '../components/Navigation/GoBack';
 
