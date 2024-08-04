@@ -111,151 +111,148 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   const {width} = Dimensions.get('window');
   // console.log(width, height)
   // let off = calculateDiscountPercentage(products.DisPrice, products.Price);
-  return (
-    <View style={styles.Container}>
-      <View
-        key={products.id}
-        style={{
-          width: horizontalScale(110),
-          height: verticalScale(width < 380 ? 180 : 200),
-        }}>
-        <Pressable
-          onPress={() => onPress(products.code)}
-          style={{
-            borderRadius: 16,
-            backgroundColor: '#F9FAFB',
-            height: verticalScale(90),
-            width: horizontalScale(100),
-            overflow: 'hidden',
-          }}>
-          {offerPerIndex >= 0 && (
-            <View
-              style={{
-                backgroundColor: Colors.primary[500],
-                height: verticalScale(25),
-                width: horizontalScale(28),
-                marginLeft: verticalScale(10),
-                borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8,
-              }}>
-              <Text
-                style={{
-                  fontFamily: 'Inter_Bold',
-                  fontSize: scaleFontSize(12),
-                  alignSelf: 'center',
-                  color: 'white',
-                }}>
-                {products.varietyList[offerPerIndex].discountPercent}%
-              </Text>
-              <Text
-                style={{
-                  fontFamily: 'Inter_Bold',
-                  fontSize: scaleFontSize(12),
-                  alignSelf: 'center',
-                  position: 'absolute',
-                  top: verticalScale(8),
-                  color: 'white',
-                }}>
-                OFF
-              </Text>
-            </View>
-          )}
-          <View flex={1} alignItems={'center'} justifyContent={'center'}>
-            {products?.varietyList[0]?.documentUrls[0] ? (
-              <Image
-                alt="Image"
-                source={{uri: products?.varietyList[0]?.documentUrls[0]}}
-                style={styles.Image}
-                resizeMode="contain"
-              />
-            ) : null}
-          </View>
-        </Pressable>
-        <Text mr={horizontalScale(10)} style={styles.Title} numberOfLines={2}>
-          {capitalizeFirstLetter(products.name)}
-        </Text>
-        <Text style={styles.Quantity}>
-          {products.varietyList[0].value} {products.varietyList[0].unit}
-        </Text>
+  if (products.varietyList[0].quantity !== 0) {
+    return (
+      <View style={styles.Container}>
         <View
+          key={products.id}
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            position: 'absolute',
-            top: verticalScale(width < 380 ? 130 : 140),
+            width: horizontalScale(110),
+            height: verticalScale(width < 380 ? 180 : 200),
           }}>
-          <View style={{marginTop: 18}}>
-            <Text
-              style={[
-                products.varietyList[0].discountPrice < 1000
-                  ? styles.Price
-                  : styles.adjPrice,
-              ]}>
-              ₹{products.varietyList[0].discountPrice}
-            </Text>
-            <Text strikeThrough style={styles.DisPrice}>
-              ₹{products.varietyList[0].price}
-            </Text>
-          </View>
-          <View>
-            {isButton1Visible ? (
-              <Pressable style={styles.Button} onPress={handleButtonPress}>
-                <Text style={styles.ButtonText}>ADD</Text>
-                {products.varietyList.length > 1 && (
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      backgroundColor: 'white',
-                      top: verticalScale(17),
-                      position: 'absolute',
-                      width: horizontalScale(34),
-                      height: verticalScale(14),
-                      left: horizontalScale(9),
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: scaleFontSize(8),
-                      }}>
-                      {' '}
-                      {products.varietyList.length} Options
-                    </Text>
-                  </View>
-                )}
-              </Pressable>
-            ) : (
+          <Pressable
+            onPress={() => onPress(products.code)}
+            style={{
+              borderRadius: 16,
+              backgroundColor: '#F9FAFB',
+              height: verticalScale(90),
+              width: horizontalScale(100),
+              overflow: 'hidden',
+            }}>
+            {offerPerIndex >= 0 && (
               <View
                 style={{
-                  paddingVertical: verticalScale(3),
-                  paddingHorizontal: horizontalScale(1),
-                  marginHorizontal: horizontalScale(5),
                   backgroundColor: Colors.primary[500],
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 10,
+                  height: verticalScale(25),
+                  width: horizontalScale(28),
+                  marginLeft: verticalScale(10),
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
                 }}>
-                <Pressable onPress={handleDecrease}>
-                  <Text
-                    style={{
-                      fontFamily: 'Inter_Medium',
-                      color: 'white',
-                      fontSize: scaleFontSize(18),
-                      marginHorizontal: horizontalScale(5),
-                    }}>
-                    -
-                  </Text>
-                </Pressable>
                 <Text
                   style={{
-                    fontFamily: 'Inter_Medium',
+                    fontFamily: 'Inter_Bold',
+                    fontSize: scaleFontSize(12),
+                    alignSelf: 'center',
                     color: 'white',
-                    fontSize: scaleFontSize(18),
-                    marginHorizontal: horizontalScale(5),
                   }}>
-                  {count}
+                  {products.varietyList[offerPerIndex].discountPercent}%
                 </Text>
-                <Pressable onPress={handleIncrease}>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    fontSize: scaleFontSize(12),
+                    alignSelf: 'center',
+                    position: 'absolute',
+                    top: verticalScale(8),
+                    color: 'white',
+                  }}>
+                  OFF
+                </Text>
+              </View>
+            )}
+            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+              {products?.varietyList[0]?.documentUrls[0] ? (
+                <Image
+                  alt="Image"
+                  source={{uri: products?.varietyList[0]?.documentUrls[0]}}
+                  style={styles.Image}
+                  resizeMode="contain"
+                />
+              ) : null}
+            </View>
+          </Pressable>
+          <Text mr={horizontalScale(10)} style={styles.Title} numberOfLines={2}>
+            {capitalizeFirstLetter(products.name)}
+          </Text>
+          <Text style={styles.Quantity}>
+            {products.varietyList[0].value} {products.varietyList[0].unit}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              position: 'absolute',
+              top: verticalScale(width < 380 ? 130 : 140),
+            }}>
+            <View style={{marginTop: 18}}>
+              <Text
+                style={[
+                  products.varietyList[0].discountPrice < 1000
+                    ? styles.Price
+                    : styles.adjPrice,
+                ]}>
+                ₹{products.varietyList[0].discountPrice}
+              </Text>
+              <Text strikeThrough style={styles.DisPrice}>
+                {products.varietyList[0].discountPrice !==
+                  products.varietyList[0].price && (
+                  <Text style={{textDecorationLine: 'line-through'}}>
+                    {'₹'}
+                    {products.varietyList[0].price}
+                  </Text>
+                )}
+              </Text>
+            </View>
+            <View>
+              {isButton1Visible ? (
+                <Pressable style={styles.Button} onPress={handleButtonPress}>
+                  <Text style={styles.ButtonText}>ADD</Text>
+                  {products.varietyList.length > 1 && (
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        backgroundColor: 'white',
+                        top: verticalScale(17),
+                        position: 'absolute',
+                        width: horizontalScale(34),
+                        height: verticalScale(14),
+                        left: horizontalScale(9),
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: scaleFontSize(8),
+                        }}>
+                        {' '}
+                        {products.varietyList.length} Options
+                      </Text>
+                    </View>
+                  )}
+                </Pressable>
+              ) : (
+                <View
+                  style={{
+                    paddingVertical: verticalScale(3),
+                    paddingHorizontal: horizontalScale(1),
+                    marginHorizontal: horizontalScale(5),
+                    backgroundColor: Colors.primary[500],
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                  }}>
+                  <Pressable onPress={handleDecrease}>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      -
+                    </Text>
+                  </Pressable>
                   <Text
                     style={{
                       fontFamily: 'Inter_Medium',
@@ -263,16 +260,197 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                       fontSize: scaleFontSize(18),
                       marginHorizontal: horizontalScale(5),
                     }}>
-                    +
+                    {count}
                   </Text>
-                </Pressable>
-              </View>
-            )}
+                  <Pressable onPress={handleIncrease}>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      +
+                    </Text>
+                  </Pressable>
+                </View>
+              )}
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View style={styles.Container} opacity={0.6}>
+        <View
+          key={products.id}
+          style={{
+            width: horizontalScale(110),
+            height: verticalScale(width < 380 ? 180 : 200),
+          }}>
+          <Pressable
+            disabled
+            onPress={() => onPress(products.code)}
+            style={{
+              borderRadius: 16,
+              backgroundColor: '#F9FAFB',
+              height: verticalScale(90),
+              width: horizontalScale(100),
+              overflow: 'hidden',
+            }}>
+            {offerPerIndex >= 0 && (
+              <View
+                style={{
+                  backgroundColor: Colors.primary[500],
+                  height: verticalScale(25),
+                  width: horizontalScale(28),
+                  marginLeft: verticalScale(10),
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    fontSize: scaleFontSize(12),
+                    alignSelf: 'center',
+                    color: 'white',
+                  }}>
+                  {products.varietyList[offerPerIndex].discountPercent}%
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Inter_Bold',
+                    fontSize: scaleFontSize(12),
+                    alignSelf: 'center',
+                    position: 'absolute',
+                    top: verticalScale(8),
+                    color: 'white',
+                  }}>
+                  OFF
+                </Text>
+              </View>
+            )}
+            <View flex={1} alignItems={'center'} justifyContent={'center'}>
+              {products?.varietyList[0]?.documentUrls[0] ? (
+                <Image
+                  alt="Image"
+                  source={{uri: products?.varietyList[0]?.documentUrls[0]}}
+                  style={styles.Image}
+                  resizeMode="contain"
+                />
+              ) : null}
+            </View>
+          </Pressable>
+          <Text mr={horizontalScale(10)} style={styles.Title} numberOfLines={2}>
+            {capitalizeFirstLetter(products.name)}
+          </Text>
+          <Text style={styles.Quantity}>
+            {products.varietyList[0].value} {products.varietyList[0].unit}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              // alignItems: 'center',
+              // position: 'absolute',
+              marginTop: verticalScale(10),
+              // top: verticalScale(width < 380 ? 130 : 140),
+            }}>
+            {/* <View style={{marginTop: 18}}>
+              <Text
+                style={[
+                  products.varietyList[0].discountPrice < 1000
+                    ? styles.Price
+                    : styles.adjPrice,
+                ]}>
+                ₹{products.varietyList[0].discountPrice}
+              </Text>
+              <Text strikeThrough style={styles.DisPrice}>
+                ₹{products.varietyList[0].price}
+              </Text>
+            </View> */}
+            <View>
+              {isButton1Visible ? (
+                <Pressable
+                  style={styles.Button}
+                  onPress={handleButtonPress}
+                  disabled>
+                  <Text style={[styles.ButtonText, {fontSize: 11}]}>
+                    Out of Stock
+                  </Text>
+                  {products.varietyList.length > 1 && (
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        backgroundColor: 'white',
+                        top: verticalScale(17),
+                        position: 'absolute',
+                        width: horizontalScale(34),
+                        height: verticalScale(14),
+                        left: horizontalScale(9),
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: scaleFontSize(8),
+                        }}>
+                        {' '}
+                        {products.varietyList.length} Options
+                      </Text>
+                    </View>
+                  )}
+                </Pressable>
+              ) : (
+                <View
+                  style={{
+                    paddingVertical: verticalScale(3),
+                    paddingHorizontal: horizontalScale(1),
+                    marginHorizontal: horizontalScale(5),
+                    backgroundColor: Colors.primary[500],
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                  }}>
+                  <Pressable onPress={handleDecrease} disabled>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      -
+                    </Text>
+                  </Pressable>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter_Medium',
+                      color: 'white',
+                      fontSize: scaleFontSize(18),
+                      marginHorizontal: horizontalScale(5),
+                    }}>
+                    {count}
+                  </Text>
+                  <Pressable onPress={handleIncrease} disabled>
+                    <Text
+                      style={{
+                        fontFamily: 'Inter_Medium',
+                        color: 'white',
+                        fontSize: scaleFontSize(18),
+                        marginHorizontal: horizontalScale(5),
+                      }}>
+                      +
+                    </Text>
+                  </Pressable>
+                </View>
+              )}
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
 };
 export const styles = StyleSheet.create({
   Container: {

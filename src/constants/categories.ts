@@ -106,7 +106,7 @@ export const Categories = [
         image: require('../assets/images/Categories/household/Newfolder/resized_Cleaners&Repellents.webp'),
       },
       {
-        name: 'Stationary & Games',
+        name: 'Stationary & Pooja',
         image: require('../assets/images/Categories/household/Newfolder/Resized_PencilPen&Markers.jpg'),
       },
     ],

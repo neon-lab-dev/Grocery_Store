@@ -55,8 +55,8 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
         undefined,
         undefined,
         undefined,
-        pageNo,
-        perPage,
+        text.length === 0 ? pageNo : 1,
+        text.length === 0 ? perPage : undefined,
       );
       setProducts(prevResults =>
         pageNo === 1 ? response.content : [...prevResults, ...response.content],
@@ -72,7 +72,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
   }, [pageNo, perPage, text]);
 
   const loadMoreResults = () => {
-    if (perPage === count) {
+    if (perPage <= count) {
       setIsLoadingMore(true);
       setPageNo(prevPage => prevPage + 1);
     }
@@ -98,6 +98,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
           editable
           width={90}
           onPress={() => {}}
+          onSubmit={fetchProducts}
         />
       </View>
       {isLoading ? (
@@ -127,6 +128,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
           )}
           numColumns={2}
           data={products}
+          keyExtractor={item => item.id.toString()}
           renderItem={({item}) => (
             <SearchProductCard
               products={item}
@@ -134,8 +136,8 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
               onPress={() => onPress(item.code)}
             />
           )}
-          onEndReached={loadMoreResults}
-          onEndReachedThreshold={0.5}
+          onEndReached={text.length === 0 && loadMoreResults}
+          onEndReachedThreshold={0.8}
           ListFooterComponent={
             isLoadingMore && (
               <View

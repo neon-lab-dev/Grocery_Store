@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   Center,
   FlatList,
@@ -72,6 +72,8 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
     };
   }, [dispatch]);
 
+  const filterOverlayRef = useRef(null);
+
   useEffect(() => {
     const fetchRecentSearch = async () => {
       const recentSearchData = await getItem('recentSearch');
@@ -120,11 +122,6 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   };
 
   const searchProducts = async () => {
-    if (isLoadingMore) {
-      if (searchInp === '') {
-        return;
-      }
-    }
     if (searchInp !== '') {
       setPageNo(1);
     }
@@ -140,7 +137,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
         minValue,
         maxValue,
         selectedBrand,
-        pageNo,
+        searchInp === '' ? pageNo : 1,
         searchInp === '' ? perPage : undefined,
       );
       if (response && response.content) {
@@ -163,7 +160,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
   };
 
   const loadMoreResults = () => {
-    if (perPage === count) {
+    if (perPage <= count) {
       setPageNo(prevPage => prevPage + 1);
     }
   };
@@ -186,9 +183,16 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
           </Text>
           <Pressable
             onPress={() => {
+              if (filterOverlayRef.current) {
+                filterOverlayRef.current.resetFilters();
+              }
               SetsearchInp('');
               setSelectedRecentSearch('');
               setRecentSearch([]);
+              setSortBy('default');
+              setMinValue(0);
+              setMaxValue(1000);
+              setSelectedBrand('');
             }}>
             <Text
               fontFamily={'Inter_Medium'}
@@ -351,7 +355,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             renderItem={({item, index}) => (
               <SearchProductCard
                 key={index}
-                onPress={() => listToDetails(item.name)}
+                onPress={() => listToDetails(item.code)}
                 products={item}
               />
             )}
@@ -387,6 +391,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       )}
 
       <FilterOverlay
+        ref={filterOverlayRef}
         showModal={showModal}
         onClose={() => setShowModal(false)}
         onSortByChange={option => setSortBy(option)}

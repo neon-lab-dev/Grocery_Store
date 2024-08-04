@@ -48,9 +48,9 @@ const Home: React.FC<Props> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
-
   const [selectedProduct, setSelectedProduct] = useState('');
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const [check, setCheck] = useState(false);
 
   const fetchUser = async () => {
     try {
@@ -103,11 +103,21 @@ const Home: React.FC<Props> = ({navigation}) => {
   };
 
   const openBottomSheet = () => {
+    if (overLay === 'Product-List') {
+      setCheck(true);
+    }
     setBottomSheetVisible(true);
   };
 
   const closeBottomSheet = () => {
-    setBottomSheetVisible(false);
+    if (check === true && overLay === 'Product-Details') {
+      openBottomSheet();
+      setOverLay('Product-List');
+    } else {
+      setCheck(false);
+      setBottomSheetVisible(false);
+      setOverLay('Product-Details');
+    }
   };
 
   const listToDetails = (productName: string) => {
@@ -224,7 +234,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                         'Paan Corner',
                         'Health & Pharma',
                         'Cleaners & Repellents',
-                        'Stationary & Games',
+                        'Stationary & Pooja',
                       ];
                       const isDoubleWidth = doubleWidthCategories.includes(
                         subCategory.name,

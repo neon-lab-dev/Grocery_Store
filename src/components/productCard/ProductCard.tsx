@@ -199,8 +199,15 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                 ]}>
                 ₹{products.varietyList[0].discountPrice}
               </Text>
+
               <Text strikeThrough style={styles.DisPrice}>
-                ₹{products.varietyList[0].price}
+                {products.varietyList[0].discountPrice !==
+                  products.varietyList[0].price && (
+                  <Text style={{textDecorationLine: 'line-through'}}>
+                    {'₹'}
+                    {products.varietyList[0].price}
+                  </Text>
+                )}
               </Text>
             </View>
             <View>
@@ -283,7 +290,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
     return (
       <View style={styles.Container}>
         <View
-          opacity={0.6}
+          opacity={0.7}
           key={products.id}
           style={{
             width: horizontalScale(105),
