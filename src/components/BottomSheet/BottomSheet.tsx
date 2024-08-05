@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import ProductsSpecialOverlay from '../ProductsSpecialOverlay';
 import {verticalScale} from '../../assets/scaling';

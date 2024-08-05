@@ -10,7 +10,13 @@ import {shoppingBag} from '../../assets/images/icons/shopping-bag';
 import {locationAlt} from '../../assets/images/icons/location-alt';
 import {comment} from '../../assets/images/icons/comment';
 import {user} from '../../assets/images/icons/user';
-import {Keyboard, KeyboardEvent, Pressable, TextInput} from 'react-native';
+import {
+  Keyboard,
+  KeyboardEvent,
+  Linking,
+  Pressable,
+  TextInput,
+} from 'react-native';
 
 import {StyleSheet} from 'react-native';
 import {
@@ -63,6 +69,14 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
       unsubscribe();
     };
   }, [dispatch]);
+
+  const openURL = async url => {
+    try {
+      await Linking.openURL(url);
+    } catch (error) {
+      console.error('An error occurred', error);
+    }
+  };
 
   useEffect(() => {
     getOrders();
@@ -317,7 +331,6 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
             style={{
               flexDirection: 'row',
               alignSelf: 'center',
-              marginBottom: verticalScale(10),
             }}>
             <Text style={{alignSelf: 'center', marginRight: 2}}>
               Powered by
@@ -328,6 +341,26 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               source={require('../../assets/images/icons/logo.png')}></Image>
           </View>
           <Loader isOpen={loaderVisible} />
+          <View style={styles.footer}>
+            <Text
+              fontFamily={'Inter_Regular'}
+              fontSize={scaleFontSize(10)}
+              color="accent.400"
+              lineHeight={14.4}
+              letterSpacing={-0.03}>
+              By proceeding, you agree to our{' '}
+            </Text>
+            <Text
+              onPress={() => openURL('https://api.kaserag.com/')}
+              fontFamily={'Inter_Regular'}
+              fontSize={scaleFontSize(10)}
+              color="accent.500"
+              underline
+              lineHeight={14.4}
+              letterSpacing={-0.03}>
+              Terms & Conditions and Privacy policy.
+            </Text>
+          </View>
         </View>
       )}
     </>
@@ -354,5 +387,12 @@ export const styles = StyleSheet.create({
     color: '#1F2937',
     lineHeight: 16.8,
     letterSpacing: -0.03,
+  },
+  footer: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: horizontalScale(10),
   },
 });

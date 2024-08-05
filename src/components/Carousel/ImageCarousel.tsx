@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Image, ScrollView } from 'react-native';
+import {View, Image, ScrollView, Pressable} from 'react-native';
 import imageCarouselData from '../../assets/data/imageCarouselData';
-import { styles } from './style';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {styles} from './style';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface Props {
   onImagePress2: () => void;
   onImagePress3: () => void;
 }
 
-const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3 }) => {
+const ImageCarousel: React.FC<Props> = ({onImagePress2, onImagePress3}) => {
   const handleCarouselFunction = (id: number) => {
     if (id == 2) {
       onImagePress2();
@@ -21,15 +21,16 @@ const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3 }) => {
   return (
     <View style={styles.carouselItem}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {imageCarouselData.map((imageCarousel) => {
+        {imageCarouselData.map(imageCarousel => {
           return (
             <View key={imageCarousel.id}>
-              <TouchableOpacity onPress={() => handleCarouselFunction(imageCarousel.id)}>
+              <Pressable
+                onPress={() => handleCarouselFunction(imageCarousel.id)}>
                 <Image
                   source={getImage(imageCarousel.image)}
                   style={styles.img}
                 />
-              </TouchableOpacity>
+              </Pressable>
             </View>
           );
         })}

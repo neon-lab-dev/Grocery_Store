@@ -28,7 +28,11 @@ export const Categories = [
       },
       {
         name: 'Kitchenware & Appliances',
-        image: require('../assets/images/Categories/Grocery/NewFolder/kitchenware.png'),
+        image: require('../assets/images/Categories/Grocery/NewFolder/kitchenwareApliances.png'),
+      },
+      {
+        name: 'Festive special',
+        image: require('../assets/images/Categories/Grocery/NewFolder/gift.png'),
       },
     ],
   },
@@ -61,7 +65,7 @@ export const Categories = [
       },
       {
         name: 'Paan Corner',
-        image: require('../assets/images/Categories/snacks/Newfolder/resized_paancorner.jpg'),
+        image: require('../assets/images/Categories/snacks/Newfolder/paan.png'),
       },
     ],
   },
@@ -94,7 +98,7 @@ export const Categories = [
       },
       {
         name: 'Health & Pharma',
-        image: require('../assets/images/Categories/bath&body/Newfolder/healthPharma.png'),
+        image: require('../assets/images/Categories/bath&body/Newfolder/health.png'),
       },
     ],
   },
@@ -103,11 +107,11 @@ export const Categories = [
     subCategory: [
       {
         name: 'Cleaners & Repellents',
-        image: require('../assets/images/Categories/household/Newfolder/resized_Cleaners&Repellents.webp'),
+        image: require('../assets/images/Categories/household/Newfolder/cleaners.png'),
       },
       {
-        name: 'Stationary & Games',
-        image: require('../assets/images/Categories/household/Newfolder/Resized_PencilPen&Markers.jpg'),
+        name: 'Stationary & Pooja',
+        image: require('../assets/images/Categories/household/Newfolder/puja.png'),
       },
     ],
   },
