@@ -230,7 +230,6 @@ const Home: React.FC<Props> = ({navigation}) => {
                     }}>
                     {category.subCategory.map((subCategory, subIndex) => {
                       const doubleWidthCategories = [
-                        'Kitchenware & Appliances',
                         'Paan Corner',
                         'Health & Pharma',
                         'Cleaners & Repellents',

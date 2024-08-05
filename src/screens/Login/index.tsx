@@ -17,7 +17,7 @@ import {
 } from '../../assets/scaling';
 import LinearGradient from 'react-native-linear-gradient';
 import validators from '../../utils/validators';
-import {Platform} from 'react-native';
+import {Linking, Platform} from 'react-native';
 import {sendOtp} from '../../api/auth';
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';
@@ -35,6 +35,13 @@ const Login: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
 
+  const openURL = async url => {
+    try {
+      await Linking.openURL(url);
+    } catch (error) {
+      console.error('An error occurred', error);
+    }
+  };
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       dispatch(setNetworkStatus(state.isConnected));
@@ -171,6 +178,7 @@ const Login: React.FC<Props> = ({navigation}) => {
               By proceeding, you agree to our{' '}
             </Text>
             <Text
+              onPress={() => openURL('https://api.kaserag.com/')}
               fontFamily={'Inter_Regular'}
               fontSize={scaleFontSize(10)}
               color="accent.500"
