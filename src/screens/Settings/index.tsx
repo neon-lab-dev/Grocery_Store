@@ -337,19 +337,12 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
             </Text>
             <Image
               alt="logo"
-              style={{height: 30, width: 80}}
+              style={{height: 32, width: 80}}
               source={require('../../assets/images/icons/logo.png')}></Image>
           </View>
           <Loader isOpen={loaderVisible} />
           <View style={styles.footer}>
-            <Text
-              fontFamily={'Inter_Regular'}
-              fontSize={scaleFontSize(10)}
-              color="accent.400"
-              lineHeight={14.4}
-              letterSpacing={-0.03}>
-              By proceeding, you agree to our{' '}
-            </Text>
+            
             <Text
               onPress={() => openURL('https://api.kaserag.com/')}
               fontFamily={'Inter_Regular'}
