@@ -133,9 +133,9 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
       const response = await searchProduct(
         undefined,
         searchInp,
-        sortBy,
-        minValue,
-        maxValue,
+        undefined,
+        undefined,
+        undefined,
         selectedBrand,
         searchInp === '' ? pageNo : 1,
         searchInp === '' ? perPage : undefined,
@@ -167,7 +167,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
 
   useEffect(() => {
     searchProducts();
-  }, [sortBy, minValue, maxValue, selectedBrand, pageNo]);
+  }, [selectedBrand, pageNo]);
 
   const ListHeaderComponent = () => (
     <View flex={1} bg={'accent.50'}>

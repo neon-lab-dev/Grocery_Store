@@ -17,7 +17,7 @@ import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import GoBack from '../../components/Navigation/GoBack';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
-import {evaluateOrder, getAddress} from '../../api/auth_routes';
+import {evaluateOrder, getAddress, getCart} from '../../api/auth_routes';
 import {useFocusEffect} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
@@ -47,6 +47,8 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
 
   const cartItemCount = cartItems.items.length;
 
+  // console.log(cartItems);
+
   React.useEffect(() => {
     selAddress();
     getDeliveryCharge();
@@ -74,10 +76,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     if (address != null) {
       setSelectAddress(address);
       setisAddressPresent(true);
-      // setLoaderVisible(false);
+      setLoaderVisible(false);
     } else if (address === null) {
       setisAddressPresent(false);
-      // setLoaderVisible(false);
+      setLoaderVisible(false);
     }
     // setLoaderVisible(false);
   };
@@ -96,7 +98,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     let temp = 0;
     cartItems.items.forEach(
       (item: {varietyList: any[]; discountPrice: number; quantity: number}) => {
-        temp += item.varietyList[0].price * item.quantity;
+        temp += item.price * item.boughtQuantity;
       },
     );
     setTotalDiscountedPrice(temp);
@@ -107,16 +109,18 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     cartItems.items.map((item, i) => {
       setVarietyIds(prevState => [
         ...prevState,
-        {varietyId: item.varietyList[0].id, boughtQuantity: item.quantity},
+        {varietyId: item.varietyId, boughtQuantity: item.boughtQuantity},
       ]);
     });
   }, [cartItems]);
+
+  // console.log('variety', varetyIds);
 
   const getDeliveryCharge = React.useCallback(async () => {
     if (isConnected) {
       try {
         const delCharge = await evaluateOrder(varetyIds);
-        setDeliveryCharge(delCharge.deliveryCharges);
+        setDeliveryCharge(delCharge?.deliveryCharges);
         setLoaderVisible(false);
       } catch (error) {
         console.error('Error evaluating order:', error);
@@ -150,6 +154,17 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       setModalVisible(true);
     }
   };
+
+  const getCartItems = async () => {
+    try {
+      const response = await getCart();
+      console.log('response', response);
+    } catch (error) {
+      console.log('err', error);
+    }
+  };
+
+  getCartItems();
 
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress', {title: 'Add'});
@@ -213,9 +228,11 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
           <View bg={'white'} mt={verticalScale(15)}>
-            {cartItems.items.map((data: {id: React.Key | null | undefined}) => (
-              <CartItemCard key={data.id} item={data} />
-            ))}
+            {cartItems.items.map(
+              (data: {varietyId: React.Key | null | undefined}) => (
+                <CartItemCard key={data.varietyId} item={data} />
+              ),
+            )}
           </View>
           <BillSummaryCard
             cutOffPrice={totalDiscountedPrice + deliveryCharge}

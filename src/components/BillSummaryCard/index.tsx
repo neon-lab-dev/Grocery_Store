@@ -56,7 +56,7 @@ const BillSummaryCard: FC<BillSummaryCardProps> = ({
           color={'accent.800'}
           lineHeight={16.94}
           letterSpacing={-0.04}>
-          ₹{itemPrice.toFixed(2)}
+          ₹{itemPrice?.toFixed(2)}
         </Text>
       </View>
       <View flexDir={'row'} justifyContent={'space-between'}>

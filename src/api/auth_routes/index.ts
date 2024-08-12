@@ -212,3 +212,16 @@ export const evaluateOrder = async orderData => {
     console.log(error);
   }
 };
+
+export const getCart = async () => {
+  try {
+    const response = await AuthAPIClient.get('/cart/list');
+    if (response.data) {
+      // console.log('resspsp', response.data);
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};

@@ -4,7 +4,9 @@ import {
   DECREMENT_ITEM,
   CLEAR_CART,
   REMOVE_ITEM,
+  FETCH_CART,
 } from './actionTypes';
+
 import {Item} from './index';
 
 export const addToCart = (item: Item) => ({
@@ -27,4 +29,8 @@ export const removeItem = (itemId: string) => ({
 });
 export const clearCart = () => ({
   type: CLEAR_CART,
+});
+export const fetchCart = (cartData: CartItem[]) => ({
+  type: FETCH_CART,
+  payload: cartData,
 });
