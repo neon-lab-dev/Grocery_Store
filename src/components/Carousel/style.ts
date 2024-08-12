@@ -5,10 +5,12 @@ import {Colors} from '../../constants/colors';
 export const styles = StyleSheet.create({
   carouselItem: {},
   img: {
-    width: width < 380 ? 285 : 330,
+    width: width < 380 ? 285 : 360,
+    height: width < 380 ? 195 : 200,
     marginLeft: horizontalScale(18),
-    height: width < 380 ? 195 : 225,
     borderRadius: 25,
+    overflow: 'hidden', 
+    resizeMode: 'stretch'
   },
   container: {
     margin: 5,
