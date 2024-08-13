@@ -21,9 +21,20 @@ const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3, showItem
   const filteredData = imageCarouselData
     .map(item => ({
       ...item,
-      imageSource: getImage(item.image, showItem) // Pass showItem4 to getImage
+      imageSource: getImage(item.image, showItem)
     }))
     .filter(item => item.imageSource !== null);
+
+  // Find the item3 and remove it from the list
+  const item3Index = filteredData.findIndex(item => item.image === 'item3');
+  const item3 = filteredData.splice(item3Index, 1)[0];
+
+  // Insert item3 at the correct position based on showItem
+  if (showItem) {
+    filteredData.unshift(item3); // Insert at first position
+  } else {
+    filteredData.splice(2, 0, item3); // Insert at the third position
+  }
 
   return (
     <View style={styles.carouselItem}>
@@ -40,22 +51,18 @@ const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3, showItem
   );
 };
 
-const getImage = (imageName: string, showItem: boolean) => { // Update function signature
+const getImage = (imageName: string, showItem: boolean) => {
   switch (imageName) {
     case 'item1':
       return require('../../assets/images/Carousel/CarouselImage1.png');
     case 'item2':
-      return require('../../assets/images/Carousel/CarouselImage3.png'); // Corrected image name
+      return require('../../assets/images/Carousel/CarouselImage3.png'); 
     case 'item3':
-      return require('../../assets/images/icons/SendListWhatsapp.png');
+      return require('../../assets/images/Carousel/CarouselImage5.png');  
     case 'item4':
-      return require('../../assets/images/Carousel/CarouselImage4.png');  
+      return require('../../assets/images/icons/SendListWhatsapp.png');
     case 'item5':
-      if (showItem) {
-        return require('../../assets/images/Carousel/CarouselImage5.png');
-      } else {
-        return null;
-      }
+      return require('../../assets/images/Carousel/CarouselImage4.png');  
     default:
       return null;
   }
