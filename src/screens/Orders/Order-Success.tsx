@@ -199,7 +199,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
           </View>
         </View>
       </View>
-      <ImageCarousel />
+      <ImageCarousel  onImagePress2={gotoHome} onImagePress3={gotoHome} showItem={true} />
       <View h={100} w={width} bg={'white'} mt={width < 380 ? 6 : 3}>
         <Center flex={1} px={5}>
           <Button

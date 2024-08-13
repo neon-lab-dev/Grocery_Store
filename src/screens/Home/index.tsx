@@ -173,7 +173,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 colors={['red']}
               />
             }>
-            <ImageCarousel onImagePress2={seeAll} onImagePress3={handleClick} />
+            <ImageCarousel onImagePress2={seeAll} onImagePress3={handleClick} showItem={false} />
             <View
               style={{
                 flexDirection: 'row',
