@@ -295,8 +295,13 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
               />
             }>
             <View style={styles.imageContainer}>
-              {selectedProduct?.varietyList[0].discountPercent !== 0 && (
-                <View style={styles.offPerContainer}>
+              
+                <View style={[
+                  styles.offPerContainer,
+                  {
+                    opacity: selectedProduct?.varietyList[0].discountPercent !== 0 ? 1 : 0,
+                  },
+                ]}>
                   <Text style={styles.percentageText}>
                     {selectedProduct?.varietyList[0].discountPercent ||
                       productDetails?.varietyList[0].discountPercent}
@@ -310,7 +315,7 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
                     OFF
                   </Text>
                 </View>
-              )}
+              
               <View style={{flex: 1, marginHorizontal: horizontalScale(40)}}>
                 {selectedImageUrl && (
                   <View style={{height: 200, width: 200}}>
