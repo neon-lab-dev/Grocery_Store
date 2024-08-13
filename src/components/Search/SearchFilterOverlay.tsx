@@ -43,8 +43,8 @@ const FilterOverlay: React.FC<FilterOverlayProps> = forwardRef(
     },
     ref,
   ) => {
-    const filterOptions = ['Sort', 'Price', 'Brands'];
-    const [selectedOption, setSelectedOption] = useState('Sort');
+    const filterOptions = ['Brands'];
+    const [selectedOption, setSelectedOption] = useState('Brands');
     const [selectedBrand, setSelectedBrand] = useState<string>('');
     const [selectedSortBy, setSelectedSortBy] = useState('default');
     const [selectedMinValue, setSelectedMinValue] = useState<number>(0);

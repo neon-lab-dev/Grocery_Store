@@ -51,20 +51,18 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   const toast = useToast();
   const id = 'test-toast';
   // console.log(item);
-  const [count, setCount] = useState(item.quantity);
+  const [count, setCount] = useState(item.boughtQuantity);
   const [discountPrice, setDiscountPrice] = useState(
-    item.varietyList[0].discountPrice * count,
+    item.discountedPrice * count,
   );
-  const [actualPrice, setActualPrice] = useState(
-    item.varietyList[0].price * count,
-  );
+  const [actualPrice, setActualPrice] = useState(item.price * count);
 
   const handleDecrease = () => {
     if (count === 1) {
-      dispatch(removeItem(item.id));
+      dispatch(removeItem(item.varietyId));
       setCount(0);
     } else {
-      dispatch(decrementItem(item.id));
+      dispatch(decrementItem(item.varietyId));
       setCount(count - 1);
     }
   };
@@ -74,8 +72,8 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   // console.log(rounded); // Outputs: "236.34"
 
   const handleIncrease = () => {
-    if (count < item.varietyList[0].quantity) {
-      dispatch(incrementItem(item.id));
+    if (count) {
+      dispatch(incrementItem(item.varietyId));
       setCount(count + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -104,9 +102,9 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   };
 
   useEffect(() => {
-    setDiscountPrice(item.varietyList[0].discountPrice * count);
-    setActualPrice(item.varietyList[0].price * count);
-  }, [count, item.varietyList]);
+    setDiscountPrice(item.discountedPrice * count);
+    setActualPrice(item.price * count);
+  }, [count, item]);
 
   return (
     <View
@@ -123,7 +121,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
         <Image
           style={styles.image}
           alt="Image"
-          source={{uri: item.varietyList[0].documentUrls[0]}}
+          source={{uri: item.documents[0]}}
           resizeMode="contain"
           mr={horizontalScale(10)}
         />
@@ -145,7 +143,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
             color={'accent.500'}
             lineHeight={14.52}
             letterSpacing={-0.04}>
-            {item.varietyList[0].value} {item.varietyList[0].unit}
+            {item.value} {item.unit}
           </Text>
         </View>
       </View>

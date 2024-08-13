@@ -5,17 +5,16 @@ import {
   DECREMENT_ITEM,
   CLEAR_CART,
   REMOVE_ITEM,
+  FETCH_CART,
 } from './actionTypes';
 import {CartItem} from './index';
 
 interface CartState {
   items: CartItem[];
-  totalPrice: number;
 }
 
 const initialState: CartState = {
   items: [],
-  totalPrice: 0,
 };
 
 export const cartReducer = createReducer(initialState, builder => {
@@ -24,50 +23,48 @@ export const cartReducer = createReducer(initialState, builder => {
       const newItem = action.payload as CartItem;
       const existingItem = state.items.find(
         item =>
-          item.id === newItem.id &&
+          item.varietyId === newItem.varietyId &&
           item.varietyList[0].value === newItem.varietyList[0].value,
       );
       if (existingItem) {
-        existingItem.quantity += newItem.quantity;
-        // console.log(existingItem)
+        existingItem.boughtQuantity += newItem.boughtQuantity;
       } else {
         state.items.push(newItem);
       }
-      state.totalPrice +=
-        newItem.varietyList[0].discountPrice * newItem.quantity;
-      // console.log(state);
+      // No need to update totalPrice here
     })
     .addCase(INCREMENT_ITEM, (state, action) => {
       const itemId = action.payload as number;
-      const itemToIncrement = state.items.find(item => item.id === itemId);
+      const itemToIncrement = state.items.find(
+        item => item.varietyId === itemId,
+      );
       if (itemToIncrement) {
-        itemToIncrement.quantity++;
-        state.totalPrice += itemToIncrement.varietyList[0].discountPrice;
+        itemToIncrement.boughtQuantity++;
+        // No need to update totalPrice here
       }
-      // console.log(state);
     })
     .addCase(DECREMENT_ITEM, (state, action) => {
       const itemId = action.payload as number;
-      const itemToDecrement = state.items.find(item => item.id === itemId);
-      if (itemToDecrement && itemToDecrement.quantity >= 1) {
-        itemToDecrement.quantity--;
-        state.totalPrice -= itemToDecrement.varietyList[0].discountPrice;
+      const itemToDecrement = state.items.find(
+        item => item.varietyId === itemId,
+      );
+      if (itemToDecrement && itemToDecrement.boughtQuantity >= 1) {
+        itemToDecrement.boughtQuantity--;
+        // No need to update totalPrice here
       }
-      // console.log(state);
     })
     .addCase(REMOVE_ITEM, (state, action) => {
       const itemId = action.payload as number;
-      const itemToDecrement = state.items.find(item => item.id === itemId);
-      if (itemToDecrement) {
-        state.items = state.items.filter(item => item.id !== itemId);
-        state.totalPrice -= itemToDecrement
-          ? itemToDecrement.varietyList[0].discountPrice
-          : 0;
-      }
-      // console.log(state);
+      state.items = state.items.filter(item => item.varietyId !== itemId);
+      // No need to update totalPrice here
     })
     .addCase(CLEAR_CART, state => {
       state.items = [];
-      state.totalPrice = 0;
+      // No need to update totalPrice here
+    })
+    .addCase(FETCH_CART, (state, action) => {
+      const items = action.payload;
+      state.items = items;
+      // No need to update totalPrice here
     });
 });

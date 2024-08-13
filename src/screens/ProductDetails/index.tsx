@@ -58,9 +58,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
   const id = 'test-toast';
   const cartItems = useSelector((state: any) => state.cart.items);
   const cartItem = cartItems.find(
-    (item: any) => selectedProduct && item.id === selectedProduct.id,
+    (item: any) =>
+      selectedProduct && item.varietyId === selectedProduct.varietyId,
   );
-  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const [count, setCount] = useState(cartItem ? cartItem.boughtQuantity : 0);
   const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
@@ -145,10 +146,10 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
 
   const updateCount = (product: any) => {
     const item = cartItems.find(
-      (obj: any) => obj?.id === product?.varietyList[0]?.id,
+      (obj: any) => obj?.varietyId === product?.varietyList[0]?.id,
     );
     if (item) {
-      setCount(item.quantity);
+      setCount(item.boughtQuantity);
       setIsButton1Visible(false);
     } else {
       setCount(0);
@@ -207,8 +208,21 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
 
   const handleButtonPress = () => {
     setCount(1);
-    const product = {...selectedProduct, id: selectedProduct.varietyList[0].id};
-    product.quantity = 1;
+    const product = {
+      ...selectedProduct,
+      varietyId: selectedProduct.varietyList[0].id,
+      name: selectedProduct.name,
+      price: selectedProduct.varietyList[0].price,
+      discountPercent: selectedProduct.varietyList[0].discountPercent,
+      discountedPrice: selectedProduct.varietyList[0].discountPrice,
+      boughtQuantity: 0,
+      value: selectedProduct.varietyList[0].value,
+      unit: selectedProduct.varietyList[0].unit,
+      boughtPrice: selectedProduct.varietyList[0].discountPrice,
+      savings: 0,
+      documents: selectedProduct.varietyList[0].documentUrls,
+    };
+    product.boughtQuantity = 1;
     dispatch(addToCart(product));
     // setIsButton1Visible(false);
     // setShowCartButton(true);
@@ -351,11 +365,12 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                         <Pressable
                           onPress={() => setModalVisible(false)}
                           style={styles.modalCloseButton}>
-                        <Text  color={'primary.50'}
-                  fontFamily={'Inter_Medium'}
-                  fontSize={scaleFontSize(14)}
-                  lineHeight={19.38}
-                  letterSpacing={-0.04}>
+                          <Text
+                            color={'primary.50'}
+                            fontFamily={'Inter_Medium'}
+                            fontSize={scaleFontSize(14)}
+                            lineHeight={19.38}
+                            letterSpacing={-0.04}>
                             Close
                           </Text>
                         </Pressable>

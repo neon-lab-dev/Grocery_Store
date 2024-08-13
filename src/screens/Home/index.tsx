@@ -11,7 +11,7 @@ import {View, Text} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import {StackNavigationProp} from '@react-navigation/stack';
-
+import {fetchCart} from '../../redux/slices/actions.ts';
 import style from './style.ts';
 import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import Header from '../../components/Header';
@@ -25,7 +25,7 @@ import SearchInput from '../../components/SearchInput';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {Categories} from '../../constants/categories';
-import {fetchUserData} from '../../api/auth_routes';
+import {fetchUserData, getCart, updateOrder} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
 import {REACT_APP_PHONE_NO} from '@env';
 import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
@@ -47,10 +47,56 @@ const Home: React.FC<Props> = ({navigation}) => {
   const [userDetails, setUserDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const cartItems = useSelector((state: any) => state.cart.items);
   const isConnected = useSelector(state => state.network.isConnected);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const [statusCode, setStatusCode] = useState();
   const [check, setCheck] = useState(false);
+
+  // const list2 = cartItems.map(({varietyId, boughtQuantity}) => ({
+  //   varietyId,
+  //   boughtQuantity,
+
+  // }));
+
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
+  const getCartItems = async () => {
+    try {
+      const response = await getCart();
+      if (response.statusCode === 200) {
+        dispatch(fetchCart(response.responseBody.boughtProductDetailsList));
+      }
+      if (response.statusCode === 200 || response.statusCode === 204) {
+        setStatusCode(response.statusCode);
+      }
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const addUpdateCart = useCallback(async list2 => {
+    try {
+      const response = await updateOrder(list2);
+      // console.log('respgff', response);
+    } catch (error) {
+      console.error('Error updating cart:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const list2 = cartItems.map(({varietyId, boughtQuantity}) => ({
+      varietyId,
+      boughtQuantity,
+    }));
+    if (statusCode) {
+      addUpdateCart(list2);
+    }
+  }, [addUpdateCart, cartItems]);
 
   const fetchUser = async () => {
     try {
@@ -67,6 +113,19 @@ const Home: React.FC<Props> = ({navigation}) => {
       console.log(error);
     }
   };
+
+  // useEffect(() => {
+  //   const loadCartData = async () => {
+  //     try {
+  //       const cartData = await getCart(); // Fetch the cart data
+  //       dispatch(fetchCart(cartData)); // Dispatch the action with the fetched data
+  //     } catch (error) {
+  //       console.error('Error fetching cart data:', error);
+  //     }
+  //   };
+
+  //   loadCartData(); // Call the function to load cart data
+  // }, [dispatch]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -182,9 +241,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 marginBottom: verticalScale(15),
               }}>
               <View style={style.Category}>
-                <Text style={style.CategoryText}>
-                  Freshly Picked up for you!
-                </Text>
+                <Text style={style.CategoryText}>Exclusive Select Range</Text>
                 <Text style={style.SubCategoryText}>
                   get your health on line :)
                 </Text>

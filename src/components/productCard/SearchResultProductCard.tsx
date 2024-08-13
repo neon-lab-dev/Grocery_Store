@@ -49,17 +49,31 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
   onPress,
   products,
 }) => {
-  const product = {...products, id: products.varietyList[0].id};
+  const product = {
+    varietyId: products.varietyList[0].id,
+    name: products.name,
+    price: products.varietyList[0].price,
+    discountPercent: products.varietyList[0].discountPercent,
+    discountedPrice: products.varietyList[0].discountPrice,
+    boughtQuantity: 0,
+    value: products.varietyList[0].value,
+    unit: products.varietyList[0].unit,
+    boughtPrice: products.varietyList[0].discountPrice,
+    savings: 0,
+    documents: products.varietyList[0].documentUrls,
+  };
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
   const cartItems = useSelector((state: any) => state.cart.items);
-  const cartItem = cartItems.find((item: any) => item.id === product.id);
-  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const cartItem = cartItems.find(
+    (item: any) => item.varietyId === product.varietyId,
+  );
+  const [count, setCount] = useState(cartItem ? cartItem.boughtQuantity : 0);
   const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
 
   useEffect(() => {
-    setCount(cartItem ? cartItem.quantity : 0);
+    setCount(cartItem ? cartItem.boughtQuantity : 0);
     setIsButton1Visible(!cartItem);
   }, [cartItem]);
 
@@ -69,18 +83,18 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
 
   const handleDecrease = useCallback(() => {
     if (count === 1) {
-      dispatch(removeItem(product.id));
+      dispatch(removeItem(product.varietyId));
       setIsButton1Visible(true);
       setCount(0);
     } else {
-      dispatch(decrementItem(product.id));
+      dispatch(decrementItem(product.varietyId));
       setCount(prevCount => prevCount - 1);
     }
-  }, [count, dispatch, product.id]);
+  }, [count, dispatch, product.varietyId]);
 
   const handleIncrease = useCallback(() => {
     if (count < products.varietyList[0].quantity) {
-      dispatch(incrementItem(product.id));
+      dispatch(incrementItem(product.varietyId));
       setCount(prevCount => prevCount + 1);
     } else {
       if (!toast.isActive(id)) {
@@ -107,11 +121,11 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
         });
       }
     }
-  }, [count, dispatch, id, products.varietyList, toast]);
+  }, [count, dispatch, product.varietyId, id, products.varietyList, toast]);
 
   const handleButtonPress = useCallback(() => {
     setCount(1);
-    product.quantity = 1;
+    product.boughtQuantity = 1;
     dispatch(addToCart(product));
     setIsButton1Visible(false);
   }, [dispatch, product]);
@@ -125,7 +139,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             borderRadius={16}
             px={horizontalScale(20)}
             py={verticalScale(20)}>
-            {offerPerIndex() >= 0 && (
+            {products.varietyList[0].discountPercent !== 0 && (
               <View
                 bgColor={'primary.500'}
                 position={'absolute'}

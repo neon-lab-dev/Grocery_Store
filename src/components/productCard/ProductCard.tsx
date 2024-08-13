@@ -46,18 +46,32 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
-  const product = {...products, id: products.varietyList[0].id};
+  const product = {
+    varietyId: products.varietyList[0].id,
+    name: products.name,
+    price: products.varietyList[0].price,
+    discountPercent: products.varietyList[0].discountPercent,
+    discountedPrice: products.varietyList[0].discountPrice,
+    boughtQuantity: 0,
+    value: products.varietyList[0].value,
+    unit: products.varietyList[0].unit,
+    boughtPrice: products.varietyList[0].discountPrice,
+    savings: 0,
+    documents: products.varietyList[0].documentUrls,
+  };
   const [perIndex, setPerIndex] = useState(0);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
   const cartItems = useSelector((state: any) => state.cart.items);
-  const cartItem = cartItems.find((item: any) => item.id === product.id);
-  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const cartItem = cartItems.find(
+    (item: any) => item.varietyId === product.varietyId,
+  );
+  const [count, setCount] = useState(cartItem ? cartItem.boughtQuantity : 0);
   const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
 
   useEffect(() => {
-    setCount(cartItem ? cartItem.quantity : 0);
+    setCount(cartItem ? cartItem.boughtQuantity : 0);
     setIsButton1Visible(!cartItem);
   }, [cartItem]);
 
@@ -71,6 +85,8 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
       setCount(count - 1);
     }
   };
+
+  // console.log('cartItems', cartItems);
   const handleIncrease = () => {
     if (count < products.varietyList[0].quantity) {
       dispatch(incrementItem(products.varietyList[0].id));
@@ -102,7 +118,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
   };
   const handleButtonPress = () => {
     setCount(1);
-    product.quantity = 1;
+    product.boughtQuantity = 1;
     dispatch(addToCart(product));
     setIsButton1Visible(false);
   };
@@ -132,7 +148,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               overflow: 'hidden',
             }}>
             {/* offer per container */}
-            {offerPerIndex >= 0 && (
+            {products.varietyList[0].discountPercent !== 0 && (
               <View
                 style={{
                   backgroundColor: Colors.primary[500],
@@ -149,7 +165,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                     color: 'white',
                     fontSize: scaleFontSize(14),
                   }}>
-                  {products.varietyList[offerPerIndex].discountPercent}%
+                  {products.varietyList[0].discountPercent}%
                 </Text>
                 <Text
                   style={{

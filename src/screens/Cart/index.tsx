@@ -17,7 +17,7 @@ import {rightArrowIcon} from '../../assets/images/icons/rightArrow';
 import GoBack from '../../components/Navigation/GoBack';
 import {getSelectedAddress} from '../../api/localstorage';
 import Loader from '../../components/Loader/Loader';
-import {evaluateOrder, getAddress} from '../../api/auth_routes';
+import {evaluateOrder, getAddress, getCart} from '../../api/auth_routes';
 import {useFocusEffect} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
@@ -40,12 +40,16 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
   const [addresscount, setaddresscount] = React.useState(0);
   const [isAddressPresent, setisAddressPresent] = React.useState(Boolean);
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
-  const cartItems = useSelector((state: any) => state.cart);
-  const [deliveryCharge, setDeliveryCharge] = React.useState(0);
+  const cartItems = useSelector((state: any) => state.cart.items);
+  const [deliveryCharge, setDeliveryCharge] = React.useState(10);
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
+  const totalPrice = cartItems.reduce((accumulator, item) => {
+    return accumulator + item.discountedPrice * item.boughtQuantity;
+  }, 0);
+  const cartItemCount = cartItems.length;
 
-  const cartItemCount = cartItems.items.length;
+  // console.log(cartItems);
 
   React.useEffect(() => {
     selAddress();
@@ -74,10 +78,10 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
     if (address != null) {
       setSelectAddress(address);
       setisAddressPresent(true);
-      // setLoaderVisible(false);
+      setLoaderVisible(false);
     } else if (address === null) {
       setisAddressPresent(false);
-      // setLoaderVisible(false);
+      setLoaderVisible(false);
     }
     // setLoaderVisible(false);
   };
@@ -94,41 +98,41 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
 
   React.useEffect(() => {
     let temp = 0;
-    cartItems.items.forEach(
+    cartItems.forEach(
       (item: {varietyList: any[]; discountPrice: number; quantity: number}) => {
-        temp += item.varietyList[0].price * item.quantity;
+        temp += item.price * item.boughtQuantity;
       },
     );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
 
   React.useEffect(() => {
-    setVarietyIds([]);
-    cartItems.items.map((item, i) => {
-      setVarietyIds(prevState => [
-        ...prevState,
-        {varietyId: item.varietyList[0].id, boughtQuantity: item.quantity},
-      ]);
-    });
+    const list2 = cartItems?.map(({varietyId, boughtQuantity}) => ({
+      varietyId,
+      boughtQuantity,
+    }));
+    getDeliveryCharge(list2);
   }, [cartItems]);
 
-  const getDeliveryCharge = React.useCallback(async () => {
-    if (isConnected) {
-      try {
-        const delCharge = await evaluateOrder(varetyIds);
-        setDeliveryCharge(delCharge.deliveryCharges);
+  const getDeliveryCharge = React.useCallback(
+    async items => {
+      if (isConnected) {
+        try {
+          const delCharge = await evaluateOrder(items);
+          // console.log('evaluate order', delCharge);
+          setDeliveryCharge(delCharge?.deliveryCharges);
+          setLoaderVisible(false);
+        } catch (error) {
+          console.error('Error evaluating order:', error);
+          setLoaderVisible(false);
+        }
+      } else {
         setLoaderVisible(false);
-      } catch (error) {
-        console.error('Error evaluating order:', error);
-        setLoaderVisible(false);
+        toast.showToast('Please Check Your Internet Connection');
       }
-    } else {
-      setLoaderVisible(false);
-      toast.showToast('Please Check Your Internet Connection');
-    }
-  }, [isConnected, varetyIds]);
-
-  const TotalPrice = cartItems.totalPrice;
+    },
+    [isConnected, varetyIds],
+  );
 
   useFocusEffect(() => {
     fetchAddress();
@@ -150,6 +154,17 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
       setModalVisible(true);
     }
   };
+
+  // const getCartItems = async () => {
+  //   try {
+  //     const response = await getCart();
+  //     console.log('response', response);
+  //   } catch (error) {
+  //     console.log('err', error);
+  //   }
+  // };
+
+  // getCartItems();
 
   const gotoAddAddress = () => {
     navigation.navigate('AddAddress', {title: 'Add'});
@@ -213,16 +228,18 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
           <View bg={'white'} mt={verticalScale(15)}>
-            {cartItems.items.map((data: {id: React.Key | null | undefined}) => (
-              <CartItemCard key={data.id} item={data} />
-            ))}
+            {cartItems.map(
+              (data: {varietyId: React.Key | null | undefined}) => (
+                <CartItemCard key={data.varietyId} item={data} />
+              ),
+            )}
           </View>
           <BillSummaryCard
             cutOffPrice={totalDiscountedPrice + deliveryCharge}
             deliveryCharge={deliveryCharge}
-            itemPrice={TotalPrice}
-            price={TotalPrice + deliveryCharge}
-            savingPrice={totalDiscountedPrice - TotalPrice}
+            itemPrice={totalPrice}
+            price={totalPrice + deliveryCharge}
+            savingPrice={totalDiscountedPrice - totalPrice}
           />
         </ScrollView>
       )}
@@ -361,7 +378,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                     color={'primary.50'}
                     lineHeight={24.2}
                     letterSpacing={-0.04}>
-                    ₹{(TotalPrice + deliveryCharge).toFixed(2)}
+                    ₹{(totalPrice + deliveryCharge).toFixed(2)}
                   </Text>
                 </View>
                 <View flexDir={'row'} alignItems={'center'}>

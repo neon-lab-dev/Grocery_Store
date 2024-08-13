@@ -151,6 +151,7 @@ export const getOrders = async () => {
   }
 };
 export const CreateOrders = async (orderData: {paymentId: string}) => {
+  console.log('order', orderData);
   try {
     const response = await AuthAPIClient.post('/order/create', orderData);
     return response;
@@ -206,6 +207,30 @@ export const evaluateOrder = async orderData => {
   try {
     const response = await AuthAPIClient.post('/order/evaluate', {
       boughtProductDetailsList: orderData,
+    });
+    return response.data.responseBody;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCart = async () => {
+  try {
+    const response = await AuthAPIClient.get('/cart/list');
+    if (response.data) {
+      // console.log('resspsp', response.data);
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+export const updateOrder = async cartItems => {
+  try {
+    const response = await AuthAPIClient.post('/cart/create-or-update', {
+      boughtProductDetailsList: cartItems,
     });
     return response.data.responseBody;
   } catch (error) {
