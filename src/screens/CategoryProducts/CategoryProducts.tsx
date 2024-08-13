@@ -70,7 +70,7 @@ const CategoryProducts: FC = ({navigation, route}) => {
         );
 
         // Log the filtered categories
-        console.log('Filtered categories:', filteredSubCategory2List);
+        // console.log('Filtered categories:', filteredSubCategory2List);
 
         setSubCategory2List(filteredSubCategory2List);
         if (filteredSubCategory2List.length > 0) {
