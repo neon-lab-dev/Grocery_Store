@@ -139,7 +139,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             borderRadius={16}
             px={horizontalScale(20)}
             py={verticalScale(20)}>
-            {offerPerIndex() >= 0 && (
+            {products.varietyList[0].discountPercent !== 0 && (
               <View
                 bgColor={'primary.500'}
                 position={'absolute'}

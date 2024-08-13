@@ -151,6 +151,7 @@ export const getOrders = async () => {
   }
 };
 export const CreateOrders = async (orderData: {paymentId: string}) => {
+  console.log('order', orderData);
   try {
     const response = await AuthAPIClient.post('/order/create', orderData);
     return response;
@@ -223,5 +224,16 @@ export const getCart = async () => {
   } catch (error) {
     console.log(error);
     return [];
+  }
+};
+
+export const updateOrder = async cartItems => {
+  try {
+    const response = await AuthAPIClient.post('/cart/create-or-update', {
+      boughtProductDetailsList: cartItems,
+    });
+    return response.data.responseBody;
+  } catch (error) {
+    console.log(error);
   }
 };

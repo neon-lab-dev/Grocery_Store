@@ -47,18 +47,20 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
   // console.log(deliveryCharges);
   const [loaderVisible, setLoaderVisible] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
-
   const [paymentLinkID, setPaymentLinkID] = useState('');
   const [value, setValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectAddress, setSelectAddress] = useState({});
   const [totalDiscountedPrice, setTotalDiscountedPrice] = React.useState(0);
-  const cartItems = useSelector((state: any) => state.cart);
+  const cartItems = useSelector((state: any) => state.cart.items);
   const toast = useToast();
   const id = 'test-toast';
   const Navigation = useNavigation();
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.network.isConnected);
+  const totalPrice = cartItems.reduce((accumulator, item) => {
+    return accumulator + item.discountedPrice * item.boughtQuantity;
+  }, 0);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -95,7 +97,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
             fontFamily={'Inter_SemiBold'}
             fontSize={scaleFontSize(12)}
             color={'#6B7280'}>
-            {cartItemCount} Item | Total ₹{TotalPrice.toFixed(2)}
+            {cartItemCount} Item | Total ₹{totalPrice.toFixed(2)}
           </Text>
         </View>
       ),
@@ -112,10 +114,10 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
 
   var orderData = {
     paymentId: paymentLinkID,
-    boughtProductDetailsList: cartItems.items.map(
+    boughtProductDetailsList: cartItems.map(
       (item: {varietyList: any; id: any; quantity: any}) => ({
-        varietyId: item.varietyList[0].id,
-        boughtQuantity: item.quantity,
+        varietyId: item.varietyId,
+        boughtQuantity: item.boughtQuantity,
       }),
     ),
     shippingInfo: {
@@ -146,9 +148,9 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
         },
       });
     } else if (orderData.paymentMode === 'ONLINE_PAYMENT') {
-      const dis = cartItems.items[0].description;
+      const dis = cartItems[0].name;
       try {
-        const paymentLinkResponse = await fetchpayment(TotalPrice, dis);
+        const paymentLinkResponse = await fetchpayment(totalPrice, dis);
         if (paymentLinkResponse.statusCode === 200) {
           const shortUrl =
             paymentLinkResponse.responseBody.additionalInfo.shortUrl;
@@ -436,17 +438,16 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
     setModalVisible(false);
     navigation.navigate('AddAddress', {title: 'Add'});
   };
-  const cartItemCount = cartItems.items.length;
+  const cartItemCount = cartItems.length;
   React.useEffect(() => {
     let temp = 0;
-    cartItems.items.forEach(
+    cartItems.forEach(
       (item: {varietyList: any[]; discountPrice: number; quantity: number}) => {
-        temp += item.varietyList[0].price * item.quantity;
+        temp += item.price * item.boughtQuantity;
       },
     );
     setTotalDiscountedPrice(temp);
   }, [cartItems]);
-  const TotalPrice = cartItems.totalPrice;
   useEffect(() => {
     selAddress();
   }, []);
@@ -504,9 +505,9 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
         <BillSummaryCard
           cutOffPrice={totalDiscountedPrice + deliveryCharges}
           deliveryCharge={deliveryCharges}
-          itemPrice={TotalPrice}
-          price={TotalPrice + deliveryCharges}
-          savingPrice={totalDiscountedPrice - TotalPrice}
+          itemPrice={totalPrice}
+          price={totalPrice + deliveryCharges}
+          savingPrice={totalDiscountedPrice - totalPrice}
         />
         <PaymentPreferred setValue={setValue} value={value} />
       </View>
@@ -523,7 +524,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
               <Text style={styles.bottomCardText}>{cartItemCount} Item |</Text>
               {/* <View style={styles.straightLine} /> */}
               <Text style={[styles.bottomCardText, {fontFamily: 'Inter_Bold'}]}>
-                ₹{(TotalPrice + deliveryCharges).toFixed(2)}
+                ₹{(totalPrice + deliveryCharges).toFixed(2)}
               </Text>
             </View>
             <View

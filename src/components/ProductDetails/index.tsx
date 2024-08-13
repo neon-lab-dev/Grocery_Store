@@ -7,9 +7,9 @@ import {
   Pressable,
   RefreshControl,
   ScrollView,
-  Modal
+  Modal,
 } from 'react-native';
-import {View, Text,} from 'native-base';
+import {View, Text} from 'native-base';
 import {
   horizontalScale,
   verticalScale,
@@ -62,9 +62,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
   const [productDetails, setProductDetails] = useState(null);
   const cartItems = useSelector((state: any) => state.cart.items);
   const cartItem = cartItems.find(
-    (item: any) => selectedProduct && item.id === selectedProduct.id,
+    (item: any) =>
+      selectedProduct && item.varietyId === selectedProduct.varietyId,
   );
-  const [count, setCount] = useState(cartItem ? cartItem.quantity : 0);
+  const [count, setCount] = useState(cartItem ? cartItem.boughtQuantity : 0);
   const [isButton1Visible, setIsButton1Visible] = useState(count === 0);
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
@@ -138,10 +139,10 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
 
   const updateCount = (product: any) => {
     const item = cartItems.find(
-      (obj: any) => obj?.id === product?.varietyList[0]?.id,
+      (obj: any) => obj?.varietyId === product?.varietyList[0]?.id,
     );
     if (item) {
-      setCount(item.quantity);
+      setCount(item.boughtQuantity);
       setIsButton1Visible(false);
     } else {
       setCount(0);
@@ -199,10 +200,20 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
     setCount(1);
     const product = {
       ...selectedProduct,
-      id: selectedProduct.varietyList[0].id,
+      varietyId: selectedProduct.varietyList[0].id,
+      name: selectedProduct.name,
+      price: selectedProduct.varietyList[0].price,
+      discountPercent: selectedProduct.varietyList[0].discountPercent,
+      discountedPrice: selectedProduct.varietyList[0].discountPrice,
+      boughtQuantity: 0,
+      value: selectedProduct.varietyList[0].value,
+      unit: selectedProduct.varietyList[0].unit,
+      boughtPrice: selectedProduct.varietyList[0].discountPrice,
+      savings: 0,
+      documents: selectedProduct.varietyList[0].documentUrls,
     };
 
-    product.quantity = 1;
+    product.boughtQuantity = 1;
     dispatch(addToCart(product));
 
     // updateCount();
@@ -314,13 +325,12 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
               <View style={{flex: 1, marginHorizontal: horizontalScale(40)}}>
                 {selectedImageUrl && (
                   <View style={{height: 200, width: 200}}>
-                    <Pressable
-          onPress={() => setModalVisible(true)}>
-                    <Image
-                      source={{uri: selectedImageUrl}}
-                      style={{height: 240, width: 300}}
-                      resizeMode="contain"
-                    />
+                    <Pressable onPress={() => setModalVisible(true)}>
+                      <Image
+                        source={{uri: selectedImageUrl}}
+                        style={{height: 240, width: 300}}
+                        resizeMode="contain"
+                      />
                     </Pressable>
                   </View>
                 )}
@@ -583,11 +593,14 @@ const ProductDetails: FC<{Close: () => void; productName?: string}> = ({
               <Pressable
                 onPress={() => setModalVisible(false)}
                 style={styles.modalCloseButton}>
-                <Text  color={'primary.50'}
+                <Text
+                  color={'primary.50'}
                   fontFamily={'Inter_Medium'}
                   fontSize={scaleFontSize(14)}
                   lineHeight={19.38}
-                  letterSpacing={-0.04}>Close</Text>
+                  letterSpacing={-0.04}>
+                  Close
+                </Text>
               </Pressable>
               <Image
                 source={{uri: selectedImageUrl}}

@@ -25,7 +25,7 @@ import SearchInput from '../../components/SearchInput';
 import ProductHorizontalScroll from '../../components/productCard/ProductHorizontalScroll';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import {Categories} from '../../constants/categories';
-import {fetchUserData, getCart} from '../../api/auth_routes';
+import {fetchUserData, getCart, updateOrder} from '../../api/auth_routes';
 import {openWhatsApp} from '../../utils/launchIntents';
 import {REACT_APP_PHONE_NO} from '@env';
 import {SkeletonHome} from '../../components/Skeleton/SkeletonHome';
@@ -51,7 +51,52 @@ const Home: React.FC<Props> = ({navigation}) => {
   const isConnected = useSelector(state => state.network.isConnected);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const [statusCode, setStatusCode] = useState();
   const [check, setCheck] = useState(false);
+
+  // const list2 = cartItems.map(({varietyId, boughtQuantity}) => ({
+  //   varietyId,
+  //   boughtQuantity,
+
+  // }));
+
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
+  const getCartItems = async () => {
+    try {
+      const response = await getCart();
+      if (response.statusCode === 200) {
+        dispatch(fetchCart(response.responseBody.boughtProductDetailsList));
+      }
+      if (response.statusCode === 200 || response.statusCode === 204) {
+        setStatusCode(response.statusCode);
+      }
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const addUpdateCart = useCallback(async list2 => {
+    try {
+      const response = await updateOrder(list2);
+      // console.log('respgff', response);
+    } catch (error) {
+      console.error('Error updating cart:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const list2 = cartItems.map(({varietyId, boughtQuantity}) => ({
+      varietyId,
+      boughtQuantity,
+    }));
+    if (statusCode) {
+      addUpdateCart(list2);
+    }
+  }, [addUpdateCart, cartItems]);
 
   const fetchUser = async () => {
     try {
@@ -81,23 +126,6 @@ const Home: React.FC<Props> = ({navigation}) => {
 
   //   loadCartData(); // Call the function to load cart data
   // }, [dispatch]);
-
-  useEffect(() => {
-    getCartItems();
-  }, []);
-
-  const getCartItems = async () => {
-    try {
-      const response = await getCart();
-      if (response.statusCode === 200) {
-        dispatch(fetchCart(response.responseBody.boughtProductDetailsList));
-      }
-      console.log('res', response);
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

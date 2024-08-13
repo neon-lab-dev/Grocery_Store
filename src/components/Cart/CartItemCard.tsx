@@ -47,7 +47,6 @@ import {styles} from './style';
 // }
 
 export const CartItemCard: React.FC<{item: any}> = ({item}) => {
-  console.log('item', item);
   const dispatch = useDispatch();
   const toast = useToast();
   const id = 'test-toast';
@@ -73,7 +72,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
   // console.log(rounded); // Outputs: "236.34"
 
   const handleIncrease = () => {
-    if (count < item.quantity) {
+    if (count) {
       dispatch(incrementItem(item.varietyId));
       setCount(count + 1);
     } else {

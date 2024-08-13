@@ -148,7 +148,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
               overflow: 'hidden',
             }}>
             {/* offer per container */}
-            {offerPerIndex >= 0 && (
+            {products.varietyList[0].discountPercent !== 0 && (
               <View
                 style={{
                   backgroundColor: Colors.primary[500],
@@ -165,7 +165,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                     color: 'white',
                     fontSize: scaleFontSize(14),
                   }}>
-                  {products.varietyList[offerPerIndex].discountPercent}%
+                  {products.varietyList[0].discountPercent}%
                 </Text>
                 <Text
                   style={{
