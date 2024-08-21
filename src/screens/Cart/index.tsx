@@ -1,4 +1,15 @@
-import {Button, Center, Image, Modal, Pressable, Text, View} from 'native-base';
+import {
+  Alert,
+  Button,
+  Center,
+  HStack,
+  Image,
+  Modal,
+  Pressable,
+  Text,
+  View,
+  VStack,
+} from 'native-base';
 import * as React from 'react';
 import {CartItemCard} from '../../components/Cart/CartItemCard';
 import {
@@ -197,6 +208,30 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           {isCartEmpty ? 'Cart' : `Cart(${cartItemCount})`}
         </Text>
       </View>
+      {totalPrice < 799 && (
+        <Alert w="100%" status="warning">
+          <VStack space={2} flexShrink={1} w="100%">
+            <HStack flexShrink={1} space={2} justifyContent="space-between">
+              <HStack space={2} flexShrink={1}>
+                <Alert.Icon mt="1" size={'md'} />
+                <Text fontSize="lg" color="coolGray.800">
+                  Minimum Order Should be ₹799
+                </Text>
+              </HStack>
+              {/* <IconButton
+              variant="unstyled"
+              _focus={{
+                borderWidth: 0,
+              }}
+              icon={<CloseIcon size="3" />}
+              _icon={{
+                color: 'coolGray.600',
+              }}
+            /> */}
+            </HStack>
+          </VStack>
+        </Alert>
+      )}
 
       {isCartEmpty ? (
         <ScrollView
@@ -234,13 +269,23 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
               ),
             )}
           </View>
-          <BillSummaryCard
-            cutOffPrice={totalDiscountedPrice + deliveryCharge}
-            deliveryCharge={deliveryCharge}
-            itemPrice={totalPrice}
-            price={totalPrice + deliveryCharge}
-            savingPrice={totalDiscountedPrice - totalPrice}
-          />
+          {totalPrice >= 799 ? (
+            <BillSummaryCard
+              cutOffPrice={totalDiscountedPrice + deliveryCharge}
+              deliveryCharge={deliveryCharge}
+              itemPrice={totalPrice}
+              price={totalPrice + deliveryCharge}
+              savingPrice={totalDiscountedPrice - totalPrice}
+            />
+          ) : (
+            <BillSummaryCard
+              cutOffPrice={totalDiscountedPrice}
+              deliveryCharge={0}
+              itemPrice={totalPrice}
+              price={totalPrice}
+              savingPrice={totalDiscountedPrice - totalPrice}
+            />
+          )}
         </ScrollView>
       )}
       <Modal
@@ -349,57 +394,107 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
             </View>
           )}
           <Center flex={1} px={5}>
-            <Button
-              w={'100%'}
-              py={verticalScale(15)}
-              rounded={12}
-              colorScheme={'transparent'}
-              bg={'primary.500'}
-              onPress={gotoPayment}>
-              <View
+            {totalPrice >= 799 ? (
+              <Button
                 w={'100%'}
-                flexDir={'row'}
-                justifyContent={'space-between'}
-                alignItems={'center'}
-                px={horizontalScale(5)}>
-                <View flexDir={'row'} alignItems={'center'}>
-                  <Text
-                    color={'primary.50'}
-                    fontFamily={'Inter_SemiBold'}
-                    fontSize={scaleFontSize(20)}
-                    lineHeight={24.2}
-                    letterSpacing={-0.04}>
-                    {cartItemCount} Item |{' '}
-                  </Text>
-                  <Text
-                    fontFamily={'Inter_Bold'}
-                    fontWeight={600}
-                    fontSize={scaleFontSize(20)}
-                    color={'primary.50'}
-                    lineHeight={24.2}
-                    letterSpacing={-0.04}>
-                    ₹{(totalPrice + deliveryCharge).toFixed(2)}
-                  </Text>
+                py={verticalScale(15)}
+                rounded={12}
+                colorScheme={'transparent'}
+                bg={'primary.500'}
+                onPress={gotoPayment}>
+                <View
+                  w={'100%'}
+                  flexDir={'row'}
+                  justifyContent={'space-between'}
+                  alignItems={'center'}
+                  px={horizontalScale(5)}>
+                  <View flexDir={'row'} alignItems={'center'}>
+                    <Text
+                      color={'primary.50'}
+                      fontFamily={'Inter_SemiBold'}
+                      fontSize={scaleFontSize(20)}
+                      lineHeight={24.2}
+                      letterSpacing={-0.04}>
+                      {cartItemCount} Item |{' '}
+                    </Text>
+                    <Text
+                      fontFamily={'Inter_Bold'}
+                      fontWeight={600}
+                      fontSize={scaleFontSize(20)}
+                      color={'primary.50'}
+                      lineHeight={24.2}
+                      letterSpacing={-0.04}>
+                      ₹{(totalPrice + deliveryCharge).toFixed(2)}
+                    </Text>
+                  </View>
+                  <View flexDir={'row'} alignItems={'center'}>
+                    <Text
+                      color={'primary.50'}
+                      ml={horizontalScale(10)}
+                      fontFamily={'Inter_SemiBold'}
+                      fontSize={scaleFontSize(17)}
+                      textAlign={'center'}
+                      lineHeight={21.78}
+                      letterSpacing={-0.04}>
+                      {isAddressPresent ? 'Proceed to Pay' : 'Checkout'}
+                    </Text>
+                    <SvgXml xml={rightArrowIcon} height={15} width={15} />
+                  </View>
                 </View>
-                <View flexDir={'row'} alignItems={'center'}>
-                  <Text
-                    color={'primary.50'}
-                    ml={horizontalScale(10)}
-                    fontFamily={'Inter_SemiBold'}
-                    fontSize={scaleFontSize(17)}
-                    textAlign={'center'}
-                    lineHeight={21.78}
-                    letterSpacing={-0.04}>
-                    {isAddressPresent ? 'Proceed to Pay' : 'Checkout'}
-                  </Text>
-                  <SvgXml xml={rightArrowIcon} height={15} width={15} />
+              </Button>
+            ) : (
+              <Button
+                disabled
+                w={'100%'}
+                py={verticalScale(15)}
+                rounded={12}
+                colorScheme={'transparent'}
+                bg={'gray.400'}
+                onPress={gotoPayment}>
+                <View
+                  w={'100%'}
+                  flexDir={'row'}
+                  justifyContent={'space-between'}
+                  alignItems={'center'}
+                  px={horizontalScale(5)}>
+                  <View flexDir={'row'} alignItems={'center'}>
+                    <Text
+                      color={'primary.50'}
+                      fontFamily={'Inter_SemiBold'}
+                      fontSize={scaleFontSize(20)}
+                      lineHeight={24.2}
+                      letterSpacing={-0.04}>
+                      {cartItemCount} Item |{' '}
+                    </Text>
+                    <Text
+                      fontFamily={'Inter_Bold'}
+                      fontWeight={600}
+                      fontSize={scaleFontSize(20)}
+                      color={'primary.50'}
+                      lineHeight={24.2}
+                      letterSpacing={-0.04}>
+                      ₹{totalPrice}
+                    </Text>
+                  </View>
+                  <View flexDir={'row'} alignItems={'center'}>
+                    <Text
+                      color={'primary.50'}
+                      ml={horizontalScale(10)}
+                      fontFamily={'Inter_SemiBold'}
+                      fontSize={scaleFontSize(17)}
+                      textAlign={'center'}
+                      lineHeight={21.78}
+                      letterSpacing={-0.04}>
+                      {isAddressPresent ? 'Proceed to Pay' : 'Checkout'}
+                    </Text>
+                    <SvgXml xml={rightArrowIcon} height={15} width={15} />
+                  </View>
                 </View>
-              </View>
-            </Button>
+              </Button>
+            )}
           </Center>
         </View>
       )}
-
       <Loader isOpen={loaderVisible} />
     </View>
   );
