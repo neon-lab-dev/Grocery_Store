@@ -522,7 +522,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                 lineHeight: 24.2,
                 letterSpacing: -0.04,
               }}
-              onPress={() => CallNumber(1234567890)}>
+              onPress={() => CallNumber(7004262401)}>
               Need Help?
             </Button>
           </View>
