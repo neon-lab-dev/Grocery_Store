@@ -257,7 +257,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
                 Enter Valid Mobile Number*
               </Text>
             )}
-            <Text
+            {/* <Text
               mb={verticalScale(5)}
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(16)}
@@ -285,7 +285,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
                 </Text>
               }
               onFocus={() => scrollViewRef.current?.scrollToEnd()}
-            />
+            /> */}
             {isClicked && secondaryMobileNoErrorShown && (
               <Text
                 fontFamily={'Inter_Regular'}

@@ -22,6 +22,9 @@ import Cart from '../screens/Cart';
 import CategoryProducts from '../screens/CategoryProducts/CategoryProducts';
 import ProductDetails from '../screens/ProductDetails';
 import GoBack from '../components/Navigation/GoBack';
+import {AboutUs} from '../screens/AboutUs';
+import {AccountPrivacy} from '../screens/AccountPrivacy';
+import {DeleteAccount} from '../screens/DeleteAccount';
 
 type AppNavigationProps = {
   navigation: StackNavigationProp<RootStackParamList, 'App'>;
@@ -80,7 +83,7 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
             letterSpacing: -0.04,
           },
           headerStyle: {
-            height: 128,
+            height: 105,
             borderBottomColor: 'accent.100',
           },
           headerTitleAlign: 'center',
@@ -191,6 +194,63 @@ export const AppNavigation: React.FC<AppNavigationProps> = () => {
         name="CategoryProducts"
         component={CategoryProducts}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="About Us"
+        component={AboutUs}
+        options={({navigation}) => ({
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+            lineHeight: 21.78,
+            letterSpacing: -0.04,
+          },
+          headerStyle: {
+            height: 105,
+            borderBottomColor: 'accent.100',
+          },
+          headerTitleAlign: 'left',
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
+        })}
+      />
+      <Stack.Screen
+        name="Account Privacy"
+        component={AccountPrivacy}
+        options={({navigation}) => ({
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+            lineHeight: 21.78,
+            letterSpacing: -0.04,
+          },
+          headerStyle: {
+            height: 105,
+            borderBottomColor: 'accent.100',
+          },
+          headerTitleAlign: 'left',
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
+        })}
+      />
+      <Stack.Screen
+        name="Delete Account"
+        component={DeleteAccount}
+        options={({navigation}) => ({
+          headerTitleStyle: {
+            fontFamily: 'Inter_Medium',
+            fontSize: scaleFontSize(18),
+            color: '#1F2937',
+            lineHeight: 21.78,
+            letterSpacing: -0.04,
+          },
+          headerStyle: {
+            height: 105,
+            borderBottomColor: 'accent.100',
+          },
+          headerTitleAlign: 'left',
+          headerLeft: () => <GoBack onPress={() => navigation.goBack()} />,
+        })}
       />
     </Stack.Navigator>
   );

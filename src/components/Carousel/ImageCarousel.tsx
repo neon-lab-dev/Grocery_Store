@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Image, ScrollView, Pressable } from 'react-native';
+import {View, Image, ScrollView, Pressable} from 'react-native';
 import imageCarouselData from '../../assets/data/imageCarouselData';
-import { styles } from './style';
+import {styles} from './style';
 
 interface Props {
   onImagePress2: () => void;
@@ -9,7 +9,11 @@ interface Props {
   showItem: boolean; // New prop
 }
 
-const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3, showItem }) => {
+const ImageCarousel: React.FC<Props> = ({
+  onImagePress2,
+  onImagePress3,
+  showItem,
+}) => {
   const handleCarouselFunction = (id: number) => {
     if (id === 2) {
       onImagePress2();
@@ -21,7 +25,7 @@ const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3, showItem
   const filteredData = imageCarouselData
     .map(item => ({
       ...item,
-      imageSource: getImage(item.image, showItem)
+      imageSource: getImage(item.image, showItem),
     }))
     .filter(item => item.imageSource !== null);
 
@@ -54,15 +58,13 @@ const ImageCarousel: React.FC<Props> = ({ onImagePress2, onImagePress3, showItem
 const getImage = (imageName: string, showItem: boolean) => {
   switch (imageName) {
     case 'item1':
-      return require('../../assets/images/Carousel/CarouselImage1.png');
+      return require('../../assets/images/Carousel/ImageCarousel1.png');
     case 'item2':
-      return require('../../assets/images/Carousel/CarouselImage3.png'); 
+      return require('../../assets/images/Carousel/ImageCarousel2.png');
     case 'item3':
-      return require('../../assets/images/Carousel/CarouselImage5.png');  
+      return require('../../assets/images/Carousel/CarouselImage1.png');
     case 'item4':
-      return require('../../assets/images/icons/SendListWhatsapp.png');
-    case 'item5':
-      return require('../../assets/images/Carousel/CarouselImage4.png');  
+      return require('../../assets/images/Carousel/delivery.jpg');
     default:
       return null;
   }

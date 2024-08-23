@@ -85,12 +85,12 @@ const Login: React.FC<Props> = ({navigation}) => {
         enabled
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={styles.imageBackground}>
-          <Image
+          {/* <Image
             source={require('../../assets/images/20450388_Vitamins.png')}
             style={styles.image}
             resizeMode="cover"
             alt="Top Image"
-          />
+          /> */}
         </View>
         <View style={styles.inputSection}>
           <Text
@@ -99,7 +99,7 @@ const Login: React.FC<Props> = ({navigation}) => {
             color={'accent.800'}
             lineHeight={33.89}
             letterSpacing={-0.05}>
-            Fresh Picks Just a Tap Away!
+            Login
           </Text>
           <Text
             fontFamily={'Inter_Regular'}
@@ -178,14 +178,41 @@ const Login: React.FC<Props> = ({navigation}) => {
               By proceeding, you agree to our{' '}
             </Text>
             <Text
-              onPress={() => openURL('https://api.kaserag.com/')}
+              onPress={() =>
+                openURL(
+                  'https://grocerystore-blond.vercel.app/terms-and-conditions.html',
+                )
+              }
               fontFamily={'Inter_Regular'}
               fontSize={scaleFontSize(10)}
               color="accent.500"
               underline
               lineHeight={14.4}
               letterSpacing={-0.03}>
-              Terms & Conditions and Privacy policy.
+              Terms & Conditions
+            </Text>
+            <Text
+              paddingX={1}
+              fontFamily={'Inter_Regular'}
+              fontSize={scaleFontSize(10)}
+              color="accent.500"
+              lineHeight={14.4}
+              letterSpacing={-0.03}>
+              and
+            </Text>
+            <Text
+              onPress={() =>
+                openURL(
+                  'https://grocerystore-blond.vercel.app/privacy-policy.html',
+                )
+              }
+              fontFamily={'Inter_Regular'}
+              fontSize={scaleFontSize(10)}
+              color="accent.500"
+              underline
+              lineHeight={14.4}
+              letterSpacing={-0.03}>
+              Privacy policy.
             </Text>
           </View>
         </View>
