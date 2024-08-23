@@ -84,10 +84,11 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
   };
 
   return (
-    <ImageBackground
-      source={require('../../assets/images/20450388_Vitamins.png')}
+    <View
+      // source={require('../../assets/images/20450388_Vitamins.png')}
       style={styles.imageBackground}
-      imageStyle={styles.image}>
+      // imageStyle={styles.image}
+    >
       <Loader isOpen={isLoading} />
       <View h={300} w={'100%'} position={'absolute'} top={40}>
         <LinearGradient
@@ -100,7 +101,7 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
               color={'accent.800'}
               lineHeight={24.2}
               letterSpacing={-0.01}>
-              We've sent you a Verification Code
+              Verification Code sent to
             </Text>
             <Text
               fontFamily={'Inter_SemiBold'}
@@ -118,7 +119,7 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
           />
         </LinearGradient>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 

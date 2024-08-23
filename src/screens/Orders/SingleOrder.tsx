@@ -523,7 +523,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
                 letterSpacing: -0.04,
               }}
               onPress={() => CallNumber(7004262401)}>
-              Need Help?
+              Cancel Order
             </Button>
           </View>
         </View>

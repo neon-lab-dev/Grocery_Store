@@ -16,6 +16,7 @@ import {
   Linking,
   Pressable,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 
 import {StyleSheet} from 'react-native';
@@ -36,6 +37,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
 import {createSuggestion, getOrders} from '../../api/auth_routes';
 import {REACT_APP_PHONE_NO} from '@env';
+import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow.js';
 
 interface SettingsProps {
   navigation: StackNavigationProp<AppNavigatorParamList, 'Settings'>;
@@ -301,11 +303,61 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
             iconSVG={user}
             onPress={gotoPersonalDetails}
           />
-          <SettingsOption
+          {/* <SettingsOption
             name="Suggest Product"
             iconSVG={bulb}
             onPress={SuggestProductOverlay}
-          />
+          /> */}
+          <TouchableOpacity onPress={() => navigation.navigate('About Us')}>
+            <View
+              mt={2}
+              bg="white"
+              px={horizontalScale(20)}
+              py={verticalScale(15)}
+              flexDir="row"
+              alignItems="center"
+              borderBottomColor={'accent.100'}
+              borderBottomWidth={1}>
+              {/* <SvgXml xml={iconSVG} width={18} height={18} /> */}
+              <Text
+                fontFamily={'Inter_Regular'}
+                fontSize={scaleFontSize(14)}
+                color={'accent.800'}
+                ml={horizontalScale(10)}
+                lineHeight={16.8}
+                letterSpacing={-0.03}>
+                About Us
+              </Text>
+              <View flex={1} alignItems="flex-end">
+                <SvgXml xml={rightOrangeArrowIcon} width={9} height={15} />
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Account Privacy')}>
+            <View
+              bg="white"
+              px={horizontalScale(20)}
+              py={verticalScale(15)}
+              flexDir="row"
+              alignItems="center"
+              borderBottomColor={'accent.100'}
+              borderBottomWidth={1}>
+              {/* <SvgXml xml={iconSVG} width={18} height={18} /> */}
+              <Text
+                fontFamily={'Inter_Regular'}
+                fontSize={scaleFontSize(14)}
+                color={'accent.800'}
+                ml={horizontalScale(10)}
+                lineHeight={16.8}
+                letterSpacing={-0.03}>
+                Account Privacy
+              </Text>
+              <View flex={1} alignItems="flex-end">
+                <SvgXml xml={rightOrangeArrowIcon} width={9} height={15} />
+              </View>
+            </View>
+          </TouchableOpacity>
           <Center flex={1}>
             <Button
               onPress={handleLogOut}
@@ -327,7 +379,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               Log Out
             </Button>
           </Center>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               alignSelf: 'center',
@@ -339,10 +391,9 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               alt="logo"
               style={{height: 32, width: 80}}
               source={require('../../assets/images/icons/logo.png')}></Image>
-          </View>
+          </View> */}
           <Loader isOpen={loaderVisible} />
-          <View style={styles.footer}>
-            
+          {/* <View style={styles.footer}>
             <Text
               onPress={() => openURL('https://api.kaserag.com/')}
               fontFamily={'Inter_Regular'}
@@ -353,7 +404,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               letterSpacing={-0.03}>
               Terms & Conditions and Privacy policy.
             </Text>
-          </View>
+          </View> */}
         </View>
       )}
     </>

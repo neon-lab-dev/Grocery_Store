@@ -168,7 +168,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
           >
-            {ItemCount} items | ₹{boughtPrice+25}
+            {ItemCount} items | ₹{boughtPrice + 25}
           </Text>
           <Center
             rounded={6}
@@ -199,7 +199,12 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
           </View>
         </View>
       </View>
-      <ImageCarousel  onImagePress2={gotoHome} onImagePress3={gotoHome} showItem={true} />
+      {/* <ImageCarousel  onImagePress2={gotoHome} onImagePress3={gotoHome} showItem={true} /> */}
+      <Image
+        source={require('../../assets/images/Carousel/delivery.jpg')}
+        style={styles.img}
+        alt="image"
+      />
       <View h={100} w={width} bg={'white'} mt={width < 380 ? 6 : 3}>
         <Center flex={1} px={5}>
           <Button
@@ -231,5 +236,13 @@ const styles = StyleSheet.create({
     fontSize: width < 380 ? 27 : 34,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  img: {
+    width: width < 380 ? 285 : 360,
+    height: width < 380 ? 195 : 200,
+    marginLeft: horizontalScale(18),
+    borderRadius: 25,
+    overflow: 'hidden',
+    resizeMode: 'stretch',
   },
 });

@@ -1,17 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, ImageBackground } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../navigation/MainNavigation';
+import React, {useState, useEffect} from 'react';
+import {
+  Dimensions,
+  StyleSheet,
+  ImageBackground,
+  View,
+  Text,
+} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../navigation/MainNavigation';
 import * as Animatable from 'react-native-animatable';
-import { getItem } from '../../api/localstorage';
-import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/scaling.ts';
+import {getItem} from '../../api/localstorage';
+import {
+  horizontalScale,
+  scaleFontSize,
+  verticalScale,
+} from '../../assets/scaling.ts';
 export interface SplashProps {
   navigation: StackNavigationProp<RootStackParamList, 'Splash'>;
 }
 
-const { height } = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
-const Splash: React.FC<SplashProps> = ({ navigation }) => {
+const Splash: React.FC<SplashProps> = ({navigation}) => {
   const [showSecondImage, setShowSecondImage] = useState(false);
 
   useEffect(() => {
@@ -24,76 +34,103 @@ const Splash: React.FC<SplashProps> = ({ navigation }) => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       const token = await getItem('token');
       if (token) {
-        navigation.replace('App', { screen: 'Home' });
+        navigation.replace('App', {screen: 'Home'});
       } else {
-        navigation.replace('Auth', { screen: 'Login' });
+        navigation.replace('Auth', {screen: 'Login'});
       }
     };
     isLoggedIn();
   }, [navigation]);
 
   return (
-    <ImageBackground
-      source={require('../../assets/images/SplashScreen/splashbg.png')}
-      style={styles.container}
-    >
-      {showSecondImage && (
-        <Animatable.Text
-          animation={unfoldAnimation}
-          duration={400}
-          style={styles.newImage}
-        >
-          Kasera
-        </Animatable.Text>
-      )}
-      <Animatable.Image
-        source={require('../../assets/images/SplashScreen/G.png')}
-        animation={bottomToTopBounceThenRightAndShrink}
-        duration={1500}
-        style={[styles.image]}
-      />
-    </ImageBackground>
+    <View
+      style={{
+        backgroundColor: '#FF9A31',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text
+        style={{
+          fontSize: scaleFontSize(48),
+          fontFamily: 'Inter_Black',
+          fontWeight: '700',
+          textAlign: 'center',
+          color: 'black',
+          lineHeight: verticalScale(58),
+        }}>
+        Grocery Shop
+      </Text>
+      <Text
+        style={{
+          color: 'black',
+          fontFamily: 'Inter_Black',
+          fontWeight: '500',
+          fontSize: scaleFontSize(12),
+          lineHeight: verticalScale(14),
+        }}>
+        Your Local Market in Your Pocket!
+      </Text>
+    </View>
+    // <ImageBackground
+    //   source={require('../../assets/images/SplashScreen/splashbg.png')}
+    //   style={styles.container}>
+    //   {showSecondImage && (
+    //     <Animatable.Text
+    //       animation={unfoldAnimation}
+    //       duration={400}
+    //       style={styles.newImage}>
+    //       Kasera
+    //     </Animatable.Text>
+    //   )}
+    //   <Animatable.Image
+    //     source={require('../../assets/images/SplashScreen/G.png')}
+    //     animation={bottomToTopBounceThenRightAndShrink}
+    //     duration={1500}
+    //     style={[styles.image]}
+    //   />
+    // </ImageBackground>
   );
 };
 
-const unfoldAnimation = {
-  0: {
-    translateY: 0,
-    scaleX: 0,
-  },
-  1: {
-    translateY: 0,
-    scaleX: 1,
-  },
-};
+// const unfoldAnimation = {
+//   0: {
+//     translateY: 0,
+//     scaleX: 0,
+//   },
+//   1: {
+//     translateY: 0,
+//     scaleX: 1,
+//   },
+// };
 
-const bottomToTopBounceThenRightAndShrink = {
-  0: {
-    translateY: height,
-    translateX: 0,
-    scale: 1,
-  },
-  0.5: {
-    translateY: 0,
-    translateX: 0,
-    scale: 1,
-  },
-  0.7: {
-    translateY: 50,
-    translateX: 0,
-    scale: 0.9,
-  },
-  0.9: {
-    translateY: 0,
-    translateX: 0,
-    scale: 0.9,
-  },
-  1: {
-    translateY: 0,
-    translateX: horizontalScale(155 - 70),
-    scale: 0.8,
-  },
-};
+// const bottomToTopBounceThenRightAndShrink = {
+//   0: {
+//     translateY: height,
+//     translateX: 0,
+//     scale: 1,
+//   },
+//   0.5: {
+//     translateY: 0,
+//     translateX: 0,
+//     scale: 1,
+//   },
+//   0.7: {
+//     translateY: 50,
+//     translateX: 0,
+//     scale: 0.9,
+//   },
+//   0.9: {
+//     translateY: 0,
+//     translateX: 0,
+//     scale: 0.9,
+//   },
+//   1: {
+//     translateY: 0,
+//     translateX: horizontalScale(155 - 70),
+//     scale: 0.8,
+//   },
+// };
 
 const styles = StyleSheet.create({
   container: {
@@ -114,7 +151,7 @@ const styles = StyleSheet.create({
     left: '50%',
     marginLeft: horizontalScale(-35),
     marginTop: verticalScale(-60),
-    transform: [{ translateX: -50 }, { translateY: -30 }],
+    transform: [{translateX: -50}, {translateY: -30}],
   },
   newImage: {
     textAlign: 'center',

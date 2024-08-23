@@ -74,9 +74,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.grocery_store'
+    namespace 'com.grocery_shop'
     defaultConfig {
-        applicationId 'com.grocery_store'
+        applicationId 'com.grocery_shop'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
