@@ -11,6 +11,9 @@ import {SvgXml} from 'react-native-svg';
 import {rightOrangeArrowIcon} from '../../assets/images/icons/rightOrangeArrow.js';
 import {useEffect, useState} from 'react';
 import {toast} from '../../components/Toast/Toast';
+import {deleteUser} from '../../api/auth_routes/index.ts';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../redux/slices/auth.slice.ts';
 type DeleteAccountProps = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'Delete Account'>;
 };
@@ -19,6 +22,7 @@ export const DeleteAccount: React.FC<DeleteAccountProps> = ({
   navigation,
   route,
 }) => {
+  const dispatch = useDispatch();
   const [showError, setShowEror] = useState(false);
   const [suggestion, setSuggestion] = useState('');
   const [Selection, setSelection] = useState('');
@@ -32,11 +36,28 @@ export const DeleteAccount: React.FC<DeleteAccountProps> = ({
     const isLoggedIn = async () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
       if (alertShow) {
-        navigation.navigate('Home');
+        handleLogOut();
       }
     };
     isLoggedIn();
-  }, [navigation, alertShow]);
+  }, [alertShow]);
+
+  const handleLogOut = () => {
+    dispatch(logout());
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Auth'}],
+    });
+  };
+
+  const deleteAccount = async () => {
+    try {
+      const response = await deleteUser();
+      if (response === 200) {
+        handleDeleteAccount();
+      }
+    } catch (error) {}
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -74,7 +95,7 @@ export const DeleteAccount: React.FC<DeleteAccountProps> = ({
               multiline={true}
             />
             <Pressable
-              onPress={handleDeleteAccount}
+              onPress={deleteAccount}
               style={{
                 borderRadius: 8,
                 width: horizontalScale(300),
@@ -206,31 +227,34 @@ export const DeleteAccount: React.FC<DeleteAccountProps> = ({
         )}
       </View>
       {alertShow && (
-        <Alert w="100%" status="success" marginTop="4">
-          <VStack space={1} flexShrink={1} w="100%" alignItems="center">
-            <Alert.Icon size="md" />
-            <Text
-              fontSize="md"
-              fontWeight="medium"
-              _dark={{
-                color: 'coolGray.800',
-              }}>
-              Application received!
-            </Text>
+        <View style={{marginTop: 'auto'}}>
+          <Alert w="100%" status="success">
+            <VStack space={1} flexShrink={1} w="100%" alignItems="center">
+              <Alert.Icon size="md" />
+              <Text
+                fontSize="md"
+                fontWeight="medium"
+                _dark={{
+                  color: 'coolGray.800',
+                }}>
+                Account Deleted!
+              </Text>
 
-            <Box
-              _text={{
-                textAlign: 'center',
-              }}
-              _dark={{
-                _text: {
-                  color: 'coolGray.600',
-                },
-              }}>
-              We have received your request and will process.
-            </Box>
-          </VStack>
-        </Alert>
+              <Box
+                _text={{
+                  textAlign: 'center',
+                }}
+                _dark={{
+                  _text: {
+                    color: 'coolGray.600',
+                  },
+                }}>
+                All of your personal data and content associated with your
+                account will be permanently deleted from our systems.
+              </Box>
+            </VStack>
+          </Alert>
+        </View>
       )}
     </View>
   );
@@ -256,6 +280,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     borderRadius: 8,
+    alignItems: 'center',
   },
   textInput: {
     height: 150,
@@ -268,6 +293,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlignVertical: 'top', // Aligns text to the top for multiline TextInput
     backgroundColor: '#F5F5F7',
-    marginRight: horizontalScale(20),
+    // marginRight: horizontalScale(20),
   },
 });

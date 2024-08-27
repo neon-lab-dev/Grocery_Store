@@ -66,7 +66,7 @@ export const AboutUs: React.FC<AboutUsProps> = ({navigation, route}) => {
             <Text
               fontFamily={'Inter_Regular'}
               fontSize={scaleFontSize(14)}
-              color={'accent.800'}
+              color={'black'}
               ml={horizontalScale(10)}
               lineHeight={16.8}
               letterSpacing={-0.03}>
@@ -95,7 +95,7 @@ export const AboutUs: React.FC<AboutUsProps> = ({navigation, route}) => {
             <Text
               fontFamily={'Inter_Regular'}
               fontSize={scaleFontSize(14)}
-              color={'accent.800'}
+              color={'black'}
               ml={horizontalScale(10)}
               lineHeight={16.8}
               letterSpacing={-0.03}>

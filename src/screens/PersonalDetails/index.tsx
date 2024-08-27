@@ -155,13 +155,6 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
           bgColor={'accent.50'}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                colors={['#F97316']}
-              />
-            }
             flex={1}
             flexGrow={1}
             ref={scrollViewRef}
