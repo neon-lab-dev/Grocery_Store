@@ -98,13 +98,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
   };
 
   return (
-    <ScrollView
-      flex={1}
-      bgColor={'accent.50'}
-      justifyContent={'space-between'}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
+    <View flex={1} bgColor={'accent.50'} justifyContent={'space-between'}>
       <Loader isOpen={isLoading} />
       <View px={horizontalScale(20)} py={verticalScale(20)}>
         <Text
@@ -229,6 +223,6 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
           </Button>
         </Center>
       </View>
-    </ScrollView>
+    </View>
   );
 };

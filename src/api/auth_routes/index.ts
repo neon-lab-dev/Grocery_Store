@@ -237,3 +237,13 @@ export const updateOrder = async cartItems => {
     console.log(error);
   }
 };
+
+export const deleteUser = async () => {
+  try {
+    const response = await AuthAPIClient2.delete('/profile/user/delete');
+    console.log('respsos', response.data.responseBody);
+    return response.status;
+  } catch (error) {
+    console.log(error);
+  }
+};
