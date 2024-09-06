@@ -378,6 +378,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               }}>
               Log Out
             </Button>
+            <Text style={{marginTop: verticalScale(10)}}>V - 2.0</Text>
           </Center>
           {/* <View
             style={{
