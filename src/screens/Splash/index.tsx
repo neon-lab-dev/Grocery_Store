@@ -43,53 +43,13 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
   }, [navigation]);
 
   return (
-    <View
-      style={{
-        backgroundColor: '#FF9A31',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text
-        style={{
-          fontSize: scaleFontSize(48),
-          fontFamily: 'Inter_Black',
-          fontWeight: '700',
-          textAlign: 'center',
-          color: 'black',
-          lineHeight: verticalScale(58),
-        }}>
-        Grocery Shop
-      </Text>
-      <Text
-        style={{
-          color: 'black',
-          fontFamily: 'Inter_Black',
-          fontWeight: '500',
-          fontSize: scaleFontSize(12),
-          lineHeight: verticalScale(14),
-        }}>
-        Your Local Market in Your Pocket!
-      </Text>
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <Text style={styles.title}>Grocery Shop</Text>
+        <Text style={styles.subtitle}>Your Local Market in Your Pocket!</Text>
+      </View>
+      <Text style={styles.version}>V - 2.0</Text>
     </View>
-    // <ImageBackground
-    //   source={require('../../assets/images/SplashScreen/splashbg.png')}
-    //   style={styles.container}>
-    //   {showSecondImage && (
-    //     <Animatable.Text
-    //       animation={unfoldAnimation}
-    //       duration={400}
-    //       style={styles.newImage}>
-    //       Kasera
-    //     </Animatable.Text>
-    //   )}
-    //   <Animatable.Image
-    //     source={require('../../assets/images/SplashScreen/G.png')}
-    //     animation={bottomToTopBounceThenRightAndShrink}
-    //     duration={1500}
-    //     style={[styles.image]}
-    //   />
-    // </ImageBackground>
   );
 };
 
@@ -135,32 +95,37 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FF9A31',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: verticalScale(20),
+  },
+  content: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    flex: 1, // This allows the content to take up available space
   },
-  hidden: {
-    display: 'none',
-  },
-  image: {
-    width: horizontalScale(73),
-    height: verticalScale(98),
-    position: 'absolute',
-    zIndex: 1,
-    top: '52.4%',
-    left: '50%',
-    marginLeft: horizontalScale(-35),
-    marginTop: verticalScale(-60),
-    transform: [{translateX: -50}, {translateY: -30}],
-  },
-  newImage: {
+  title: {
+    fontSize: scaleFontSize(48),
+    fontFamily: 'Inter_Black',
+    fontWeight: '700',
     textAlign: 'center',
-    left: horizontalScale(68),
-    position: 'absolute',
-    zIndex: 0,
-    fontSize: scaleFontSize(55),
-    fontFamily: 'Montserrat-Black',
-    color: '#22C55E',
+    color: 'black',
+    lineHeight: verticalScale(58),
+  },
+  subtitle: {
+    color: 'black',
+    fontFamily: 'Inter_Black',
+    fontWeight: '500',
+    fontSize: scaleFontSize(12),
+    lineHeight: verticalScale(14),
+  },
+  version: {
+    fontFamily: 'Inter_Black',
+    fontWeight: '500',
+    fontSize: scaleFontSize(12),
+    lineHeight: verticalScale(14),
+    marginBottom: verticalScale(20),
   },
 });
 
