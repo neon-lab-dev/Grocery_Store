@@ -1,4 +1,4 @@
-package com.grocery_shop
+package com.grocerystore.kasera
 
 import android.app.Application
 import com.facebook.react.PackageList
