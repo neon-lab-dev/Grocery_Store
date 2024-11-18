@@ -182,7 +182,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
             px={horizontalScale(20)}
             mb={verticalScale(5)}>
             <Center
-              bg={'primary.500'}
+              bg={'#7C3AED'}
               borderRadius={100}
               overflow={'hidden'}
               p={horizontalScale(10)}
@@ -269,7 +269,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
                   py={verticalScale(15)}
                   rounded={12}
                   colorScheme={'transparent'}
-                  bg={'primary.500'}
+                  bg={'#7C3AED'}
                   _text={{
                     fontFamily: 'Inter_SemiBold',
                     fontSize: scaleFontSize(20),
@@ -378,7 +378,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
               }}>
               Log Out
             </Button>
-            <Text style={{marginTop: verticalScale(10)}}>V - 2.0</Text>
+            <Text style={{marginTop: verticalScale(10)}}>V - 1.0</Text>
           </Center>
           {/* <View
             style={{

@@ -44,6 +44,222 @@
     {
       "path": "src/assets/fonts/Montserrat-ExtraBold.ttf",
       "sha1": "1e3298f51b4766e2810a4a2c09a2c75c323d5e7e"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-Black.ttf",
+      "sha1": "c3d7fe2a8b018e99903f6bb5061da33449e6fd3e"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-BlackItalic.ttf",
+      "sha1": "cf004cfcd42db7e157ad4b132417312e5e98b0fd"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-Bold.ttf",
+      "sha1": "1e6cf1f8909370c0aa9d27b68090c93a7f7edca5"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-BoldItalic.ttf",
+      "sha1": "7c03f819bef2c226e62565dd19a6ce7534b4732d"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-ExtraBold.ttf",
+      "sha1": "b714c1001f86908e323660762a8ad66412699abb"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-ExtraBoldItalic.ttf",
+      "sha1": "1059efab18b56f2d2913cd8fc42b5cb723a5c235"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-ExtraLight.ttf",
+      "sha1": "03bbbe392dce7b72d95c91ebc4783e1af30f1fc9"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-ExtraLightItalic.ttf",
+      "sha1": "2678fa37e70652815174b9e02373206d46fbb63d"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-Italic.ttf",
+      "sha1": "71758b9fd3ecaf81f56074a179b4caae09551463"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-Light.ttf",
+      "sha1": "55d10b917ceb7478e079dcf4f1fa10d5db4b5584"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-LightItalic.ttf",
+      "sha1": "d523196702bdfb7faf9856079efe6abebda10b92"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-Medium.ttf",
+      "sha1": "c94565beed2fc1cbd75ff4d50eb97aa66cd3548f"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-MediumItalic.ttf",
+      "sha1": "a1d123bbf3b26cc2dcd1a6a04f7ea279049a3e43"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-Regular.ttf",
+      "sha1": "9153a73222afa30127c671db0e17937de108a160"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-SemiBold.ttf",
+      "sha1": "d78565e6e678074628fdb0ad7c0c1b2b416dd22e"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-SemiBoldItalic.ttf",
+      "sha1": "7b2fb7d2b771e9aea1f8d6728b0588bb6e7d049f"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-Thin.ttf",
+      "sha1": "8dab034e7b86ad436180fb1c97ad0759c4561fe7"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy-ThinItalic.ttf",
+      "sha1": "8fcf43690d2765269e446ab97f2891e44075163f"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-Black.ttf",
+      "sha1": "46102b6cbb54ef15dbcf9ebb62e554d0832a9940"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-BlackItalic.ttf",
+      "sha1": "ff7b30871dff916471df5a04d30458cd318f4451"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-Bold.ttf",
+      "sha1": "50b529ba980a74c26010de2c2ad8376184301ade"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-BoldItalic.ttf",
+      "sha1": "7812e9857c9e5f2a28fe9a7cdf564e2f173ec87c"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-ExtraBold.ttf",
+      "sha1": "349b8a6a6ed986adf5be3337cab4c88105a09cd5"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-ExtraBoldItalic.ttf",
+      "sha1": "2feebe8e831130cfdfc0e5f3bde5f128ec77cf65"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-ExtraLight.ttf",
+      "sha1": "b76a454f402e2cea0cf3d9dfe1b400e6e371b1fe"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-ExtraLightItalic.ttf",
+      "sha1": "3060b2b9d4d311aaae56ade373c4d20acf9ede0b"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-Italic.ttf",
+      "sha1": "cd436e1cdcdd2be6909b7c3c0fd6103c43f0164f"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-Light.ttf",
+      "sha1": "17a54e60955080bda620d17ce4ce86fabfb6882b"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-LightItalic.ttf",
+      "sha1": "e70231c16a178da605701f3694329d374dbb4332"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-Medium.ttf",
+      "sha1": "954494756906dc0f666070e8a1afb7f55b5cd970"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-MediumItalic.ttf",
+      "sha1": "f0d43070d9ee574a29c277a3d65a109e52d8ad04"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-Regular.ttf",
+      "sha1": "f55940e119f8abb98faa52504bc40df7edbb7d2c"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-SemiBold.ttf",
+      "sha1": "a9f46bf155fe0cecf556e5255d053539f5854a1c"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-SemiBoldItalic.ttf",
+      "sha1": "7ddb4a93787492cb246779aa828d58ad55641fb5"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-Thin.ttf",
+      "sha1": "3bc0c642b1570fb9aab1b5d41cef11fae1473749"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_Expanded-ThinItalic.ttf",
+      "sha1": "2e10d705a81a0d43a677fc302e67caae3b27a017"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-Black.ttf",
+      "sha1": "102a7bf6045ad78fa5279f9c1b58b0ff91929d2f"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-BlackItalic.ttf",
+      "sha1": "8e2cd6af8668528f779e106e6eb4db7b4e8e9466"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-Bold.ttf",
+      "sha1": "ecbb318e55a46370a6239a39402009deee19113d"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-BoldItalic.ttf",
+      "sha1": "6b052e611aaaa771f75095c7a3732bad97c25ad1"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-ExtraBold.ttf",
+      "sha1": "a53041a334118b1627f3ee876e2c91cd9f51df5d"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-ExtraBoldItalic.ttf",
+      "sha1": "1bcbd95c7d315300ae981c6e1476097cfbb9d8a9"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-ExtraLight.ttf",
+      "sha1": "716137b56a7c56ca9fa7f23fabbbdb16f9822e91"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-ExtraLightItalic.ttf",
+      "sha1": "0e1b023913a3b498ed970340d823e56c4af20f24"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-Italic.ttf",
+      "sha1": "20eb2c5844841953e30858b614a7641ecf713ba3"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-Light.ttf",
+      "sha1": "18cba0fa76af4527bbc2dc7c3f214e4b2342a597"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-LightItalic.ttf",
+      "sha1": "25df352bc2ca9d3c09827e6154a819a5b438367f"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-Medium.ttf",
+      "sha1": "9d796ef1ee8245d8bd143b33b59ce6dcbeaedd5f"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-MediumItalic.ttf",
+      "sha1": "747ada83fe7146e22f37ab8a95779e5fededf9e0"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-Regular.ttf",
+      "sha1": "81882c3c70ca8a4537b94e3aadcb00d35d7a0346"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-SemiBold.ttf",
+      "sha1": "22dd750385e4a9e66c4a5a9bf5ff415a170679e9"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-SemiBoldItalic.ttf",
+      "sha1": "49aee326d4bfab94a3c6036487ef2651a601728d"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-Thin.ttf",
+      "sha1": "298688cc8a25e32a1181c1f1b90a578a49649bea"
+    },
+    {
+      "path": "src/assets/fonts/SourGummy_SemiExpanded-ThinItalic.ttf",
+      "sha1": "5fb8fc830e82681807c8c4921197757010da0b1d"
     }
   ]
 }

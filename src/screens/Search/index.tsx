@@ -197,7 +197,7 @@ const Search: React.FC<SearchProps> = ({navigation}) => {
             <Text
               fontFamily={'Inter_Medium'}
               fontSize={scaleFontSize(14)}
-              color={'primary.500'}
+              color={'#6D28D9'}
               lineHeight={16.94}
               letterSpacing={-0.04}>
               Clear All

@@ -462,6 +462,7 @@ const Payment: FC<PaymentProps> = ({navigation, route}) => {
   };
   return (
     <ScrollView
+      contentContainerStyle={{justifyContent: 'space-between'}}
       style={styles.mainContainer}
       refreshControl={
         <RefreshControl

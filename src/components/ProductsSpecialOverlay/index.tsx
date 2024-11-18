@@ -114,7 +114,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              colors={['#F97316']}
+              colors={['#6D28D9']}
             />
           }
           contentContainerStyle={{paddingBottom: verticalScale(30)}}
@@ -150,7 +150,7 @@ const ProductsSpecialOverlay: React.FC<ProductsSpecialOverlayProps> = ({
                   source={require('../../assets/images/icons/loading.gif')}
                   style={{height: 250, width: 250}}
                 /> */}
-                <ActivityIndicator size="large" color="#F97316" />
+                <ActivityIndicator size="large" color="#6D28D9" />
               </View>
             )
           }

@@ -84,147 +84,36 @@ export const DeleteAccount: React.FC<DeleteAccountProps> = ({
           </Text>
         )}
 
-        {Selection.length > 0 ? (
-          <View style={styles.container}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Enter Here"
-              placeholderTextColor="#C7C7CD"
-              value={suggestion}
-              onChangeText={setSuggestion}
-              multiline={true}
-            />
-            <Pressable
-              onPress={deleteAccount}
+        <View style={styles.container}>
+          {/* <TextInput
+            style={styles.textInput}
+            placeholder="Enter Here"
+            placeholderTextColor="#C7C7CD"
+            value={suggestion}
+            onChangeText={setSuggestion}
+            multiline={true}
+          /> */}
+          <Pressable
+            onPress={deleteAccount}
+            style={{
+              borderRadius: 8,
+              width: horizontalScale(300),
+              height: verticalScale(51),
+              backgroundColor: '#7C3AED',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
               style={{
-                borderRadius: 8,
-                width: horizontalScale(300),
-                height: verticalScale(51),
-                backgroundColor: '#F97316',
-                justifyContent: 'center',
-                alignItems: 'center',
+                color: '#FFF7ED',
+                textAlign: 'center',
+                fontSize: scaleFontSize(16),
+                lineHeight: verticalScale(19),
               }}>
-              <Text
-                style={{
-                  color: '#FFF7ED',
-                  textAlign: 'center',
-                  fontSize: scaleFontSize(16),
-                  lineHeight: verticalScale(19),
-                }}>
-                Delete my account
-              </Text>
-            </Pressable>
-          </View>
-        ) : (
-          <View>
-            <TouchableOpacity
-              onPress={() =>
-                setSelection("I don't want to use the app anymore")
-              }>
-              <View
-                mt={2}
-                bg="white"
-                px={horizontalScale(20)}
-                py={verticalScale(15)}
-                flexDir="row"
-                justifyContent={'space-between'}
-                alignItems="center"
-                borderBottomColor={'accent.100'}
-                borderBottomWidth={1}>
-                {/* <SvgXml xml={iconSVG} width={18} height={18} /> */}
-                <Text
-                  fontFamily={'Inter_Regular'}
-                  fontSize={scaleFontSize(14)}
-                  color={'accent.800'}
-                  ml={horizontalScale(10)}
-                  lineHeight={16.8}
-                  letterSpacing={-0.03}>
-                  I don't want to use the app anymore
-                </Text>
-                <View flex={1} alignItems="flex-end">
-                  <SvgXml xml={rightOrangeArrowIcon} width={9} height={15} />
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setSelection('I’m using a different account')}>
-              <View
-                mt={1}
-                bg="white"
-                px={horizontalScale(20)}
-                py={verticalScale(15)}
-                flexDir="row"
-                alignItems="center"
-                borderBottomColor={'accent.100'}
-                borderBottomWidth={1}>
-                {/* <SvgXml xml={iconSVG} width={18} height={18} /> */}
-                <Text
-                  fontFamily={'Inter_Regular'}
-                  fontSize={scaleFontSize(14)}
-                  color={'accent.800'}
-                  ml={horizontalScale(10)}
-                  lineHeight={16.8}
-                  letterSpacing={-0.03}>
-                  I’m using a different account
-                </Text>
-                <View flex={1} alignItems="flex-end">
-                  <SvgXml xml={rightOrangeArrowIcon} width={9} height={15} />
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setSelection('I’m worried about my privacy')}>
-              <View
-                mt={1}
-                bg="white"
-                px={horizontalScale(20)}
-                py={verticalScale(15)}
-                flexDir="row"
-                alignItems="center"
-                borderBottomColor={'accent.100'}
-                borderBottomWidth={1}>
-                {/* <SvgXml xml={iconSVG} width={18} height={18} /> */}
-                <Text
-                  fontFamily={'Inter_Regular'}
-                  fontSize={scaleFontSize(14)}
-                  color={'accent.800'}
-                  ml={horizontalScale(10)}
-                  lineHeight={16.8}
-                  letterSpacing={-0.03}>
-                  I’m worried about my privacy
-                </Text>
-                <View flex={1} alignItems="flex-end">
-                  <SvgXml xml={rightOrangeArrowIcon} width={9} height={15} />
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelection('Other')}>
-              <View
-                mt={1}
-                bg="white"
-                px={horizontalScale(20)}
-                py={verticalScale(15)}
-                flexDir="row"
-                alignItems="center"
-                borderBottomColor={'accent.100'}
-                borderBottomWidth={1}>
-                {/* <SvgXml xml={iconSVG} width={18} height={18} /> */}
-                <Text
-                  fontFamily={'Inter_Regular'}
-                  fontSize={scaleFontSize(14)}
-                  color={'accent.800'}
-                  ml={horizontalScale(10)}
-                  lineHeight={16.8}
-                  letterSpacing={-0.03}>
-                  Other
-                </Text>
-                <View flex={1} alignItems="flex-end">
-                  <SvgXml xml={rightOrangeArrowIcon} width={9} height={15} />
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
+              Delete my account
+            </Text>
+          </Pressable>
+        </View>
       </View>
       {alertShow && (
         <View style={{marginTop: 'auto'}}>

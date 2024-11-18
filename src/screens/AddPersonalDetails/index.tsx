@@ -209,7 +209,7 @@ export const AddPersonalDetails: React.FC<AddPersonalDetailsProps> = ({
             py={verticalScale(12)}
             rounded={12}
             colorScheme={'transparent'}
-            bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
+            bg={isContinueDisabled ? 'accent.200' : '#6D28D9'}
             _text={{
               fontFamily: 'Inter_SemiBold',
               fontSize: scaleFontSize(20),

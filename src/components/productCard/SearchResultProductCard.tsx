@@ -141,7 +141,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             py={verticalScale(20)}>
             {products.varietyList[0].discountPercent !== 0 && (
               <View
-                bgColor={'primary.500'}
+                bgColor={'#6D28D9'}
                 position={'absolute'}
                 borderBottomLeftRadius={8}
                 borderBottomRightRadius={8}
@@ -243,7 +243,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             <Pressable
               borderRadius={10}
               borderWidth={1}
-              borderColor={'primary.500'}
+              borderColor={'#6D28D9'}
               w={horizontalScale(60)}
               alignItems={'center'}
               justifyContent={'center'}
@@ -253,7 +253,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
               <Text
                 fontFamily={'Inter_Medium'}
                 fontSize={scaleFontSize(14)}
-                color={'primary.500'}
+                color={'#6D28D9'}
                 lineHeight={16.94}
                 letterSpacing={-0.08}>
                 ADD
@@ -280,7 +280,7 @@ const SearchProductCard: React.FC<SearchProductCardProps> = ({
             <View
               w={horizontalScale(60)}
               borderRadius={10}
-              bgColor={'primary.500'}
+              bgColor={'#6D28D9'}
               py={verticalScale(5)}
               flexDir={'row'}
               alignItems={'center'}

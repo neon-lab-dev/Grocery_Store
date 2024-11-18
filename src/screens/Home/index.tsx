@@ -232,7 +232,13 @@ const Home: React.FC<Props> = ({navigation}) => {
                 colors={['red']}
               />
             }>
-            <ImageCarousel onImagePress2={seeAll} onImagePress3={handleClick} showItem={false} />
+            <View style={{alignItems: 'center'}}>
+              <Image
+                source={require('../../assets/images/newTheme/banner.png')}
+              />
+            </View>
+
+            {/* <ImageCarousel onImagePress2={seeAll} onImagePress3={handleClick} showItem={false} /> */}
             <View
               style={{
                 flexDirection: 'row',
@@ -345,7 +351,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                 </View>
               ))}
 
-            <View
+            {/* <View
               style={{
                 alignSelf: 'center',
                 marginTop: verticalScale(15),
@@ -393,7 +399,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   />
                 </View>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </ScrollView>
 
           <View style={style.floatingButton} shadow={5}>
@@ -404,6 +410,17 @@ const Home: React.FC<Props> = ({navigation}) => {
               <Image
                 source={require('../../assets/images/icons/Categories.png')}
                 style={style.buttonImage}
+              />
+            </Pressable>
+          </View>
+          <View style={style.floatingButton2} shadow={5}>
+            <Pressable onPress={() => openWhatsApp('Hi', REACT_APP_PHONE_NO)}>
+              <Image
+                style={{
+                  width: horizontalScale(50),
+                  height: horizontalScale(50),
+                }}
+                source={require('../../assets/images/newTheme/whatsapp.png')}
               />
             </Pressable>
           </View>

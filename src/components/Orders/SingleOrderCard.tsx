@@ -13,8 +13,8 @@ interface Product {
   name: string;
   discountedPrice: number;
   price: number;
-  value:number;
-  unit:string
+  value: number;
+  unit: string;
 }
 
 export const SingleOrderCard: React.FC<{product: Product}> = ({product}) => {
@@ -62,7 +62,7 @@ export const SingleOrderCard: React.FC<{product: Product}> = ({product}) => {
         <Text
           fontFamily={'Inter_Medium'}
           fontSize={scaleFontSize(16)}
-          color={'primary.500'}
+          color={'#7C3AED'}
           mb={-verticalScale(1)}
           lineHeight={19.36}
           letterSpacing={-0.04}>

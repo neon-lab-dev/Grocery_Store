@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     width: horizontalScale(66),
     height: verticalScale(70),
     borderRadius: horizontalScale(16),
-    backgroundColor: '#FFF7ED',
+    backgroundColor: '#F5F3FF',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     color: '#4B5563',
   },
   selectedItem: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     width: horizontalScale(4),
     height: verticalScale(53),
     marginTop: verticalScale(15),
