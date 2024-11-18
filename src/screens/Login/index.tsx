@@ -169,9 +169,7 @@ const Login: React.FC<Props> = ({navigation}) => {
             </Text>
             <Text
               onPress={() =>
-                openURL(
-                  'https://grocerystore-blond.vercel.app/terms-and-conditions.html',
-                )
+                openURL('https://inquisitive-ganache-5dedc5.netlify.app/terms')
               }
               fontFamily={'Inter_Regular'}
               fontSize={scaleFontSize(10)}
@@ -193,7 +191,7 @@ const Login: React.FC<Props> = ({navigation}) => {
             <Text
               onPress={() =>
                 openURL(
-                  'https://grocerystore-blond.vercel.app/privacy-policy.html',
+                  'https://inquisitive-ganache-5dedc5.netlify.app/privacy',
                 )
               }
               fontFamily={'Inter_Regular'}

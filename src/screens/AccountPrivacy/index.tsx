@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {
   horizontalScale,
   scaleFontSize,
@@ -18,7 +18,7 @@ export const AccountPrivacy: React.FC<AccountPrivacyProps> = ({
   route,
 }) => {
   return (
-    <View style={{paddingHorizontal: horizontalScale(10)}}>
+    <ScrollView style={{paddingHorizontal: horizontalScale(10)}}>
       <Text style={styles.headingText}>Account Privacy</Text>
       <Text style={styles.matter}>
         Welcome to EasyNeeds! At EasyNeeds, we value your privacy and are
@@ -53,14 +53,14 @@ export const AccountPrivacy: React.FC<AccountPrivacyProps> = ({
         Contact Us For questions or concerns about this policy, reach out to us
         at 8595090886.
       </Text>
-      <View style={{marginTop: verticalScale(10)}}>
+      <View style={{marginVertical: verticalScale(15)}}>
         <SettingsOption
           name="Request to delete account"
           iconSVG={deleteIcon}
           onPress={() => navigation.navigate('Delete Account')}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   matter: {
     color: 'black',
-    fontSize: scaleFontSize(14),
+    fontSize: scaleFontSize(13),
     lineHeight: verticalScale(18),
     fontWeight: '400',
   },
