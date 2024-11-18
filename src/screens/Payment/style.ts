@@ -7,8 +7,7 @@ import {
 
 export const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: '#F9FAFB',
-    // justifyContent: 'space-between',
+    // backgroundColor: 'blue',
     flex: 1,
   },
   billSummaryCard: {
@@ -86,10 +85,10 @@ export const styles = StyleSheet.create({
     height: verticalScale(90),
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    marginTop: 'auto',
+    marginTop: verticalScale(50),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
   },
   paymentPreferredText: {
     fontFamily: 'Inter',
@@ -113,7 +112,7 @@ export const styles = StyleSheet.create({
   bottomCard: {
     width: horizontalScale(305),
     height: verticalScale(45),
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     borderRadius: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',

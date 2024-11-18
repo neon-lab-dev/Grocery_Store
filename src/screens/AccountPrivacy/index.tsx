@@ -21,29 +21,37 @@ export const AccountPrivacy: React.FC<AccountPrivacyProps> = ({
     <View style={{paddingHorizontal: horizontalScale(10)}}>
       <Text style={styles.headingText}>Account Privacy</Text>
       <Text style={styles.matter}>
-        We "Grocery Store" (“Kirana Store”), are committed to protecting the
-        privacy and security of your personal information. Your privacy is
-        important to us and maintaining your trust is paramount.
+        Welcome to EasyNeeds! At EasyNeeds, we value your privacy and are
+        committed to protecting your personal information. This Privacy Policy
+        outlines how we collect, use, and safeguard your data while providing
+        our services.
       </Text>
       <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
-        This privacy policy explains how we collect, use, process and disclose
-        information about you. By using our website/ app/ platform and
-        affiliated services, you consent to the terms of our privacy policy
-        (“Privacy Policy”) in addition to our ‘Terms of Use.’ We encourage you
-        to read this privacy policy to understand the collection, use, and
-        disclosure of your information from time to time, to keep yourself
-        updated with the changes and updates that we make to this policy.
+        Information We Collect Personal Information: Name, contact details,
+        address, and payment information provided during registration and order
+        placement. Usage Data: Details about how you use our app, including
+        browsing patterns, device information, and app performance.
+      </Text>
+      {/* <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
+        How We Use Your Information To process your orders and deliver products
+        efficiently. To improve our app's functionality and user experience. To
+        send notifications, promotional offers, and updates.
+      </Text> */}
+      <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
+        Data Security We implement robust security measures to protect your data
+        from unauthorized access or disclosure. However, no system is entirely
+        foolproof, and we cannot guarantee absolute security.
       </Text>
       <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
-        This privacy policy describes our privacy practices for all websites,
-        products and services that are linked to it. However this policy does
-        not apply to those affiliates and partners that have their own privacy
-        policy. In such situations, we recommend that you read the privacy
-        policy on the applicable site.
+        Sharing Your Information We do not sell or share your personal data with
+        third parties except as required for service delivery, legal compliance,
+        or fraud prevention.
       </Text>
       <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
-        Should you have any clarifications regarding this privacy policy, please
-        write to us at arpitksr@gmail.com
+        Your Rights Access and update your personal information. Request
+        deletion of your data (subject to legal or operational constraints).
+        Contact Us For questions or concerns about this policy, reach out to us
+        at 8595090886.
       </Text>
       <View style={{marginTop: verticalScale(10)}}>
         <SettingsOption

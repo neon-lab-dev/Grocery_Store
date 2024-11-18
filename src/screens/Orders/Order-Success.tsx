@@ -91,7 +91,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
         px={2}>
         <Center
           borderRadius={100}
-          bg={'primary.400'}
+          bg={'#7C3AED'}
           h={width < 380 ? 10 : 12}
           w={width < 380 ? 10 : 12}
           mr={2}>
@@ -136,7 +136,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
           </Text>
           <Text
             fontSize={width < 380 ? 14 : 15}
-            color={'primary.500'}
+            color={'#7C3AED'}
             fontWeight={500}
             // fontFamily={'Inter_Medium'}
             ml={marginLeft}>
@@ -188,7 +188,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
           <Pressable onPress={gotoOrderDetails}>
             <Text
               fontSize={width < 380 ? 12 : 14}
-              color={'primary.500'}
+              color={'#7C3AED'}
               fontWeight={500}
               ml={width < 380 ? 10 : 12}>
               View Details
@@ -213,7 +213,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = ({route, navigation}) => {
             h={50}
             rounded={12}
             colorScheme={'transparent'}
-            bg={'primary.500'}
+            bg={'#7C3AED'}
             _text={{
               fontSize: scaleFontSize(20),
               color: 'white',

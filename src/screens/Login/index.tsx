@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Button,
-  Input,
-  Text,
-  Image,
-  KeyboardAvoidingView,
-} from 'native-base';
+import {View, Button, Input, Text, KeyboardAvoidingView} from 'native-base';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {styles} from './style';
 import {AuthNavigatorParamList} from '../../navigation/MainNavigation';
@@ -21,29 +14,34 @@ import {Linking, Platform} from 'react-native';
 import {sendOtp} from '../../api/auth';
 import Loader from '../../components/Loader/Loader';
 import {toast} from '../../components/Toast/Toast';
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 import {useDispatch, useSelector} from 'react-redux';
-import {setNetworkStatus} from '../../redux/slices/networkSlice.ts';
+import {setNetworkStatus} from '../../redux/slices/networkSlice';
+import {Image} from 'react-native-svg';
 
 type Props = {
   navigation: StackNavigationProp<AuthNavigatorParamList, 'Login'>;
 };
 
 const Login: React.FC<Props> = ({navigation}) => {
-  const [phoneNo, setPhoneNo] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [phoneNo, setPhoneNo] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const isConnected = useSelector(state => state.network.isConnected);
 
-  const openURL = async url => {
+  const isConnected: boolean = useSelector(
+    (state: any) => state.network.isConnected,
+  );
+
+  const openURL = async (url: string): Promise<void> => {
     try {
       await Linking.openURL(url);
     } catch (error) {
       console.error('An error occurred', error);
     }
   };
+
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
+    const unsubscribe = NetInfo.addEventListener((state: NetInfoState) => {
       dispatch(setNetworkStatus(state.isConnected));
     });
 
@@ -52,7 +50,7 @@ const Login: React.FC<Props> = ({navigation}) => {
     };
   }, [dispatch]);
 
-  const handleContinue = async () => {
+  const handleContinue = async (): Promise<void> => {
     if (isConnected) {
       if (validators.isPhoneNumber(phoneNo)) {
         setIsLoading(true);
@@ -60,7 +58,7 @@ const Login: React.FC<Props> = ({navigation}) => {
           const response = await sendOtp(phoneNo);
           if (response.statusCode === 200 || response.statusCode === 400) {
             toast.showToast(response.responseBody.message);
-            navigation.navigate('OTP', {phoneNo: phoneNo});
+            navigation.navigate('OTP', {phoneNo});
           } else {
             toast.showToast(response.message);
           }
@@ -79,19 +77,15 @@ const Login: React.FC<Props> = ({navigation}) => {
   return (
     <>
       <Loader isOpen={isLoading} />
-      <KeyboardAvoidingView
-        flex={1}
-        bg="primary.50"
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <View style={styles.imageBackground}>
-          {/* <Image
-            source={require('../../assets/images/20450388_Vitamins.png')}
+      <View flex={1}>
+        {/* <View style={styles.imageBackground}>
+          <Image
+            source={require('../../assets/images/SplashScreen/background.png')}
             style={styles.image}
             resizeMode="cover"
             alt="Top Image"
-          /> */}
-        </View>
+          />
+        </View> */}
         <View style={styles.inputSection}>
           <Text
             fontFamily={'Inter_SemiBold'}
@@ -99,16 +93,16 @@ const Login: React.FC<Props> = ({navigation}) => {
             color={'accent.800'}
             lineHeight={33.89}
             letterSpacing={-0.05}>
-            Login
+            Login/SignUp
           </Text>
-          <Text
+          {/* <Text
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(15)}
             color="accent.500"
             lineHeight={20}
             letterSpacing={-0.03}>
             Enter your phone number to receive an OTP.
-          </Text>
+          </Text> */}
           <Input
             InputLeftElement={
               <Text
@@ -140,15 +134,11 @@ const Login: React.FC<Props> = ({navigation}) => {
             maxLength={10}
             blurOnSubmit
             value={phoneNo}
-            onChangeText={setPhoneNo}
+            onChangeText={(text: string) => setPhoneNo(text)}
           />
           <LinearGradient
-            colors={['#FDBA74', '#F97316']}
-            style={{
-              borderRadius: 12,
-              width: '100%',
-              marginTop: verticalScale(10),
-            }}
+            colors={['#7C3AED', '#8745F8']}
+            style={styles.linearGradient}
             start={{y: 0.0, x: 0.0}}
             end={{y: 1.0, x: 0.0}}>
             <Button
@@ -157,7 +147,7 @@ const Login: React.FC<Props> = ({navigation}) => {
               rounded={12}
               colorScheme={'transparent'}
               bg="transparent"
-              onPress={phoneNo.length === 10 ? handleContinue : null}
+              onPress={phoneNo.length === 10 ? handleContinue : undefined}
               _text={{
                 fontFamily: 'Inter_Medium',
                 fontSize: scaleFontSize(18),
@@ -216,7 +206,7 @@ const Login: React.FC<Props> = ({navigation}) => {
             </Text>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </>
   );
 };

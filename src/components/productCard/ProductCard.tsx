@@ -151,7 +151,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             {products.varietyList[0].discountPercent !== 0 && (
               <View
                 style={{
-                  backgroundColor: Colors.primary[500],
+                  backgroundColor: '#6D28D9',
                   height: verticalScale(28),
                   width: horizontalScale(30),
                   marginLeft: horizontalScale(15),
@@ -258,7 +258,7 @@ const ProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                     paddingVertical: verticalScale(4),
                     paddingHorizontal: horizontalScale(4),
                     marginHorizontal: horizontalScale(20),
-                    backgroundColor: Colors.primary[500],
+                    backgroundColor: '#6D28D9',
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',

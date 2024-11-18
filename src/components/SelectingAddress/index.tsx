@@ -35,7 +35,6 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
   const navigation = useNavigation();
 
   const saveSelectAddress = (location: any) => {
-    console.log('address Pressed', location);
     setSelectedAddress(location);
     onClose();
   };
@@ -76,7 +75,7 @@ const SelectAddress: FC<SelectAddressProps> = ({onClose, onAddAddress}) => {
       </View>
       <Pressable onPress={onAddAddress}>
         <View style={styles.addAddress}>
-          <Text style={[styles.selectAddressText, {color: '#FB923C'}]}>
+          <Text style={[styles.selectAddressText, {color: '#6D28D9'}]}>
             Add an Address
           </Text>
           <SvgXml xml={addIcon} height={24} width={24} />

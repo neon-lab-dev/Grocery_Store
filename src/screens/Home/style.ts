@@ -12,6 +12,7 @@ const style = StyleSheet.create({
     flex: 1,
     position: 'relative',
     backgroundColor: 'white',
+    paddingBottom: verticalScale(30),
   },
   Category: {
     marginLeft: horizontalScale(18),
@@ -48,9 +49,21 @@ const style = StyleSheet.create({
     width: width < 370 ? 70 : 72,
     height: width < 370 ? 70 : 72,
   },
+  floatingButton2: {
+    position: 'absolute',
+    bottom: verticalScale(1),
+    right: horizontalScale(20),
+    left: horizontalScale(20),
+    width: width < 370 ? 70 : 72,
+    height: width < 370 ? 70 : 72,
+  },
   buttonImage: {
     width: '100%',
     height: '100%',
+  },
+  buttonImage2: {
+    width: 50,
+    height: 50,
   },
 });
 

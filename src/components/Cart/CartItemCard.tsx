@@ -155,7 +155,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
         <View
           marginLeft={horizontalScale(25)}
           w={horizontalScale(60)}
-          bg={'primary.500'}
+          bg={'#6D28D9'}
           flexDir={'row'}
           rounded={8}
           h={'auto'}
@@ -219,7 +219,7 @@ export const CartItemCard: React.FC<{item: any}> = ({item}) => {
           <Text
             fontFamily={'Inter_Medium'}
             fontSize={scaleFontSize(16)}
-            color={'primary.500'}
+            color={'#6D28D9'}
             lineHeight={19.36}
             letterSpacing={-0.04}>
             ₹{discountPriceRound}

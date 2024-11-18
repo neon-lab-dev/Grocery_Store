@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Button, Center, Image, Modal, Text, View} from 'native-base';
+import {Button, Center, Modal, Image, Text, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
 
 import SettingsOption from '../../components/Settings/SettingsOptionComponent';
@@ -17,6 +17,7 @@ import {
   Pressable,
   TextInput,
   TouchableOpacity,
+  Image as ReactImage,
 } from 'react-native';
 
 import {StyleSheet} from 'react-native';
@@ -175,39 +176,56 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
       ) : (
         <View flex={1} bgColor={'accent.50'}>
           <View
-            flexDir={'row'}
-            height={100}
-            alignItems={'center'}
-            bg={'white'}
-            px={horizontalScale(20)}
-            mb={verticalScale(5)}>
-            <Center
-              bg={'primary.500'}
-              borderRadius={100}
-              overflow={'hidden'}
-              p={horizontalScale(10)}
-              mr={horizontalScale(10)}>
-              <SvgXml xml={accountIcon} height={27} width={27} />
-            </Center>
-            <View>
-              <Text
-                fontFamily={'Inter_SemiBold'}
-                fontSize={scaleFontSize(20)}
-                color={'accent.800'}
-                lineHeight={24.2}
-                letterSpacing={-0.01}>
-                {name}
-              </Text>
-              <Text
-                fontFamily={'Inter_Regular'}
-                fontSize={scaleFontSize(14)}
-                color={'accent.600'}
-                lineHeight={16.94}
-                letterSpacing={-0.04}>
-                {phoneNo}
-              </Text>
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              backgroundColor: '#FFFFFF',
+              alignItems: 'center',
+              paddingRight: horizontalScale(20),
+              marginVertical: verticalScale(5),
+            }}>
+            <View
+              flexDir={'row'}
+              height={100}
+              alignItems={'center'}
+              bg={'white'}
+              px={horizontalScale(20)}
+              mb={verticalScale(5)}>
+              <Center
+                bg={'#7C3AED'}
+                borderRadius={100}
+                overflow={'hidden'}
+                p={horizontalScale(10)}
+                mr={horizontalScale(10)}>
+                <SvgXml xml={accountIcon} height={27} width={27} />
+              </Center>
+              <View>
+                <Text
+                  fontFamily={'Inter_SemiBold'}
+                  fontSize={scaleFontSize(20)}
+                  color={'accent.800'}
+                  lineHeight={24.2}
+                  letterSpacing={-0.01}>
+                  {name}
+                </Text>
+                <Text
+                  fontFamily={'Inter_Regular'}
+                  fontSize={scaleFontSize(14)}
+                  color={'accent.600'}
+                  lineHeight={16.94}
+                  letterSpacing={-0.04}>
+                  {phoneNo}
+                </Text>
+              </View>
             </View>
+            <Pressable onPress={handleLogOut}>
+              <ReactImage
+                style={{width: 52, height: 52}}
+                source={require('../../assets/images/newTheme/logout.png')}
+              />
+            </Pressable>
           </View>
+
           <Modal isOpen={modalVisible} size={'full'} onClose={onclose}>
             <Modal.Content
               mb={keyboardHeight}
@@ -269,7 +287,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
                   py={verticalScale(15)}
                   rounded={12}
                   colorScheme={'transparent'}
-                  bg={'primary.500'}
+                  bg={'#7C3AED'}
                   _text={{
                     fontFamily: 'Inter_SemiBold',
                     fontSize: scaleFontSize(20),
@@ -284,14 +302,14 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
             </Modal.Content>
           </Modal>
           <SettingsOption
+            name="Profile"
+            iconSVG={user}
+            onPress={gotoPersonalDetails}
+          />
+          <SettingsOption
             name="Orders"
             iconSVG={shoppingBag}
             onPress={gotoOrders}
-          />
-          <SettingsOption
-            name="Customer Support and FAQ"
-            iconSVG={comment}
-            onPress={gotoHelp}
           />
           <SettingsOption
             name="Addresses"
@@ -299,10 +317,11 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
             onPress={gotoAddress}
           />
           <SettingsOption
-            name="Profile"
-            iconSVG={user}
-            onPress={gotoPersonalDetails}
+            name="Customer Support and FAQ"
+            iconSVG={comment}
+            onPress={gotoHelp}
           />
+
           {/* <SettingsOption
             name="Suggest Product"
             iconSVG={bulb}
@@ -359,7 +378,7 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
             </View>
           </TouchableOpacity>
           <Center flex={1}>
-            <Button
+            {/* <Button
               onPress={handleLogOut}
               variant={'outline'}
               px={horizontalScale(30)}
@@ -377,8 +396,8 @@ export const Settings: React.FC<SettingsProps> = ({navigation, route}) => {
                 letterSpacing: -0.04,
               }}>
               Log Out
-            </Button>
-            <Text style={{marginTop: verticalScale(10)}}>V - 2.0</Text>
+            </Button> */}
+            <Text style={{marginTop: 'auto'}}>V - 1.0</Text>
           </Center>
           {/* <View
             style={{

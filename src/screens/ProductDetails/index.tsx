@@ -246,7 +246,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
         }}
         style={[
           styles.smImage,
-          {borderColor: img.uri === selectedImageUrl ? '#F97316' : '#E5E7EB'},
+          {borderColor: img.uri === selectedImageUrl ? '#6D28D9' : '#E5E7EB'},
         ]}>
         <Image
           source={img}
@@ -320,7 +320,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                colors={['#F97316']}
+                colors={['#6D28D9']}
               />
             }>
             <View style={styles.imageContainer}>
@@ -680,7 +680,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
                 style={{
                   width: horizontalScale(115),
                   height: verticalScale(45),
-                  backgroundColor: '#F97316',
+                  backgroundColor: '#6D28D9',
                   borderRadius: 12,
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -699,7 +699,7 @@ const ProductDetails: FC<{Close: () => void}> = ({Close, route}) => {
               <View
                 w={horizontalScale(120)}
                 h={verticalScale(50)}
-                bgColor={'primary.500'}
+                bgColor={'#6D28D9'}
                 flexDir={'row'}
                 alignItems={'center'}
                 justifyContent={'space-evenly'}

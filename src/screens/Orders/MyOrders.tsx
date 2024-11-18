@@ -76,7 +76,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                colors={['#F97316']}
+                colors={['#7C3AED']}
               />
             }
             ListEmptyComponent={
@@ -87,7 +87,7 @@ const Orders: React.FC<OrdersProps> = ({navigation}) => {
                 alignItems={'center'}>
                 <Text
                   style={{
-                    color: '#F97316',
+                    color: '#7C3AED',
                     textAlign: 'center',
                     fontSize: scaleFontSize(30),
                     marginTop: verticalScale(20),

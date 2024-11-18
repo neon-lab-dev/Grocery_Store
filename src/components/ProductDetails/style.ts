@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
   },
   offPerContainer: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     width: horizontalScale(54),
     left: horizontalScale(23),
     borderBottomRightRadius: 13,
@@ -61,12 +61,12 @@ export const styles = StyleSheet.create({
   },
   selectUnitCardContainer: {
     borderWidth: horizontalScale(1),
-    borderColor: '#F97316',
+    borderColor: '#6D28D9',
     width: horizontalScale(90),
     padding: 12,
     alignItems: 'center',
     borderRadius: 12,
-    backgroundColor: '#FFF7ED',
+    backgroundColor: '#F5F3FF',
     gap: 3,
   },
   unitCardKgText: {
@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Inter_Medium',
     fontSize: scaleFontSize(14),
     textAlign: 'left',
-    color: '#F97316',
+    color: '#6D28D9',
   },
   similarProductsText: {
     fontFamily: 'Inter_SemiBold',
@@ -127,7 +127,7 @@ export const styles = StyleSheet.create({
     color: '#1F2937',
   },
   addToCartButton: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -176,7 +176,7 @@ export const styles = StyleSheet.create({
   floatingButton: {
     paddingHorizontal: 20,
     paddingVertical: 14,
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     position: 'absolute',
     left: horizontalScale(260),
     bottom: verticalScale(100),
@@ -214,7 +214,7 @@ export const styles = StyleSheet.create({
     top: 20,
     right: 20,
     padding: 10,
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     borderRadius: 5,
   },
   modalCloseButtonText: {

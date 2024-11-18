@@ -13,7 +13,7 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from '../screens/Splash';
-// import {useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -54,9 +54,9 @@ export type AppNavigatorParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation: React.FC = () => {
-  // const user = useSelector(state => state.user);
-  // const isLoggedIn = false;
-  // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const user = useSelector(state => state.user);
+  const isLoggedIn = false;
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   return (
     <NavigationContainer>

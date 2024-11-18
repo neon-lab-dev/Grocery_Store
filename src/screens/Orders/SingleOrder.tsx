@@ -257,7 +257,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
             px={horizontalScale(20)}
             mt={verticalScale(15)}
             style={{gap: horizontalScale(12)}}>
-            <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
+            <Center borderRadius={100} bg={'#7C3AED'} h={10} w={10}>
               <SvgXml xml={timer} height={20} width={20} />
             </Center>
             <View style={{gap: verticalScale(2)}}>
@@ -288,7 +288,7 @@ const SingleOrder: React.FC<SingleOrderProps> = ({navigation, route}) => {
             alignItems={'center'}
             px={horizontalScale(20)}
             style={{gap: horizontalScale(12)}}>
-            <Center borderRadius={100} bg={'primary.400'} h={10} w={10}>
+            <Center borderRadius={100} bg={'#7C3AED'} h={10} w={10}>
               <SvgXml xml={location} height={20} width={20} />
             </Center>
             <View style={{gap: verticalScale(2)}}>

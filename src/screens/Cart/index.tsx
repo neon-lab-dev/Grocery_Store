@@ -209,12 +209,12 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
         </Text>
       </View>
       {totalPrice < 799 && (
-        <Alert w="100%" status="warning">
+        <Alert w="100%" status="warning" bgColor={'#7C3AED'}>
           <VStack space={2} flexShrink={1} w="100%">
             <HStack flexShrink={1} space={2} justifyContent="space-between">
               <HStack space={2} flexShrink={1}>
                 <Alert.Icon mt="1" size={'md'} />
-                <Text fontSize="lg" color="coolGray.800">
+                <Text fontSize="lg" color="#FFFFFF">
                   Minimum Order Should be ₹799
                 </Text>
               </HStack>
@@ -324,7 +324,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
           justifyContent={'center'}>
           <Button
             w={'100%'}
-            bg={'primary.500'}
+            bg={'#7C3AED'}
             rounded={12}
             py={verticalScale(15)}
             colorScheme={'transparent'}
@@ -400,7 +400,7 @@ const Cart: React.FC<CartProps> = ({navigation}) => {
                 py={verticalScale(15)}
                 rounded={12}
                 colorScheme={'transparent'}
-                bg={'primary.500'}
+                bg={'#6D28D9'}
                 onPress={gotoPayment}>
                 <View
                   w={'100%'}

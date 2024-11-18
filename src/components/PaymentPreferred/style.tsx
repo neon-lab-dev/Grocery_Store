@@ -75,8 +75,9 @@ export const styles = StyleSheet.create({
     color: '#1F2937',
   },
   paymentPreferredCard: {
-    width: horizontalScale(width < 380 ? 315: 315),
-    height: verticalScale(width < 380 ? 130: 200),
+    flex: 1,
+    width: horizontalScale(width < 380 ? 315 : 315),
+    height: verticalScale(width < 380 ? 130 : 150),
     backgroundColor: '#FFFFFF',
     borderRadius: horizontalScale(14),
     padding: 17,
@@ -84,7 +85,7 @@ export const styles = StyleSheet.create({
     // margin: 26,
     borderWidth: horizontalScale(1),
     borderColor: '#E5E7EB',
-    marginLeft: horizontalScale(  width < 380 ? 10: 18),
+    marginLeft: horizontalScale(width < 380 ? 10 : 18),
   },
   bottomLayout: {
     height: verticalScale(120),

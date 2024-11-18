@@ -145,7 +145,7 @@ const Categories: FC = ({navigation}) => {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              colors={['orange']}
+              colors={['#F5F3FF']}
               progressViewOffset={50}
             />
           }

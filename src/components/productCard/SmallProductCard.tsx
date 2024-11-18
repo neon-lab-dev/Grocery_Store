@@ -146,7 +146,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
             {products.varietyList[0].discountPercent !== 0 && (
               <View
                 style={{
-                  backgroundColor: Colors.primary[500],
+                  backgroundColor: '#6D28D9',
                   height: verticalScale(25),
                   width: horizontalScale(28),
                   marginLeft: verticalScale(10),
@@ -250,7 +250,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                     paddingVertical: verticalScale(3),
                     paddingHorizontal: horizontalScale(1),
                     marginHorizontal: horizontalScale(5),
-                    backgroundColor: Colors.primary[500],
+                    backgroundColor: '#6D28D9',
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -420,7 +420,7 @@ const SmallProductCard: React.FC<ProductCardProps> = ({onPress, products}) => {
                     paddingVertical: verticalScale(3),
                     paddingHorizontal: horizontalScale(1),
                     marginHorizontal: horizontalScale(5),
-                    backgroundColor: Colors.primary[500],
+                    backgroundColor: '#6D28D9',
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -504,13 +504,13 @@ export const styles = StyleSheet.create({
     paddingVertical: verticalScale(3),
     paddingHorizontal: horizontalScale(12),
     borderWidth: 1,
-    borderColor: Colors.primary[400],
+    borderColor: '#6D28D9',
     marginHorizontal: horizontalScale(5),
   },
   ButtonText: {
     fontFamily: 'Inter_Medium',
     // fontWeight: '500',
-    color: Colors.primary[400],
+    color: '#6D28D9',
     fontSize: scaleFontSize(15),
   },
   Quantity: {

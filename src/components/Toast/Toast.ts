@@ -6,7 +6,7 @@ export const toast = {
       title: message,
       duration,
       placement: 'bottom',
-      backgroundColor: 'primary.500',
+      backgroundColor: '#7C3AED',
       fontFamily: 'Inter_Regular',
       color: 'primary.50',
       style: {marginBottom: 30},

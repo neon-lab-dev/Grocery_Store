@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     borderTopWidth: horizontalScale(1),
     flexDirection: 'row',
     backgroundColor: 'white',
-    borderColor: '#F3F4F6',
+    borderColor: '#F5F3FF',
   },
   leftCard: {
     flex: 1,
@@ -50,19 +50,19 @@ export const styles = StyleSheet.create({
     width: horizontalScale(66),
     height: verticalScale(73),
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#F5F3FF',
   },
   leftImage: {
     width: horizontalScale(66),
     height: verticalScale(70),
     borderRadius: horizontalScale(16),
-    backgroundColor: '#FFF7ED',
+    backgroundColor: '#F5F3FF',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   selectedItem: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     width: horizontalScale(4),
     height: verticalScale(53),
     marginTop: verticalScale(15),

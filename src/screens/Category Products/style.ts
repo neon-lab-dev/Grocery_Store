@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
   },
 
   selectedItem: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#6D28D9',
     width: horizontalScale(4),
     height: verticalScale(53),
     marginTop: verticalScale(15),

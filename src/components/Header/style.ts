@@ -31,21 +31,21 @@ export const styles = StyleSheet.create({
     color: '#4B5563',
   },
   cartContainer: {
-    backgroundColor: '#FED7AA',
+    backgroundColor: '#DDD6FE',
     position: 'absolute',
     top: -6,
-    right: -12,
+    right: -20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
     flex: 1,
     borderWidth: 0.1,
-    width:horizontalScale(20),
-    height:horizontalScale(20)
+    width: horizontalScale(20),
+    height: horizontalScale(20),
   },
   cartQuantity: {
     fontFamily: 'Inter_Medium',
-    color: Colors.primary[500],
+    color: '#6D28D9',
     fontSize: scaleFontSize(14),
   },
 });

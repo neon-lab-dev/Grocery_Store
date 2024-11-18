@@ -27,15 +27,17 @@ export const AboutUs: React.FC<AboutUsProps> = ({navigation, route}) => {
       <View style={{paddingHorizontal: horizontalScale(10)}}>
         <Text style={styles.headingText}>About Us</Text>
         <Text style={styles.matter}>
-          Welcome to Grocery Store, the ultimate grocery store app designed to
-          revolutionize your shopping experience. Whether you're restocking your
-          pantry, exploring new snacks and drinks, enhancing your beauty
-          regimen, or maintaining a clean and organized home, Grocery Store has
-          you covered. Our app offers an extensive range of products across
-          multiple categories, ensuring that you find everything you need with
-          just a few taps on your smartphone.
+          Welcome to EasyNeeds, your trusted e-commerce platform dedicated to
+          providing high-quality, vegetarian products. Based in the heart of
+          Patna City, we serve a growing community that values fresh and
+          wholesome essentials. Our Coverage Area: We currently operate within
+          the region spanning from Sabalpur, Patna City, to Boring Road, Patna,
+          catering to specific pin codes within this area. Our Promise: At
+          EasyNeeds, we commit to delivering: Fresh vegetables and fruits
+          Essential groceries A strictly vegetarian product range Join us in
+          redefining convenience and quality for your daily needs!
         </Text>
-        <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
+        {/* <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
           Comprehensive Grocery and Kitchen Essentials
         </Text>
         <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
@@ -46,13 +48,13 @@ export const AboutUs: React.FC<AboutUsProps> = ({navigation, route}) => {
         </Text>
         <Text style={[styles.matter, {marginTop: verticalScale(5)}]}>
           Household Essentials
-        </Text>
+        </Text> */}
       </View>
 
       <View style={{marginTop: 'auto', marginBottom: verticalScale(15)}}>
         <TouchableOpacity
           onPress={() =>
-            openURL('https://grocerystore-blond.vercel.app/privacy-policy.html')
+            openURL('https://inquisitive-ganache-5dedc5.netlify.app/privacy')
           }>
           <View
             bg="white"
@@ -79,9 +81,7 @@ export const AboutUs: React.FC<AboutUsProps> = ({navigation, route}) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            openURL(
-              'https://grocerystore-blond.vercel.app/terms-and-conditions.html',
-            )
+            openURL('https://inquisitive-ganache-5dedc5.netlify.app/terms')
           }>
           <View
             bg="white"

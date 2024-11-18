@@ -304,7 +304,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({navigation}) => {
                 w={'100%'}
                 py={verticalScale(15)}
                 rounded={12}
-                bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
+                bg={isContinueDisabled ? 'accent.200' : '#7C3AED'}
                 _text={{
                   fontSize: scaleFontSize(20),
                   fontFamily: 'Inter_SemiBold',

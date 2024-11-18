@@ -283,10 +283,8 @@ const AddAddress = ({route, navigation}) => {
               mr={horizontalScale(10)}
               py={verticalScale(7)}
               px={horizontalScale(15)}
-              borderColor={
-                selectedLabel === item ? 'primary.500' : 'accent.200'
-              }
-              bgColor={selectedLabel === item ? 'primary.500' : 'accent.100'}
+              borderColor={selectedLabel === item ? '#6D28D9' : 'accent.200'}
+              bgColor={selectedLabel === item ? '#6D28D9' : 'accent.100'}
               alignItems={'center'}
               onPress={() => setSelectedLabel(item)}>
               <Text
@@ -324,7 +322,7 @@ const AddAddress = ({route, navigation}) => {
             py={verticalScale(15)}
             rounded={12}
             colorScheme={'transparent'}
-            bg={isContinueDisabled ? 'accent.200' : 'primary.500'}
+            bg={isContinueDisabled ? 'accent.200' : '#6D28D9'}
             _text={{
               fontFamily: 'Inter_SemiBold',
               fontSize: scaleFontSize(20),
