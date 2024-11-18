@@ -124,11 +124,11 @@ const SavedAddress: React.FC<SavedAddressProps> = ({navigation}) => {
           borderStyle={'dashed'}
           borderRadius={12}
           colorScheme={'muted'}
-          borderColor={'primary.500'}
+          borderColor={'#7C3AED'}
           mt={verticalScale(20)}
           py={verticalScale(15)}
           _text={{
-            color: 'primary.400',
+            color: '#7C3AED',
             fontFamily: 'Inter_Medium',
             fontSize: scaleFontSize(20),
             lineHeight: 24.2,
