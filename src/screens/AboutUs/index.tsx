@@ -54,7 +54,7 @@ export const AboutUs: React.FC<AboutUsProps> = ({navigation, route}) => {
       <View style={{marginTop: 'auto', marginBottom: verticalScale(15)}}>
         <TouchableOpacity
           onPress={() =>
-            openURL('https://grocerystore-blond.vercel.app/privacy-policy.html')
+            openURL('https://inquisitive-ganache-5dedc5.netlify.app/privacy')
           }>
           <View
             bg="white"
@@ -81,9 +81,7 @@ export const AboutUs: React.FC<AboutUsProps> = ({navigation, route}) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            openURL(
-              'https://grocerystore-blond.vercel.app/terms-and-conditions.html',
-            )
+            openURL('https://inquisitive-ganache-5dedc5.netlify.app/terms')
           }>
           <View
             bg="white"

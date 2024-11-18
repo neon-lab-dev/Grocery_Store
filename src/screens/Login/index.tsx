@@ -77,19 +77,15 @@ const Login: React.FC<Props> = ({navigation}) => {
   return (
     <>
       <Loader isOpen={isLoading} />
-      <KeyboardAvoidingView
-        flex={1}
-        bg="primary.50"
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <View style={styles.imageBackground}>
+      <View flex={1}>
+        {/* <View style={styles.imageBackground}>
           <Image
             source={require('../../assets/images/SplashScreen/background.png')}
             style={styles.image}
             resizeMode="cover"
             alt="Top Image"
           />
-        </View>
+        </View> */}
         <View style={styles.inputSection}>
           <Text
             fontFamily={'Inter_SemiBold'}
@@ -99,14 +95,14 @@ const Login: React.FC<Props> = ({navigation}) => {
             letterSpacing={-0.05}>
             Login/SignUp
           </Text>
-          <Text
+          {/* <Text
             fontFamily={'Inter_Regular'}
             fontSize={scaleFontSize(15)}
             color="accent.500"
             lineHeight={20}
             letterSpacing={-0.03}>
             Enter your phone number to receive an OTP.
-          </Text>
+          </Text> */}
           <Input
             InputLeftElement={
               <Text
@@ -210,7 +206,7 @@ const Login: React.FC<Props> = ({navigation}) => {
             </Text>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </>
   );
 };

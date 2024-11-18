@@ -1,26 +1,28 @@
 import {StyleSheet} from 'react-native';
 import {horizontalScale, verticalScale} from '../../assets/scaling';
 export const styles = StyleSheet.create({
-  imageBackground: {
-    flex: 0.7,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F5F3FF',
-  },
-  image: {
-    height: '100%',
-    width: '100%',
-  },
+  // imageBackground: {
+  //   flex: 0.7,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   backgroundColor: '#F5F3FF',
+  // },
+  // image: {
+  //   height: '100%',
+  //   width: '100%',
+  // },
   inputSection: {
-    flex: 0.5,
+    paddingTop: verticalScale(120),
+    flex: 1,
     alignItems: 'center',
     paddingHorizontal: horizontalScale(10),
-    backgroundColor: '#F5F3FF',
+    // backgroundColor: '#F5F3FF',
   },
   footer: {
+    paddingTop: verticalScale(10),
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingHorizontal: horizontalScale(10),
   },
   linearGradient: {

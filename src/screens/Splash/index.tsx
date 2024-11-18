@@ -46,7 +46,7 @@ const Splash: React.FC<SplashProps> = ({navigation}) => {
     <View style={styles.container}>
       <Animatable.View ref={contentRef} style={styles.content}>
         <Text style={styles.title}>EasyNeeds</Text>
-        <Text style={styles.subtitle}>Your Local Market in Your Pocket!</Text>
+        {/* <Text style={styles.subtitle}>Your Local Market in Your Pocket!</Text> */}
       </Animatable.View>
       <Text style={styles.version}>V - 1.0</Text>
     </View>
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFFFFF',
     lineHeight: verticalScale(58),
+    fontFamily: 'Inter_Thin',
   },
   subtitle: {
     color: '#FFFFFF',

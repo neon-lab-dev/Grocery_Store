@@ -84,21 +84,20 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
   };
 
   return (
-    <View
+    <LinearGradient
+      colors={['#7C3AED', '#8745F8']}
       // source={require('../../assets/images/20450388_Vitamins.png')}
       style={styles.imageBackground}
       // imageStyle={styles.image}
     >
       <Loader isOpen={isLoading} />
       <View h={300} w={'100%'} position={'absolute'} top={40}>
-        <LinearGradient
-          colors={['rgba(255,247,237,0.7)', 'rgba(255,247,237,0.7)']}
-          style={styles.gradient}>
+        <View style={styles.gradient}>
           <Center>
             <Text
               fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
-              color={'accent.800'}
+              color={'#FFFFFF'}
               lineHeight={24.2}
               letterSpacing={-0.01}>
               Verification Code sent to
@@ -106,7 +105,7 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
             <Text
               fontFamily={'Inter_SemiBold'}
               fontSize={scaleFontSize(20)}
-              color={'accent.800'}
+              color={'#FFFFFF'}
               lineHeight={24.2}
               letterSpacing={-0.01}>
               {route.params.phoneNo}
@@ -117,9 +116,9 @@ const OTPScreen: React.FC<OTPScreenProps> = ({navigation, route}) => {
             onOtpComplete={handleOtpComplete}
             resendOTP={resendOTP}
           />
-        </LinearGradient>
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 

@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {height, width} from '../../assets/scaling';
 export const styles = StyleSheet.create({
   imageBackground: {
-    backgroundColor: '#FFF7ED',
+    // backgroundColor: 'rgba(167, 139, 250, 1)',
     position: 'absolute',
     left: 0,
     top: 0,
